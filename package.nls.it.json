@@ -1,4 +1,8 @@
 {
+  "extension.config.title": "Playful Sparkle: Cassetta degli strumenti per sviluppatori",
+  "extension.config.slugify.desc": "Carattere utilizzato come separatore nel testo slugificato.",
+  "extension.config.slugify.dash.desc": "Usa un trattino (-) come separatore",
+  "extension.config.slugify.underscore.desc": "Usa un trattino basso (_) come separatore",
   "extension.command.slugify.title": "Genera slug URL",
   "extension.command.makeLowercase.title": "Converti in minuscolo",
   "extension.command.makeUppercase.title": "Converti in maiuscolo",

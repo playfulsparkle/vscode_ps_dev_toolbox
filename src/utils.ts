@@ -53,50 +53,47 @@ export function safeToUppercase(text: string, locale?: string | string[]): strin
  * @param text - The string to slugify.
  * @returns The slugified version of the string.
  */
-export function slugify(text: string): string {
+export function slugify(text: string, separator: string = "-"): string {
     // Find the last dot position
     const lastDotIndex = text.lastIndexOf(".");
 
     // Quick check if there might be a file extension (contains a dot)
     if (lastDotIndex === -1 || lastDotIndex === text.length - 1) {
-        return slugifyHelper(text);
+        return slugifyHelper(text, separator);
     }
 
     // Check if what follows the dot looks like a valid file extension
     const possibleExt = text.substring(lastDotIndex);
 
     if (!possibleExt.match(/(\.[a-zA-Z0-9]{2,11})$/)) {
-        return slugifyHelper(text);
+        return slugifyHelper(text, separator);
     }
 
     // Process only the base name (everything except the extension)
     const baseName = text.substring(0, lastDotIndex);
 
     // Apply slugify to base name and reattach extension
-    return slugifyHelper(baseName) + possibleExt;
+    return slugifyHelper(baseName, separator) + possibleExt;
 }
 
 // Helper function to apply the slugify transformations
-function slugifyHelper(text: string): string {
+function slugifyHelper(text: string, separator: string): string {
     // Remove diacritics (accent marks) and convert to lowercase in one step
     let normalized = text.normalize("NFD");
 
     // Remove combining marks and special characters in one regex operation
-    normalized = normalized.replace(/[\u0300-\u036f]/g, "");
-
-    normalized = normalized.toLowerCase();
+    normalized = normalized.replace(/[\u0300-\u036f]/g, "").toLowerCase();
 
     // Remove non-alphanumeric characters (except spaces)
-    normalized = normalized.replace(/[^a-z0-9\s-]/g, " ");
+    normalized = normalized.replace(new RegExp(`[^a-z0-9\s${separator}]`, "g"), " ");
+
+    normalized = normalized.trim();
 
     // Replace spaces with hyphens
-    normalized = normalized.replace(/\s+/g, "-");
+    normalized = normalized.replace(/\s+/g, separator);
 
     // Replace multiple hyphens with a single hyphen
-    normalized = normalized.replace(/-+/g, "-");
-
-    // Remove leading and trailing hyphens
-    normalized = normalized.replace(/^-|-$/g, "");
+    normalized = normalized.replace(new RegExp(`${separator}+`, "g"), separator);
 
     return normalized;
 }
@@ -120,7 +117,7 @@ export function base64Decode(text: string): string {
         if (!isValidBase64(text)) {
             return text;
         }
-        
+
         return Buffer.from(text, "base64").toString("utf-8");
     } catch (error) {
         return text;

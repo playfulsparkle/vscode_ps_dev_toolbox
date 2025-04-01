@@ -1,4 +1,8 @@
 {
+    "extension.config.title": "Playful Sparkle: Набор инструментов разработчика",
+    "extension.config.slugify.desc": "Символ, используемый в качестве разделителя в слагифицированном тексте.",
+    "extension.config.slugify.dash.desc": "Используйте дефис (-) в качестве разделителя",
+    "extension.config.slugify.underscore.desc": "Используйте подчеркивание (_) в качестве разделителя",
     "extension.command.slugify.title": "Генерировать URL-слаг",
     "extension.command.makeLowercase.title": "Преобразовать в нижний регистр",
     "extension.command.makeUppercase.title": "Преобразовать в верхний регистр",

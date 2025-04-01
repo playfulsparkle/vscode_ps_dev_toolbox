@@ -1,4 +1,8 @@
 {
+  "extension.config.title": "Playful Sparkle: 開発者ツールボックス",
+  "extension.config.slugify.desc": "スラッグ化されたテキストの区切り文字として使用される文字。",
+  "extension.config.slugify.dash.desc": "ハイフン（-）を区切り文字として使用してください。",
+  "extension.config.slugify.underscore.desc": "アンダースコア（_）を区切り文字として使用してください。",
   "extension.command.slugify.title": "URLスラッグを生成",
   "extension.command.makeLowercase.title": "小文字に変換",
   "extension.command.makeUppercase.title": "大文字に変換",

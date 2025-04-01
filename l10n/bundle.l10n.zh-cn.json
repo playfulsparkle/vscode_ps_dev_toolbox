@@ -1,4 +1,4 @@
 {
     "Enter the locales to use for the transformation (comma-separated)": "输入要用于转换的区域设置（用逗号分隔）",
-    "e.g. hu, sk, en-US": "例如：zh-CN, en-US"
+    "e.g. hu, sk, en-US": "例如：zh-CN, zh-TW, en-US"
 }

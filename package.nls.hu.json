@@ -1,4 +1,8 @@
 {
+  "extension.config.title": "Playful Sparkle: Fejlesztői Eszközkészlet",
+  "extension.config.slugify.desc": "A slugosított szövegben elválasztóként használt karakter.",
+  "extension.config.slugify.dash.desc": "Használjon kötőjelet (-) elválasztóként",
+  "extension.config.slugify.underscore.desc": "Használjon aláhúzást (_) elválasztóként",
   "extension.command.slugify.title": "URL slug generálása",
   "extension.command.makeLowercase.title": "Kisbetűssé alakítás",
   "extension.command.makeUppercase.title": "Nagybetűssé alakítás",

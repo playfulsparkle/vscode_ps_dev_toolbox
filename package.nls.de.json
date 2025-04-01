@@ -1,4 +1,8 @@
 {
+  "extension.config.title": "Playful Sparkle: Entwickler-Werkzeugkasten",
+  "extension.config.slugify.desc": "Zeichen, das als Trennzeichen in gesluggtem Text verwendet wird.",
+  "extension.config.slugify.dash.desc": "Verwenden Sie einen Bindestrich (-) als Trennzeichen",
+  "extension.config.slugify.underscore.desc": "Verwenden Sie einen Unterstrich (_) als Trennzeichen",
   "extension.command.slugify.title": "URL-Slug generieren",
   "extension.command.makeLowercase.title": "In Kleinbuchstaben umwandeln",
   "extension.command.makeUppercase.title": "In Großbuchstaben umwandeln",

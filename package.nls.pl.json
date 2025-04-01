@@ -1,4 +1,8 @@
 {
+    "extension.config.title": "Playful Sparkle: Zestaw narzędzi dla programistów",
+    "extension.config.slugify.desc": "Znak używany jako separator w tekście slugowanym.",
+    "extension.config.slugify.dash.desc": "Użyj łącznika (-) jako separatora",
+    "extension.config.slugify.underscore.desc": "Użyj podkreślnika (_) jako separatora",
     "extension.command.slugify.title": "Generuj slug URL",
     "extension.command.makeLowercase.title": "Konwertuj na małe litery",
     "extension.command.makeUppercase.title": "Konwertuj na wielkie litery",

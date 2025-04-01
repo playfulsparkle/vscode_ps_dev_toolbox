@@ -1,4 +1,8 @@
 {
+    "extension.config.title": "Playful Sparkle: 開發人員工具箱",
+    "extension.config.slugify.desc": "用作 slug 化文字分隔符號的字元。",
+    "extension.config.slugify.dash.desc": "使用連字號 (-) 作為分隔符號。",
+    "extension.config.slugify.underscore.desc": "使用底線 (_) 作為分隔符號。",
     "extension.command.slugify.title": "產生 URL 別名",
     "extension.command.makeLowercase.title": "轉換為小寫",
     "extension.command.makeUppercase.title": "轉換為大寫",

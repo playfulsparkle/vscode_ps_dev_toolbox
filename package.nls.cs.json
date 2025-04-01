@@ -1,4 +1,8 @@
 {
+  "extension.config.title": "Playful Sparkle: Sada nástrojů pro vývojáře",
+  "extension.config.slugify.desc": "Znak použitý jako oddělovač ve slugifikovaném textu.",
+  "extension.config.slugify.dash.desc": "Použijte pomlčku (-) jako oddělovač",
+  "extension.config.slugify.underscore.desc": "Použijte podtržítko (_) jako oddělovač",
   "extension.command.slugify.title": "Vytvořit URL slug",
   "extension.command.makeLowercase.title": "Převést na malá písmena",
   "extension.command.makeUppercase.title": "Převést na velká písmena",

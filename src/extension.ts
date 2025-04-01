@@ -83,8 +83,14 @@ export function activate(context: vscode.ExtensionContext) {
 		};
 	};
 
+
 	const commandHandlers = {
-		[CommandId.Slugify]: createTextTransformCommand(utils.slugify),
+		[CommandId.Slugify]: createTextTransformCommand(text => {
+			const config = vscode.workspace.getConfiguration("ps-dev-toolbox");
+			const separator = config.get<string>("slugifySeparator", "-");
+			
+			return utils.slugify(text, separator);
+		}),
 		[CommandId.MakeLowercase]: createTextTransformCommandPrompt(utils.safeToLowerCase),
 		[CommandId.MakeUppercase]: createTextTransformCommandPrompt(utils.safeToUppercase),
 		[CommandId.Base64Encode]: createTextTransformCommand(utils.base64Encode),

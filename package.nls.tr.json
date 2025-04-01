@@ -1,4 +1,8 @@
 {
+    "extension.config.title": "Playful Sparkle: Geliştirici Araç Kutusu",
+    "extension.config.slugify.desc": "Slug haline getirilmiş metinde ayırıcı olarak kullanılan karakter.",
+    "extension.config.slugify.dash.desc": "Ayırıcı olarak tire (-) kullanın",
+    "extension.config.slugify.underscore.desc": "Ayırıcı olarak alt çizgi (_) kullanın",
     "extension.command.slugify.title": "URL Slug'ı Oluştur",
     "extension.command.makeLowercase.title": "Küçük Harfe Dönüştür",
     "extension.command.makeUppercase.title": "Büyük Harfe Dönüştür",

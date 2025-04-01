@@ -70,52 +70,69 @@
       {
         "command": "ps-dev-toolbox.slugify",
         "title": "%extension.command.slugify.title%",
-				"category": "Playful Sparkle",
+        "category": "Playful Sparkle",
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },
       {
         "command": "ps-dev-toolbox.makeLowercase",
         "title": "%extension.command.makeLowercase.title%",
-				"category": "Playful Sparkle",
+        "category": "Playful Sparkle",
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },
       {
         "command": "ps-dev-toolbox.makeUppercase",
         "title": "%extension.command.makeUppercase.title%",
-				"category": "Playful Sparkle",
+        "category": "Playful Sparkle",
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },
       {
         "command": "ps-dev-toolbox.base64Encode",
         "title": "%extension.command.base64Encode.title%",
-				"category": "Playful Sparkle",
+        "category": "Playful Sparkle",
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },
       {
         "command": "ps-dev-toolbox.base64Decode",
         "title": "%extension.command.base64Decode.title%",
-				"category": "Playful Sparkle",
+        "category": "Playful Sparkle",
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },
       {
         "command": "ps-dev-toolbox.urlEncode",
         "title": "%extension.command.urlEncode.title%",
-				"category": "Playful Sparkle",
+        "category": "Playful Sparkle",
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },
       {
         "command": "ps-dev-toolbox.urlDecode",
         "title": "%extension.command.urlDecode.title%",
-				"category": "Playful Sparkle",
+        "category": "Playful Sparkle",
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },
       {
         "command": "ps-dev-toolbox.generateGuid",
         "title": "%extension.command.generateGuid.title%",
-				"category": "Playful Sparkle"
+        "category": "Playful Sparkle"
       }
     ],
-    "configuration": {},
+    "configuration": {
+      "title": "%extension.config.title%",
+      "properties": {
+        "ps-dev-toolbox.slugifySeparator": {
+          "type": "string",
+          "default": "-",
+          "description": "%extension.config.slugify.desc%",
+          "enum": [
+            "-",
+            "_"
+          ],
+          "enumDescriptions": [
+            "%extension.config.slugify.dash.desc%",
+            "%extension.config.slugify.underscore.desc%"
+          ]
+        }
+      }
+    },
     "keybindings": []
   },
   "scripts": {

@@ -1,4 +1,8 @@
 {
+  "extension.config.title": "Playful Sparkle: Dev Toolbox",
+  "extension.config.slugify.desc": "Character used as the separator in slugified text.",
+  "extension.config.slugify.dash.desc": "Use a hyphen (-) as the separator",
+  "extension.config.slugify.underscore.desc": "Use an underscore (_) as the separator",
   "extension.command.slugify.title": "Generate URL Slug",
   "extension.command.makeLowercase.title": "Convert to Lowercase",
   "extension.command.makeUppercase.title": "Convert to Uppercase",

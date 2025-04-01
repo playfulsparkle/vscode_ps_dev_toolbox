@@ -1,4 +1,8 @@
 {
+  "extension.config.title": "Playful Sparkle: Набор от Инструменти за Разработчици",
+  "extension.config.slugify.desc": "Символ, използван като разделител в slug-нат текст.",
+  "extension.config.slugify.dash.desc": "Използвайте тире (-) като разделител",
+  "extension.config.slugify.underscore.desc": "Използвайте долна черта (_) като разделител",
   "extension.command.slugify.title": "Генериране на URL slug",
   "extension.command.makeLowercase.title": "Преобразуване в малки букви",
   "extension.command.makeUppercase.title": "Преобразуване в главни букви",
