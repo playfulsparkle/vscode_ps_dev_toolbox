@@ -1,0 +1,10 @@
+{
+    "extension.command.slugify.title": "URL 슬러그 생성",
+    "extension.command.makeLowercase.title": "소문자로 변환",
+    "extension.command.makeUppercase.title": "대문자로 변환",
+    "extension.command.base64Encode.title": "Base64 인코딩",
+    "extension.command.base64Decode.title": "Base64 디코딩",
+    "extension.command.urlEncode.title": "URL 인코딩",
+    "extension.command.urlDecode.title": "URL 디코딩",
+    "extension.command.generateGuid.title": "UUID/GUID 생성"
+}

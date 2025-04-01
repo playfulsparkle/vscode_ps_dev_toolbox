@@ -1,0 +1,10 @@
+{
+  "extension.command.slugify.title": "URLスラッグを生成",
+  "extension.command.makeLowercase.title": "小文字に変換",
+  "extension.command.makeUppercase.title": "大文字に変換",
+  "extension.command.base64Encode.title": "Base64エンコード",
+  "extension.command.base64Decode.title": "Base64デコード",
+  "extension.command.urlEncode.title": "URLエンコード",
+  "extension.command.urlDecode.title": "URLデコード",
+  "extension.command.generateGuid.title": "UUID/GUIDを生成"
+}

@@ -1,0 +1,10 @@
+{
+  "extension.command.slugify.title": "Генериране на URL slug",
+  "extension.command.makeLowercase.title": "Преобразуване в малки букви",
+  "extension.command.makeUppercase.title": "Преобразуване в главни букви",
+  "extension.command.base64Encode.title": "Кодиране в Base64",
+  "extension.command.base64Decode.title": "Декодиране от Base64",
+  "extension.command.urlEncode.title": "URL кодиране",
+  "extension.command.urlDecode.title": "URL декодиране",
+  "extension.command.generateGuid.title": "Генериране на UUID/GUID"
+}

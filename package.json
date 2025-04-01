@@ -1,0 +1,153 @@
+{
+  "name": "ps-dev-toolbox",
+  "displayName": "Playful Sparkle: Dev Toolbox",
+  "version": "0.0.1",
+  "publisher": "playful-sparkle",
+  "description": "Handy productivity tools for developers in Visual Studio Code.",
+  "author": {
+    "name": "Zsolt Oroszlány",
+    "email": "hello@playfulsparkle.com"
+  },
+  "categories": [
+    "Formatters",
+    "Other"
+  ],
+  "icon": "img/icon.png",
+  "galleryBanner": {
+    "color": "#e61a4a",
+    "theme": "dark"
+  },
+  "badges": [
+    {
+      "url": "https://img.shields.io/visual-studio-marketplace/v/playful-sparkle.ps-dev-toolbox?style=flat-square",
+      "href": "https://marketplace.visualstudio.com/items?itemName=playful-sparkle.ps-dev-toolbox",
+      "description": "The latest version of this extension"
+    },
+    {
+      "url": "https://img.shields.io/visual-studio-marketplace/i/playful-sparkle.ps-dev-toolbox?style=flat-square",
+      "href": "https://marketplace.visualstudio.com/items?itemName=playful-sparkle.ps-dev-toolbox",
+      "description": "Number of installs for this extension"
+    },
+    {
+      "url": "https://img.shields.io/visual-studio-marketplace/stars/playful-sparkle.ps-dev-toolbox?style=flat-square",
+      "href": "https://marketplace.visualstudio.com/items?itemName=playful-sparkle.ps-dev-toolbox",
+      "description": "Number of stars for this extension"
+    }
+  ],
+  "pricing": "Free",
+  "engines": {
+    "vscode": "^1.98.0"
+  },
+  "main": "./dist/extension.js",
+  "license": "BSD-3-Clause",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/playfulsparkle/vscode_ps_dev_toolbox.git"
+  },
+  "bugs": {
+    "url": "https://github.com/playfulsparkle/vscode_ps_dev_toolbox/issues"
+  },
+  "homepage": "https://github.com/playfulsparkle/vscode_ps_dev_toolbox#readme",
+  "extensionKind": [
+    "ui",
+    "workspace"
+  ],
+  "keywords": [
+    "ascii",
+    "diacritics",
+    "accent",
+    "letter",
+    "alphabet",
+    "remove",
+    "replace",
+    "playfulsparkle",
+    "vscode",
+    "extension"
+  ],
+  "l10n": "./l10n",
+  "contributes": {
+    "commands": [
+      {
+        "command": "ps-dev-toolbox.slugify",
+        "title": "%extension.command.slugify.title%",
+				"category": "Playful Sparkle",
+        "enablement": "editorHasSelection || editorHasMultipleSelections"
+      },
+      {
+        "command": "ps-dev-toolbox.makeLowercase",
+        "title": "%extension.command.makeLowercase.title%",
+				"category": "Playful Sparkle",
+        "enablement": "editorHasSelection || editorHasMultipleSelections"
+      },
+      {
+        "command": "ps-dev-toolbox.makeUppercase",
+        "title": "%extension.command.makeUppercase.title%",
+				"category": "Playful Sparkle",
+        "enablement": "editorHasSelection || editorHasMultipleSelections"
+      },
+      {
+        "command": "ps-dev-toolbox.base64Encode",
+        "title": "%extension.command.base64Encode.title%",
+				"category": "Playful Sparkle",
+        "enablement": "editorHasSelection || editorHasMultipleSelections"
+      },
+      {
+        "command": "ps-dev-toolbox.base64Decode",
+        "title": "%extension.command.base64Decode.title%",
+				"category": "Playful Sparkle",
+        "enablement": "editorHasSelection || editorHasMultipleSelections"
+      },
+      {
+        "command": "ps-dev-toolbox.urlEncode",
+        "title": "%extension.command.urlEncode.title%",
+				"category": "Playful Sparkle",
+        "enablement": "editorHasSelection || editorHasMultipleSelections"
+      },
+      {
+        "command": "ps-dev-toolbox.urlDecode",
+        "title": "%extension.command.urlDecode.title%",
+				"category": "Playful Sparkle",
+        "enablement": "editorHasSelection || editorHasMultipleSelections"
+      },
+      {
+        "command": "ps-dev-toolbox.generateGuid",
+        "title": "%extension.command.generateGuid.title%",
+				"category": "Playful Sparkle"
+      }
+    ],
+    "configuration": {},
+    "keybindings": []
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "npm run check-types && npm run lint && node esbuild.js",
+    "watch": "npm-run-all -p watch:*",
+    "watch:esbuild": "node esbuild.js --watch",
+    "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+    "package": "npm run check-types && npm run lint && node esbuild.js --production",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "check-types": "tsc --noEmit",
+    "lint": "eslint src",
+    "lint:fix": "eslint --fix src"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "20.x",
+    "@types/vscode": "^1.98.0",
+    "@typescript-eslint/eslint-plugin": "^8.28.0",
+    "@typescript-eslint/parser": "^8.28.0",
+    "@vscode/l10n-dev": "^0.0.35",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.4.1",
+    "esbuild": "^0.25.1",
+    "eslint": "^9.23.0",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.8.2",
+    "typescript-eslint": "^8.28.0"
+  },
+  "dependencies": {
+    "@vscode/l10n": "^0.0.18"
+  }
+}

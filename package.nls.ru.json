@@ -1,0 +1,10 @@
+{
+    "extension.command.slugify.title": "Генерировать URL-слаг",
+    "extension.command.makeLowercase.title": "Преобразовать в нижний регистр",
+    "extension.command.makeUppercase.title": "Преобразовать в верхний регистр",
+    "extension.command.base64Encode.title": "Кодировать в Base64",
+    "extension.command.base64Decode.title": "Декодировать из Base64",
+    "extension.command.urlEncode.title": "Кодировать URL",
+    "extension.command.urlDecode.title": "Декодировать URL",
+    "extension.command.generateGuid.title": "Генерировать UUID/GUID"
+}

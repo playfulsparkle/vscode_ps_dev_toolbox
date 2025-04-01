@@ -1,0 +1,10 @@
+{
+    "extension.command.slugify.title": "產生 URL 別名",
+    "extension.command.makeLowercase.title": "轉換為小寫",
+    "extension.command.makeUppercase.title": "轉換為大寫",
+    "extension.command.base64Encode.title": "Base64 編碼",
+    "extension.command.base64Decode.title": "Base64 解碼",
+    "extension.command.urlEncode.title": "URL 編碼",
+    "extension.command.urlDecode.title": "URL 解碼",
+    "extension.command.generateGuid.title": "產生 UUID/GUID"
+}

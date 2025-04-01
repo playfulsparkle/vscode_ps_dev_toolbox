@@ -1,0 +1,10 @@
+{
+  "extension.command.slugify.title": "Generar slug de URL",
+  "extension.command.makeLowercase.title": "Convertir a minúsculas",
+  "extension.command.makeUppercase.title": "Convertir a mayúsculas",
+  "extension.command.base64Encode.title": "Codificar a Base64",
+  "extension.command.base64Decode.title": "Decodificar desde Base64",
+  "extension.command.urlEncode.title": "Codificar URL",
+  "extension.command.urlDecode.title": "Decodificar URL",
+  "extension.command.generateGuid.title": "Generar UUID/GUID"
+}

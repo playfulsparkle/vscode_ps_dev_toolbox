@@ -1,0 +1,10 @@
+{
+  "extension.command.slugify.title": "Vytvořit URL slug",
+  "extension.command.makeLowercase.title": "Převést na malá písmena",
+  "extension.command.makeUppercase.title": "Převést na velká písmena",
+  "extension.command.base64Encode.title": "Zakódovat do Base64",
+  "extension.command.base64Decode.title": "Dekódovat z Base64",
+  "extension.command.urlEncode.title": "Zakódovat URL",
+  "extension.command.urlDecode.title": "Dekódovat URL",
+  "extension.command.generateGuid.title": "Generovat UUID/GUID"
+}

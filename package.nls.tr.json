@@ -1,0 +1,10 @@
+{
+    "extension.command.slugify.title": "URL Slug'ı Oluştur",
+    "extension.command.makeLowercase.title": "Küçük Harfe Dönüştür",
+    "extension.command.makeUppercase.title": "Büyük Harfe Dönüştür",
+    "extension.command.base64Encode.title": "Base64 Kodla",
+    "extension.command.base64Decode.title": "Base64 Kod Çöz",
+    "extension.command.urlEncode.title": "URL Kodla",
+    "extension.command.urlDecode.title": "URL Kod Çöz",
+    "extension.command.generateGuid.title": "UUID/GUID Oluştur"
+}

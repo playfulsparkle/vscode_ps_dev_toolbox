@@ -1,0 +1,10 @@
+{
+  "extension.command.slugify.title": "URL slug generálása",
+  "extension.command.makeLowercase.title": "Kisbetűssé alakítás",
+  "extension.command.makeUppercase.title": "Nagybetűssé alakítás",
+  "extension.command.base64Encode.title": "Base64 kódolás",
+  "extension.command.base64Decode.title": "Base64 dekódolás",
+  "extension.command.urlEncode.title": "URL kódolás",
+  "extension.command.urlDecode.title": "URL dekódolás",
+  "extension.command.generateGuid.title": "UUID/GUID generálása"
+}
