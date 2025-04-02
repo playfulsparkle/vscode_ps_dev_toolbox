@@ -1,8 +1,10 @@
 {
-    "extension.config.title": "Playful Sparkle: Caixa de Ferramentas para Desenvolvedores",
+    "extension.config.title": "Caixa de Ferramentas para Desenvolvedores",
     "extension.config.slugify.desc": "Caractere usado como separador em texto slugificado.",
     "extension.config.slugify.dash.desc": "Use um hífen (-) como separador",
     "extension.config.slugify.underscore.desc": "Use um sublinhado (_) como separador",
+    "extension.config.removeEmptyLines.removeConsecutive.desc": "Descrição da configuração para remover linhas vazias consecutivas.",
+    "extension.config.removeEmptyLines.considerWhitespaceEmpty.desc": "Descrição da configuração para considerar como vazias as linhas que contêm apenas espaços em branco.",
     "extension.command.slugify.title": "Gerar Slug de URL",
     "extension.command.makeLowercase.title": "Converter para Minúsculas",
     "extension.command.makeUppercase.title": "Converter para Maiúsculas",
@@ -10,5 +12,8 @@
     "extension.command.base64Decode.title": "Decodificar de Base64",
     "extension.command.urlEncode.title": "Codificar URL",
     "extension.command.urlDecode.title": "Decodificar URL",
-    "extension.command.generateGuid.title": "Gerar UUID/GUID"
+    "extension.command.generateGuid.title": "Gerar UUID/GUID",
+    "extension.command.removeEmptyLines.title": "Remover linhas vazias",
+    "extension.command.removeNonPrintableChars.title": "Remover caracteres não imprimíveis",
+    "extension.command.removeLeadingTrailingWhitespace.title": "Remover espaços à esquerda e à direita"
 }

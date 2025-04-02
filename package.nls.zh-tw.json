@@ -1,8 +1,10 @@
 {
-    "extension.config.title": "Playful Sparkle: 開發人員工具箱",
+    "extension.config.title": "開發人員工具箱",
     "extension.config.slugify.desc": "用作 slug 化文字分隔符號的字元。",
     "extension.config.slugify.dash.desc": "使用連字號 (-) 作為分隔符號。",
     "extension.config.slugify.underscore.desc": "使用底線 (_) 作為分隔符號。",
+    "extension.config.removeEmptyLines.removeConsecutive.desc": "移除連續空白行的配置說明。",
+    "extension.config.removeEmptyLines.considerWhitespaceEmpty.desc": "將僅包含空格的行視為空白行的配置說明。",
     "extension.command.slugify.title": "產生 URL 別名",
     "extension.command.makeLowercase.title": "轉換為小寫",
     "extension.command.makeUppercase.title": "轉換為大寫",
@@ -10,5 +12,8 @@
     "extension.command.base64Decode.title": "Base64 解碼",
     "extension.command.urlEncode.title": "URL 編碼",
     "extension.command.urlDecode.title": "URL 解碼",
-    "extension.command.generateGuid.title": "產生 UUID/GUID"
+    "extension.command.generateGuid.title": "產生 UUID/GUID",
+    "extension.command.removeEmptyLines.title": "移除空白行",
+    "extension.command.removeNonPrintableChars.title": "移除不可列印字元",
+    "extension.command.removeLeadingTrailingWhitespace.title": "移除開頭和結尾的空格"
 }

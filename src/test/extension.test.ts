@@ -1,7 +1,7 @@
 import * as assert from "assert";
 import * as utils from "../utils";
 
-suite("Playful Sparkle: Utility Functions", () => {
+suite("Dev Toolbox Tests", () => {
 	suite("String Utilities", () => {
 		test("safeToLowerCase prototype method", () => {
 			assert.strictEqual("TEST".safeToLowerCase(), "test");
@@ -99,6 +99,93 @@ suite("Playful Sparkle: Utility Functions", () => {
 				utils.slugify("Ñörmälîzätïon"),
 				"normalization"
 			);
+		});
+	});
+
+	suite("Remove Empty Lines", () => {
+		test("removes all empty lines by default", () => {
+			const input = "Line 1\n\nLine 2\n\n\nLine 3";
+			const expected = "Line 1\nLine 2\nLine 3";
+			assert.strictEqual(utils.removeEmptyLines(input), expected);
+		});
+
+		test("removes consecutive empty lines when configured", () => {
+			const input = "Line 1\n\n\nLine 2\n\nLine 3";
+			const expected = "Line 1\nLine 2\nLine 3";
+			const options = { removeConsecutive: true, considerWhitespaceEmpty: false };
+			assert.strictEqual(utils.removeEmptyLines(input, options), expected);
+		});
+
+		test("preserves single empty lines when configured", () => {
+			const input = "Line 1\n\nLine 2\n\nLine 3";
+			const expected = "Line 1\n\nLine 2\n\nLine 3";
+			const options = { removeConsecutive: false, considerWhitespaceEmpty: false };
+			assert.strictEqual(utils.removeEmptyLines(input, options), expected);
+		});
+
+		test("considers whitespace-only lines as empty", () => {
+			const input = "Line 1\n   \nLine 2\n\t\nLine 3";
+			const expected = "Line 1\nLine 2\nLine 3";
+			assert.strictEqual(utils.removeEmptyLines(input), expected);
+		});
+
+		test("does not consider whitespace-only lines as empty when configured", () => {
+			const input = "Line 1\n   \nLine 2\n\t\nLine 3";
+			const expected = "Line 1\n   \nLine 2\n\t\nLine 3";
+			const options = { removeConsecutive: false, considerWhitespaceEmpty: false };
+			assert.strictEqual(utils.removeEmptyLines(input, options), expected);
+		});
+	});
+
+	suite("Remove Non-Printable Characters", () => {
+		test("removes non-printable characters", () => {
+			const input = "Hello\u0000 World\u200B!";
+			const expected = "Hello World!";
+			assert.strictEqual(utils.removeNonPrintableCharacters(input), expected);
+		});
+
+		test("preserves printable characters", () => {
+			const input = "Hello World!";
+			const expected = "Hello World!";
+			assert.strictEqual(utils.removeNonPrintableCharacters(input), expected);
+		});
+
+		test("preserves whitespace characters", () => {
+			const input = "Hello\tWorld\nNew Line\rCarriage Return";
+			const expected = "Hello\tWorld\nNew Line\rCarriage Return";
+			assert.strictEqual(utils.removeNonPrintableCharacters(input), expected);
+		});
+
+		test("handles empty input", () => {
+			const input = "";
+			const expected = "";
+			assert.strictEqual(utils.removeNonPrintableCharacters(input), expected);
+		});
+	});
+
+	suite("Remove Leading Trailing Whitespace", () => {
+		test("removes leading and trailing whitespace from each line", () => {
+			const input = "  Line 1  \n\tLine 2\t\n  Line 3  ";
+			const expected = "Line 1\nLine 2\nLine 3";
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input), expected);
+		});
+
+		test("preserves lines with no leading or trailing whitespace", () => {
+			const input = "Line 1\nLine 2\nLine 3";
+			const expected = "Line 1\nLine 2\nLine 3";
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input), expected);
+		});
+
+		test("handles empty input", () => {
+			const input = "";
+			const expected = "";
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input), expected);
+		});
+
+		test("handles lines with only whitespace", () => {
+			const input = "  \n\t\n  ";
+			const expected = "\n\n";
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input), expected);
 		});
 	});
 });

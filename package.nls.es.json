@@ -1,8 +1,10 @@
 {
-  "extension.config.title": "Playful Sparkle: Caja de herramientas para desarrolladores",
+  "extension.config.title": "Caja de herramientas para desarrolladores",
   "extension.config.slugify.desc": "Carácter utilizado como separador en texto slugificado.",
   "extension.config.slugify.dash.desc": "Utilice un guion (-) como separador",
   "extension.config.slugify.underscore.desc": "Utilice un subrayado (_) como separador",
+  "extension.config.removeEmptyLines.removeConsecutive.desc": "Descripción de la configuración para eliminar líneas vacías consecutivas.",
+  "extension.config.removeEmptyLines.considerWhitespaceEmpty.desc": "Descripción de la configuración para considerar como vacías las líneas que solo contienen espacios en blanco.",
   "extension.command.slugify.title": "Generar slug de URL",
   "extension.command.makeLowercase.title": "Convertir a minúsculas",
   "extension.command.makeUppercase.title": "Convertir a mayúsculas",
@@ -10,5 +12,8 @@
   "extension.command.base64Decode.title": "Decodificar desde Base64",
   "extension.command.urlEncode.title": "Codificar URL",
   "extension.command.urlDecode.title": "Decodificar URL",
-  "extension.command.generateGuid.title": "Generar UUID/GUID"
+  "extension.command.generateGuid.title": "Generar UUID/GUID",
+  "extension.command.removeEmptyLines.title": "Eliminar líneas vacías",
+  "extension.command.removeNonPrintableChars.title": "Eliminar caracteres no imprimibles",
+  "extension.command.removeLeadingTrailingWhitespace.title": "Eliminar espacios iniciales y finales"
 }

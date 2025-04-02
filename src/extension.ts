@@ -42,7 +42,7 @@ export function activate(context: vscode.ExtensionContext) {
 	};
 
 	// Create a factory function for text transformation commands
-	const createTextTransformCommandPrompt = (transformFn: (text: string, localesInput: string[]) => string) => {
+	const createTextTransformPromptCommand = (transformFn: (text: string, localesInput: string[]) => string) => {
 		return async () => {
 			const editor = vscode.window.activeTextEditor;
 
@@ -85,14 +85,68 @@ export function activate(context: vscode.ExtensionContext) {
 		};
 	};
 
-	// Command handler for removing empty lines in the editor
-	const removeEmptyLinesCommand = async () => {
+	/**
+	 * Processes text in the editor with a transformation function
+	 * @param editor The active text editor
+	 * @param transformFn The function to transform the text
+	 * @param expandToFullLines Whether to expand selections to full lines
+	 * @param options Optional parameters to pass to the transform function
+	 */
+	const processTextInEditor = async (
+		transformFn: (text: string, options?: any) => string,
+		expandToFullLines: boolean = false,
+		options?: any
+	) => {
 		const editor = vscode.window.activeTextEditor;
 
 		if (!editor) {
 			return;
 		}
 
+		const document = editor.document;
+		const selections = editor.selections;
+
+		// If there are no manual selections or only empty selections, process the entire document
+		if (!selections.length || selections.every(s => s.isEmpty)) {
+			const entireDocumentRange = new vscode.Range(
+				0, 0,
+				document.lineCount - 1, document.lineAt(document.lineCount - 1).text.length
+			);
+			const text = document.getText(entireDocumentRange);
+			const processedText = transformFn(text, options);
+
+			await editor.edit(editBuilder => {
+				editBuilder.replace(entireDocumentRange, processedText);
+			});
+			return;
+		}
+
+		// Process each selection
+		await editor.edit(editBuilder => {
+			for (const selection of selections) {
+				if (selection.isEmpty) {
+					continue;
+				}
+
+				let rangeToProcess = selection;
+
+				// Expand selection to full lines if requested
+				if (expandToFullLines) {
+					const startLine = document.lineAt(selection.start.line);
+					const endLine = document.lineAt(selection.end.line);
+					rangeToProcess = new vscode.Selection(startLine.range.start, endLine.range.end);
+				}
+
+				const selectedText = document.getText(rangeToProcess);
+				const processedText = transformFn(selectedText, options);
+
+				editBuilder.replace(rangeToProcess, processedText);
+			}
+		});
+	};
+
+	// Command handler for removing empty lines in the editor
+	const removeEmptyLinesCommand = async () => {
 		// Get configuration from settings
 		const config = vscode.workspace.getConfiguration("ps-dev-toolbox.removeEmptyLines");
 		const removeConsecutive = config.get<boolean>("removeConsecutive", true);
@@ -100,133 +154,25 @@ export function activate(context: vscode.ExtensionContext) {
 
 		const options = { removeConsecutive, considerWhitespaceEmpty };
 
-		const document = editor.document;
-		const selections = editor.selections;
-
-		// If there are no manual selections or only empty selections, process the entire document
-		if (selections.length === 1 && selections[0].isEmpty) {
-			const entireDocumentRange = new vscode.Range(
-				0, 0,
-				document.lineCount - 1, document.lineAt(document.lineCount - 1).text.length
-			);
-			const text = document.getText(entireDocumentRange);
-
-			const processedText = utils.removeEmptyLines(text, options);
-
-			await editor.edit(editBuilder => editBuilder.replace(entireDocumentRange, processedText));
-
-			return;
-		}
-
-		// Process each selection
-		await editor.edit(editBuilder => {
-			for (const selection of selections) {
-				if (selection.isEmpty) {
-					continue;
-				}
-
-				// Expand selection to full lines
-				const startLine = document.lineAt(selection.start.line);
-				const endLine = document.lineAt(selection.end.line);
-
-				const expandedRange = new vscode.Range(startLine.range.start, endLine.range.end);
-
-				const selectedText = document.getText(expandedRange);
-
-				const processedText = utils.removeEmptyLines(selectedText, options);
-
-				editBuilder.replace(expandedRange, processedText);
-			}
-		});
+		await processTextInEditor(
+			utils.removeEmptyLines,
+			true, // Expand to full lines
+			options
+		);
 	};
 
 	const removeLeadingTrailingWhitespaceCommand = async () => {
-		const editor = vscode.window.activeTextEditor;
-
-		if (!editor) {
-			return;
-		}
-
-		const document = editor.document;
-		const selections = editor.selections;
-
-		// If there are no manual selections or only empty selections, process the entire document
-		if (selections.length === 1 && selections[0].isEmpty) {
-			const entireDocumentRange = new vscode.Range(
-				0, 0,
-				document.lineCount - 1, document.lineAt(document.lineCount - 1).text.length
-			);
-			const text = document.getText(entireDocumentRange);
-			const processedText = utils.removeLeadingTrailingWhitespace(text);
-
-			await editor.edit(editBuilder => {
-				editBuilder.replace(entireDocumentRange, processedText);
-			});
-			
-			return;
-		}
-
-		// Process each selection
-		await editor.edit(editBuilder => {
-			for (const selection of selections) {
-				if (selection.isEmpty) {
-					continue;
-				}
-
-				// Expand selection to full lines
-				const startLine = document.lineAt(selection.start.line);
-				const endLine = document.lineAt(selection.end.line);
-				const expandedRange = new vscode.Range(
-					startLine.range.start,
-					endLine.range.end
-				);
-
-				const selectedText = document.getText(expandedRange);
-				const processedText = utils.removeLeadingTrailingWhitespace(selectedText);
-
-				editBuilder.replace(expandedRange, processedText);
-			}
-		});
+		await processTextInEditor(
+			utils.removeLeadingTrailingWhitespace,
+			true // Expand to full lines
+		);
 	};
 
 	const removeNonPrintableCharactersCommand = async () => {
-		const editor = vscode.window.activeTextEditor;
-
-		if (!editor) {
-			return;
-		}
-
-		const document = editor.document;
-		const selections = editor.selections;
-
-		// If there are no manual selections or only empty selections, process the entire document
-		if (selections.length === 1 && selections[0].isEmpty) {
-			const entireDocumentRange = new vscode.Range(
-				0, 0,
-				document.lineCount - 1, document.lineAt(document.lineCount - 1).text.length
-			);
-			const text = document.getText(entireDocumentRange);
-			const processedText = utils.removeNonPrintableCharacters(text);
-
-			await editor.edit(editBuilder => {
-				editBuilder.replace(entireDocumentRange, processedText);
-			});
-			return;
-		}
-
-		// Process each selection
-		await editor.edit(editBuilder => {
-			for (const selection of selections) {
-				if (selection.isEmpty) {
-					continue;
-				}
-
-				const selectedText = document.getText(selection);
-				const processedText = utils.removeNonPrintableCharacters(selectedText);
-
-				editBuilder.replace(selection, processedText);
-			}
-		});
+		await processTextInEditor(
+			utils.removeNonPrintableCharacters,
+			false // Don't expand to full lines (process exact selection)
+		);
 	};
 
 	const commandHandlers = {
@@ -236,8 +182,8 @@ export function activate(context: vscode.ExtensionContext) {
 
 			return utils.slugify(text, separator);
 		}),
-		[CommandId.MakeLowercase]: createTextTransformCommandPrompt(utils.safeToLowerCase),
-		[CommandId.MakeUppercase]: createTextTransformCommandPrompt(utils.safeToUppercase),
+		[CommandId.MakeLowercase]: createTextTransformPromptCommand(utils.safeToLowerCase),
+		[CommandId.MakeUppercase]: createTextTransformPromptCommand(utils.safeToUppercase),
 		[CommandId.Base64Encode]: createTextTransformCommand(utils.base64Encode),
 		[CommandId.Base64Decode]: createTextTransformCommand(text => {
 			if (!utils.isValidBase64(text)) {

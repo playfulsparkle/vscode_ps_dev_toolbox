@@ -2,6 +2,20 @@
 
 All notable changes to the "Playful Sparkle: Dev Toolbox" extension will be documented in this file.
 
+## [0.0.2] - 2025-04-02
+
+* **Remove Empty Lines:**
+    * Removes empty lines from the selected text.
+    * Supports options to:
+        * Remove all empty lines or only consecutive ones.
+        * Consider lines with only whitespace as empty.
+        
+* **Remove Non-Printable Characters:**
+    * Removes non-printable characters from the selected text.
+
+* **Remove Leading and Trailing Whitespace:**
+    * Removes whitespace (spaces, tabs, newlines) from the beginning and end of the selected text.
+
 ## [0.0.1] - 2025-03-31
 
 * **Locale-Aware Case Conversion:**

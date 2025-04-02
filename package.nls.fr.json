@@ -3,6 +3,8 @@
   "extension.config.slugify.desc": "Caractère utilisé comme séparateur dans le texte slugifié.",
   "extension.config.slugify.dash.desc": "Utilisez un tiret (-) comme séparateur",
   "extension.config.slugify.underscore.desc": "Utilisez un tiret bas (_) comme séparateur",
+  "extension.config.removeEmptyLines.removeConsecutive.desc": "Description de la configuration pour supprimer les lignes vides consécutives.",
+  "extension.config.removeEmptyLines.considerWhitespaceEmpty.desc": "Description de la configuration pour considérer les lignes contenant uniquement des espaces blancs comme vides.",
   "extension.command.slugify.title": "Générer un slug d'URL",
   "extension.command.makeLowercase.title": "Convertir en minuscules",
   "extension.command.makeUppercase.title": "Convertir en majuscules",
@@ -10,5 +12,8 @@
   "extension.command.base64Decode.title": "Décoder depuis Base64",
   "extension.command.urlEncode.title": "Encoder l'URL",
   "extension.command.urlDecode.title": "Décoder l'URL",
-  "extension.command.generateGuid.title": "Générer un UUID/GUID"
+  "extension.command.generateGuid.title": "Générer un UUID/GUID",
+  "extension.command.removeEmptyLines.title": "Supprimer les lignes vides",
+  "extension.command.removeNonPrintableChars.title": "Supprimer les caractères non imprimables",
+  "extension.command.removeLeadingTrailingWhitespace.title": "Supprimer les espaces de début et de fin"
 }

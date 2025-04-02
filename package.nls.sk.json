@@ -1,8 +1,10 @@
 {
-  "extension.config.title": "Playful Sparkle: Sada nástrojov pre vývojárov",
+  "extension.config.title": "Sada nástrojov pre vývojárov",
   "extension.config.slugify.desc": "Znak použitý ako oddeľovač v slugifikovanom texte.",
   "extension.config.slugify.dash.desc": "Použite spojovník (-) ako oddeľovač",
   "extension.config.slugify.underscore.desc": "Použite podčiarkovník (_) ako oddeľovač",
+  "extension.config.removeEmptyLines.removeConsecutive.desc": "Popis nastavenia pre odstránenie po sebe idúcich prázdnych riadkov.",
+  "extension.config.removeEmptyLines.considerWhitespaceEmpty.desc": "Popis nastavenia pre považovanie riadkov obsahujúcich iba znaky medzery za prázdne.",
   "extension.command.slugify.title": "Generovať URL slug",
   "extension.command.makeLowercase.title": "Prekonvertovať na malé písmená",
   "extension.command.makeUppercase.title": "Prekonvertovať na veľké písmená",
@@ -10,5 +12,8 @@
   "extension.command.base64Decode.title": "Dekódovať z Base64",
   "extension.command.urlEncode.title": "Zakódovať URL",
   "extension.command.urlDecode.title": "Dekódovať URL",
-  "extension.command.generateGuid.title": "Generovať UUID/GUID"
+  "extension.command.generateGuid.title": "Generovať UUID/GUID",
+  "extension.command.removeEmptyLines.title": "Odstrániť prázdne riadky",
+  "extension.command.removeNonPrintableChars.title": "Odstrániť netlačiteľné znaky",
+  "extension.command.removeLeadingTrailingWhitespace.title": "Odstrániť úvodné a koncové znaky medzery"
 }

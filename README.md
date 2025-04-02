@@ -17,7 +17,13 @@ Seamlessly integrate these powerful features into your coding environment, simpl
 * **Base64 Encoding/Decoding:** Implements `base64Encode` and `base64Decode` functions for seamless Base64 encoding and decoding of strings.
 * **URL Encoding/Decoding:** Provides `urlEncode` and `urlDecode` functions for encoding and decoding strings for use in URLs.
 * **GUID Generation:** Generates Globally Unique Identifiers (GUIDs) in the standard `xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx` format.
-
+* **Remove Empty Lines:** Provides functionality to remove empty lines from text with the following options:
+    * When true, removes all empty lines.
+    * When false, only removes consecutive empty lines, keeping single empty lines intact.
+    * Considers lines with only whitespace (spaces, tabs) as empty when true.
+    * Only removes completely empty lines when false.
+* **Remove Non-Printable Characters:** Removes characters that are not typically intended for printing or display.
+* **Remove Leading and Trailing Whitespace:** Trims whitespace (spaces, tabs, newlines) from the beginning and end of strings.
 * **Multi-Language Support**: The extension's user interface and informational messages are available in English (en), Magyar (hu), Slovenčina (sk), Čeština (cs), Deutsch (de), Français (fr), Polski (pl), Български (bg), Español (es), Italiano (it), 日本語 (ja), 한국어 (ko), Português do Brasil (pt-br), Русский (ru), Türkçe (tr), 简体中文 (zh-cn), 繁體中文 (zh-tw) languages.
 
 ---
@@ -52,6 +58,20 @@ If you encounter any of these or other issues, please report them on the [GitHub
 ---
 
 ## Release Notes
+
+### 0.0.2
+
+* **Remove Empty Lines:**
+    * Removes empty lines from the selected text.
+    * Supports options to:
+        * Remove all empty lines or only consecutive ones.
+        * Consider lines with only whitespace as empty.
+        
+* **Remove Non-Printable Characters:**
+    * Removes non-printable characters from the selected text.
+
+* **Remove Leading and Trailing Whitespace:**
+    * Removes whitespace (spaces, tabs, newlines) from the beginning and end of the selected text.
 
 ### 0.0.1
 

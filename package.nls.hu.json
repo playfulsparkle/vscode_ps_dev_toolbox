@@ -1,8 +1,10 @@
 {
-  "extension.config.title": "Playful Sparkle: Fejlesztői Eszközkészlet",
+  "extension.config.title": "Fejlesztői Eszköztár",
   "extension.config.slugify.desc": "A slugosított szövegben elválasztóként használt karakter.",
   "extension.config.slugify.dash.desc": "Használjon kötőjelet (-) elválasztóként",
   "extension.config.slugify.underscore.desc": "Használjon aláhúzást (_) elválasztóként",
+  "extension.config.removeEmptyLines.removeConsecutive.desc": "Azonos egymás utáni üres sorok eltávolításának beállítási leírása.",
+  "extension.config.removeEmptyLines.considerWhitespaceEmpty.desc": "A csak szóközöket tartalmazó sorok üresként való kezelésének beállítási leírása.",
   "extension.command.slugify.title": "URL slug generálása",
   "extension.command.makeLowercase.title": "Kisbetűssé alakítás",
   "extension.command.makeUppercase.title": "Nagybetűssé alakítás",
@@ -10,5 +12,8 @@
   "extension.command.base64Decode.title": "Base64 dekódolás",
   "extension.command.urlEncode.title": "URL kódolás",
   "extension.command.urlDecode.title": "URL dekódolás",
-  "extension.command.generateGuid.title": "UUID/GUID generálása"
+  "extension.command.generateGuid.title": "UUID/GUID generálása",
+  "extension.command.removeEmptyLines.title": "Üres sorok eltávolítása",
+  "extension.command.removeNonPrintableChars.title": "Nem nyomtatható karakterek eltávolítása",
+  "extension.command.removeLeadingTrailingWhitespace.title": "Kezdő és záró szóközök eltávolítása"
 }

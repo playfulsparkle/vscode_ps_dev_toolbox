@@ -1,8 +1,10 @@
 {
-    "extension.config.title": "Playful Sparkle: 개발 도구 상자",
+    "extension.config.title": "개발 도구 상자",
     "extension.config.slugify.desc": "슬러그화된 텍스트의 구분 기호로 사용되는 문자입니다.",
     "extension.config.slugify.dash.desc": "하이픈(-)을 구분 기호로 사용하세요.",
     "extension.config.slugify.underscore.desc": "밑줄(_)을 구분 기호로 사용하세요.",
+    "extension.config.removeEmptyLines.removeConsecutive.desc": "연속된 빈 줄을 제거하는 설정에 대한 설명입니다.",
+    "extension.config.removeEmptyLines.considerWhitespaceEmpty.desc": "공백 문자만 포함하는 줄을 빈 줄로 간주하는 설정에 대한 설명입니다.",
     "extension.command.slugify.title": "URL 슬러그 생성",
     "extension.command.makeLowercase.title": "소문자로 변환",
     "extension.command.makeUppercase.title": "대문자로 변환",
@@ -10,5 +12,8 @@
     "extension.command.base64Decode.title": "Base64 디코딩",
     "extension.command.urlEncode.title": "URL 인코딩",
     "extension.command.urlDecode.title": "URL 디코딩",
-    "extension.command.generateGuid.title": "UUID/GUID 생성"
+    "extension.command.generateGuid.title": "UUID/GUID 생성",
+    "extension.command.removeEmptyLines.title": "빈 줄 제거",
+    "extension.command.removeNonPrintableChars.title": "인쇄할 수 없는 문자 제거",
+    "extension.command.removeLeadingTrailingWhitespace.title": "앞뒤 스페이스 제거"
 }

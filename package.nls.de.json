@@ -1,8 +1,10 @@
 {
-  "extension.config.title": "Playful Sparkle: Entwickler-Werkzeugkasten",
+  "extension.config.title": "Entwickler-Werkzeugkasten",
   "extension.config.slugify.desc": "Zeichen, das als Trennzeichen in gesluggtem Text verwendet wird.",
   "extension.config.slugify.dash.desc": "Verwenden Sie einen Bindestrich (-) als Trennzeichen",
   "extension.config.slugify.underscore.desc": "Verwenden Sie einen Unterstrich (_) als Trennzeichen",
+  "extension.config.removeEmptyLines.removeConsecutive.desc": "Beschreibung der Einstellung zum Entfernen aufeinanderfolgender leerer Zeilen.",
+  "extension.config.removeEmptyLines.considerWhitespaceEmpty.desc": "Beschreibung der Einstellung, um Zeilen, die nur Leerzeichen enthalten, als leer zu betrachten.",
   "extension.command.slugify.title": "URL-Slug generieren",
   "extension.command.makeLowercase.title": "In Kleinbuchstaben umwandeln",
   "extension.command.makeUppercase.title": "In Großbuchstaben umwandeln",
@@ -10,5 +12,8 @@
   "extension.command.base64Decode.title": "Base64-Dekodierung",
   "extension.command.urlEncode.title": "URL-Kodierung",
   "extension.command.urlDecode.title": "URL-Dekodierung",
-  "extension.command.generateGuid.title": "UUID/GUID generieren"
+  "extension.command.generateGuid.title": "UUID/GUID generieren",
+  "extension.command.removeEmptyLines.title": "Leere Zeilen entfernen",
+  "extension.command.removeNonPrintableChars.title": "Nicht druckbare Zeichen entfernen",
+  "extension.command.removeLeadingTrailingWhitespace.title": "Führende und nachfolgende Leerzeichen entfernen"
 }

@@ -1,5 +1,5 @@
 {
-  "extension.config.title": "Playful Sparkle: Dev Toolbox",
+  "extension.config.title": "Dev Toolbox",
   "extension.config.slugify.desc": "Character used as the separator in slugified text.",
   "extension.config.slugify.dash.desc": "Use a hyphen (-) as the separator",
   "extension.config.slugify.underscore.desc": "Use an underscore (_) as the separator",
