@@ -1,7 +1,7 @@
 {
   "name": "ps-dev-toolbox",
   "displayName": "Dev Toolbox",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "publisher": "playful-sparkle",
   "description": "Handy productivity tools for developers in Visual Studio Code.",
   "author": {
