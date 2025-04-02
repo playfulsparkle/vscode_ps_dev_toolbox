@@ -48,6 +48,125 @@ export function safeToUppercase(text: string, locale?: string | string[]): strin
 }
 
 /**
+ * Removes empty lines from text with configurable options
+ * @param text The input text
+ * @param options Configuration options
+ * @returns The text with empty lines removed according to options
+ */
+export function removeEmptyLines(
+    text: string,
+    options: { removeConsecutive: boolean; considerWhitespaceEmpty: boolean; } = { removeConsecutive: true, considerWhitespaceEmpty: true }
+): string {
+    if (!text) {
+        return text;
+    }
+
+    const lines = text.split("\n");
+
+    const result: string[] = [];
+
+    let lastLineWasEmpty = false;
+
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+
+        const isEmpty = options.considerWhitespaceEmpty
+            ? line.trim().length === 0
+            : line.length === 0;
+
+        if (isEmpty) {
+            if (!options.removeConsecutive || !lastLineWasEmpty) {
+                // If we don't remove consecutive empty lines or the last line wasn't empty
+                if (!options.removeConsecutive) {
+                    result.push(line);
+                }
+            }
+
+            lastLineWasEmpty = true;
+        } else {
+            result.push(line);
+
+            lastLineWasEmpty = false;
+        }
+    }
+
+    return result.join("\n");
+}
+
+/**
+ * Removes non-printable characters from text
+ * @param text The input text
+ * @returns The text with non-printable characters removed
+ */
+export function removeNonPrintableCharacters(text: string): string {
+    if (!text) {
+        return text;
+    }
+
+    // Pre-build a lookup Set for fast character checking
+    const controlAndInvisibleChars = new Set([
+        // C0 controls (0-31)
+        ...Array.from({ length: 32 }, (_, i) => i),
+        // DEL and C1 controls (127-159)
+        ...Array.from({ length: 33 }, (_, i) => i + 127),
+        // Zero-width and special control characters
+        0x200B, 0x200C, 0x200D, 0x200E, 0x200F, 0x2028, 0x2029, 0xFEFF,
+        // Invisible whitespace characters
+        0x00A0, 0x1680, 0x180E, 0x2000, 0x2001, 0x2002, 0x2003, 0x2004,
+        0x2005, 0x2006, 0x2007, 0x2008, 0x2009, 0x200A, 0x202F, 0x205F, 0x3000
+    ]);
+
+    // Use a single pass with a string builder approach
+    let result = "";
+    const len = text.length;
+
+    for (let i = 0; i < len; i++) {
+        const char = text.charAt(i);
+        const charCode = text.charCodeAt(i);
+
+        // Fast track for common ASCII printable characters
+        if (charCode >= 32 && charCode <= 126) {
+            result += char;
+            continue;
+        }
+
+        // Handle whitespace that we want to keep
+        if (charCode === 9 || charCode === 10 || charCode === 13) {
+            result += char;
+            continue;
+        }
+
+        // Check Unicode characters against our lookup set
+        if (charCode >= 128 && !controlAndInvisibleChars.has(charCode)) {
+            result += char;
+        }
+
+        // All other characters are excluded (non-printable)
+    }
+
+    return result;
+}
+
+/**
+ * Removes leading and trailing whitespace from each line
+ * @param text The input text
+ * @returns The text with leading and trailing whitespace removed
+ */
+export function removeLeadingTrailingWhitespace(text: string): string {
+    if (!text) {
+        return text;
+    }
+
+    const lines = text.split("\n");
+
+    for (let i = 0; i < lines.length; i++) {
+        lines[i] = lines[i].trim();
+    }
+
+    return lines.join("\n");
+}
+
+/**
  * Converts a string into a slugified version, suitable for URLs or file names.
  * Removes diacritics, special characters, and spaces, replacing them with hyphens.
  * @param text - The string to slugify.

@@ -113,6 +113,21 @@
         "command": "ps-dev-toolbox.generateGuid",
         "title": "%extension.command.generateGuid.title%",
         "category": "Playful Sparkle"
+      },
+      {
+        "command": "ps-dev-toolbox.removeEmptyLines",
+        "title": "%extension.command.removeEmptyLines.title%",
+        "category": "Playful Sparkle"
+      },
+      {
+        "command": "ps-dev-toolbox.removeNonPrintableChars",
+        "title": "%extension.command.removeNonPrintableChars.title%",
+        "category": "Playful Sparkle"
+      },
+      {
+        "command": "ps-dev-toolbox.removeLeadingTrailingWhitespace",
+        "title": "%extension.command.removeLeadingTrailingWhitespace.title%",
+        "category": "Playful Sparkle"
       }
     ],
     "configuration": {
@@ -130,6 +145,16 @@
             "%extension.config.slugify.dash.desc%",
             "%extension.config.slugify.underscore.desc%"
           ]
+        },
+        "ps-dev-toolbox.removeEmptyLines.removeConsecutive": {
+          "type": "boolean",
+          "default": true,
+          "description": "%extension.config.removeEmptyLines.removeConsecutive.desc%"
+        },
+        "ps-dev-toolbox.removeEmptyLines.considerWhitespaceEmpty": {
+          "type": "boolean",
+          "default": true,
+          "description": "%extension.config.removeEmptyLines.considerWhitespaceEmpty.desc%"
         }
       }
     },
