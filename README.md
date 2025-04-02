@@ -59,6 +59,10 @@ If you encounter any of these or other issues, please report them on the [GitHub
 
 ## Release Notes
 
+### 0.0.3
+
+* Re-upload, package was not updated properly
+
 ### 0.0.2
 
 * **Remove Empty Lines:**
