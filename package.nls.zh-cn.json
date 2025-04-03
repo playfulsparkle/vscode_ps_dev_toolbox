@@ -3,7 +3,6 @@
     "extension.config.slugify.desc": "用作 slug 化文本分隔符的字符。",
     "extension.config.slugify.dash.desc": "使用连字符 (-) 作为分隔符。",
     "extension.config.slugify.underscore.desc": "使用下划线 (_) 作为分隔符。",
-    "extension.config.removeEmptyLines.removeConsecutive.desc": "删除连续空行的配置说明。",
     "extension.config.removeEmptyLines.considerWhitespaceEmpty.desc": "将仅包含空格的行视为空行的配置说明。",
     "extension.command.slugify.title": "生成 URL 别名",
     "extension.command.makeLowercase.title": "转换为小写",
@@ -13,7 +12,8 @@
     "extension.command.urlEncode.title": "URL 编码",
     "extension.command.urlDecode.title": "URL 解码",
     "extension.command.generateGuid.title": "生成 UUID/GUID",
-    "extension.command.removeEmptyLines.title": "删除空行",
+    "extension.command.removeEmptyLinesDocument.title": "从文档中删除空行",
+    "extension.command.removeEmptyLinesSelection.title": "从选定内容中删除空行",
     "extension.command.removeNonPrintableChars.title": "删除不可打印字符",
     "extension.command.removeLeadingTrailingWhitespace.title": "删除前导和尾随空格"
 }

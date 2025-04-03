@@ -102,41 +102,6 @@ suite("Dev Toolbox Tests", () => {
 		});
 	});
 
-	suite("Remove Empty Lines", () => {
-		test("removes all empty lines by default", () => {
-			const input = "Line 1\n\nLine 2\n\n\nLine 3";
-			const expected = "Line 1\nLine 2\nLine 3";
-			assert.strictEqual(utils.removeEmptyLines(input), expected);
-		});
-
-		test("removes consecutive empty lines when configured", () => {
-			const input = "Line 1\n\n\nLine 2\n\nLine 3";
-			const expected = "Line 1\nLine 2\nLine 3";
-			const options = { removeConsecutive: true, considerWhitespaceEmpty: false };
-			assert.strictEqual(utils.removeEmptyLines(input, options), expected);
-		});
-
-		test("preserves single empty lines when configured", () => {
-			const input = "Line 1\n\nLine 2\n\nLine 3";
-			const expected = "Line 1\n\nLine 2\n\nLine 3";
-			const options = { removeConsecutive: false, considerWhitespaceEmpty: false };
-			assert.strictEqual(utils.removeEmptyLines(input, options), expected);
-		});
-
-		test("considers whitespace-only lines as empty", () => {
-			const input = "Line 1\n   \nLine 2\n\t\nLine 3";
-			const expected = "Line 1\nLine 2\nLine 3";
-			assert.strictEqual(utils.removeEmptyLines(input), expected);
-		});
-
-		test("does not consider whitespace-only lines as empty when configured", () => {
-			const input = "Line 1\n   \nLine 2\n\t\nLine 3";
-			const expected = "Line 1\n   \nLine 2\n\t\nLine 3";
-			const options = { removeConsecutive: false, considerWhitespaceEmpty: false };
-			assert.strictEqual(utils.removeEmptyLines(input, options), expected);
-		});
-	});
-
 	suite("Remove Non-Printable Characters", () => {
 		test("removes non-printable characters", () => {
 			const input = "Hello\u0000 World\u200B!";

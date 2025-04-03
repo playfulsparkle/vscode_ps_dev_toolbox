@@ -3,7 +3,6 @@
   "extension.config.slugify.desc": "Znak použitý jako oddělovač ve slugifikovaném textu.",
   "extension.config.slugify.dash.desc": "Použijte pomlčku (-) jako oddělovač",
   "extension.config.slugify.underscore.desc": "Použijte podtržítko (_) jako oddělovač",
-  "extension.config.removeEmptyLines.removeConsecutive.desc": "Popis nastavení pro odstranění po sobě jdoucích prázdných řádků.",
   "extension.config.removeEmptyLines.considerWhitespaceEmpty.desc": "Popis nastavení pro považování řádků obsahujících pouze bílé znaky za prázdné.",
   "extension.command.slugify.title": "Vytvořit URL slug",
   "extension.command.makeLowercase.title": "Převést na malá písmena",
@@ -13,7 +12,8 @@
   "extension.command.urlEncode.title": "Zakódovat URL",
   "extension.command.urlDecode.title": "Dekódovat URL",
   "extension.command.generateGuid.title": "Generovat UUID/GUID",
-  "extension.command.removeEmptyLines.title": "Odstranit prázdné řádky",
+  "extension.command.removeEmptyLinesDocument.title": "Odebrat prázdné řádky z dokumentu",
+  "extension.command.removeEmptyLinesSelection.title": "Odebrat prázdné řádky z výběru",
   "extension.command.removeNonPrintableChars.title": "Odstranit netisknutelné znaky",
   "extension.command.removeLeadingTrailingWhitespace.title": "Odstranit úvodní a koncové znaky mezery"
 }

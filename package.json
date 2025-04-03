@@ -1,7 +1,7 @@
 {
   "name": "ps-dev-toolbox",
   "displayName": "Dev Toolbox",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "publisher": "playful-sparkle",
   "description": "Handy productivity tools for developers in Visual Studio Code.",
   "author": {
@@ -115,8 +115,13 @@
         "category": "Playful Sparkle"
       },
       {
-        "command": "ps-dev-toolbox.removeEmptyLines",
-        "title": "%extension.command.removeEmptyLines.title%",
+        "command": "ps-dev-toolbox.removeEmptyLinesDocument",
+        "title": "%extension.command.removeEmptyLinesDocument.title%",
+        "category": "Playful Sparkle"
+      },
+      {
+        "command": "ps-dev-toolbox.removeEmptyLinesSelection",
+        "title": "%extension.command.removeEmptyLinesSelection.title%",
         "category": "Playful Sparkle"
       },
       {
@@ -125,7 +130,7 @@
         "category": "Playful Sparkle"
       },
       {
-        "command": "ps-dev-toolbox.removeLeadingTrailingWhitespace",
+        "command": "ps-dev-toolbox.removeLeadingTrailingWhitespaceDocument",
         "title": "%extension.command.removeLeadingTrailingWhitespace.title%",
         "category": "Playful Sparkle"
       }
@@ -145,11 +150,6 @@
             "%extension.config.slugify.dash.desc%",
             "%extension.config.slugify.underscore.desc%"
           ]
-        },
-        "ps-dev-toolbox.removeEmptyLines.removeConsecutive": {
-          "type": "boolean",
-          "default": true,
-          "description": "%extension.config.removeEmptyLines.removeConsecutive.desc%"
         },
         "ps-dev-toolbox.removeEmptyLines.considerWhitespaceEmpty": {
           "type": "boolean",

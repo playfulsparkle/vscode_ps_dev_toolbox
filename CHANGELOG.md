@@ -2,6 +2,15 @@
 
 All notable changes to the "Playful Sparkle: Dev Toolbox" extension will be documented in this file.
 
+## [0.0.4] - 2025-04-03
+
+* **Added:**
+    * Remove Empty Lines from Document
+    * Remove Empty Lines from Selection
+
+* **Removed:**
+    * Remove all empty lines or only consecutive ones.
+
 ## [0.0.3] - 2025-04-02
 
 * Re-upload, package was not updated properly

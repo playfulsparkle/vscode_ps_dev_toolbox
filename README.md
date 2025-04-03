@@ -59,6 +59,15 @@ If you encounter any of these or other issues, please report them on the [GitHub
 
 ## Release Notes
 
+### 0.0.4
+
+* **Added:**
+    * Remove Empty Lines from Document
+    * Remove Empty Lines from Selection
+
+* **Removed:**
+    * Remove all empty lines or only consecutive ones.
+
 ### 0.0.3
 
 * Re-upload, package was not updated properly

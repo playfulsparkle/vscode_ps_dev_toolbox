@@ -3,7 +3,6 @@
   "extension.config.slugify.desc": "スラッグ化されたテキストの区切り文字として使用される文字。",
   "extension.config.slugify.dash.desc": "ハイフン（-）を区切り文字として使用してください。",
   "extension.config.slugify.underscore.desc": "アンダースコア（_）を区切り文字として使用してください。",
-  "extension.config.removeEmptyLines.removeConsecutive.desc": "連続する空行を削除する設定の説明。",
   "extension.config.removeEmptyLines.considerWhitespaceEmpty.desc": "空白文字のみを含む行を空行と見なす設定の説明。",
   "extension.command.slugify.title": "URLスラッグを生成",
   "extension.command.makeLowercase.title": "小文字に変換",
@@ -13,7 +12,8 @@
   "extension.command.urlEncode.title": "URLエンコード",
   "extension.command.urlDecode.title": "URLデコード",
   "extension.command.generateGuid.title": "UUID/GUIDを生成",
-  "extension.command.removeEmptyLines.title": "空行を削除",
+  "extension.command.removeEmptyLinesDocument.title": "ドキュメントから空行を削除",
+  "extension.command.removeEmptyLinesSelection.title": "選択範囲から空行を削除",
   "extension.command.removeNonPrintableChars.title": "印刷できない文字を削除",
   "extension.command.removeLeadingTrailingWhitespace.title": "行頭および行末のスペースを削除"
 }

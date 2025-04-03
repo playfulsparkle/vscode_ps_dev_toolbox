@@ -3,7 +3,6 @@
     "extension.config.slugify.desc": "Slug haline getirilmiş metinde ayırıcı olarak kullanılan karakter.",
     "extension.config.slugify.dash.desc": "Ayırıcı olarak tire (-) kullanın",
     "extension.config.slugify.underscore.desc": "Ayırıcı olarak alt çizgi (_) kullanın",
-    "extension.config.removeEmptyLines.removeConsecutive.desc": "Ardışık boş satırları kaldırma ayarının açıklaması.",
     "extension.config.removeEmptyLines.considerWhitespaceEmpty.desc": "Yalnızca boşluk karakteri içeren satırları boş olarak kabul etme ayarının açıklaması.",
     "extension.command.slugify.title": "URL Slug'ı Oluştur",
     "extension.command.makeLowercase.title": "Küçük Harfe Dönüştür",
@@ -13,7 +12,8 @@
     "extension.command.urlEncode.title": "URL Kodla",
     "extension.command.urlDecode.title": "URL Kod Çöz",
     "extension.command.generateGuid.title": "UUID/GUID Oluştur",
-    "extension.command.removeEmptyLines.title": "Boş Satırları Kaldır",
+    "extension.command.removeEmptyLinesDocument.title": "Belgedeki Boş Satırları Kaldır",
+    "extension.command.removeEmptyLinesSelection.title": "Seçimdeki Boş Satırları Kaldır",
     "extension.command.removeNonPrintableChars.title": "Yazdırılamayan Karakterleri Kaldır",
     "extension.command.removeLeadingTrailingWhitespace.title": "Baştaki ve Sondaki Boşlukları Kaldır"
 }

@@ -3,7 +3,6 @@
     "extension.config.slugify.desc": "Znak używany jako separator w tekście slugowanym.",
     "extension.config.slugify.dash.desc": "Użyj łącznika (-) jako separatora",
     "extension.config.slugify.underscore.desc": "Użyj podkreślnika (_) jako separatora",
-    "extension.config.removeEmptyLines.removeConsecutive.desc": "Opis ustawienia dotyczącego usuwania kolejnych pustych linii.",
     "extension.config.removeEmptyLines.considerWhitespaceEmpty.desc": "Opis ustawienia dotyczącego traktowania linii zawierających tylko białe znaki jako puste.",
     "extension.command.slugify.title": "Generuj slug URL",
     "extension.command.makeLowercase.title": "Konwertuj na małe litery",
@@ -13,7 +12,8 @@
     "extension.command.urlEncode.title": "Koduj URL",
     "extension.command.urlDecode.title": "Dekoduj URL",
     "extension.command.generateGuid.title": "Generuj UUID/GUID",
-    "extension.command.removeEmptyLines.title": "Usuń puste linie",
+    "extension.command.removeEmptyLinesDocument.title": "Usuń puste wiersze z dokumentu",
+    "extension.command.removeEmptyLinesSelection.title": "Usuń puste wiersze z zaznaczenia",
     "extension.command.removeNonPrintableChars.title": "Usuń niedrukowalne znaki",
     "extension.command.removeLeadingTrailingWhitespace.title": "Usuń wiodące i końcowe spacje"
 }

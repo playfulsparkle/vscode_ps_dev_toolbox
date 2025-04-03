@@ -48,52 +48,6 @@ export function safeToUppercase(text: string, locale?: string | string[]): strin
 }
 
 /**
- * Removes empty lines from text with configurable options
- * @param text The input text
- * @param options Configuration options
- * @returns The text with empty lines removed according to options
- */
-export function removeEmptyLines(
-    text: string,
-    options: { removeConsecutive: boolean; considerWhitespaceEmpty: boolean; } = { removeConsecutive: true, considerWhitespaceEmpty: true }
-): string {
-    if (!text) {
-        return text;
-    }
-
-    const lines = text.split("\n");
-
-    const result: string[] = [];
-
-    let lastLineWasEmpty = false;
-
-    for (let i = 0; i < lines.length; i++) {
-        const line = lines[i];
-
-        const isEmpty = options.considerWhitespaceEmpty
-            ? line.trim().length === 0
-            : line.length === 0;
-
-        if (isEmpty) {
-            if (!options.removeConsecutive || !lastLineWasEmpty) {
-                // If we don't remove consecutive empty lines or the last line wasn't empty
-                if (!options.removeConsecutive) {
-                    result.push(line);
-                }
-            }
-
-            lastLineWasEmpty = true;
-        } else {
-            result.push(line);
-
-            lastLineWasEmpty = false;
-        }
-    }
-
-    return result.join("\n");
-}
-
-/**
  * Removes non-printable characters from text
  * @param text The input text
  * @returns The text with non-printable characters removed

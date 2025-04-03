@@ -3,7 +3,6 @@
     "extension.config.slugify.desc": "Символ, используемый в качестве разделителя в слагифицированном тексте.",
     "extension.config.slugify.dash.desc": "Используйте дефис (-) в качестве разделителя",
     "extension.config.slugify.underscore.desc": "Используйте подчеркивание (_) в качестве разделителя",
-    "extension.config.removeEmptyLines.removeConsecutive.desc": "Описание настройки для удаления последовательных пустых строк.",
     "extension.config.removeEmptyLines.considerWhitespaceEmpty.desc": "Описание настройки для учета строк, содержащих только пробелы, как пустых.",
     "extension.command.slugify.title": "Генерировать URL-слаг",
     "extension.command.makeLowercase.title": "Преобразовать в нижний регистр",
@@ -13,7 +12,8 @@
     "extension.command.urlEncode.title": "Кодировать URL",
     "extension.command.urlDecode.title": "Декодировать URL",
     "extension.command.generateGuid.title": "Генерировать UUID/GUID",
-    "extension.command.removeEmptyLines.title": "Удалить пустые строки",
+    "extension.command.removeEmptyLinesDocument.title": "Удалить пустые строки из документа",
+    "extension.command.removeEmptyLinesSelection.title": "Удалить пустые строки из выделения",
     "extension.command.removeNonPrintableChars.title": "Удалить непечатаемые символы",
     "extension.command.removeLeadingTrailingWhitespace.title": "Удалить начальные и конечные пробелы"
 }

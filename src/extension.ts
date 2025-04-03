@@ -15,7 +15,8 @@ export function activate(context: vscode.ExtensionContext) {
 		UrlEncode = "ps-dev-toolbox.urlEncode",
 		UrlDecode = "ps-dev-toolbox.urlDecode",
 		GenerateGuid = "ps-dev-toolbox.generateGuid",
-		RemoveEmptyLines = "ps-dev-toolbox.removeEmptyLines",
+		RemoveEmptyLinesDocument = "ps-dev-toolbox.removeEmptyLinesDocument",
+		RemoveEmptyLinesSelection = "ps-dev-toolbox.removeEmptyLinesSelection",
 		RemoveNonPrintableChars = "ps-dev-toolbox.removeNonPrintableChars",
 		RemoveLeadingTrailingWhitespace = "ps-dev-toolbox.removeLeadingTrailingWhitespace",
 	}
@@ -145,20 +146,124 @@ export function activate(context: vscode.ExtensionContext) {
 		});
 	};
 
+	type IRange = [number, number];
+
 	// Command handler for removing empty lines in the editor
-	const removeEmptyLinesCommand = async () => {
+	const removeEmptyLinesCommand = async (inSelection: boolean) => {
+		const editor = vscode.window.activeTextEditor;
+
+		if (!editor) {
+			return;
+		}
+
 		// Get configuration from settings
 		const config = vscode.workspace.getConfiguration("ps-dev-toolbox.removeEmptyLines");
-		const removeConsecutive = config.get<boolean>("removeConsecutive", true);
 		const considerWhitespaceEmpty = config.get<boolean>("considerWhitespaceEmpty", true);
 
-		const options = { removeConsecutive, considerWhitespaceEmpty };
+		const document = editor.document;
+		const selections = editor.selections;
 
-		await processTextInEditor(
-			utils.removeEmptyLines,
-			true, // Expand to full lines
-			options
-		);
+		if (inSelection) { // Process selections
+			if (selections.length === 1 && selections[0].isEmpty) { // Single cursor position
+				const cursorLine = document.lineAt(selections[0].start.line);
+
+				if (!cursorLine) {
+					return;
+				}
+
+				const cursorFirstNonEmptyLine = getCursorFirstNoneEmptyLine(selections[0].start.line, document);
+				const cursorLastNonEmptyLine = getCursorLastNoneEmptyLine(selections[0].start.line, document);
+
+				removeEmptyLines(editor, document, [[cursorFirstNonEmptyLine, cursorLastNonEmptyLine]], considerWhitespaceEmpty);
+			} else { // Multi-cursor selections
+				const rangesToProcess: IRange[] = [];
+
+				for (const selection of selections) {
+					if (!selection.isEmpty) {
+						rangesToProcess.push([selection.start.line, selection.end.line]);
+					}
+				}
+
+				removeEmptyLines(editor, document, rangesToProcess, considerWhitespaceEmpty);
+			}
+		} else { // Process entire document
+			removeEmptyLines(editor, document, [[0, document.lineCount - 1]], considerWhitespaceEmpty);
+		}
+	};
+
+	const removeEmptyLines = async (
+		editor: vscode.TextEditor,
+		document: vscode.TextDocument,
+		ranges: IRange[],
+		considerWhitespaceEmpty: boolean
+	) => {
+		if (ranges.length === 0) {
+			return;
+		}
+
+		const rangesToDelete: vscode.Range[] = [];
+
+		for (const range of ranges) {
+			for (let idx = range[0]; idx <= range[1]; idx++) {
+				const line = document.lineAt(idx);
+
+				const isEmpty = considerWhitespaceEmpty
+					? line.isEmptyOrWhitespace
+					: line.text.length === 0;
+
+				if (isEmpty) {
+					rangesToDelete.push(line.rangeIncludingLineBreak);
+				}
+			}
+		}
+
+		if (rangesToDelete.length === 0) {
+			return;
+		}
+
+		await editor.edit(editBuilder => {
+			for (const range of rangesToDelete) {
+				editBuilder.delete(range);
+			}
+		});
+	};
+
+	// Search backward from cursor position to find first non-empty line
+	const getCursorFirstNoneEmptyLine = (line: number, document: vscode.TextDocument) => {
+		let startLine = line - 1;
+
+		if (startLine < 0) {
+			return 0; // Default to first line if all lines before cursor are empty
+		}
+
+		for (let idx = startLine; idx >= 0; idx--) {
+			if (document.lineAt(idx).isEmptyOrWhitespace) {
+				continue;
+			}
+
+			return idx;
+		}
+
+		return 0; // Default to first line if all lines before cursor are empty
+	};
+
+	// Search forward from cursor position to find first non-empty line
+	const getCursorLastNoneEmptyLine = (line: number, document: vscode.TextDocument) => {
+		let startLine = line + 1;
+
+		if (startLine >= document.lineCount) {
+			return document.lineCount - 1; // Default to last line if all lines after cursor are empty
+		}
+
+		for (let idx = startLine; idx < document.lineCount; idx++) {
+			if (document.lineAt(idx).isEmptyOrWhitespace) {
+				continue;
+			}
+
+			return idx;
+		}
+
+		return document.lineCount - 1; // Default to last line if all lines after cursor are empty
 	};
 
 	const removeLeadingTrailingWhitespaceCommand = async () => {
@@ -197,7 +302,8 @@ export function activate(context: vscode.ExtensionContext) {
 		[CommandId.UrlEncode]: createTextTransformCommand(utils.urlEncode),
 		[CommandId.UrlDecode]: createTextTransformCommand(utils.urlDecode),
 		[CommandId.GenerateGuid]: createInsertAtCursorCommand(utils.generateGuid),
-		[CommandId.RemoveEmptyLines]: removeEmptyLinesCommand,
+		[CommandId.RemoveEmptyLinesDocument]: async () => removeEmptyLinesCommand(false),
+		[CommandId.RemoveEmptyLinesSelection]: async () => removeEmptyLinesCommand(true),
 		[CommandId.RemoveNonPrintableChars]: removeNonPrintableCharactersCommand,
 		[CommandId.RemoveLeadingTrailingWhitespace]: removeLeadingTrailingWhitespaceCommand
 	};
