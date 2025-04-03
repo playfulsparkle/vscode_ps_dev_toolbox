@@ -1,9 +1,9 @@
 {
   "name": "ps-dev-toolbox",
   "displayName": "Dev Toolbox",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "publisher": "playful-sparkle",
-  "description": "Handy productivity tools for developers in Visual Studio Code.",
+  "description": "All-in-one toolset for URL slug generation, Base64/URL encoding/decoding, GUID generation, and removing empty lines, non-printable characters, and whitespace.",
   "author": {
     "name": "Zsolt Oroszlány",
     "email": "hello@playfulsparkle.com"

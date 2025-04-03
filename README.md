@@ -4,9 +4,9 @@
 
 # Playful Sparkle: Dev Toolbox
 
-Enhance your development workflow within Visual Studio Code with the **Playful Sparkle Dev Toolbox**. This extension provides a suite of essential text manipulation and generation tools, designed to streamline common coding tasks directly within your editor. From locale-aware case conversions and URL-friendly slug generation to Base64 encoding/decoding and GUID generation, this toolbox is crafted to boost your productivity.
+**Playful Sparkle Dev Toolbox** is your all-in-one solution within Visual Studio Code for URL slug generation, Base64/URL encoding/decoding, GUID generation, and removing empty lines, non-printable characters, and whitespace. This extension streamlines common text manipulation tasks directly in your editor, boosting your productivity without the need for external tools.
 
-Seamlessly integrate these powerful features into your coding environment, simplifying text processing and generation tasks without the need for external tools or scripts. Whether you're dealing with internationalization, data encoding, or simply need to generate unique identifiers, the **Playful Sparkle Dev Toolbox** is your go-to extension for efficient and reliable text manipulation within Visual Studio Code.
+Seamlessly integrate these essential features into your coding environment to simplify text processing and generation. Whether you're optimizing URLs, handling data encoding, generating unique IDs, or cleaning up text, **Playful Sparkle Dev Toolbox** provides efficient and reliable tools at your fingertips.
 
 ---
 
