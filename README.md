@@ -59,6 +59,11 @@ If you encounter any of these or other issues, please report them on the [GitHub
 
 ## Release Notes
 
+### 0.0.5
+
+* **Enhanced Visuals:** The extension's icon color theme has been updated, providing a more polished and consistent look.
+* **Improved User Understanding:** The extension description has been refined to be more clear, concise, and easier for new users to understand its features and benefits.
+
 ### 0.0.4
 
 * **Added:**

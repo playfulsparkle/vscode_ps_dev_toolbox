@@ -2,6 +2,11 @@
 
 All notable changes to the "Playful Sparkle: Dev Toolbox" extension will be documented in this file.
 
+## [0.0.5] - 2025-04-03
+
+* **Enhanced Visuals:** The extension's icon color theme has been updated, providing a more polished and consistent look.
+* **Improved User Understanding:** The extension description has been refined to be more clear, concise, and easier for new users to understand its features and benefits.
+
 ## [0.0.4] - 2025-04-03
 
 * **Added:**
