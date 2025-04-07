@@ -524,12 +524,12 @@ export function decodeCssUnicodeEscape(text: string): string {
 }
 
 /**
- * Encodes a string into a CSS Unicode code point sequence in the format "U+XXXX".
+ * Encodes a string into a Unicode code point sequence in the format "U+XXXX".
  * Each character's code point is converted to its hexadecimal representation (uppercase, padded to 4 digits) and prefixed with "U+".
  * The resulting code points are joined by spaces.
  *
  * @param text The input string to encode.
- * @returns The CSS Unicode code point string.
+ * @returns The Unicode code point string.
  */
 export function encodeUnicodeCodePoints(text: string): string {
     if (typeof text !== "string") {
@@ -550,11 +550,11 @@ export function encodeUnicodeCodePoints(text: string): string {
 }
 
 /**
- * Decodes a CSS Unicode code point sequence (e.g., "U+0041 U+1F600") back to a string.
+ * Decodes a Unicode code point sequence (e.g., "U+0041 U+1F600") back to a string.
  * Each token in the sequence (separated by spaces) is expected to be in the format "U+XXXX" (4 to 6 hexadecimal digits).
  * Surrogate code points are handled as individual code units. Code points exceeding the Unicode maximum will throw an error.
  *
- * @param text The CSS Unicode code point string to decode.
+ * @param text The Unicode code point string to decode.
  * @returns The decoded string.
  */
 export function decodeUnicodeCodePoints(text: string): string {
@@ -562,40 +562,40 @@ export function decodeUnicodeCodePoints(text: string): string {
         return "";
     }
 
-    const codePoints = text.split(" ").map((token) => {
-        if (!/^U\+[0-9A-Fa-f]{4,6}$/.test(token)) {
-            throw new Error(`Invalid CSS Unicode token: ${token}`);
+    return text.replace(
+        /(U\+[0-9A-Fa-f]{4,6}(?:\s+U\+[0-9A-Fa-f]{4,6})*)/gi,
+        (match) => {
+            // Split code point sequence into individual tokens
+            const tokens = match.split(/\s+/);
+            
+            const characters = tokens.map(token => {
+                // Validate token format
+                if (!/^U\+[0-9A-Fa-f]{4,6}$/i.test(token)) {
+                    throw new Error(`Invalid Unicode token: ${token}`);
+                }
+
+                const hex = token.slice(2);
+                const codePoint = parseInt(hex, 16);
+
+                // Validate numerical range
+                if (isNaN(codePoint) || codePoint < 0x0000 || codePoint > 0x10FFFF) {
+                    throw new Error(`Invalid code point: ${token}`);
+                }
+
+                // Handle surrogate pairs
+                if (codePoint >= 0xD800 && codePoint <= 0xDFFF) {
+                    return String.fromCharCode(codePoint);
+                }
+
+                // Convert valid code points
+                try {
+                    return String.fromCodePoint(codePoint);
+                } catch (e) {
+                    throw new Error(`Invalid code point: ${token}`);
+                }
+            });
+
+            return characters.join("");
         }
-
-        const hex = token.slice(2);
-
-        const codePoint = parseInt(hex, 16);
-
-        if (isNaN(codePoint) || codePoint < 0x0000) {
-            throw new Error(`Invalid code point: ${token}`);
-        }
-
-        return codePoint;
-    });
-
-    let result = "";
-
-    for (const cp of codePoints) {
-        if (cp >= 0xd800 && cp <= 0xdfff) {
-            // Handle surrogate code points as individual code units
-            result += String.fromCharCode(cp);
-        } else {
-            if (cp > 0x10ffff) {
-                throw new Error(`Code point U+${cp.toString(16).toUpperCase()} exceeds Unicode maximum`);
-            }
-
-            try {
-                result += String.fromCodePoint(cp);
-            } catch (e) {
-                throw new Error(`Invalid Unicode code point: U+${cp.toString(16).toUpperCase()}`);
-            }
-        }
-    }
-
-    return result;
+    );
 }
