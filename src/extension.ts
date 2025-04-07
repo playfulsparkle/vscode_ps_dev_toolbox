@@ -1,5 +1,6 @@
 import * as vscode from "vscode";
 import * as utils from "./utils";
+import { text } from "stream/consumers";
 
 
 /** Activates the extension
@@ -39,35 +40,6 @@ export function activate(context: vscode.ExtensionContext) {
 			}
 
 			await editor.edit(editBuilder => editBuilder.replace(selection, transformFn(text)));
-		};
-	};
-
-	// Create a factory function for text transformation commands
-	const createTextTransformPromptCommand = (transformFn: (text: string, localesInput: string[]) => string) => {
-		return async () => {
-			const editor = vscode.window.activeTextEditor;
-
-			if (!editor) {
-				return;
-			}
-
-			const selection = editor.selection;
-
-			const text = editor.document.getText(selection);
-
-			if (!text) {
-				return;
-			}
-
-			const localesPrompt = await vscode.window.showInputBox({
-				prompt: vscode.l10n.t("Enter the locales to use for the transformation (comma-separated)"),
-				placeHolder: vscode.l10n.t("e.g. hu, sk, en-US"),
-				value: vscode.env.language,
-			});
-
-			const localesInput = localesPrompt ? localesPrompt.split(",").map(locale => locale.trim()) : [];
-
-			await editor.edit(editBuilder => editBuilder.replace(selection, transformFn(text, localesInput)));
 		};
 	};
 
@@ -280,6 +252,16 @@ export function activate(context: vscode.ExtensionContext) {
 		);
 	};
 
+	const localesPrompt = async () => {
+		const localesPrompt = await vscode.window.showInputBox({
+			prompt: vscode.l10n.t("Enter the locales to use for the transformation (comma-separated)"),
+			placeHolder: vscode.l10n.t("e.g. hu, sk, en-US"),
+			value: vscode.env.language,
+		});
+
+		return localesPrompt ? localesPrompt.split(",").map(locale => locale.trim()) : [];
+	};
+
 	const commandHandlers = {
 		[CommandId.Slugify]: createTextTransformCommand(text => {
 			const config = vscode.workspace.getConfiguration("ps-dev-toolbox");
@@ -287,8 +269,16 @@ export function activate(context: vscode.ExtensionContext) {
 
 			return utils.slugify(text, separator);
 		}),
-		[CommandId.MakeLowercase]: createTextTransformPromptCommand(utils.safeToLowerCase),
-		[CommandId.MakeUppercase]: createTextTransformPromptCommand(utils.safeToUppercase),
+		[CommandId.MakeLowercase]: async () => {
+			const localesInput = await localesPrompt();
+
+			return processTextInEditor(text => utils.safeToLowerCase(text, localesInput));
+		},
+		[CommandId.MakeUppercase]: async () => {
+			const localesInput = await localesPrompt();
+			
+			return processTextInEditor(text => utils.safeToUppercase(text, localesInput));
+		},
 		[CommandId.Base64Encode]: createTextTransformCommand(utils.base64Encode),
 		[CommandId.Base64Decode]: createTextTransformCommand(text => {
 			if (!utils.isValidBase64(text)) {
@@ -301,7 +291,22 @@ export function activate(context: vscode.ExtensionContext) {
 		}),
 		[CommandId.UrlEncode]: createTextTransformCommand(utils.urlEncode),
 		[CommandId.UrlDecode]: createTextTransformCommand(utils.urlDecode),
-		[CommandId.GenerateGuid]: createInsertAtCursorCommand(utils.generateGuid),
+		[CommandId.GenerateGuid]: createInsertAtCursorCommand(() => {
+			const config = vscode.workspace.getConfiguration("ps-dev-toolbox");
+			const uuidFormat = config.get<string>("uuidFormat", "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx");
+			const generatedUuid = utils.generateGuid();
+
+			switch (uuidFormat) {
+				default:
+					return `${generatedUuid}`;
+				case "{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}":
+					return `{${generatedUuid}}`;
+				case "[Guid(\"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\")]":
+					return `[Guid("${generatedUuid}")]`;
+				case "<Guid(\"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\")>":
+					return `<Guid("${generatedUuid}")>`;
+			}
+		}),
 		[CommandId.RemoveEmptyLinesDocument]: async () => removeEmptyLinesCommand(false),
 		[CommandId.RemoveEmptyLinesSelection]: async () => removeEmptyLinesCommand(true),
 		[CommandId.RemoveNonPrintableChars]: removeNonPrintableCharactersCommand,

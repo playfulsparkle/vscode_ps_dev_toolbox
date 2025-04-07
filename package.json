@@ -155,6 +155,23 @@
           "type": "boolean",
           "default": true,
           "description": "%extension.config.removeEmptyLines.considerWhitespaceEmpty.desc%"
+        },
+        "ps-dev-toolbox.uuidFormat": {
+          "type": "string",
+          "default": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+          "description": "%extension.config.uuid.desc%",
+          "enum": [
+            "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+            "{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}",
+            "[Guid(\"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\")]",
+            "<Guid(\"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\")>"
+          ],
+          "enumDescriptions": [
+            "%extension.config.uuid.raw.desc%",
+            "%extension.config.uuid.registryFormat.desc%",
+            "%extension.config.uuid.squareFormat.desc%",
+            "%extension.config.uuid.lessThanSignFormat.desc%"
+          ]
         }
       }
     },

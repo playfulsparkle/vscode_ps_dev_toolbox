@@ -25,6 +25,10 @@ if (!String.prototype.safeToUppercase) {
  * @returns The lowercase version of the string.
  */
 export function safeToLowerCase(text: string, locale?: string | string[]): string {
+    if (typeof text !== "string") {
+        return text;
+    }
+
     try {
         return text.toLocaleLowerCase(locale);
     } catch (e) {
@@ -40,6 +44,10 @@ export function safeToLowerCase(text: string, locale?: string | string[]): strin
  * @returns The uppercase version of the string.
  */
 export function safeToUppercase(text: string, locale?: string | string[]): string {
+    if (typeof text !== "string") {
+        return text;
+    }
+
     try {
         return text.toLocaleUpperCase(locale);
     } catch (e) {
@@ -53,7 +61,7 @@ export function safeToUppercase(text: string, locale?: string | string[]): strin
  * @returns The text with non-printable characters removed
  */
 export function removeNonPrintableCharacters(text: string): string {
-    if (!text) {
+    if (typeof text !== "string") {
         return text;
     }
 
@@ -107,7 +115,7 @@ export function removeNonPrintableCharacters(text: string): string {
  * @returns The text with leading and trailing whitespace removed
  */
 export function removeLeadingTrailingWhitespace(text: string): string {
-    if (!text) {
+    if (typeof text !== "string") {
         return text;
     }
 
@@ -127,6 +135,10 @@ export function removeLeadingTrailingWhitespace(text: string): string {
  * @returns The slugified version of the string.
  */
 export function slugify(text: string, separator: string = "-"): string {
+    if (typeof text !== "string") {
+        return text;
+    }
+
     // Find the last dot position
     const lastDotIndex = text.lastIndexOf(".");
 
@@ -177,6 +189,10 @@ function slugifyHelper(text: string, separator: string): string {
  * @returns The Base64-encoded string.
  */
 export function base64Encode(text: string): string {
+    if (typeof text !== "string") {
+        return text;
+    }
+
     return Buffer.from(text).toString("base64");
 }
 
@@ -186,6 +202,10 @@ export function base64Encode(text: string): string {
  * @returns The decoded string.
  */
 export function base64Decode(text: string): string {
+    if (typeof text !== "string") {
+        return text;
+    }
+
     try {
         if (!isValidBase64(text)) {
             return text;
@@ -207,6 +227,10 @@ export function isValidBase64(str: string): boolean {
  * @returns The URL-encoded string.
  */
 export function urlEncode(text: string): string {
+    if (typeof text !== "string") {
+        return text;
+    }
+
     return encodeURIComponent(text);
 }
 
@@ -216,6 +240,10 @@ export function urlEncode(text: string): string {
  * @returns The decoded string.
  */
 export function urlDecode(text: string): string {
+    if (typeof text !== "string") {
+        return text;
+    }
+
     return decodeURIComponent(text);
 }
 
@@ -230,5 +258,5 @@ export function generateGuid(): string {
         const result = char === "x" ? rand : (rand & 0x3 | 0x8);
 
         return result.toString(16);
-    });
+    }).toUpperCase();
 }
