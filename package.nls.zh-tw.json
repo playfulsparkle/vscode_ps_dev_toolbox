@@ -20,5 +20,15 @@
     "extension.command.removeEmptyLinesDocument.title": "從文件中移除空白行",
     "extension.command.removeEmptyLinesSelection.title": "從選取範圍中移除空白行",
     "extension.command.removeNonPrintableChars.title": "移除不可列印字元",
-    "extension.command.removeLeadingTrailingWhitespace.title": "移除開頭和結尾的空格"
+    "extension.command.removeLeadingTrailingWhitespace.title": "移除開頭和結尾的空格",
+    "extension.command.encodeHtmlHexEntities.title": "編碼 HTML 十六進位實體 (&#x0012;)",
+    "extension.command.decodeHtmlHexEntities.title": "解碼 HTML 十六進位實體 (&#x0012;)",
+    "extension.command.encodeHtmlDecimalEntities.title": "編碼 HTML 十進位實體 (&#123;)",
+    "extension.command.decodeHtmlDecimalEntities.title": "解碼 HTML 十進位實體 (&#123;)",
+    "extension.command.encodeUnicodeEscapeSequences.title": "編碼 Unicode 逸出序列 (\\UXXXXXXXX, \\uXXXX)",
+    "extension.command.decodeUnicodeEscapeSequences.title": "解碼 Unicode 逸出序列 (\\UXXXXXXXX, \\uXXXX)",
+    "extension.command.encodeCssUnicodeEscape.title": "編碼 CSS Unicode 逸出序列 (\\XXXXXX)",
+    "extension.command.decodeCssUnicodeEscape.title": "解碼 CSS Unicode 逸出序列 (\\XXXXXX)",
+    "extension.command.encodeUnicodeCodePoints.title": "編碼 Unicode 碼位 (U+XXXX)",
+    "extension.command.decodeUnicodeCodePoints.title": "解碼 Unicode 碼位 (U+XXXX)"
 }

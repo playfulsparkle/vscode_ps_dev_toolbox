@@ -20,6 +20,16 @@ export function activate(context: vscode.ExtensionContext) {
 		RemoveEmptyLinesSelection = "ps-dev-toolbox.removeEmptyLinesSelection",
 		RemoveNonPrintableChars = "ps-dev-toolbox.removeNonPrintableChars",
 		RemoveLeadingTrailingWhitespace = "ps-dev-toolbox.removeLeadingTrailingWhitespace",
+		EncodeHtmlHexEntities = "ps-dev-toolbox.encodeHtmlHexEntities",
+		DecodeHtmlHexEntities = "ps-dev-toolbox.decodeHtmlHexEntities",
+		EncodeHtmlDecimalEntities = "ps-dev-toolbox.encodeHtmlDecimalEntities",
+		DecodeHtmlDecimalEntities = "ps-dev-toolbox.decodeHtmlDecimalEntities",
+		EncodeUnicodeEscapeSequences = "ps-dev-toolbox.encodeUnicodeEscapeSequences",
+		DecodeUnicodeEscapeSequences = "ps-dev-toolbox.decodeUnicodeEscapeSequences",
+		EncodeCssUnicodeEscape = "ps-dev-toolbox.encodeCssUnicodeEscape",
+		DecodeCssUnicodeEscape = "ps-dev-toolbox.decodeCssUnicodeEscape",
+		EncodeUnicodeCodePoints = "ps-dev-toolbox.encodeUnicodeCodePoints",
+		DecodeUnicodeCodePoints = "ps-dev-toolbox.decodeUnicodeCodePoints",
 	}
 
 	// Create a factory function for text transformation commands
@@ -310,7 +320,17 @@ export function activate(context: vscode.ExtensionContext) {
 		[CommandId.RemoveEmptyLinesDocument]: async () => removeEmptyLinesCommand(false),
 		[CommandId.RemoveEmptyLinesSelection]: async () => removeEmptyLinesCommand(true),
 		[CommandId.RemoveNonPrintableChars]: removeNonPrintableCharactersCommand,
-		[CommandId.RemoveLeadingTrailingWhitespace]: removeLeadingTrailingWhitespaceCommand
+		[CommandId.RemoveLeadingTrailingWhitespace]: removeLeadingTrailingWhitespaceCommand,
+		[CommandId.EncodeHtmlHexEntities]: createTextTransformCommand(utils.encodeHtmlHexEntities),
+		[CommandId.DecodeHtmlHexEntities]: createTextTransformCommand(utils.decodeHtmlHexEntities),
+		[CommandId.EncodeHtmlDecimalEntities]: createTextTransformCommand(utils.encodeHtmlDecimalEntities),
+		[CommandId.DecodeHtmlDecimalEntities]: createTextTransformCommand(utils.decodeHtmlDecimalEntities),
+		[CommandId.EncodeUnicodeEscapeSequences]: createTextTransformCommand(utils.encodeUnicodeEscapeSequences),
+		[CommandId.DecodeUnicodeEscapeSequences]: createTextTransformCommand(utils.decodeUnicodeEscapeSequences),
+		[CommandId.EncodeCssUnicodeEscape]: createTextTransformCommand(utils.encodeCssUnicodeEscape),
+		[CommandId.DecodeCssUnicodeEscape]: createTextTransformCommand(utils.decodeCssUnicodeEscape),
+		[CommandId.EncodeUnicodeCodePoints]: createTextTransformCommand(utils.encodeUnicodeCodePoints),
+		[CommandId.DecodeUnicodeCodePoints]: createTextTransformCommand(utils.decodeUnicodeCodePoints),
 	};
 
 	// Register all commands

@@ -20,5 +20,15 @@
     "extension.command.removeEmptyLinesDocument.title": "Belgedeki Boş Satırları Kaldır",
     "extension.command.removeEmptyLinesSelection.title": "Seçimdeki Boş Satırları Kaldır",
     "extension.command.removeNonPrintableChars.title": "Yazdırılamayan Karakterleri Kaldır",
-    "extension.command.removeLeadingTrailingWhitespace.title": "Baştaki ve Sondaki Boşlukları Kaldır"
+    "extension.command.removeLeadingTrailingWhitespace.title": "Baştaki ve Sondaki Boşlukları Kaldır",
+    "extension.command.encodeHtmlHexEntities.title": "HTML Onaltılık Varlıklarını Kodla (&#x0012;)",
+    "extension.command.decodeHtmlHexEntities.title": "HTML Onaltılık Varlıklarının Kodunu Çöz (&#x0012;)",
+    "extension.command.encodeHtmlDecimalEntities.title": "HTML Ondalık Varlıklarını Kodla (&#123;)",
+    "extension.command.decodeHtmlDecimalEntities.title": "HTML Ondalık Varlıklarının Kodunu Çöz (&#123;)",
+    "extension.command.encodeUnicodeEscapeSequences.title": "Unicode Kaçış Dizilerini Kodla (\\UXXXXXXXX, \\uXXXX)",
+    "extension.command.decodeUnicodeEscapeSequences.title": "Unicode Kaçış Dizilerinin Kodunu Çöz (\\UXXXXXXXX, \\uXXXX)",
+    "extension.command.encodeCssUnicodeEscape.title": "CSS Unicode Kaçış Dizilerini Kodla (\\XXXXXX)",
+    "extension.command.decodeCssUnicodeEscape.title": "CSS Unicode Kaçış Dizilerinin Kodunu Çöz (\\XXXXXX)",
+    "extension.command.encodeUnicodeCodePoints.title": "Unicode Kod Noktalarını Kodla (U+XXXX)",
+    "extension.command.decodeUnicodeCodePoints.title": "Unicode Kod Noktalarını Çöz (U+XXXX)"
 }

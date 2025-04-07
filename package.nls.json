@@ -20,5 +20,15 @@
   "extension.command.removeEmptyLinesDocument.title": "Remove Empty Lines from Document",
   "extension.command.removeEmptyLinesSelection.title": "Remove Empty Lines from Selection",
   "extension.command.removeNonPrintableChars.title": "Remove Non-Printable Characters",
-  "extension.command.removeLeadingTrailingWhitespace.title": "Remove Leading and Trailing Whitespace"
+  "extension.command.removeLeadingTrailingWhitespace.title": "Remove Leading and Trailing Whitespace",
+  "extension.command.encodeHtmlHexEntities.title": "Encode HTML Hex Entities (&#x0012;)",
+  "extension.command.decodeHtmlHexEntities.title": "Decode HTML Hex Entities (&#x0012;)",
+  "extension.command.encodeHtmlDecimalEntities.title": "Encode HTML Decimal Entities (&#123;)",
+  "extension.command.decodeHtmlDecimalEntities.title": "Decode HTML Decimal Entities (&#123;)",
+  "extension.command.encodeUnicodeEscapeSequences.title": "Encode Unicode Escape Sequences (\\UXXXXXXXX, \\uXXXX)",
+  "extension.command.decodeUnicodeEscapeSequences.title": "Decode Unicode Escape Sequences (\\UXXXXXXXX, \\uXXXX)",
+  "extension.command.encodeCssUnicodeEscape.title": "Encode CSS Unicode Escape Sequences (\\XXXXXX)",
+  "extension.command.decodeCssUnicodeEscape.title": "Decode CSS Unicode Escape Sequences (\\XXXXXX)",
+  "extension.command.encodeUnicodeCodePoints.title": "Encode Unicode Code Points (U+XXXX)",
+  "extension.command.decodeUnicodeCodePoints.title": "Decode Unicode Code Points (U+XXXX)"
 }

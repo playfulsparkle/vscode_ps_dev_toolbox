@@ -133,6 +133,66 @@
         "command": "ps-dev-toolbox.removeLeadingTrailingWhitespaceDocument",
         "title": "%extension.command.removeLeadingTrailingWhitespace.title%",
         "category": "Playful Sparkle"
+      },
+      {
+        "command": "ps-dev-toolbox.encodeHtmlHexEntities",
+        "title": "%extension.command.encodeHtmlHexEntities.title%",
+        "category": "Playful Sparkle",
+        "enablement": "editorHasSelection || editorHasMultipleSelections"
+      },
+      {
+        "command": "ps-dev-toolbox.decodeHtmlHexEntities",
+        "title": "%extension.command.decodeHtmlHexEntities.title%",
+        "category": "Playful Sparkle",
+        "enablement": "editorHasSelection || editorHasMultipleSelections"
+      },
+      {
+        "command": "ps-dev-toolbox.encodeHtmlDecimalEntities",
+        "title": "%extension.command.encodeHtmlDecimalEntities.title%",
+        "category": "Playful Sparkle",
+        "enablement": "editorHasSelection || editorHasMultipleSelections"
+      },
+      {
+        "command": "ps-dev-toolbox.decodeHtmlDecimalEntities",
+        "title": "%extension.command.decodeHtmlDecimalEntities.title%",
+        "category": "Playful Sparkle",
+        "enablement": "editorHasSelection || editorHasMultipleSelections"
+      },
+      {
+        "command": "ps-dev-toolbox.encodeUnicodeEscapeSequences",
+        "title": "%extension.command.encodeUnicodeEscapeSequences.title%",
+        "category": "Playful Sparkle",
+        "enablement": "editorHasSelection || editorHasMultipleSelections"
+      },
+      {
+        "command": "ps-dev-toolbox.decodeUnicodeEscapeSequences",
+        "title": "%extension.command.decodeUnicodeEscapeSequences.title%",
+        "category": "Playful Sparkle",
+        "enablement": "editorHasSelection || editorHasMultipleSelections"
+      },
+      {
+        "command": "ps-dev-toolbox.encodeCssUnicodeEscape",
+        "title": "%extension.command.encodeCssUnicodeEscape.title%",
+        "category": "Playful Sparkle",
+        "enablement": "editorHasSelection || editorHasMultipleSelections"
+      },
+      {
+        "command": "ps-dev-toolbox.decodeCssUnicodeEscape",
+        "title": "%extension.command.decodeCssUnicodeEscape.title%",
+        "category": "Playful Sparkle",
+        "enablement": "editorHasSelection || editorHasMultipleSelections"
+      },
+      {
+        "command": "ps-dev-toolbox.encodeUnicodeCodePoints",
+        "title": "%extension.command.encodeUnicodeCodePoints.title%",
+        "category": "Playful Sparkle",
+        "enablement": "editorHasSelection || editorHasMultipleSelections"
+      },
+      {
+        "command": "ps-dev-toolbox.decodeUnicodeCodePoints",
+        "title": "%extension.command.decodeUnicodeCodePoints.title%",
+        "category": "Playful Sparkle",
+        "enablement": "editorHasSelection || editorHasMultipleSelections"
       }
     ],
     "configuration": {

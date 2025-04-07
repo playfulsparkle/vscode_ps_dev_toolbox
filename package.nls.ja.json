@@ -20,5 +20,15 @@
   "extension.command.removeEmptyLinesDocument.title": "ドキュメントから空行を削除",
   "extension.command.removeEmptyLinesSelection.title": "選択範囲から空行を削除",
   "extension.command.removeNonPrintableChars.title": "印刷できない文字を削除",
-  "extension.command.removeLeadingTrailingWhitespace.title": "行頭および行末のスペースを削除"
+  "extension.command.removeLeadingTrailingWhitespace.title": "行頭および行末のスペースを削除",
+  "extension.command.encodeHtmlHexEntities.title": "HTML 16進数エンティティをエンコード (&#x0012;)",
+  "extension.command.decodeHtmlHexEntities.title": "HTML 16進数エンティティをデコード (&#x0012;)",
+  "extension.command.encodeHtmlDecimalEntities.title": "HTML 10進数エンティティをエンコード (&#123;)",
+  "extension.command.decodeHtmlDecimalEntities.title": "HTML 10進数エンティティをデコード (&#123;)",
+  "extension.command.encodeUnicodeEscapeSequences.title": "Unicodeエスケープシーケンスをエンコード (\\UXXXXXXXX, \\uXXXX)",
+  "extension.command.decodeUnicodeEscapeSequences.title": "Unicodeエスケープシーケンスをデコード (\\UXXXXXXXX, \\uXXXX)",
+  "extension.command.encodeCssUnicodeEscape.title": "CSS Unicodeエスケープシーケンスをエンコード (\\XXXXXX)",
+  "extension.command.decodeCssUnicodeEscape.title": "CSS Unicodeエスケープシーケンスをデコード (\\XXXXXX)",
+  "extension.command.encodeUnicodeCodePoints.title": "Unicodeコードポイントをエンコード (U+XXXX)",
+  "extension.command.decodeUnicodeCodePoints.title": "Unicodeコードポイントをデコード (U+XXXX)"
 }

@@ -20,5 +20,15 @@
   "extension.command.removeEmptyLinesDocument.title": "Supprimer les lignes vides du document",
   "extension.command.removeEmptyLinesSelection.title": "Supprimer les lignes vides de la sélection",
   "extension.command.removeNonPrintableChars.title": "Supprimer les caractères non imprimables",
-  "extension.command.removeLeadingTrailingWhitespace.title": "Supprimer les espaces de début et de fin"
+  "extension.command.removeLeadingTrailingWhitespace.title": "Supprimer les espaces de début et de fin",
+  "extension.command.encodeHtmlHexEntities.title": "Encoder les entités hexadécimales HTML (&#x0012;)",
+  "extension.command.decodeHtmlHexEntities.title": "Décoder les entités hexadécimales HTML (&#x0012;)",
+  "extension.command.encodeHtmlDecimalEntities.title": "Encoder les entités décimales HTML (&#123;)",
+  "extension.command.decodeHtmlDecimalEntities.title": "Décoder les entités décimales HTML (&#123;)",
+  "extension.command.encodeUnicodeEscapeSequences.title": "Encoder les séquences d'échappement Unicode (\\UXXXXXXXX, \\uXXXX)",
+  "extension.command.decodeUnicodeEscapeSequences.title": "Décoder les séquences d'échappement Unicode (\\UXXXXXXXX, \\uXXXX)",
+  "extension.command.encodeCssUnicodeEscape.title": "Encoder les séquences d'échappement Unicode CSS (\\XXXXXX)",
+  "extension.command.decodeCssUnicodeEscape.title": "Décoder les séquences d'échappement Unicode CSS (\\XXXXXX)",
+  "extension.command.encodeUnicodeCodePoints.title": "Encoder les points de code Unicode (U+XXXX)",
+  "extension.command.decodeUnicodeCodePoints.title": "Décoder les points de code Unicode (U+XXXX)"
 }

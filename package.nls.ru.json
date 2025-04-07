@@ -20,5 +20,15 @@
     "extension.command.removeEmptyLinesDocument.title": "Удалить пустые строки из документа",
     "extension.command.removeEmptyLinesSelection.title": "Удалить пустые строки из выделения",
     "extension.command.removeNonPrintableChars.title": "Удалить непечатаемые символы",
-    "extension.command.removeLeadingTrailingWhitespace.title": "Удалить начальные и конечные пробелы"
+    "extension.command.removeLeadingTrailingWhitespace.title": "Удалить начальные и конечные пробелы",
+    "extension.command.encodeHtmlHexEntities.title": "Кодировать шестнадцатеричные HTML-сущности (&#x0012;)",
+    "extension.command.decodeHtmlHexEntities.title": "Декодировать шестнадцатеричные HTML-сущности (&#x0012;)",
+    "extension.command.encodeHtmlDecimalEntities.title": "Кодировать десятичные HTML-сущности (&#123;)",
+    "extension.command.decodeHtmlDecimalEntities.title": "Декодировать десятичные HTML-сущности (&#123;)",
+    "extension.command.encodeUnicodeEscapeSequences.title": "Кодировать escape-последовательности Unicode (\\UXXXXXXXX, \\uXXXX)",
+    "extension.command.decodeUnicodeEscapeSequences.title": "Декодировать escape-последовательности Unicode (\\UXXXXXXXX, \\uXXXX)",
+    "extension.command.encodeCssUnicodeEscape.title": "Кодировать escape-последовательности Unicode CSS (\\XXXXXX)",
+    "extension.command.decodeCssUnicodeEscape.title": "Декодировать escape-последовательности Unicode CSS (\\XXXXXX)",
+    "extension.command.encodeUnicodeCodePoints.title": "Кодировать кодовые точки Unicode (U+XXXX)",
+    "extension.command.decodeUnicodeCodePoints.title": "Декодировать кодовые точки Unicode (U+XXXX)"
 }

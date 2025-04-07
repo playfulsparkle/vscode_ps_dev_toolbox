@@ -20,5 +20,15 @@
   "extension.command.removeEmptyLinesDocument.title": "Üres sorok eltávolítása a dokumentumból",
   "extension.command.removeEmptyLinesSelection.title": "Üres sorok eltávolítása a kijelölésből",
   "extension.command.removeNonPrintableChars.title": "Nem nyomtatható karakterek eltávolítása",
-  "extension.command.removeLeadingTrailingWhitespace.title": "Kezdő és záró szóközök eltávolítása"
+  "extension.command.removeLeadingTrailingWhitespace.title": "Kezdő és záró szóközök eltávolítása",
+  "extension.command.encodeHtmlHexEntities.title": "HTML hexadecimális entitások kódolása (&#x0012;)",
+  "extension.command.decodeHtmlHexEntities.title": "HTML hexadecimális entitások dekódolása (&#x0012;)",
+  "extension.command.encodeHtmlDecimalEntities.title": "HTML decimális entitások kódolása (&#123;)",
+  "extension.command.decodeHtmlDecimalEntities.title": "HTML decimális entitások dekódolása (&#123;)",
+  "extension.command.encodeUnicodeEscapeSequences.title": "Unicode escape szekvenciák kódolása (\\UXXXXXXXX, \\uXXXX)",
+  "extension.command.decodeUnicodeEscapeSequences.title": "Unicode escape szekvenciák dekódolása (\\UXXXXXXXX, \\uXXXX)",
+  "extension.command.encodeCssUnicodeEscape.title": "CSS Unicode escape szekvenciák kódolása (\\XXXXXX)",
+  "extension.command.decodeCssUnicodeEscape.title": "CSS Unicode escape szekvenciák dekódolása (\\XXXXXX)",
+  "extension.command.encodeUnicodeCodePoints.title": "Unicode kódpontok kódolása (U+XXXX)",
+  "extension.command.decodeUnicodeCodePoints.title": "Unicode kódpontok dekódolása (U+XXXX)"
 }

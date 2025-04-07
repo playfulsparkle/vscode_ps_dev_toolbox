@@ -80,21 +80,25 @@ export function removeNonPrintableCharacters(text: string): string {
 
     // Use a single pass with a string builder approach
     let result = "";
+
     const len = text.length;
 
     for (let i = 0; i < len; i++) {
         const char = text.charAt(i);
+
         const charCode = text.charCodeAt(i);
 
         // Fast track for common ASCII printable characters
         if (charCode >= 32 && charCode <= 126) {
             result += char;
+
             continue;
         }
 
         // Handle whitespace that we want to keep
         if (charCode === 9 || charCode === 10 || charCode === 13) {
             result += char;
+
             continue;
         }
 
@@ -217,8 +221,8 @@ export function base64Decode(text: string): string {
     }
 }
 
-export function isValidBase64(str: string): boolean {
-    return /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/.test(str);
+export function isValidBase64(text: string): boolean {
+    return /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/.test(text);
 }
 
 /**
@@ -241,7 +245,7 @@ export function urlEncode(text: string): string {
  */
 export function urlDecode(text: string): string {
     if (typeof text !== "string") {
-        return text;
+        return "";
     }
 
     return decodeURIComponent(text);
@@ -259,4 +263,339 @@ export function generateGuid(): string {
 
         return result.toString(16);
     }).toUpperCase();
+}
+
+/**
+ * Converts a string to HTML/XML entity representation using hexadecimal code points.
+ * Handles ASCII characters, Unicode characters, emojis, and composite emojis.
+ *
+ * @param text The string to encode.
+ * @returns The encoded string with each code point represented as a hexadecimal entity (e.g., "&#x0012;").
+ */
+export function encodeHtmlHexEntities(text: string): string {
+    if (typeof text !== "string") {
+        return text;
+    }
+
+    let result = "";
+
+    // Process the string code point by code point, not character by character
+    for (let i = 0; i < text.length;) {
+        const codePoint = text.codePointAt(i);
+
+        if (codePoint === undefined) {
+            i++;
+
+            continue;
+        }
+
+        // Format the code point as a hex entity
+        result += `&#x${codePoint.toString(16).toUpperCase().padStart(4, "0")};`;
+
+        // Move to the next code point
+        // For surrogate pairs (like emojis), this will move ahead by 2
+        i += codePoint > 0xFFFF ? 2 : 1;
+    }
+
+    return result;
+}
+
+/**
+ * Converts a string with HTML/XML hexadecimal or decimal entity representations back to the original string.
+ *
+ * @param text The string with HTML/XML entities to decode (e.g., "&#x0012;").
+ * @returns The decoded string with original characters.
+ */
+export function decodeHtmlHexEntities(text: string): string {
+    if (typeof text !== "string") {
+        return "";
+    }
+
+    // Pattern to match both hex (&#x[0-9a-fA-F]+;) entities
+    return text.replace(/&#x([0-9a-fA-F]+);/g, (match, hex, decimal) => {
+        if (hex !== undefined) {
+            // Convert hex entity to character
+            return String.fromCodePoint(parseInt(hex, 16));
+        } else if (decimal !== undefined) {
+            // Convert decimal entity to character
+            return String.fromCodePoint(parseInt(decimal, 10));
+        }
+
+        return match; // This should never happen given the regex
+    });
+}
+
+/**
+ * Converts a string to HTML/XML entity representation using decimal code points.
+ * Handles ASCII characters, Unicode characters, emojis, and composite emojis.
+ *
+ * @param text The string to encode.
+ * @returns The encoded string with each code point represented as a decimal entity (e.g., "&#123;").
+ */
+export function encodeHtmlDecimalEntities(text: string): string {
+    if (typeof text !== "string") {
+        return text;
+    }
+
+    let result = "";
+
+    // Process the string code point by code point, not character by character
+    for (let i = 0; i < text.length;) {
+        const codePoint = text.codePointAt(i);
+
+        if (codePoint === undefined) {
+            i++;
+
+            continue;
+        }
+
+        // Format the code point as a decimal entity (without leading zeros)
+        result += `&#${codePoint};`;
+
+        // Move to the next code point
+        // For surrogate pairs (like emojis), this will move ahead by 2
+        i += codePoint > 0xFFFF ? 2 : 1;
+    }
+
+    return result;
+}
+
+/**
+ * Converts a string with HTML/XML decimal entity representations back to the original string.
+ * Handles decimal entities (e.g., "&#123;").
+ *
+ * @param text The string with HTML/XML decimal entities to decode.
+ * @returns The decoded string with original characters.
+ */
+export function decodeHtmlDecimalEntities(text: string): string {
+    if (typeof text !== "string") {
+        return "";
+    }
+
+    // Pattern to match decimal entities (&#[0-9]+;)
+    return text.replace(/&#([0-9]+);/g, (match, decimal) => {
+        try {
+            const codePoint = parseInt(decimal, 10);
+
+            return String.fromCodePoint(codePoint);
+        } catch (error) {
+            // If conversion fails (invalid code point), return the original match
+            return match;
+        }
+    });
+}
+
+/**
+ * Encodes characters in a string to their Unicode escape sequences.
+ * ASCII characters remain unchanged, BMP characters are encoded as "\\uXXXX" (uppercase hex),
+ * and characters in supplementary planes are encoded as "\\UXXXXXXXX" (lowercase hex).
+ *
+ * @param text The string to encode.
+ * @returns The encoded string with Unicode escape sequences.
+ */
+export function encodeUnicodeEscapeSequences(text: string): string {
+    if (typeof text !== "string") {
+        return text;
+    }
+
+    let result = "";
+
+    for (let i = 0; i < text.length;) {
+        const codePoint = text.codePointAt(i);
+
+        if (codePoint === undefined) {
+            i++;
+
+            continue;
+        }
+
+        if (codePoint <= 127) {
+            // ASCII characters remain unchanged
+            result += text[i];
+
+            i++;
+        } else if (codePoint <= 0xFFFF) {
+            // BMP characters (including ZWJ and variation selectors)
+            // Convert to hex and ensure uppercase for specific ranges
+            const hexCode = codePoint.toString(16).padStart(4, "0");
+
+            // Use uppercase for all non-digits in the hex string
+            const formattedHex = hexCode.replace(/[a-f]/g, char => char.toUpperCase());
+
+            result += `\\u${formattedHex}`;
+            i++;
+        } else {
+            // Characters in supplementary planes
+            const hexCode = codePoint.toString(16).padStart(8, "0");
+
+            result += `\\U${hexCode}`; // All lowercase for supplementary planes
+
+            // Skip the surrogate pair (2 JavaScript "characters")
+            i += 2;
+        }
+    }
+
+    return result;
+}
+
+/**
+ * Decodes a string containing Unicode escape sequences (both "\\Uxxxxxxxx" and "\\uxxxx") back to the original characters.
+ *
+ * @param text The string with Unicode escape sequences.
+ * @returns The decoded string with original characters.
+ */
+export function decodeUnicodeEscapeSequences(text: string): string {
+    if (typeof text !== "string") {
+        return "";
+    }
+
+    // Pattern matches both \Uxxxxxxxx and \uxxxx formats, case insensitive for hex digits
+    return text.replace(/\\U([0-9a-fA-F]{8})|\\u([0-9a-fA-F]{4})/gi, (_, u8, u4) => {
+        if (u8) {
+            return String.fromCodePoint(parseInt(u8, 16));
+        } else if (u4) {
+            return String.fromCharCode(parseInt(u4, 16));
+        }
+
+        return "";
+    });
+}
+
+/**
+ * Converts a string with emojis and special characters to CSS Unicode escape sequences.
+ * Non-ASCII characters (excluding non-breaking space) and characters outside the BMP are encoded as "\\XXXXXX " (uppercase hex).
+ *
+ * @param text The input string containing emojis and special characters.
+ * @returns A string with CSS Unicode escape sequences.
+ */
+export function encodeCssUnicodeEscape(text: string): string {
+    if (typeof text !== "string") {
+        return text;
+    }
+
+    let result = "";
+
+    // Process each character in the input string
+    for (let i = 0; i < text.length; i++) {
+        const code = text.codePointAt(i);
+
+        if (code === undefined) { continue; }
+
+        // Handle surrogate pairs and other special characters
+        if (code > 0xFFFF) {
+            // This is a character outside the BMP (Basic Multilingual Plane)
+            const hex = code.toString(16).padStart(6, "0").toUpperCase();
+
+            result += `\\${hex} `;
+            // Skip the low surrogate
+            i++;
+        } else if (code > 127 && code !== 160) { // 160 is non-breaking space
+            // This is a non-ASCII character
+            const hex = code.toString(16).padStart(4, "0").toUpperCase();
+
+            result += `\\${hex} `;
+        } else {
+            // Regular ASCII character or space
+            result += text.charAt(i);
+        }
+    }
+
+    return result; // Trim any trailing space added by the last escape
+}
+
+/**
+ * Converts a string containing CSS Unicode escape sequences back to the original string with emojis and special characters.
+ * Matches Unicode escape sequences in the format "\\XXXX " or "\\XXXXXX ".
+ *
+ * @param text The input string containing CSS Unicode escape sequences.
+ * @returns A string with emojis and special characters.
+ */
+export function decodeCssUnicodeEscape(text: string): string {
+    if (typeof text !== "string") {
+        return "";
+    }
+
+    // Match Unicode escape sequences followed by an optional space
+    return text.replace(/\\([0-9a-fA-F]{4,6}) ?/g, (_, hexCode) => {
+        const codePoint = parseInt(hexCode, 16);
+
+        return String.fromCodePoint(codePoint);
+    });
+}
+
+/**
+ * Encodes a string into a CSS Unicode code point sequence in the format "U+XXXX".
+ * Each character's code point is converted to its hexadecimal representation (uppercase, padded to 4 digits) and prefixed with "U+".
+ * The resulting code points are joined by spaces.
+ *
+ * @param text The input string to encode.
+ * @returns The CSS Unicode code point string.
+ */
+export function encodeUnicodeCodePoints(text: string): string {
+    if (typeof text !== "string") {
+        return text;
+    }
+
+    return Array.from(text)
+        .map((char) => {
+            const codePoint = char.codePointAt(0);
+
+            if (codePoint === undefined) {
+                throw new Error("Invalid Unicode character");
+            }
+
+            return "U+" + codePoint.toString(16).toUpperCase().padStart(4, "0");
+        })
+        .join(" ");
+}
+
+/**
+ * Decodes a CSS Unicode code point sequence (e.g., "U+0041 U+1F600") back to a string.
+ * Each token in the sequence (separated by spaces) is expected to be in the format "U+XXXX" (4 to 6 hexadecimal digits).
+ * Surrogate code points are handled as individual code units. Code points exceeding the Unicode maximum will throw an error.
+ *
+ * @param text The CSS Unicode code point string to decode.
+ * @returns The decoded string.
+ */
+export function decodeUnicodeCodePoints(text: string): string {
+    if (typeof text !== "string") {
+        return "";
+    }
+
+    const codePoints = text.split(" ").map((token) => {
+        if (!/^U\+[0-9A-Fa-f]{4,6}$/.test(token)) {
+            throw new Error(`Invalid CSS Unicode token: ${token}`);
+        }
+
+        const hex = token.slice(2);
+
+        const codePoint = parseInt(hex, 16);
+
+        if (isNaN(codePoint) || codePoint < 0x0000) {
+            throw new Error(`Invalid code point: ${token}`);
+        }
+
+        return codePoint;
+    });
+
+    let result = "";
+
+    for (const cp of codePoints) {
+        if (cp >= 0xd800 && cp <= 0xdfff) {
+            // Handle surrogate code points as individual code units
+            result += String.fromCharCode(cp);
+        } else {
+            if (cp > 0x10ffff) {
+                throw new Error(`Code point U+${cp.toString(16).toUpperCase()} exceeds Unicode maximum`);
+            }
+
+            try {
+                result += String.fromCodePoint(cp);
+            } catch (e) {
+                throw new Error(`Invalid Unicode code point: U+${cp.toString(16).toUpperCase()}`);
+            }
+        }
+    }
+
+    return result;
 }

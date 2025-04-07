@@ -20,5 +20,15 @@
     "extension.command.removeEmptyLinesDocument.title": "从文档中删除空行",
     "extension.command.removeEmptyLinesSelection.title": "从选定内容中删除空行",
     "extension.command.removeNonPrintableChars.title": "删除不可打印字符",
-    "extension.command.removeLeadingTrailingWhitespace.title": "删除前导和尾随空格"
+    "extension.command.removeLeadingTrailingWhitespace.title": "删除前导和尾随空格",
+    "extension.command.encodeHtmlHexEntities.title": "编码 HTML 十六进制实体 (&#x0012;)",
+    "extension.command.decodeHtmlHexEntities.title": "解码 HTML 十六进制实体 (&#x0012;)",
+    "extension.command.encodeHtmlDecimalEntities.title": "编码 HTML 十进制实体 (&#123;)",
+    "extension.command.decodeHtmlDecimalEntities.title": "解码 HTML 十进制实体 (&#123;)",
+    "extension.command.encodeUnicodeEscapeSequences.title": "编码 Unicode 转义序列 (\\UXXXXXXXX, \\uXXXX)",
+    "extension.command.decodeUnicodeEscapeSequences.title": "解码 Unicode 转义序列 (\\UXXXXXXXX, \\uXXXX)",
+    "extension.command.encodeCssUnicodeEscape.title": "编码 CSS Unicode 转义序列 (\\XXXXXX)",
+    "extension.command.decodeCssUnicodeEscape.title": "解码 CSS Unicode 转义序列 (\\XXXXXX)",
+    "extension.command.encodeUnicodeCodePoints.title": "编码 Unicode 代码点 (U+XXXX)",
+    "extension.command.decodeUnicodeCodePoints.title": "解码 Unicode 代码点 (U+XXXX)"
 }

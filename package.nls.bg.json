@@ -20,5 +20,15 @@
   "extension.command.removeEmptyLinesDocument.title": "Премахване на празни редове от документа",
   "extension.command.removeEmptyLinesSelection.title": "Премахване на празни редове от селекцията",
   "extension.command.removeNonPrintableChars.title": "Премахване на непечатаеми символи",
-  "extension.command.removeLeadingTrailingWhitespace.title": "Премахване на водещи и крайни интервали"
+  "extension.command.removeLeadingTrailingWhitespace.title": "Премахване на водещи и крайни интервали",
+  "extension.command.encodeHtmlHexEntities.title": "Кодиране на HTML шестнадесетични обекти (&#x0012;)",
+  "extension.command.decodeHtmlHexEntities.title": "Декодиране на HTML шестнадесетични обекти (&#x0012;)",
+  "extension.command.encodeHtmlDecimalEntities.title": "Кодиране на HTML десетични обекти (&#123;)",
+  "extension.command.decodeHtmlDecimalEntities.title": "Декодиране на HTML десетични обекти (&#123;)",
+  "extension.command.encodeUnicodeEscapeSequences.title": "Кодиране на Unicode екраниращи последователности (\\UXXXXXXXX, \\uXXXX)",
+  "extension.command.decodeUnicodeEscapeSequences.title": "Декодиране на Unicode екраниращи последователности (\\UXXXXXXXX, \\uXXXX)",
+  "extension.command.encodeCssUnicodeEscape.title": "Кодиране на CSS Unicode екраниращи последователности (\\XXXXXX)",
+  "extension.command.decodeCssUnicodeEscape.title": "Декодиране на CSS Unicode екраниращи последователности (\\XXXXXX)",
+  "extension.command.encodeUnicodeCodePoints.title": "Кодиране на Unicode кодови точки (U+XXXX)",
+  "extension.command.decodeUnicodeCodePoints.title": "Декодиране на Unicode кодови точки (U+XXXX)"
 }

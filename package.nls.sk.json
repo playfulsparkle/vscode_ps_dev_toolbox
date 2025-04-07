@@ -20,5 +20,15 @@
   "extension.command.removeEmptyLinesDocument.title": "Odstrániť prázdne riadky z dokumentu",
   "extension.command.removeEmptyLinesSelection.title": "Odstrániť prázdne riadky z výberu",
   "extension.command.removeNonPrintableChars.title": "Odstrániť netlačiteľné znaky",
-  "extension.command.removeLeadingTrailingWhitespace.title": "Odstrániť úvodné a koncové znaky medzery"
+  "extension.command.removeLeadingTrailingWhitespace.title": "Odstrániť úvodné a koncové znaky medzery",
+  "extension.command.encodeHtmlHexEntities.title": "Zakódovať HTML hexadecimálne entity (&#x0012;)",
+  "extension.command.decodeHtmlHexEntities.title": "Dekódovať HTML hexadecimálne entity (&#x0012;)",
+  "extension.command.encodeHtmlDecimalEntities.title": "Zakódovať HTML desatinné entity (&#123;)",
+  "extension.command.decodeHtmlDecimalEntities.title": "Dekódovať HTML desatinné entity (&#123;)",
+  "extension.command.encodeUnicodeEscapeSequences.title": "Zakódovať Unicode únikové sekvencie (\\UXXXXXXXX, \\uXXXX)",
+  "extension.command.decodeUnicodeEscapeSequences.title": "Dekódovať Unicode únikové sekvencie (\\UXXXXXXXX, \\uXXXX)",
+  "extension.command.encodeCssUnicodeEscape.title": "Zakódovať CSS Unicode únikové sekvencie (\\XXXXXX)",
+  "extension.command.decodeCssUnicodeEscape.title": "Dekódovať CSS Unicode únikové sekvencie (\\XXXXXX)",
+  "extension.command.encodeUnicodeCodePoints.title": "Zakódovať Unicode kódové body (U+XXXX)",
+  "extension.command.decodeUnicodeCodePoints.title": "Dekódovať Unicode kódové body (U+XXXX)"
 }

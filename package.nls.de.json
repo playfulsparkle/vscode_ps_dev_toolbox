@@ -20,5 +20,15 @@
   "extension.command.removeEmptyLinesDocument.title": "Leere Zeilen aus Dokument entfernen",
   "extension.command.removeEmptyLinesSelection.title": "Leere Zeilen aus Auswahl entfernen",
   "extension.command.removeNonPrintableChars.title": "Nicht druckbare Zeichen entfernen",
-  "extension.command.removeLeadingTrailingWhitespace.title": "Führende und nachfolgende Leerzeichen entfernen"
+  "extension.command.removeLeadingTrailingWhitespace.title": "Führende und nachfolgende Leerzeichen entfernen",
+  "extension.command.encodeHtmlHexEntities.title": "HTML-Hexadezimal-Entities kodieren (&#x0012;)",
+  "extension.command.decodeHtmlHexEntities.title": "HTML-Hexadezimal-Entities dekodieren (&#x0012;)",
+  "extension.command.encodeHtmlDecimalEntities.title": "HTML-Dezimal-Entities kodieren (&#123;)",
+  "extension.command.decodeHtmlDecimalEntities.title": "HTML-Dezimal-Entities dekodieren (&#123;)",
+  "extension.command.encodeUnicodeEscapeSequences.title": "Unicode-Escape-Sequenzen kodieren (\\UXXXXXXXX, \\uXXXX)",
+  "extension.command.decodeUnicodeEscapeSequences.title": "Unicode-Escape-Sequenzen dekodieren (\\UXXXXXXXX, \\uXXXX)",
+  "extension.command.encodeCssUnicodeEscape.title": "CSS-Unicode-Escape-Sequenzen kodieren (\\XXXXXX)",
+  "extension.command.decodeCssUnicodeEscape.title": "CSS-Unicode-Escape-Sequenzen dekodieren (\\XXXXXX)",
+  "extension.command.encodeUnicodeCodePoints.title": "Unicode-Codepoints kodieren (U+XXXX)",
+  "extension.command.decodeUnicodeCodePoints.title": "Unicode-Codepoints dekodieren (U+XXXX)"
 }
