@@ -30,5 +30,11 @@
   "extension.command.encodeCssUnicodeEscape.title": "Encode CSS Unicode Escape Sequences (\\XXXXXX)",
   "extension.command.decodeCssUnicodeEscape.title": "Decode CSS Unicode Escape Sequences (\\XXXXXX)",
   "extension.command.encodeUnicodeCodePoints.title": "Encode Unicode Code Points (U+XXXX)",
-  "extension.command.decodeUnicodeCodePoints.title": "Decode Unicode Code Points (U+XXXX)"
+  "extension.command.decodeUnicodeCodePoints.title": "Decode Unicode Code Points (U+XXXX)",
+  "extension.command.encodeES6UnicodeCodePointEscape.title": "Encode ES6 Unicode Code Point Escape Sequences (\\u{XXXXXX})",
+  "extension.command.decodeES6UnicodeCodePointEscape.title": "Decode ES6 Unicode Code Point Escape Sequences (\\u{XXXXXX})",
+  "extension.command.encodeExtendedHexEscape.title": "Encode Extended Hex Escape Sequences (\\x{XXXXXX})",
+  "extension.command.decodeExtendedHexEscape.title": "Decode Extended Hex Escape Sequences (\\x{XXXXXX})",
+  "extension.command.encodeHexCodePoints.title": "Encode Hex Code Points (0xXXXX)",
+  "extension.command.decodeHexCodePoints.title": "Decode Hex Code Points (0xXXXX)"
 }

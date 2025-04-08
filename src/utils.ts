@@ -1,3 +1,5 @@
+import * as namedentities from "./namedentities";
+
 declare global {
     interface String {
         safeToLowerCase(locale?: string | string[]): string;
@@ -263,6 +265,90 @@ export function generateGuid(): string {
 
         return result.toString(16);
     }).toUpperCase();
+}
+
+/**
+ * Encodes a string to HTML entities, using named entities where possible and hexadecimal entities otherwise.
+ * @param text The input string to encode.
+ * @returns The encoded string with HTML entities.
+ */
+export function encodeToHtmlEntities(text: string): string {
+    let result = "";
+    for (let i = 0; i < text.length;) {
+        const codePoint = text.codePointAt(i);
+        if (codePoint === undefined) {
+            result += text[i];
+            i++;
+            continue;
+        }
+        const entityName = namedentities.codePointToEntityName[codePoint];
+        if (entityName) {
+            result += `&${entityName};`;
+        } else {
+            result += `&#x${codePoint.toString(16).toUpperCase().padStart(4, "0")};`;
+        }
+        i += codePoint > 0xFFFF ? 2 : 1;
+    }
+    return result;
+}
+
+/**
+ * Decodes a string containing HTML entities back to the original characters.
+ * @param text The input string with HTML entities to decode.
+ * @returns The decoded string.
+ */
+export function decodeHtmlEntities(text: string): string {
+    let result = "";
+    let i = 0;
+    while (i < text.length) {
+        if (text[i] === "&") {
+            const end = text.indexOf(";", i + 1);
+            if (end === -1) {
+                result += text[i];
+                i++;
+                continue;
+            }
+            const entity = text.slice(i, end + 1);
+            let codePoint: number | undefined;
+
+            // Check named entity
+            const nameMatch = entity.match(/^&([A-Za-z]+);$/);
+            if (nameMatch) {
+                const name = nameMatch[1].toLowerCase();
+                codePoint = namedentities.entityNameToCodePoint[name];
+            } else {
+                // Check hex entity
+                const hexMatch = entity.match(/^&#x([0-9A-Fa-f]+);$/i);
+                if (hexMatch) {
+                    codePoint = parseInt(hexMatch[1], 16);
+                } else {
+                    // Check decimal entity
+                    const decMatch = entity.match(/^&#(\d+);$/);
+                    if (decMatch) {
+                        codePoint = parseInt(decMatch[1], 10);
+                    }
+                }
+            }
+
+            if (codePoint !== undefined && !isNaN(codePoint)) {
+                try {
+                    result += String.fromCodePoint(codePoint);
+                    i = end + 1;
+                    continue;
+                } catch {
+                    // Invalid code point, fall through
+                }
+            }
+
+            // Append the original entity if it's invalid
+            result += entity;
+            i = end + 1;
+        } else {
+            result += text[i];
+            i++;
+        }
+    }
+    return result;
 }
 
 /**

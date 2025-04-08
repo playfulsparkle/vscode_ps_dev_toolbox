@@ -1,6 +1,5 @@
 import * as vscode from "vscode";
 import * as utils from "./utils";
-import { text } from "stream/consumers";
 
 
 /** Activates the extension
@@ -30,6 +29,12 @@ export function activate(context: vscode.ExtensionContext) {
 		DecodeCssUnicodeEscape = "ps-dev-toolbox.decodeCssUnicodeEscape",
 		EncodeUnicodeCodePoints = "ps-dev-toolbox.encodeUnicodeCodePoints",
 		DecodeUnicodeCodePoints = "ps-dev-toolbox.decodeUnicodeCodePoints",
+		EncodeES6UnicodeCodePointEscape = "ps-dev-toolbox.encodeES6UnicodeCodePointEscape",
+		DecodeES6UnicodeCodePointEscape = "ps-dev-toolbox.decodeES6UnicodeCodePointEscape",
+		EncodeExtendedHexEscape = "ps-dev-toolbox.encodeExtendedHexEscape",
+		DecodeExtendedHexEscape = "ps-dev-toolbox.decodeExtendedHexEscape",
+		EncodeHexCodePoints = "ps-dev-toolbox.encodeHexCodePoints",
+		DecodeHexCodePoints = "ps-dev-toolbox.decodeHexCodePoints"
 	}
 
 	// Create a factory function for text transformation commands
@@ -331,6 +336,12 @@ export function activate(context: vscode.ExtensionContext) {
 		[CommandId.DecodeCssUnicodeEscape]: createTextTransformCommand(utils.decodeCssUnicodeEscape),
 		[CommandId.EncodeUnicodeCodePoints]: createTextTransformCommand(utils.encodeUnicodeCodePoints),
 		[CommandId.DecodeUnicodeCodePoints]: createTextTransformCommand(utils.decodeUnicodeCodePoints),
+		[CommandId.EncodeES6UnicodeCodePointEscape]: createTextTransformCommand(utils.encodeES6UnicodeCodePointEscape),
+		[CommandId.DecodeES6UnicodeCodePointEscape]: createTextTransformCommand(utils.decodeES6UnicodeCodePointEscape),
+		[CommandId.EncodeExtendedHexEscape]: createTextTransformCommand(utils.encodeExtendedHexEscape),
+		[CommandId.DecodeExtendedHexEscape]: createTextTransformCommand(utils.decodeExtendedHexEscape),
+		[CommandId.EncodeHexCodePoints]: createTextTransformCommand(utils.encodeHexCodePoints),
+		[CommandId.DecodeHexCodePoints]: createTextTransformCommand(utils.decodeHexCodePoints)
 	};
 
 	// Register all commands
