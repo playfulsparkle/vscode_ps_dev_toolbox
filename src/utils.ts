@@ -7,6 +7,10 @@ declare global {
     }
 }
 
+const re = {
+    base64: /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/
+};
+
 if (!String.prototype.safeToLowerCase) {
     String.prototype.safeToLowerCase = function (locale?: string | string[]): string {
         return this.toLocaleLowerCase(locale);
@@ -224,7 +228,7 @@ export function base64Decode(text: string): string {
 }
 
 export function isValidBase64(text: string): boolean {
-    return /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/.test(text);
+    return re.base64.test(text);
 }
 
 /**
@@ -268,25 +272,38 @@ export function generateGuid(): string {
 }
 
 /**
- * Encodes a string to HTML entities, using named entities where possible and hexadecimal entities otherwise.
- * @param text The input string to encode.
- * @returns The encoded string with HTML entities.
+ * Converts a string to HTML/XML entity representation using named HTML entities.
+ * Handles common named HTML entities.
+ *
+ * @param text The string to encode.
+ * @returns The encoded string with named HTML entities (e.g., "&amp;" for "&").
  */
-export function encodeToHtmlEntities(text: string): string {
+export function encodeNamedHtmlEntities(text: string): string {
+    if (typeof text !== "string") {
+        return text;
+    }
+
     let result = "";
+
     for (let i = 0; i < text.length;) {
         const codePoint = text.codePointAt(i);
+
         if (codePoint === undefined) {
             result += text[i];
+
             i++;
+
             continue;
         }
+
         // Preserve control characters (0x00-0x1F) and space (0x20)
         if (codePoint <= 0x20) {
             result += text[i];
+
             i++;
         } else {
             const entityName = namedentities.codePointToEntityName[codePoint];
+
             if (entityName) {
                 result += `&${entityName};`;
             } else {
@@ -298,45 +315,64 @@ export function encodeToHtmlEntities(text: string): string {
                     result += `&#x${codePoint.toString(16).toUpperCase().padStart(4, "0")};`;
                 }
             }
+
             // Move to the next code point, handling surrogate pairs
             i += codePoint > 0xFFFF ? 2 : 1;
         }
     }
+
     return result;
 }
 
 /**
- * Decodes a string containing HTML entities back to the original characters.
- * @param text The input string with HTML entities to decode.
- * @returns The decoded string.
+ * Converts a string containing named HTML/XML entities back to the original string.
+ * Handles common named HTML entities.
+ *
+ * @param text The string to decode.
+ * @returns The decoded string with named HTML entities resolved.
  */
-export function decodeHtmlEntities(text: string): string {
+export function decodeNamedHtmlEntities(text: string): string {
+    if (typeof text !== "string") {
+        return "";
+    }
+
     let result = "";
+
     let i = 0;
+
     while (i < text.length) {
         if (text[i] === "&") {
             const end = text.indexOf(";", i + 1);
+
             if (end === -1) {
                 result += text[i];
+
                 i++;
+
                 continue;
             }
+
             const entity = text.slice(i, end + 1);
+
             let codePoint: number | undefined;
 
             // Check named entity
             const nameMatch = entity.match(/^&([A-Za-z]+);$/);
+
             if (nameMatch) {
                 const name = nameMatch[1];
+
                 codePoint = namedentities.entityNameToCodePoint[name];
             } else {
                 // Check hex entity
-                const hexMatch = entity.match(/^&#x([0-9A-Fa-f]+);$/i);
+                const hexMatch = entity.match(/^&#x([0-9A-Fa-f]+);$/);
+
                 if (hexMatch) {
                     codePoint = parseInt(hexMatch[1], 16);
                 } else {
                     // Check decimal entity
                     const decMatch = entity.match(/^&#(\d+);$/);
+
                     if (decMatch) {
                         codePoint = parseInt(decMatch[1], 10);
                     }
@@ -346,7 +382,9 @@ export function decodeHtmlEntities(text: string): string {
             if (codePoint !== undefined && !isNaN(codePoint)) {
                 try {
                     result += String.fromCodePoint(codePoint);
+
                     i = end + 1;
+
                     continue;
                 } catch {
                     // Invalid code point, fall through
@@ -355,12 +393,15 @@ export function decodeHtmlEntities(text: string): string {
 
             // Append the original entity if it's invalid
             result += entity;
+
             i = end + 1;
         } else {
             result += text[i];
+
             i++;
         }
     }
+
     return result;
 }
 
@@ -560,7 +601,7 @@ export function decodeJavaScriptUnicodeEscapes(text: string): string {
     }
 
     // Pattern matches both \Uxxxxxxxx and \uxxxx formats, case insensitive for hex digits
-    return text.replace(/\\U([0-9a-fA-F]{8})|\\u([0-9a-fA-F]{4})/gi, (_, u8, u4) => {
+    return text.replace(/\\U([0-9a-fA-F]{8})|\\u([0-9a-fA-F]{4})/g, (_, u8, u4) => {
         if (u8) {
             return String.fromCodePoint(parseInt(u8, 16));
         } else if (u4) {
@@ -684,41 +725,40 @@ export function decodeUnicodeCodePoints(text: string): string {
         return "";
     }
 
-    return text.replace(
-        /(U\+[0-9A-Fa-f]{4,6}(?:\s+U\+[0-9A-Fa-f]{4,6})*)/gi,
-        (match) => {
-            // Split code point sequence into individual tokens
-            const tokens = match.split(/\s+/);
+    return text.replace(/(U\+[0-9A-Fa-f]{4,6}(?:\s+U\+[0-9A-Fa-f]{4,6})*)/g, match => {
+        // Split code point sequence into individual tokens
+        const tokens = match.split(/\s+/);
 
-            const characters = tokens.map(token => {
-                // Validate token format
-                if (!/^U\+[0-9A-Fa-f]{4,6}$/i.test(token)) {
-                    throw new Error(`Invalid Unicode token: ${token}`);
-                }
+        const characters = tokens.map(token => {
+            // Validate token format
+            if (!/^U\+[0-9A-Fa-f]{4,6}$/.test(token)) {
+                throw new Error(`Invalid Unicode token: ${token}`);
+            }
 
-                const hex = token.slice(2);
-                const codePoint = parseInt(hex, 16);
+            const hex = token.slice(2);
 
-                // Validate numerical range
-                if (isNaN(codePoint) || codePoint < 0x0000 || codePoint > 0x10FFFF) {
-                    throw new Error(`Invalid code point: ${token}`);
-                }
+            const codePoint = parseInt(hex, 16);
 
-                // Handle surrogate pairs
-                if (codePoint >= 0xD800 && codePoint <= 0xDFFF) {
-                    return String.fromCharCode(codePoint);
-                }
+            // Validate numerical range
+            if (isNaN(codePoint) || codePoint < 0x0000 || codePoint > 0x10FFFF) {
+                throw new Error(`Invalid code point: ${token}`);
+            }
 
-                // Convert valid code points
-                try {
-                    return String.fromCodePoint(codePoint);
-                } catch (e) {
-                    throw new Error(`Invalid code point: ${token}`);
-                }
-            });
+            // Handle surrogate pairs
+            if (codePoint >= 0xD800 && codePoint <= 0xDFFF) {
+                return String.fromCharCode(codePoint);
+            }
 
-            return characters.join("");
-        }
+            // Convert valid code points
+            try {
+                return String.fromCodePoint(codePoint);
+            } catch (e) {
+                throw new Error(`Invalid code point: ${token}`);
+            }
+        });
+
+        return characters.join("");
+    }
     );
 }
 
@@ -728,26 +768,31 @@ export function decodeUnicodeCodePoints(text: string): string {
  * including those beyond the Basic Multilingual Plane (BMP).
  * All control characters (0x00-0x1F) and space (0x20) are preserved as-is.
  * 
- * @param {string} str - The string to encode
+ * @param {string} text - The string to encode
  * @returns {string} - The encoded string with Unicode escape sequences
  * @see decodeES6UnicodeCodePointEscape
  */
-export function encodeES6UnicodeCodePointEscape(str: string): string {
-    if (typeof str !== "string") {
-        return str;
+export function encodeES6UnicodeCodePointEscape(text: string): string {
+    if (typeof text !== "string") {
+        return text;
     }
+
     let result = "";
-    for (const char of str) {
+
+    for (const char of text) {
+
         const codePoint = char.codePointAt(0);
+
         if (codePoint === undefined) {
             continue;
         }
 
         // Preserve all control characters (0x00-0x1F) and space (0x20)
-        if (codePoint <= 0x20) {
+        if (codePoint <= 127) {
             result += char;
         } else {
             const hex = codePoint.toString(16).toUpperCase();
+
             result += `\\u{${hex}}`;
         }
     }
@@ -759,22 +804,22 @@ export function encodeES6UnicodeCodePointEscape(str: string): string {
  * This decodes escape sequences introduced in ES6/ES2015 that can represent
  * any Unicode code point, including those beyond the Basic Multilingual Plane.
  * 
- * @param {string} encodedStr - The string with Unicode escape sequences to decode
+ * @param {string} text - The string with Unicode escape sequences to decode
  * @returns {string} - The decoded string with actual Unicode characters
  * @see encodeES6UnicodeCodePointEscape
  */
-export function decodeES6UnicodeCodePointEscape(encodedStr: string): string {
-    if (typeof encodedStr !== "string") {
+export function decodeES6UnicodeCodePointEscape(text: string): string {
+    if (typeof text !== "string") {
         return "";
     }
 
-    return encodedStr.replace(/\\u\{([0-9A-Fa-f]+)\}/gi, (_, hex) => {
+    return text.replace(/\\u\{([0-9A-Fa-f]+)\}/g, (_, hex) => {
         const codePoint = parseInt(hex, 16);
 
         try {
             return String.fromCodePoint(codePoint);
         } catch (e) {
-            return "\uFFFD"; // Replacement character for invalid code points
+            return "";
         }
     });
 }
@@ -785,29 +830,34 @@ export function decodeES6UnicodeCodePointEscape(encodedStr: string): string {
  * languages like Perl and PHP. It's implemented here as a custom format.
  * All control characters (0x00-0x1F) and space (0x20) are preserved as-is.
  * 
- * @param {string} str - The string to encode
+ * @param {string} text - The string to encode
  * @returns {string} - The encoded string with hexadecimal escape sequences
  * @see decodeExtendedHexEscape
  */
-export function encodeExtendedHexEscape(str: string): string {
-    if (typeof str !== "string") {
-        return str;
+export function encodeExtendedHexEscape(text: string): string {
+    if (typeof text !== "string") {
+        return text;
     }
+
     let result = "";
-    for (const char of str) {
+
+    for (const char of text) {
         const codePoint = char.codePointAt(0);
+
         if (codePoint === undefined) {
             continue;
         }
 
         // Preserve all control characters (0x00-0x1F) and space (0x20)
-        if (codePoint <= 0x20) {
+        if (codePoint <= 127) {
             result += char;
         } else {
             const hex = codePoint.toString(16).toUpperCase();
+
             result += `\\x{${hex}}`;
         }
     }
+
     return result;
 }
 
@@ -816,22 +866,22 @@ export function encodeExtendedHexEscape(str: string): string {
  * Note that this format is not standard JavaScript syntax but is implemented here
  * as a custom format similar to what's used in languages like Perl and PHP.
  * 
- * @param {string} encodedStr - The string with hexadecimal escape sequences to decode
+ * @param {string} text - The string with hexadecimal escape sequences to decode
  * @returns {string} - The decoded string with actual Unicode characters
  * @see encodeExtendedHexEscape
  */
-export function decodeExtendedHexEscape(encodedStr: string): string {
-    if (typeof encodedStr !== "string") {
+export function decodeExtendedHexEscape(text: string): string {
+    if (typeof text !== "string") {
         return "";
     }
 
-    return encodedStr.replace(/\\x\{([0-9A-Fa-f]+)\}/gi, (_, hex) => {
+    return text.replace(/\\x\{([0-9A-Fa-f]+)\}/g, (_, hex) => {
         const codePoint = parseInt(hex, 16);
 
         try {
             return String.fromCodePoint(codePoint);
         } catch (e) {
-            return "\uFFFD"; // Replacement character for invalid code points
+            return "";
         }
     });
 }
@@ -840,18 +890,21 @@ export function decodeExtendedHexEscape(encodedStr: string): string {
  * Encodes a string into a sequence of hexadecimal representations of its Unicode code points,
  * prefixed with "0x". Control characters (U+0000 to U+001F) are preserved as is.
  *
- * @param {string} str The string to encode.
+ * @param {string} text The string to encode.
  * @param {boolean} [separate=false] If true, each encoded code point will be separated by a space.
  * @returns {string} The encoded string. If the input is not a string, it is returned as is.
  * @see decodeHexCodePoints
  */
-export function encodeHexCodePoints(str: string, separate: boolean = false): string {
-    if (typeof str !== "string") {
-        return str;
+export function encodeHexCodePoints(text: string, separate: boolean = false): string {
+    if (typeof text !== "string") {
+        return text;
     }
+
     let result = "";
-    for (const char of str) {
+
+    for (const char of text) {
         const codePoint = char.codePointAt(0);
+
         if (codePoint === undefined) {
             continue;
         }
@@ -861,9 +914,11 @@ export function encodeHexCodePoints(str: string, separate: boolean = false): str
             result += char;
         } else {
             const hex = codePoint.toString(16).toUpperCase();
+
             result += `0x${hex}` + (separate ? " " : "");
         }
     }
+
     return result.trimEnd();
 }
 
@@ -873,21 +928,22 @@ export function encodeHexCodePoints(str: string, separate: boolean = false): str
  * These representations can optionally be separated by spaces.
  * Invalid hexadecimal values will be replaced with the Unicode replacement character (U+FFFD).
  *
- * @param {string} encodedStr The string to decode.
+ * @param {string} text The string to decode.
  * @returns {string} The decoded string. If the input is not a string, an empty string is returned.
  * @see encodeHexCodePoints
  */
-export function decodeHexCodePoints(encodedStr: string): string {
-    if (typeof encodedStr !== "string") {
+export function decodeHexCodePoints(text: string): string {
+    if (typeof text !== "string") {
         return "";
     }
 
-    return encodedStr.replace(/0x([0-9A-Fa-f]+)\s*(?=0x|$)/gi, (_, hex) => {
+    return text.replace(/0x([0-9A-Fa-f]+)\s*(?=0x|$)/g, (_, hex) => {
         const codePoint = parseInt(hex, 16);
+
         try {
             return String.fromCodePoint(codePoint);
         } catch (e) {
-            return "\uFFFD"; // Replacement character for invalid code points
+            return "";
         }
     });
 }

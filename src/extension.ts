@@ -19,6 +19,8 @@ export function activate(context: vscode.ExtensionContext) {
 		RemoveEmptyLinesSelection = "ps-dev-toolbox.removeEmptyLinesSelection",
 		RemoveNonPrintableChars = "ps-dev-toolbox.removeNonPrintableChars",
 		RemoveLeadingTrailingWhitespace = "ps-dev-toolbox.removeLeadingTrailingWhitespace",
+		EncodeNamedHtmlEntities = "ps-dev-toolbox.encodeNamedHtmlEntities",
+		DecodeNamedHtmlEntities = "ps-dev-toolbox.decodeNamedHtmlEntities",
 		EncodeHtmlHexEntities = "ps-dev-toolbox.encodeHtmlHexEntities",
 		DecodeHtmlHexEntities = "ps-dev-toolbox.decodeHtmlHexEntities",
 		EncodeHtmlDecimalEntities = "ps-dev-toolbox.encodeHtmlDecimalEntities",
@@ -291,7 +293,7 @@ export function activate(context: vscode.ExtensionContext) {
 		},
 		[CommandId.MakeUppercase]: async () => {
 			const localesInput = await localesPrompt();
-			
+
 			return processTextInEditor(text => utils.safeToUppercase(text, localesInput));
 		},
 		[CommandId.Base64Encode]: createTextTransformCommand(utils.base64Encode),
@@ -326,6 +328,8 @@ export function activate(context: vscode.ExtensionContext) {
 		[CommandId.RemoveEmptyLinesSelection]: async () => removeEmptyLinesCommand(true),
 		[CommandId.RemoveNonPrintableChars]: removeNonPrintableCharactersCommand,
 		[CommandId.RemoveLeadingTrailingWhitespace]: removeLeadingTrailingWhitespaceCommand,
+		[CommandId.EncodeNamedHtmlEntities]: createTextTransformCommand(utils.encodeNamedHtmlEntities),
+		[CommandId.DecodeNamedHtmlEntities]: createTextTransformCommand(utils.decodeNamedHtmlEntities),
 		[CommandId.EncodeHtmlHexEntities]: createTextTransformCommand(utils.encodeHtmlHexEntities),
 		[CommandId.DecodeHtmlHexEntities]: createTextTransformCommand(utils.decodeHtmlHexEntities),
 		[CommandId.EncodeHtmlDecimalEntities]: createTextTransformCommand(utils.encodeHtmlDecimalEntities),
