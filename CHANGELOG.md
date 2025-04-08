@@ -2,6 +2,23 @@
 
 All notable changes to the "Playful Sparkle: Dev Toolbox" extension will be documented in this file.
 
+## [0.0.6] - 2025-04-08
+
+* **GUID Generation Enhancements:** Added support for three new GUID formats:
+    * Registry format: `{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}`
+    * Square brackets format: `[Guid("xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx")]`
+    * Less than sign format: `<Guid("xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx")>`
+* **New Encoding/Decoding Features:** Introduced support for the following character encoding and decoding schemes:
+    * Named HTML Entities (e.g., `<>` to `&lt;&gt;`)
+    * HTML Hex Entities (e.g., `!` to `&#x21;`)
+    * HTML Decimal Entities (e.g., `"` to `&#34;`)
+    * JavaScript Unicode Escape Sequences (e.g., `$` to `\u0024`)
+    * CSS Unicode Escape Sequences (e.g., `#` to `\0023`)
+    * Unicode Code Points (e.g., `%` to `U+0025`)
+    * ES6 Unicode Code Point Escape Sequences (e.g., `&` to `\u{26}`)
+    * Extended Hex Escape Sequences (e.g., `'` to `\x{27}`)
+    * Hex Code Points (e.g., `(` to `0x28`)
+
 ## [0.0.5] - 2025-04-03
 
 * **Enhanced Visuals:** The extension's icon color theme has been updated, providing a more polished and consistent look.

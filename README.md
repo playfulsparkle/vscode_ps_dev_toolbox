@@ -85,7 +85,6 @@ If you encounter any of these or other issues, please report them on the [GitHub
     * Extended Hex Escape Sequences (e.g., `'` to `\x{27}`)
     * Hex Code Points (e.g., `(` to `0x28`)
 
-
 ### 0.0.5
 
 * **Enhanced Visuals:** The extension's icon color theme has been updated, providing a more polished and consistent look.
