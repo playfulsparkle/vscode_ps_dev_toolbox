@@ -3,9 +3,19 @@ import * as utils from "../utils";
 
 suite("Dev Toolbox Tests", () => {
 	suite("Encode/Decode to named HTML Entities", () => {
-		test("Complex ascii, unicode, emoji characters", () => {
-			assert.strictEqual(utils.encodeToHtmlEntities("Foo © bar ß baz & qux < > 🍎 🏴󠁧󠁢󠁷󠁬󠁳󠁿 éá 🝫"), "");
-			assert.strictEqual(utils.decodeHtmlEntities(""), "Foo © bar ß baz & qux < > 🍎 🏴󠁧󠁢󠁷󠁬󠁳󠁿 éá 🝫");
+		test("Complex ascii lowercase, unicode, emoji characters", () => {
+			assert.strictEqual(utils.encodeToHtmlEntities("foo © bar ß baz & qux <> 🍎 🏴󠁧󠁢󠁷󠁬󠁳󠁿 éáőú 𝛲🝲"), "foo &copy; bar &szlig; baz &amp; qux &lt;&gt; &#x1F34E; &#x1F3F4;&#xE0067;&#xE0062;&#xE0077;&#xE006C;&#xE0073;&#xE007F; &eacute;&aacute;&odblac;&uacute; &#x1D6F2;&#x1F772;");
+			assert.strictEqual(utils.decodeHtmlEntities("foo &copy; bar &szlig; baz &amp; qux &lt;&gt; &#x1F34E; &#x1F3F4;&#xE0067;&#xE0062;&#xE0077;&#xE006C;&#xE0073;&#xE007F; &eacute;&aacute;&odblac;&uacute; &#x1D6F2;&#x1F772;"), "foo © bar ß baz & qux <> 🍎 🏴󠁧󠁢󠁷󠁬󠁳󠁿 éáőú 𝛲🝲");
+		});
+
+		test("Complex ascii uppercase, unicode, emoji characters", () => {
+			assert.strictEqual(utils.encodeToHtmlEntities("FOO © BAR SS BAZ & QUX <> 🍎 🏴󠁧󠁢󠁷󠁬󠁳󠁿 ÉÁŐÚ 𝛲🝲"), "FOO &copy; BAR SS BAZ &amp; QUX &lt;&gt; &#x1F34E; &#x1F3F4;&#xE0067;&#xE0062;&#xE0077;&#xE006C;&#xE0073;&#xE007F; &Eacute;&Aacute;&Odblac;&Uacute; &#x1D6F2;&#x1F772;");
+			assert.strictEqual(utils.decodeHtmlEntities("FOO &copy; BAR SS BAZ &amp; QUX &lt;&gt; &#x1F34E; &#x1F3F4;&#xE0067;&#xE0062;&#xE0077;&#xE006C;&#xE0073;&#xE007F; &Eacute;&Aacute;&Odblac;&Uacute; &#x1D6F2;&#x1F772;"), "FOO © BAR SS BAZ & QUX <> 🍎 🏴󠁧󠁢󠁷󠁬󠁳󠁿 ÉÁŐÚ 𝛲🝲");
+		});
+
+		test("Complex accented html entities", () => {
+			assert.strictEqual(utils.encodeToHtmlEntities("ôňúäéíáýžťčšľÔŇÚÄÉÍÁÝŽŤČŠĽéáűőúóüöíÉÁŰŐÚÓÜÖÍ"), "&ocirc;&ncaron;&uacute;&auml;&eacute;&iacute;&aacute;&yacute;&zcaron;&tcaron;&ccaron;&scaron;&lcaron;&Ocirc;&Ncaron;&Uacute;&Auml;&Eacute;&Iacute;&Aacute;&Yacute;&Zcaron;&Tcaron;&Ccaron;&Scaron;&Lcaron;&eacute;&aacute;&udblac;&odblac;&uacute;&oacute;&uuml;&ouml;&iacute;&Eacute;&Aacute;&Udblac;&Odblac;&Uacute;&Oacute;&Uuml;&Ouml;&Iacute;");
+			assert.strictEqual(utils.decodeHtmlEntities("&ocirc;&ncaron;&uacute;&auml;&eacute;&iacute;&aacute;&yacute;&zcaron;&tcaron;&ccaron;&scaron;&lcaron;&Ocirc;&Ncaron;&Uacute;&Auml;&Eacute;&Iacute;&Aacute;&Yacute;&Zcaron;&Tcaron;&Ccaron;&Scaron;&Lcaron;&eacute;&aacute;&udblac;&odblac;&uacute;&oacute;&uuml;&ouml;&iacute;&Eacute;&Aacute;&Udblac;&Odblac;&Uacute;&Oacute;&Uuml;&Ouml;&Iacute;"), "ôňúäéíáýžťčšľÔŇÚÄÉÍÁÝŽŤČŠĽéáűőúóüöíÉÁŰŐÚÓÜÖÍ");
 		});
 	});
 

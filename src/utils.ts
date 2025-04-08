@@ -281,13 +281,26 @@ export function encodeToHtmlEntities(text: string): string {
             i++;
             continue;
         }
-        const entityName = namedentities.codePointToEntityName[codePoint];
-        if (entityName) {
-            result += `&${entityName};`;
+        // Preserve control characters (0x00-0x1F) and space (0x20)
+        if (codePoint <= 0x20) {
+            result += text[i];
+            i++;
         } else {
-            result += `&#x${codePoint.toString(16).toUpperCase().padStart(4, "0")};`;
+            const entityName = namedentities.codePointToEntityName[codePoint];
+            if (entityName) {
+                result += `&${entityName};`;
+            } else {
+                // Check if the code point is ASCII printable (0x21-0x7E)
+                if (codePoint <= 0x7E) {
+                    result += String.fromCodePoint(codePoint);
+                } else {
+                    // Non-ASCII, encode as hex entity
+                    result += `&#x${codePoint.toString(16).toUpperCase().padStart(4, "0")};`;
+                }
+            }
+            // Move to the next code point, handling surrogate pairs
+            i += codePoint > 0xFFFF ? 2 : 1;
         }
-        i += codePoint > 0xFFFF ? 2 : 1;
     }
     return result;
 }
@@ -314,7 +327,7 @@ export function decodeHtmlEntities(text: string): string {
             // Check named entity
             const nameMatch = entity.match(/^&([A-Za-z]+);$/);
             if (nameMatch) {
-                const name = nameMatch[1].toLowerCase();
+                const name = nameMatch[1];
                 codePoint = namedentities.entityNameToCodePoint[name];
             } else {
                 // Check hex entity
