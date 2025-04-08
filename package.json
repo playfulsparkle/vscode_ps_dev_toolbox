@@ -159,14 +159,14 @@
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },
       {
-        "command": "ps-dev-toolbox.encodeUnicodeEscapeSequences",
-        "title": "%extension.command.encodeUnicodeEscapeSequences.title%",
+        "command": "ps-dev-toolbox.encodeJavaScriptUnicodeEscapes",
+        "title": "%extension.command.encodeJavaScriptUnicodeEscapes.title%",
         "category": "Playful Sparkle",
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },
       {
-        "command": "ps-dev-toolbox.decodeUnicodeEscapeSequences",
-        "title": "%extension.command.decodeUnicodeEscapeSequences.title%",
+        "command": "ps-dev-toolbox.decodeJavaScriptUnicodeEscapes",
+        "title": "%extension.command.decodeJavaScriptUnicodeEscapes.title%",
         "category": "Playful Sparkle",
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },

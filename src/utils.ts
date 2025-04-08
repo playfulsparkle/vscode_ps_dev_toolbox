@@ -268,6 +268,7 @@ export function generateGuid(): string {
 /**
  * Converts a string to HTML/XML entity representation using hexadecimal code points.
  * Handles ASCII characters, Unicode characters, emojis, and composite emojis.
+ * Creates entities in the format &#xXXXX; where XXXX is the hexadecimal code point.
  *
  * @param text The string to encode.
  * @returns The encoded string with each code point represented as a hexadecimal entity (e.g., "&#x0012;").
@@ -301,7 +302,8 @@ export function encodeHtmlHexEntities(text: string): string {
 }
 
 /**
- * Converts a string with HTML/XML hexadecimal or decimal entity representations back to the original string.
+ * Converts a string with HTML/XML hexadecimal entity representations back to the original string.
+ * Decodes entities in the format &#xXXXX; where XXXX is the hexadecimal code point.
  *
  * @param text The string with HTML/XML entities to decode (e.g., "&#x0012;").
  * @returns The decoded string with original characters.
@@ -328,6 +330,7 @@ export function decodeHtmlHexEntities(text: string): string {
 /**
  * Converts a string to HTML/XML entity representation using decimal code points.
  * Handles ASCII characters, Unicode characters, emojis, and composite emojis.
+ * Creates entities in the format &#123; where 123 is the decimal code point.
  *
  * @param text The string to encode.
  * @returns The encoded string with each code point represented as a decimal entity (e.g., "&#123;").
@@ -362,7 +365,7 @@ export function encodeHtmlDecimalEntities(text: string): string {
 
 /**
  * Converts a string with HTML/XML decimal entity representations back to the original string.
- * Handles decimal entities (e.g., "&#123;").
+ * Decodes entities in the format &#123; where 123 is the decimal code point.
  *
  * @param text The string with HTML/XML decimal entities to decode.
  * @returns The decoded string with original characters.
@@ -386,14 +389,18 @@ export function decodeHtmlDecimalEntities(text: string): string {
 }
 
 /**
- * Encodes characters in a string to their Unicode escape sequences.
- * ASCII characters remain unchanged, BMP characters are encoded as "\\uXXXX" (uppercase hex),
- * and characters in supplementary planes are encoded as "\\UXXXXXXXX" (lowercase hex).
+ * Encodes characters in a string to their JavaScript Unicode escape sequences.
+ * - ASCII characters remain unchanged
+ * - BMP characters are encoded as "\\uXXXX" (Basic Multilingual Plane, uppercase hex)
+ * - Characters in supplementary planes are encoded as "\\UXXXXXXXX" (lowercase hex)
+ * 
+ * These formats are standard in JavaScript (\uXXXX) and some other languages like C# (\UXXXXXXXX).
  *
  * @param text The string to encode.
  * @returns The encoded string with Unicode escape sequences.
+ * @see decodeJavaScriptUnicodeEscapes
  */
-export function encodeUnicodeEscapeSequences(text: string): string {
+export function encodeJavaScriptUnicodeEscapes(text: string): string {
     if (typeof text !== "string") {
         return text;
     }
@@ -439,12 +446,16 @@ export function encodeUnicodeEscapeSequences(text: string): string {
 }
 
 /**
- * Decodes a string containing Unicode escape sequences (both "\\Uxxxxxxxx" and "\\uxxxx") back to the original characters.
+ * Decodes a string containing JavaScript Unicode escape sequences back to the original characters.
+ * Handles both:
+ * - "\\uXXXX" format (4 hex digits) for BMP characters
+ * - "\\UXXXXXXXX" format (8 hex digits) for supplementary plane characters
  *
  * @param text The string with Unicode escape sequences.
  * @returns The decoded string with original characters.
+ * @see encodeJavaScriptUnicodeEscapes
  */
-export function decodeUnicodeEscapeSequences(text: string): string {
+export function decodeJavaScriptUnicodeEscapes(text: string): string {
     if (typeof text !== "string") {
         return "";
     }
@@ -462,11 +473,15 @@ export function decodeUnicodeEscapeSequences(text: string): string {
 }
 
 /**
- * Converts a string with emojis and special characters to CSS Unicode escape sequences.
- * Non-ASCII characters (excluding non-breaking space) and characters outside the BMP are encoded as "\\XXXXXX " (uppercase hex).
+ * Converts a string to CSS Unicode escape sequences.
+ * Non-ASCII characters (excluding non-breaking space) and characters outside the BMP 
+ * are encoded as "\\XXXXXX " (uppercase hex followed by a space).
+ * 
+ * This is the standard escape format used in CSS for representing Unicode characters.
  *
  * @param text The input string containing emojis and special characters.
  * @returns A string with CSS Unicode escape sequences.
+ * @see decodeCssUnicodeEscape
  */
 export function encodeCssUnicodeEscape(text: string): string {
     if (typeof text !== "string") {
@@ -504,11 +519,13 @@ export function encodeCssUnicodeEscape(text: string): string {
 }
 
 /**
- * Converts a string containing CSS Unicode escape sequences back to the original string with emojis and special characters.
- * Matches Unicode escape sequences in the format "\\XXXX " or "\\XXXXXX ".
+ * Converts a string containing CSS Unicode escape sequences back to the original string.
+ * Matches Unicode escape sequences in the format "\\XXXX " or "\\XXXXXX " 
+ * (hex digits followed by an optional space).
  *
  * @param text The input string containing CSS Unicode escape sequences.
- * @returns A string with emojis and special characters.
+ * @returns A string with the original characters, including emojis and special characters.
+ * @see encodeCssUnicodeEscape
  */
 export function decodeCssUnicodeEscape(text: string): string {
     if (typeof text !== "string") {
@@ -524,12 +541,15 @@ export function decodeCssUnicodeEscape(text: string): string {
 }
 
 /**
- * Encodes a string into a Unicode code point sequence in the format "U+XXXX".
- * Each character's code point is converted to its hexadecimal representation (uppercase, padded to 4 digits) and prefixed with "U+".
+ * Encodes a string into a Unicode code point notation sequence in the format "U+XXXX".
+ * Each character's code point is converted to its hexadecimal representation 
+ * (uppercase, padded to 4 digits) and prefixed with "U+".
+ * This is the standard format used in Unicode specifications and documentation.
  * The resulting code points are joined by spaces.
  *
  * @param text The input string to encode.
- * @returns The Unicode code point string.
+ * @returns The Unicode code point notation string (e.g., "U+0041 U+1F600").
+ * @see decodeUnicodeCodePoints
  */
 export function encodeUnicodeCodePoints(text: string): string {
     if (typeof text !== "string") {
@@ -550,12 +570,15 @@ export function encodeUnicodeCodePoints(text: string): string {
 }
 
 /**
- * Decodes a Unicode code point sequence (e.g., "U+0041 U+1F600") back to a string.
- * Each token in the sequence (separated by spaces) is expected to be in the format "U+XXXX" (4 to 6 hexadecimal digits).
- * Surrogate code points are handled as individual code units. Code points exceeding the Unicode maximum will throw an error.
+ * Decodes a Unicode code point notation sequence back to a string.
+ * Each token in the sequence (separated by spaces) is expected to be in the 
+ * format "U+XXXX" (4 to 6 hexadecimal digits).
+ * This format is the standard notation used in Unicode specifications and documentation.
+ * Surrogate code points are handled as individual code units.
  *
- * @param text The Unicode code point string to decode.
- * @returns The decoded string.
+ * @param text The Unicode code point notation string to decode (e.g., "U+0041 U+1F600").
+ * @returns The decoded string with the original characters.
+ * @see encodeUnicodeCodePoints
  */
 export function decodeUnicodeCodePoints(text: string): string {
     if (typeof text !== "string") {
@@ -567,7 +590,7 @@ export function decodeUnicodeCodePoints(text: string): string {
         (match) => {
             // Split code point sequence into individual tokens
             const tokens = match.split(/\s+/);
-            
+
             const characters = tokens.map(token => {
                 // Validate token format
                 if (!/^U\+[0-9A-Fa-f]{4,6}$/i.test(token)) {
@@ -598,4 +621,174 @@ export function decodeUnicodeCodePoints(text: string): string {
             return characters.join("");
         }
     );
+}
+
+/**
+ * Encodes a string into ES6 Unicode code point escape sequences using \u{XXXX} format.
+ * This format was introduced in ES6/ES2015 and can represent any Unicode code point,
+ * including those beyond the Basic Multilingual Plane (BMP).
+ * All control characters (0x00-0x1F) and space (0x20) are preserved as-is.
+ * 
+ * @param {string} str - The string to encode
+ * @returns {string} - The encoded string with Unicode escape sequences
+ * @see decodeES6UnicodeCodePointEscape
+ */
+export function encodeES6UnicodeCodePointEscape(str: string): string {
+    if (typeof str !== "string") {
+        return str;
+    }
+    let result = "";
+    for (const char of str) {
+        const codePoint = char.codePointAt(0);
+        if (codePoint === undefined) {
+            continue;
+        }
+
+        // Preserve all control characters (0x00-0x1F) and space (0x20)
+        if (codePoint <= 0x20) {
+            result += char;
+        } else {
+            const hex = codePoint.toString(16).toUpperCase();
+            result += `\\u{${hex}}`;
+        }
+    }
+    return result;
+}
+
+/**
+ * Decodes a string containing ES6 Unicode code point escape sequences in \u{XXXX} format.
+ * This decodes escape sequences introduced in ES6/ES2015 that can represent
+ * any Unicode code point, including those beyond the Basic Multilingual Plane.
+ * 
+ * @param {string} encodedStr - The string with Unicode escape sequences to decode
+ * @returns {string} - The decoded string with actual Unicode characters
+ * @see encodeES6UnicodeCodePointEscape
+ */
+export function decodeES6UnicodeCodePointEscape(encodedStr: string): string {
+    if (typeof encodedStr !== "string") {
+        return "";
+    }
+
+    return encodedStr.replace(/\\u\{([0-9A-Fa-f]+)\}/gi, (_, hex) => {
+        const codePoint = parseInt(hex, 16);
+
+        try {
+            return String.fromCodePoint(codePoint);
+        } catch (e) {
+            return "\uFFFD"; // Replacement character for invalid code points
+        }
+    });
+}
+
+/**
+ * Encodes a string into extended hexadecimal escape sequences using \x{XXXX} format.
+ * Note that this format is not standard JavaScript syntax but is common in other
+ * languages like Perl and PHP. It's implemented here as a custom format.
+ * All control characters (0x00-0x1F) and space (0x20) are preserved as-is.
+ * 
+ * @param {string} str - The string to encode
+ * @returns {string} - The encoded string with hexadecimal escape sequences
+ * @see decodeExtendedHexEscape
+ */
+export function encodeExtendedHexEscape(str: string): string {
+    if (typeof str !== "string") {
+        return str;
+    }
+    let result = "";
+    for (const char of str) {
+        const codePoint = char.codePointAt(0);
+        if (codePoint === undefined) {
+            continue;
+        }
+
+        // Preserve all control characters (0x00-0x1F) and space (0x20)
+        if (codePoint <= 0x20) {
+            result += char;
+        } else {
+            const hex = codePoint.toString(16).toUpperCase();
+            result += `\\x{${hex}}`;
+        }
+    }
+    return result;
+}
+
+/**
+ * Decodes a string containing extended hexadecimal escape sequences in \x{XXXX} format.
+ * Note that this format is not standard JavaScript syntax but is implemented here
+ * as a custom format similar to what's used in languages like Perl and PHP.
+ * 
+ * @param {string} encodedStr - The string with hexadecimal escape sequences to decode
+ * @returns {string} - The decoded string with actual Unicode characters
+ * @see encodeExtendedHexEscape
+ */
+export function decodeExtendedHexEscape(encodedStr: string): string {
+    if (typeof encodedStr !== "string") {
+        return "";
+    }
+
+    return encodedStr.replace(/\\x\{([0-9A-Fa-f]+)\}/gi, (_, hex) => {
+        const codePoint = parseInt(hex, 16);
+
+        try {
+            return String.fromCodePoint(codePoint);
+        } catch (e) {
+            return "\uFFFD"; // Replacement character for invalid code points
+        }
+    });
+}
+
+/**
+ * Encodes a string into a sequence of hexadecimal representations of its Unicode code points,
+ * prefixed with "0x". Control characters (U+0000 to U+001F) are preserved as is.
+ *
+ * @param {string} str The string to encode.
+ * @param {boolean} [separate=false] If true, each encoded code point will be separated by a space.
+ * @returns {string} The encoded string. If the input is not a string, it is returned as is.
+ * @see decodeHexCodePoints
+ */
+export function encodeHexCodePoints(str: string, separate: boolean = false): string {
+    if (typeof str !== "string") {
+        return str;
+    }
+    let result = "";
+    for (const char of str) {
+        const codePoint = char.codePointAt(0);
+        if (codePoint === undefined) {
+            continue;
+        }
+
+        // Preserve all control characters (0x00-0x1F)
+        if (codePoint <= 0x1F) {
+            result += char;
+        } else {
+            const hex = codePoint.toString(16).toUpperCase();
+            result += `0x${hex}` + (separate ? " " : "");
+        }
+    }
+    return result.trimEnd();
+}
+
+/**
+ * Decodes a string containing hexadecimal representations of Unicode code points,
+ * where each code point is represented as "0x[hexadecimal value]".
+ * These representations can optionally be separated by spaces.
+ * Invalid hexadecimal values will be replaced with the Unicode replacement character (U+FFFD).
+ *
+ * @param {string} encodedStr The string to decode.
+ * @returns {string} The decoded string. If the input is not a string, an empty string is returned.
+ * @see encodeHexCodePoints
+ */
+export function decodeHexCodePoints(encodedStr: string): string {
+    if (typeof encodedStr !== "string") {
+        return "";
+    }
+
+    return encodedStr.replace(/0x([0-9A-Fa-f]+)\s*(?=0x|$)/gi, (_, hex) => {
+        const codePoint = parseInt(hex, 16);
+        try {
+            return String.fromCodePoint(codePoint);
+        } catch (e) {
+            return "\uFFFD"; // Replacement character for invalid code points
+        }
+    });
 }
