@@ -2,6 +2,10 @@
 
 All notable changes to the "Playful Sparkle: Dev Toolbox" extension will be documented in this file.
 
+## [0.0.7] - 2025-04-08
+
+* **Update:** encode/decode named HTML entity, encode/decode HTML hex entity, encode/decode decimal entity, encode/decode JavaScript unicode escape, encode/decode CSS unicode escape, encode/decode code point, encode ES6 unicode code point escape, encode/decode extended hex escape and encode/decode hex code point now work using multi cursor.
+
 ## [0.0.6] - 2025-04-08
 
 * **GUID Generation Enhancements:** Added support for three new GUID formats:

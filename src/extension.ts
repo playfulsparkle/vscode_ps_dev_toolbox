@@ -219,7 +219,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 	// Search backward from cursor position to find first non-empty line
 	const getCursorFirstNoneEmptyLine = (line: number, document: vscode.TextDocument) => {
-		let startLine = line - 1;
+		const startLine = line - 1;
 
 		if (startLine < 0) {
 			return 0; // Default to first line if all lines before cursor are empty
@@ -238,7 +238,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 	// Search forward from cursor position to find first non-empty line
 	const getCursorLastNoneEmptyLine = (line: number, document: vscode.TextDocument) => {
-		let startLine = line + 1;
+		const startLine = line + 1;
 
 		if (startLine >= document.lineCount) {
 			return document.lineCount - 1; // Default to last line if all lines after cursor are empty
@@ -328,24 +328,24 @@ export function activate(context: vscode.ExtensionContext) {
 		[CommandId.RemoveEmptyLinesSelection]: async () => removeEmptyLinesCommand(true),
 		[CommandId.RemoveNonPrintableChars]: removeNonPrintableCharactersCommand,
 		[CommandId.RemoveLeadingTrailingWhitespace]: removeLeadingTrailingWhitespaceCommand,
-		[CommandId.EncodeNamedHtmlEntities]: createTextTransformCommand(utils.encodeNamedHtmlEntities),
-		[CommandId.DecodeNamedHtmlEntities]: createTextTransformCommand(utils.decodeNamedHtmlEntities),
-		[CommandId.EncodeHtmlHexEntities]: createTextTransformCommand(utils.encodeHtmlHexEntities),
-		[CommandId.DecodeHtmlHexEntities]: createTextTransformCommand(utils.decodeHtmlHexEntities),
-		[CommandId.EncodeHtmlDecimalEntities]: createTextTransformCommand(utils.encodeHtmlDecimalEntities),
-		[CommandId.DecodeHtmlDecimalEntities]: createTextTransformCommand(utils.decodeHtmlDecimalEntities),
-		[CommandId.encodeJavaScriptUnicodeEscapes]: createTextTransformCommand(utils.encodeJavaScriptUnicodeEscapes),
-		[CommandId.decodeJavaScriptUnicodeEscapes]: createTextTransformCommand(utils.decodeJavaScriptUnicodeEscapes),
-		[CommandId.EncodeCssUnicodeEscape]: createTextTransformCommand(utils.encodeCssUnicodeEscape),
-		[CommandId.DecodeCssUnicodeEscape]: createTextTransformCommand(utils.decodeCssUnicodeEscape),
-		[CommandId.EncodeUnicodeCodePoints]: createTextTransformCommand(utils.encodeUnicodeCodePoints),
-		[CommandId.DecodeUnicodeCodePoints]: createTextTransformCommand(utils.decodeUnicodeCodePoints),
-		[CommandId.EncodeES6UnicodeCodePointEscape]: createTextTransformCommand(utils.encodeES6UnicodeCodePointEscape),
-		[CommandId.DecodeES6UnicodeCodePointEscape]: createTextTransformCommand(utils.decodeES6UnicodeCodePointEscape),
-		[CommandId.EncodeExtendedHexEscape]: createTextTransformCommand(utils.encodeExtendedHexEscape),
-		[CommandId.DecodeExtendedHexEscape]: createTextTransformCommand(utils.decodeExtendedHexEscape),
-		[CommandId.EncodeHexCodePoints]: createTextTransformCommand(utils.encodeHexCodePoints),
-		[CommandId.DecodeHexCodePoints]: createTextTransformCommand(utils.decodeHexCodePoints)
+		[CommandId.EncodeNamedHtmlEntities]: async () => processTextInEditor(utils.encodeNamedHtmlEntities),
+		[CommandId.DecodeNamedHtmlEntities]: async () => processTextInEditor(utils.decodeNamedHtmlEntities),
+		[CommandId.EncodeHtmlHexEntities]: async () => processTextInEditor(utils.encodeHtmlHexEntities),
+		[CommandId.DecodeHtmlHexEntities]: async () => processTextInEditor(utils.decodeHtmlHexEntities),
+		[CommandId.EncodeHtmlDecimalEntities]: async () => processTextInEditor(utils.encodeHtmlDecimalEntities),
+		[CommandId.DecodeHtmlDecimalEntities]: async () => processTextInEditor(utils.decodeHtmlDecimalEntities),
+		[CommandId.encodeJavaScriptUnicodeEscapes]: async () => processTextInEditor(utils.encodeJavaScriptUnicodeEscapes),
+		[CommandId.decodeJavaScriptUnicodeEscapes]: async () => processTextInEditor(utils.decodeJavaScriptUnicodeEscapes),
+		[CommandId.EncodeCssUnicodeEscape]: async () => processTextInEditor(utils.encodeCssUnicodeEscape),
+		[CommandId.DecodeCssUnicodeEscape]: async () => processTextInEditor(utils.decodeCssUnicodeEscape),
+		[CommandId.EncodeUnicodeCodePoints]: async () => processTextInEditor(utils.encodeUnicodeCodePoints),
+		[CommandId.DecodeUnicodeCodePoints]: async () => processTextInEditor(utils.decodeUnicodeCodePoints),
+		[CommandId.EncodeES6UnicodeCodePointEscape]: async () => processTextInEditor(utils.encodeES6UnicodeCodePointEscape),
+		[CommandId.DecodeES6UnicodeCodePointEscape]: async () => processTextInEditor(utils.decodeES6UnicodeCodePointEscape),
+		[CommandId.EncodeExtendedHexEscape]: async () => processTextInEditor(utils.encodeExtendedHexEscape),
+		[CommandId.DecodeExtendedHexEscape]: async () => processTextInEditor(utils.decodeExtendedHexEscape),
+		[CommandId.EncodeHexCodePoints]: async () => processTextInEditor(utils.encodeHexCodePoints),
+		[CommandId.DecodeHexCodePoints]: async () => processTextInEditor(utils.decodeHexCodePoints)
 	};
 
 	// Register all commands
