@@ -71,49 +71,76 @@ export function removeNonPrintableCharacters(text: string): string {
         return text;
     }
 
-    // Pre-build a lookup Set for fast character checking
-    const controlAndInvisibleChars = new Set([
-        // C0 controls (0-31)
-        ...Array.from({ length: 32 }, (_, i) => i),
-        // DEL and C1 controls (127-159)
-        ...Array.from({ length: 33 }, (_, i) => i + 127),
-        // Zero-width and special control characters
-        0x200B, 0x200C, 0x200D, 0x200E, 0x200F, 0x2028, 0x2029, 0xFEFF,
-        // Invisible whitespace characters
-        0x00A0, 0x1680, 0x180E, 0x2000, 0x2001, 0x2002, 0x2003, 0x2004,
-        0x2005, 0x2006, 0x2007, 0x2008, 0x2009, 0x200A, 0x202F, 0x205F, 0x3000
+    // Set of control characters and invisible whitespace (including \u0000 and \u200B)
+    const replaceWithSpace = new Set<number>([
+        // C0 controls (0x00-0x1F) excluding tab, lf, cr
+        ...Array.from({ length: 32 }, (_, i) => i).filter(c => ![9, 10, 13].includes(c)),
+        // DEL and C1 controls (0x7F-0x9F)
+        ...Array.from({ length: 33 }, (_, i) => i + 0x7F),
+        // Special whitespace and invisible characters
+        0x00A0, 0x1680, 0x180E, 0x2000, 0x2001, 0x2002, 0x2003, 0x2004, 0x2005,
+        0x2006, 0x2007, 0x2008, 0x2009, 0x200A, 0x200B, 0x202F, 0x205F, 0x3000,
+        0xFEFF, 0xFFFE, 0xFFFF
     ]);
 
-    // Use a single pass with a string builder approach
-    let result = "";
+    // Characters that should be preserved only when part of larger clusters
+    const preserveInClusters = new Set<number>([
+        0x200C, 0x200D,  // ZWJ/ZWNJ
+        ...Array.from({ length: 16 }, (_, i) => 0xFE00 + i)  // Variation selectors
+    ]);
 
+    let result = "";
+    let i = 0;
     const len = text.length;
 
-    for (let i = 0; i < len; i++) {
-        const char = text.charAt(i);
+    while (i < len) {
+        const code = text.charCodeAt(i);
+        
+        // Handle surrogate pairs
+        if (code >= 0xD800 && code <= 0xDBFF && i + 1 < len) {
+            const nextCode = text.charCodeAt(i + 1);
+            if (nextCode >= 0xDC00 && nextCode <= 0xDFFF) {
+                // Valid surrogate pair
+                const codePoint = (code - 0xD800) * 0x400 + (nextCode - 0xDC00) + 0x10000;
+                if (replaceWithSpace.has(codePoint)) {
+                    result += " ";
+                } else {
+                    result += text[i] + text[i + 1];
+                }
+                i += 2;
+                continue;
+            }
+        }
 
-        const charCode = text.charCodeAt(i);
-
-        // Fast track for common ASCII printable characters
-        if (charCode >= 32 && charCode <= 126) {
-            result += char;
-
+        // Handle invalid surrogates
+        if ((code >= 0xDC00 && code <= 0xDFFF) ||  // Lone low surrogate
+            (code >= 0xD800 && code <= 0xDBFF)) { // Lone high surrogate
+            i++;
             continue;
         }
 
-        // Handle whitespace that we want to keep
-        if (charCode === 9 || charCode === 10 || charCode === 13) {
-            result += char;
-
+        // Handle characters that need replacement
+        if (replaceWithSpace.has(code)) {
+            result += " ";
+            i++;
             continue;
         }
 
-        // Check Unicode characters against our lookup set
-        if (charCode >= 128 && !controlAndInvisibleChars.has(charCode)) {
-            result += char;
+        // Handle characters that should be preserved only in clusters
+        if (preserveInClusters.has(code)) {
+            // Check if previous or next character forms a cluster
+            const isInCluster = 
+                (i > 0 && !replaceWithSpace.has(text.charCodeAt(i - 1))) ||
+                (i < len - 1 && !replaceWithSpace.has(text.charCodeAt(i + 1)));
+
+            result += isInCluster ? text[i] : " ";
+            i++;
+            continue;
         }
 
-        // All other characters are excluded (non-printable)
+        // Keep all other valid characters
+        result += text[i];
+        i++;
     }
 
     return result;

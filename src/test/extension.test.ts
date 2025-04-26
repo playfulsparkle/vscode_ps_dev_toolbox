@@ -230,7 +230,7 @@ suite("Dev Toolbox Tests", () => {
 	suite("Remove Non-Printable Characters", () => {
 		test("removes non-printable characters", () => {
 			const input = "Hello\u0000 World\u200B!";
-			const expected = "Hello World!";
+			const expected = "Hello  World !";
 			assert.strictEqual(utils.removeNonPrintableCharacters(input), expected);
 		});
 

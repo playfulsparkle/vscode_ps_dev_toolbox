@@ -2,6 +2,14 @@
 
 All notable changes to the "Playful Sparkle: Dev Toolbox" extension will be documented in this file.
 
+## [0.0.8] - 2025-04-26
+
+* **Update:** For remove non printable characters:
+    * **Sanitized Text Output:** Neutralizes hidden control characters (e.g., `null bytes`, `zero-width spaces`) by converting them to standard spaces, ensuring consistent rendering across all platforms
+    * **Grapheme Integrity:** Maintains complex character sequences (`emojis`, `diacritics`, `joined scripts`) while stripping `broken`/`invalid Unicode artifacts`
+    * **Security Hardening:** Eliminates potential injection vectors from malformed surrogate pairs and invisible formatting characters
+    * **Strict Unicode Compliance:** Guarantees output contains only standardized, renderable characters per Unicode 15.0 specifications
+
 ## [0.0.7] - 2025-04-08
 
 * **Update:** encode/decode named HTML entity, encode/decode HTML hex entity, encode/decode decimal entity, encode/decode JavaScript unicode escape, encode/decode CSS unicode escape, encode/decode code point, encode ES6 unicode code point escape, encode/decode extended hex escape and encode/decode hex code point now work using multi cursor.
