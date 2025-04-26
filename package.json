@@ -75,7 +75,7 @@
       },
       {
         "command": "ps-dev-toolbox.toPascalCase",
-        "title": "%extension.command.sltoPascalCaseugify.title%",
+        "title": "%extension.command.toPascalCase.title%",
         "category": "Playful Sparkle",
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },
