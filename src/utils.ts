@@ -238,6 +238,7 @@ function normalizeToWords(text: string): string[] {
         .normalize("NFD")                        // Normalize diacritics
         .replace(/[\u0300-\u036f]/g, "")         // Remove diacritic marks
         .toLowerCase()                           // Convert to lowercase
+        .replace(/[^a-z0-9\s]/g, " ")            // Remove non-alphanumeric characters (except spaces)
         .trim();                                 // Remove leading/trailing spaces
     
     // Step 3: Split and filter
