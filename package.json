@@ -1,7 +1,7 @@
 {
   "name": "ps-dev-toolbox",
   "displayName": "Dev Toolbox",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "publisher": "playful-sparkle",
   "description": "All-in-one toolset for URL slug generation, Base64/URL encoding/decoding, GUID generation, and removing empty lines, non-printable characters, whitespace and many more.",
   "author": {
@@ -67,6 +67,54 @@
   "l10n": "./l10n",
   "contributes": {
     "commands": [
+      {
+        "command": "ps-dev-toolbox.toCamelCase",
+        "title": "%extension.command.toCamelCase.title%",
+        "category": "Playful Sparkle",
+        "enablement": "editorHasSelection || editorHasMultipleSelections"
+      },
+      {
+        "command": "ps-dev-toolbox.toPascalCase",
+        "title": "%extension.command.sltoPascalCaseugify.title%",
+        "category": "Playful Sparkle",
+        "enablement": "editorHasSelection || editorHasMultipleSelections"
+      },
+      {
+        "command": "ps-dev-toolbox.toSnakeCase",
+        "title": "%extension.command.toSnakeCase.title%",
+        "category": "Playful Sparkle",
+        "enablement": "editorHasSelection || editorHasMultipleSelections"
+      },
+      {
+        "command": "ps-dev-toolbox.toScreamingSnakeCase",
+        "title": "%extension.command.toScreamingSnakeCase.title%",
+        "category": "Playful Sparkle",
+        "enablement": "editorHasSelection || editorHasMultipleSelections"
+      },
+      {
+        "command": "ps-dev-toolbox.toKebabCase",
+        "title": "%extension.command.toKebabCase.title%",
+        "category": "Playful Sparkle",
+        "enablement": "editorHasSelection || editorHasMultipleSelections"
+      },
+      {
+        "command": "ps-dev-toolbox.toTrainCase",
+        "title": "%extension.command.toTrainCase.title%",
+        "category": "Playful Sparkle",
+        "enablement": "editorHasSelection || editorHasMultipleSelections"
+      },
+      {
+        "command": "ps-dev-toolbox.toFlatCase",
+        "title": "%extension.command.toFlatCase.title%",
+        "category": "Playful Sparkle",
+        "enablement": "editorHasSelection || editorHasMultipleSelections"
+      },
+      {
+        "command": "ps-dev-toolbox.toUpperCase",
+        "title": "%extension.command.toUpperCase.title%",
+        "category": "Playful Sparkle",
+        "enablement": "editorHasSelection || editorHasMultipleSelections"
+      },
       {
         "command": "ps-dev-toolbox.slugify",
         "title": "%extension.command.slugify.title%",

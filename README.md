@@ -12,6 +12,15 @@ Seamlessly integrate these essential features into your coding environment to si
 
 ## Features
 
+* **Text Case Conversion Commands:** Easily convert selected text into various common programming case formats:
+  * **Camel case** - lowercase first word, uppercase subsequent words (e.g., `myVariableName`)
+  * **Pascal case** - each word starts with an uppercase letter (e.g., `MyClassName`)
+  * **Snake case** - words separated by underscores, all lowercase (e.g., `my_variable_name`)
+  * **Screaming snake case** - words separated by underscores, all uppercase (e.g., `MY_CONSTANT_NAME`)
+  * **Kebab case** - words separated by hyphens, all lowercase (e.g., `my-variable-name`)
+  * **Train case** - words separated by hyphens, all uppercase (e.g., `MY-VARIABLE-NAME`)
+  * **Flat case** - all words joined without separators, all lowercase (e.g., `myvariablename`)
+  * **Uppercase** - all characters uppercase without separators (e.g., `MYVARIABLENAME`)
 * **Safe Locale-Aware Case Conversion:** Provides `safeToLowerCase` and `safeToUppercase` functions that attempt to use locale-specific case conversion via `toLocaleLowerCase` and `toLocaleUpperCase`. Includes a robust fallback to standard `toLowerCase` and `toUpperCase` to ensure consistent behavior across different environments. Allows for optional locale parameters to handle language-specific case conversion rules.
 * **Intelligent Slugification:** Offers a `slugify` function that converts strings into URL-friendly slugs; removes diacritics, special characters, and replaces spaces with hyphens. Attempts to preserve file extensions during slugification, intelligently differentiating between file extensions and other dot-separated text.
 * **Base64 Encoding/Decoding:** Implements `base64Encode` and `base64Decode` functions for seamless Base64 encoding and decoding of strings.
@@ -68,79 +77,50 @@ If you encounter any of these or other issues, please report them on the [GitHub
 
 ## Release Notes
 
+### 0.0.9
+
+* Introduced a suite of commands to easily convert selected text to various common programming case formats like `camelCase` (e.g., `myVariableName`), `PascalCase` (e.g., `MyClassName`), `snake_case` (e.g., `my_variable_name`), `SCREAMING_SNAKE_CASE` (e.g., `MY_CONSTANT_NAME`), `kebab-case` (e.g., `my-variable-name`), `TRAIN-CASE` (e.g., `MY-VARIABLE-NAME`), `flatcase` (e.g., `myvariablename`), `UPPERCASE` (e.g., `MYVARIABLENAME`)
+
+### 0.0.8
+
+The updated removal of non-printable characters now neutralizes hidden control characters (e.g., `null bytes`, `zero-width spaces`), maintains complex character sequences (`emojis`, `diacritics`, `joined scripts`) while stripping `broken`/`invalid Unicode artifacts`, eliminates potential injection vectors from malformed surrogate pairs and invisible formatting characters, and guarantees output contains only standardized, renderable characters per Unicode 15.0 specifications.
+
+### 0.0.7
+
+* Updated encode/decode named HTML entity, encode/decode HTML hex entity, encode/decode decimal entity, encode/decode JavaScript unicode escape, encode/decode CSS unicode escape, encode/decode code point, encode ES6 unicode code point escape, encode/decode extended hex escape and encode/decode hex code point now work using multi cursor.
+
+
 ### 0.0.6
 
-* **GUID Generation Enhancements:** Added support for three new GUID formats:
-    * Registry format: `{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}`
-    * Square brackets format: `[Guid("xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx")]`
-    * Less than sign format: `<Guid("xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx")>`
-* **New Encoding/Decoding Features:** Introduced support for the following character encoding and decoding schemes:
-    * Named HTML Entities (e.g., `<>` to `&lt;&gt;`)
-    * HTML Hex Entities (e.g., `!` to `&#x21;`)
-    * HTML Decimal Entities (e.g., `"` to `&#34;`)
-    * JavaScript Unicode Escape Sequences (e.g., `$` to `\u0024`)
-    * CSS Unicode Escape Sequences (e.g., `#` to `\0023`)
-    * Unicode Code Points (e.g., `%` to `U+0025`)
-    * ES6 Unicode Code Point Escape Sequences (e.g., `&` to `\u{26}`)
-    * Extended Hex Escape Sequences (e.g., `'` to `\x{27}`)
-    * Hex Code Points (e.g., `(` to `0x28`)
+* Added support for three new GUID formats.
+* Introduced support for the following character encoding and decoding schemes.
 
 ### 0.0.5
 
-* **Enhanced Visuals:** The extension's icon color theme has been updated, providing a more polished and consistent look.
-* **Improved User Understanding:** The extension description has been refined to be more clear, concise, and easier for new users to understand its features and benefits.
+* The extension's icon color theme has been updated, providing a more polished and consistent look.
+* The extension description has been refined to be more clear, concise, and easier for new users to understand its features and benefits.
 
 ### 0.0.4
 
-* **Added:**
-    * Remove Empty Lines from Document
-    * Remove Empty Lines from Selection
-
-* **Removed:**
-    * Remove all empty lines or only consecutive ones.
+* Remove Empty Lines from Document.
+* Remove Empty Lines from Selection.
 
 ### 0.0.3
 
-* Re-upload, package was not updated properly
+* Re-upload, package was not updated properly.
 
 ### 0.0.2
 
-* **Remove Empty Lines:**
-    * Removes empty lines from the selected text.
-    * Supports options to:
-        * Remove all empty lines or only consecutive ones.
-        * Consider lines with only whitespace as empty.
-        
-* **Remove Non-Printable Characters:**
-    * Removes non-printable characters from the selected text.
-
-* **Remove Leading and Trailing Whitespace:**
-    * Removes whitespace (spaces, tabs, newlines) from the beginning and end of the selected text.
+* Removes empty lines from the selected text.
+* Removes non-printable characters from the selected text.
+* Removes whitespace (spaces, tabs, newlines) from the beginning and end of the selected text.
 
 ### 0.0.1
-
-* **Locale-Aware Case Conversion:**
-    * Converts selected text to lowercase or uppercase, respecting language-specific rules.
-    * Prompts for a locale to use for conversion, allowing for accurate handling of different languages.
-
-* **URL-Friendly Slug Generation:**
-    * Transforms selected text into a URL-safe slug.
-    * Removes diacritics (accents), special characters, and replaces spaces with hyphens.
-    * Intelligently preserves file extensions when present.
-
-* **Base64 Encoding/Decoding:**
-    * Encodes the selected text into a Base64 string.
-    * Decodes a Base64 string back to its original form.
-
-* **URL Encoding/Decoding:**
-    * Encodes the selected text for use in URLs, escaping special characters.
-    * Decodes URL-encoded text back to its original form.
-    * Ensures compatibility with URL standards.
-
-* **GUID Generation:**
-    * Generates a new Globally Unique Identifier (GUID) in the standard format.
-    * Inserts the generated GUID at the cursor's current position.
-    * Provides a quick way to create unique identifiers within the editor.
+* Locale-Aware Case Conversion.
+* URL-Friendly Slug Generation.
+* Base64 Encoding/Decoding.
+* URL Encoding/Decoding.
+* GUID Generation.
 
 ---
 

@@ -2,6 +2,18 @@
 
 All notable changes to the "Playful Sparkle: Dev Toolbox" extension will be documented in this file.
 
+## [0.0.9] - 2025-04-26
+
+* **Added:** Introduced a suite of commands to easily convert selected text to various common programming case formats.
+    * Added function to convert to `camelCase` (e.g., `myVariableName`)
+    * Added function to convert to `PascalCase` (e.g., `MyClassName`)
+    * Added function to convert to `snake_case` (e.g., `my_variable_name`)
+    * Added function to convert to `SCREAMING_SNAKE_CASE` (e.g., `MY_CONSTANT_NAME`)
+    * Added function to convert to `kebab-case` (e.g., `my-variable-name`)
+    * Added function to convert to `TRAIN-CASE` (e.g., `MY-VARIABLE-NAME`)
+    * Added function to convert to `flatcase` (e.g., `myvariablename`)
+    * Added function to convert to `UPPERCASE` (e.g., `MYVARIABLENAME`)
+
 ## [0.0.8] - 2025-04-26
 
 * **Update:** For remove non printable characters:

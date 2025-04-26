@@ -8,6 +8,14 @@ import * as utils from "./utils";
 export function activate(context: vscode.ExtensionContext) {
 	enum CommandId {
 		Slugify = "ps-dev-toolbox.slugify",
+		ToCamelCase = "ps-dev-toolbox.toCamelCase",
+		ToPascalCase = "ps-dev-toolbox.toPascalCase",
+		ToSnakeCase = "ps-dev-toolbox.toSnakeCase",
+		ToScreamingSnakeCase = "ps-dev-toolbox.toScreamingSnakeCase",
+		ToKebabCase = "ps-dev-toolbox.toKebabCase",
+		ToTrainCase = "ps-dev-toolbox.toTrainCase",
+		ToFlatCase = "ps-dev-toolbox.toFlatCase",
+		ToUpperCase = "ps-dev-toolbox.toUpperCase",
 		MakeLowercase = "ps-dev-toolbox.makeLowercase",
 		MakeUppercase = "ps-dev-toolbox.makeUppercase",
 		Base64Encode = "ps-dev-toolbox.base64Encode",
@@ -280,6 +288,14 @@ export function activate(context: vscode.ExtensionContext) {
 	};
 
 	const commandHandlers = {
+		[CommandId.ToCamelCase]: createTextTransformCommand(utils.toCamelCase),
+		[CommandId.ToPascalCase]: createTextTransformCommand(utils.toPascalCase),
+		[CommandId.ToSnakeCase]: createTextTransformCommand(utils.toSnakeCase),
+		[CommandId.ToScreamingSnakeCase]: createTextTransformCommand(utils.toScreamingSnakeCase),
+		[CommandId.ToKebabCase]: createTextTransformCommand(utils.toKebabCase),
+		[CommandId.ToTrainCase]: createTextTransformCommand(utils.toTrainCase),
+		[CommandId.ToFlatCase]: createTextTransformCommand(utils.toFlatCase),
+		[CommandId.ToUpperCase]: createTextTransformCommand(utils.toUpperCase),
 		[CommandId.Slugify]: createTextTransformCommand(text => {
 			const config = vscode.workspace.getConfiguration("ps-dev-toolbox");
 			const separator = config.get<string>("slugifySeparator", "-");

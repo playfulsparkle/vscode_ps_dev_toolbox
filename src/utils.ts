@@ -95,7 +95,7 @@ export function removeNonPrintableCharacters(text: string): string {
 
     while (i < len) {
         const code = text.charCodeAt(i);
-        
+
         // Handle surrogate pairs
         if (code >= 0xD800 && code <= 0xDBFF && i + 1 < len) {
             const nextCode = text.charCodeAt(i + 1);
@@ -129,7 +129,7 @@ export function removeNonPrintableCharacters(text: string): string {
         // Handle characters that should be preserved only in clusters
         if (preserveInClusters.has(code)) {
             // Check if previous or next character forms a cluster
-            const isInCluster = 
+            const isInCluster =
                 (i > 0 && !replaceWithSpace.has(text.charCodeAt(i - 1))) ||
                 (i < len - 1 && !replaceWithSpace.has(text.charCodeAt(i + 1)));
 
@@ -218,6 +218,140 @@ function slugifyHelper(text: string, separator: string): string {
     normalized = normalized.replace(new RegExp(`${separator}+`, "g"), separator);
 
     return normalized;
+}
+
+/**
+ * Helper function to normalize text by removing diacritics, converting to lowercase, trimming whitespace,
+ * and splitting into an array of words based on spaces, hyphens, or underscores. Empty words are filtered out.
+ *
+ * @param text The input string to normalize and split.
+ * @returns An array of normalized words.
+ */
+function normalizeToWords(text: string): string[] {
+    // Step 1: Split camel/pascal case words
+    const withSplitCase = text
+        .replace(/([a-z0-9])([A-Z])/g, "$1 $2")    // Split camelCase
+        .replace(/([A-Z])([A-Z][a-z])/g, "$1 $2"); // Split PascalCase/HTTPRequests
+    
+    // Step 2: Normalize text
+    const normalized = withSplitCase
+        .normalize("NFD")                        // Normalize diacritics
+        .replace(/[\u0300-\u036f]/g, "")         // Remove diacritic marks
+        .toLowerCase()                           // Convert to lowercase
+        .trim();                                 // Remove leading/trailing spaces
+    
+    // Step 3: Split and filter
+    return normalized.split(/[\s\-_]+/).filter(word => word.length > 0);
+}
+
+/**
+ * Capitalizes the first letter of a given word.
+ *
+ * @param word The input word.
+ * @returns The word with its first letter capitalized.
+ */
+function capitalize(word: string): string {
+    return word.charAt(0).toUpperCase() + word.slice(1);
+}
+
+/**
+ * Converts a string to camelCase.
+ * Normalizes the input text, capitalizes the first letter of subsequent words, and joins them without spaces.
+ * The first word remains lowercase.
+ *
+ * @param text The input string to convert.
+ * @returns The string in camelCase.
+ */
+export function toCamelCase(text: string): string {
+    const words = normalizeToWords(text);
+    if (words.length === 0) { return ""; }
+    const [first, ...rest] = words;
+    return first + rest.map(capitalize).join("");
+}
+
+/**
+ * Converts a string to PascalCase.
+ * Normalizes the input text, capitalizes the first letter of each word, and joins them without spaces.
+ *
+ * @param text The input string to convert.
+ * @returns The string in PascalCase.
+ */
+export function toPascalCase(text: string): string {
+    return normalizeToWords(text)
+        .map(capitalize)
+        .join("");
+}
+
+/**
+ * Converts a string to snake_case.
+ * Normalizes the input text and joins the words with underscores.
+ *
+ * @param text The input string to convert.
+ * @returns The string in snake_case.
+ */
+export function toSnakeCase(text: string): string {
+    return normalizeToWords(text).join("_");
+}
+
+/**
+ * Converts a string to SCREAMING_SNAKE_CASE.
+ * Normalizes the input text, converts words to uppercase, and joins them with underscores.
+ *
+ * @param text The input string to convert.
+ * @returns The string in SCREAMING_SNAKE_CASE.
+ */
+export function toScreamingSnakeCase(text: string): string {
+    return normalizeToWords(text)
+        .map(word => word.toUpperCase())
+        .join("_");
+}
+
+/**
+ * Converts a string to kebab-case.
+ * Normalizes the input text and joins the words with hyphens.
+ *
+ * @param text The input string to convert.
+ * @returns The string in kebab-case.
+ */
+export function toKebabCase(text: string): string {
+    return normalizeToWords(text).join("-");
+}
+
+/**
+ * Converts a string to TRAIN-CASE.
+ * Normalizes the input text, converts words to uppercase, and joins them with hyphens.
+ *
+ * @param text The input string to convert.
+ * @returns The string in TRAIN-CASE.
+ */
+export function toTrainCase(text: string): string {
+    return normalizeToWords(text)
+        .map(word => word.toUpperCase())
+        .join("-");
+}
+
+/**
+ * Converts a string to flatcase (all lowercase, no separators).
+ * Normalizes the input text and joins the words without any separators.
+ *
+ * @param text The input string to convert.
+ * @returns The string in flatcase.
+ */
+export function toFlatCase(text: string): string {
+    return normalizeToWords(text).join("");
+}
+
+/**
+ * Converts a string to UPPERCASE (all uppercase, no separators).
+ * Normalizes the input text, converts words to uppercase, and joins them without any separators.
+ *
+ * @param text The input string to convert.
+ * @returns The string in UPPERCASE.
+ */
+export function toUpperCase(text: string): string {
+    return normalizeToWords(text)
+        .map(word => word.toUpperCase())
+        .join("");
 }
 
 /**
