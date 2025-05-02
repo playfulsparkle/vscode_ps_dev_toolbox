@@ -7,6 +7,7 @@ import * as utils from "./utils";
  */
 export function activate(context: vscode.ExtensionContext) {
 	enum CommandId {
+		ReportIssue = "ps-dev-toolbox.reportIssue",
 		Slugify = "ps-dev-toolbox.slugify",
 		ToCamelCase = "ps-dev-toolbox.toCamelCase",
 		ToPascalCase = "ps-dev-toolbox.toPascalCase",
@@ -288,6 +289,7 @@ export function activate(context: vscode.ExtensionContext) {
 	};
 
 	const commandHandlers = {
+		[CommandId.ReportIssue]: () => vscode.env.openExternal(vscode.Uri.parse("https://github.com/playfulsparkle/vscode_ps_dev_toolbox/issues")),
 		[CommandId.ToCamelCase]: createTextTransformCommand(utils.toCamelCase),
 		[CommandId.ToPascalCase]: createTextTransformCommand(utils.toPascalCase),
 		[CommandId.ToSnakeCase]: createTextTransformCommand(utils.toSnakeCase),

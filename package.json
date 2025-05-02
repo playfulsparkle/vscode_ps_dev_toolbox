@@ -289,8 +289,20 @@
         "title": "%extension.command.decodeHexCodePoints.title%",
         "category": "Playful Sparkle",
         "enablement": "editorHasSelection || editorHasMultipleSelections"
+      },
+      {
+        "command": "ps-dev-toolbox.reportIssue",
+        "title": "%extension.command.reportIssue.title%",
+        "category": "Help"
       }
     ],
+    "menus": {
+      "issue/reporter": [
+        {
+          "command": "ps-dev-toolbox.reportIssue"
+        }
+      ]
+    },
     "configuration": {
       "title": "%extension.config.title%",
       "properties": {

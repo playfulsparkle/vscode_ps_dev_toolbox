@@ -9,6 +9,7 @@
   "extension.config.uuid.squareFormat.desc": "Szögletes zárójel formátum [Guid(\"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\")]",
   "extension.config.uuid.lessThanSignFormat.desc": "Kisebb mint jel formátum <Guid(\"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\")>",
   "extension.config.removeEmptyLines.considerWhitespaceEmpty.desc": "Ha igaz, a csak üres karaktereket (szóközök, tabulátorok) tartalmazó sorok is üresnek minősülnek. Ha hamis, csak a teljesen üres sorok kerülnek eltávolításra.",
+  "extension.command.reportIssue.title": "Probléma jelentése",
   "extension.command.slugify.title": "URL Slug generálása",
   "extension.command.toCamelCase.title": "Konvertálás camelCase-re (myVariableName)",
   "extension.command.toPascalCase.title": "Konvertálás PascalCase-re (MyClassName)",

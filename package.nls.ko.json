@@ -9,6 +9,7 @@
   "extension.config.uuid.squareFormat.desc": "대괄호 형식 [Guid(\"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\")]",
   "extension.config.uuid.lessThanSignFormat.desc": "작음 기호 형식 <Guid(\"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\")>",
   "extension.config.removeEmptyLines.considerWhitespaceEmpty.desc": "true인 경우 공백(스페이스, 탭)만 있는 줄도 빈 줄로 간주합니다. false인 경우 완전히 비어 있는 줄만 제거됩니다.",
+  "extension.command.reportIssue.title": "문제 보고",
   "extension.command.slugify.title": "URL 슬러그 생성",
   "extension.command.toCamelCase.title": "camelCase 로 변환 (myVariableName)",
   "extension.command.toPascalCase.title": "PascalCase 로 변환 (MyClassName)",

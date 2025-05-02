@@ -9,6 +9,7 @@
   "extension.config.uuid.squareFormat.desc": "Format nawiasów kwadratowych [Guid(\"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\")]",
   "extension.config.uuid.lessThanSignFormat.desc": "Format znaku mniejszości <Guid(\"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\")>",
   "extension.config.removeEmptyLines.considerWhitespaceEmpty.desc": "Gdy wartość to true, linie zawierające tylko białe znaki (spacje, tabulatory) są traktowane jako puste. Gdy wartość to false, usuwane są tylko całkowicie puste linie.",
+  "extension.command.reportIssue.title": "Zgłoś problem",
   "extension.command.slugify.title": "Generuj URL Slug",
   "extension.command.toCamelCase.title": "Konwertuj na camelCase (myVariableName)",
   "extension.command.toPascalCase.title": "Konwertuj na PascalCase (MyClassName)",

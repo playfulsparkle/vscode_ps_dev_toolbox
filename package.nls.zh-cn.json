@@ -9,6 +9,7 @@
   "extension.config.uuid.squareFormat.desc": "方括号格式 [Guid(\"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\")]",
   "extension.config.uuid.lessThanSignFormat.desc": "小于号格式 <Guid(\"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\")>",
   "extension.config.removeEmptyLines.considerWhitespaceEmpty.desc": "如果为 true，则仅包含空白字符（空格、制表符）的行也被视为空行。如果为 false，则仅删除完全为空的行。",
+  "extension.command.reportIssue.title": "报告问题",
   "extension.command.slugify.title": "生成 URL Slug",
   "extension.command.toCamelCase.title": "转换为 camelCase (myVariableName)",
   "extension.command.toPascalCase.title": "转换为 PascalCase (MyClassName)",

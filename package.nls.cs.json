@@ -9,6 +9,7 @@
   "extension.config.uuid.squareFormat.desc": "Formát hranatých závorek [Guid(\"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\")]",
   "extension.config.uuid.lessThanSignFormat.desc": "Formát se znaky menší než a větší než <Guid(\"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\")>",
   "extension.config.removeEmptyLines.considerWhitespaceEmpty.desc": "Je-li nastaveno na true, řádky obsahující pouze prázdné znaky (mezery, tabulátory) jsou považovány za prázdné. Je-li nastaveno na false, odstraní se pouze zcela prázdné řádky.",
+  "extension.command.reportIssue.title": "Nahlásit problém",
   "extension.command.slugify.title": "Generovat URL Slug",
   "extension.command.toCamelCase.title": "Převést na camelCase (myVariableName)",
   "extension.command.toPascalCase.title": "Převést na PascalCase (MyClassName)",

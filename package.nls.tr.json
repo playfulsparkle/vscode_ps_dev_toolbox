@@ -9,6 +9,7 @@
   "extension.config.uuid.squareFormat.desc": "Köşeli parantez biçimi [Guid(\"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\")]",
   "extension.config.uuid.lessThanSignFormat.desc": "Küçüktür işareti biçimi <Guid(\"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\")>",
   "extension.config.removeEmptyLines.considerWhitespaceEmpty.desc": "Doğru olduğunda, yalnızca boşluk (boşluklar, sekmeler) içeren satırlar boş kabul edilir. Yanlış olduğunda, yalnızca tamamen boş satırlar kaldırılır.",
+  "extension.command.reportIssue.title": "Sorun Bildir",
   "extension.command.slugify.title": "URL Slug'u Oluştur",
   "extension.command.toCamelCase.title": "camelCase'e dönüştür (myVariableName)",
   "extension.command.toPascalCase.title": "PascalCase'e dönüştür (MyClassName)",

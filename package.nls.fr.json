@@ -9,6 +9,7 @@
   "extension.config.uuid.squareFormat.desc": "Format entre crochets [Guid(\"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\")]",
   "extension.config.uuid.lessThanSignFormat.desc": "Format entre chevrons <Guid(\"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\")>",
   "extension.config.removeEmptyLines.considerWhitespaceEmpty.desc": "Lorsque la valeur est 'true', les lignes contenant uniquement des espaces blancs (espaces, tabulations) sont considérées comme vides. Lorsque la valeur est 'false', seules les lignes complètement vides sont supprimées.",
+  "extension.command.reportIssue.title": "Signaler un problème",
   "extension.command.slugify.title": "Générer un slug d'URL",
   "extension.command.toCamelCase.title": "Convertir en camelCase (myVariableName)",
   "extension.command.toPascalCase.title": "Convertir en PascalCase (MyClassName)",

@@ -9,6 +9,7 @@
   "extension.config.uuid.squareFormat.desc": "Formato de corchetes [Guid(\"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\")]",
   "extension.config.uuid.lessThanSignFormat.desc": "Formato de signo menor que <Guid(\"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\")>",
   "extension.config.removeEmptyLines.considerWhitespaceEmpty.desc": "Cuando es verdadero, las líneas con solo espacios en blanco (espacios, tabulaciones) se consideran vacías. Cuando es falso, solo se eliminan las líneas completamente vacías.",
+  "extension.command.reportIssue.title": "Informar de un problema",
   "extension.command.slugify.title": "Generar slug de URL",
   "extension.command.toCamelCase.title": "Convertir a camelCase (myVariableName)",
   "extension.command.toPascalCase.title": "Convertir a PascalCase (MyClassName)",

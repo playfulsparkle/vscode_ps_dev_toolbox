@@ -9,6 +9,7 @@
   "extension.config.uuid.squareFormat.desc": "Formato tra parentesi quadre [Guid(\"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\")]",
   "extension.config.uuid.lessThanSignFormat.desc": "Formato con segno minore di <Guid(\"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\")>",
   "extension.config.removeEmptyLines.considerWhitespaceEmpty.desc": "Se vero, le righe contenenti solo spazi bianchi (spazi, tabulazioni) sono considerate vuote. Se falso, vengono rimosse solo le righe completamente vuote.",
+  "extension.command.reportIssue.title": "Segnala problema",
   "extension.command.slugify.title": "Genera URL Slug",
   "extension.command.toCamelCase.title": "Converti in camelCase (myVariableName)",
   "extension.command.toPascalCase.title": "Converti in PascalCase (MyClassName)",
