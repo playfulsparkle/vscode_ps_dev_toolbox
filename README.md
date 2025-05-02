@@ -77,6 +77,10 @@ If you encounter any of these or other issues, please report them on the [GitHub
 
 ## Release Notes
 
+### 0.0.10
+
+* Updated the logic for removing non-printable characters. Most control characters and specific invisible whitespace are now replaced with a space. Standard whitespace (tab, line feed, carriage return) is preserved, as are zero-width joiners/non-joiners and variation selectors when they are part of character sequences.
+
 ### 0.0.9
 
 * Introduced a suite of commands to easily convert selected text to various common programming case formats like `camelCase` (e.g., `myVariableName`), `PascalCase` (e.g., `MyClassName`), `snake_case` (e.g., `my_variable_name`), `SCREAMING_SNAKE_CASE` (e.g., `MY_CONSTANT_NAME`), `kebab-case` (e.g., `my-variable-name`), `TRAIN-CASE` (e.g., `MY-VARIABLE-NAME`), `flatcase` (e.g., `myvariablename`), `UPPERCASE` (e.g., `MYVARIABLENAME`)

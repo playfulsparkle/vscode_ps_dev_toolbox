@@ -2,6 +2,10 @@
 
 All notable changes to the "Playful Sparkle: Dev Toolbox" extension will be documented in this file.
 
+## [0.0.10] - 2025-05-02
+
+* **Code fix:** Updated the logic for removing non-printable characters. Most control characters and specific invisible whitespace are now replaced with a space. Standard whitespace (tab, line feed, carriage return) is preserved, as are zero-width joiners/non-joiners and variation selectors when they are part of character sequences.
+
 ## [0.0.9] - 2025-04-26
 
 * **Added:** Introduced a suite of commands to easily convert selected text to various common programming case formats.
