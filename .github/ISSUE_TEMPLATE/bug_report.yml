@@ -1,0 +1,78 @@
+name: 🐞 Bug Report
+description: Create a report to help us improve the Dev Toolbox extension for Visual Studio Code.
+title: "Bug Report Title"
+labels: []
+assignees:
+  - zsoltoroszlany82
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug! Please fill out the details below to help us understand and fix the issue.
+
+  - type: textarea
+    attributes:
+      label: Describe the Bug
+      description: A clear and concise description of what the bug is.
+      placeholder: e.g. When using the 'Slugify' command on text containing special characters, the output is incorrect.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Steps to Reproduce
+      description: List the steps to reproduce the issue. Please be as specific as possible.
+      placeholder: |
+        1. Open a new text file in VS Code.
+        2. Type the text '...'.
+        3. Select the text.
+        4. Run the command '...'.
+        5. See error / unexpected behavior.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Expected Behavior
+      description: What should have happened instead?
+      placeholder: The slugified text should be 'expected-output'.
+    validations:
+      required: false
+
+  - type: textarea
+    attributes:
+      label: Error Logs or Messages
+      description: If applicable, paste any relevant error messages from the VS Code Developer Tools Console (`Help > Toggle Developer Tools`) or output windows.
+    validations:
+      required: false
+
+  - type: textarea
+    attributes:
+      label: Screenshots or Video
+      description: If available, upload screenshots or a short video demonstrating the problem. Drag and drop files directly into the text area.
+    validations:
+      required: false
+
+  - type: input
+    attributes:
+      label: Extension Version
+      description: What version of the Dev Toolbox extension are you using? (Found in the Extensions view)
+      placeholder: e.g. 0.0.11
+    validations:
+      required: true
+
+  - type: input
+    attributes:
+      label: VS Code Version
+      description: What version of Visual Studio Code are you using? (Found in `Help > About` or `Code > About Visual Studio Code`)
+      placeholder: e.g. 1.85.2
+    validations:
+      required: true
+
+  - type: input
+    attributes:
+      label: Operating System
+      description: What is your operating system?
+      placeholder: e.g. Windows 11, macOS Sonoma 14.2.1, Ubuntu 22.04
+    validations:
+      required: true
