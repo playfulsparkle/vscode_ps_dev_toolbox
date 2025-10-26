@@ -77,6 +77,21 @@ If you encounter any of these or other issues, please report them on the [GitHub
 
 ## Release Notes
 
+### 0.0.12
+
+* URL slugify supports multi-cursor editing.
+* Fixed named HTML entity encoding.
+* Fixed hex numeric entity encoding.
+* Fixed decimal numeric entity encoding.
+* Fixed handling of full Unicode range.
+* Fixed ES6 code point escape encoding.
+* Fixed extended hex escape generation.
+* Fixed CSS escape encode and decode.
+* Fixed JS escape encode and decode.
+* Fixed script-context escape encode and decode.
+* Fixed behavior, then standardized function naming in “encode/decode hex entities.”
+* Test cases updated and expanded.
+
 ### 0.0.11
 
 Introduced a streamlined issue reporting mechanism in alignment with **Microsoft Visual Studio Code** extension development best practices. This enhancement allows users to report bugs, suggest features, and provide feedback more efficiently, improving overall user experience and support responsiveness.
