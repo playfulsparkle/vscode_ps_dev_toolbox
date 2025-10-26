@@ -807,29 +807,24 @@ export function encodeJavaScriptUnicodeEscapes(text: string): string {
 
         if (codePoint === undefined) {
             result += text[i];
-            i++;
+            i += 1;
             continue;
         }
 
-        // Preserve all ASCII characters (0x00-0x7F) including control characters
-        if (codePoint <= 0x7F) {
-            result += text[i];
-            i++;
-        } else if (codePoint <= 0xFFFF) {
-            // BMP characters (including ZWJ and variation selectors)
-            // Convert to hex and ensure uppercase for specific ranges
-            const hexCode = codePoint.toString(16).padStart(4, "0");
+        if (codePoint <= 0x7f) {
+            result += String.fromCodePoint(codePoint);
+            i += 1;
+        } else if (codePoint <= 0xffff) {
+            const hex = codePoint.toString(16).toUpperCase().padStart(4, "0");
 
-            // Use uppercase for all non-digits in the hex string
-            const formattedHex = hexCode.toUpperCase();
+            result += `\\u${hex}`;
 
-            result += `\\u${formattedHex}`;
-            i++;
+            // Move to the next code point, handling surrogate pairs
+            i += codePoint > 0xFFFF ? 2 : 1;
         } else {
-            // Characters in supplementary planes
-            const hexCode = codePoint.toString(16).padStart(8, "0");
+            const hex = codePoint.toString(16).toUpperCase().padStart(8, "0");
 
-            result += `\\U${hexCode}`; // All lowercase for supplementary planes
+            result += `\\U${hex}`;
 
             // Move to the next code point, handling surrogate pairs
             i += codePoint > 0xFFFF ? 2 : 1;
