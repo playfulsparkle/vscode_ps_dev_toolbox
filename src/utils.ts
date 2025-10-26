@@ -806,15 +806,14 @@ export function encodeJavaScriptUnicodeEscapes(text: string): string {
         const codePoint = text.codePointAt(i);
 
         if (codePoint === undefined) {
+            result += text[i];
             i++;
-
             continue;
         }
 
-        if (codePoint <= 127) {
-            // ASCII characters remain unchanged
+        // Preserve all ASCII characters (0x00-0x7F) including control characters
+        if (codePoint <= 0x7F) {
             result += text[i];
-
             i++;
         } else if (codePoint <= 0xFFFF) {
             // BMP characters (including ZWJ and variation selectors)
@@ -832,8 +831,8 @@ export function encodeJavaScriptUnicodeEscapes(text: string): string {
 
             result += `\\U${hexCode}`; // All lowercase for supplementary planes
 
-            // Skip the surrogate pair (2 JavaScript "characters")
-            i += 2;
+            // Move to the next code point, handling surrogate pairs
+            i += codePoint > 0xFFFF ? 2 : 1;
         }
     }
 
