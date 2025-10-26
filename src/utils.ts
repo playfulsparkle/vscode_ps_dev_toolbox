@@ -168,32 +168,63 @@ export function removeLeadingTrailingWhitespace(text: string): string {
 /**
  * Converts a string into a slugified version, suitable for URLs or file names.
  * Removes diacritics, special characters, and spaces, replacing them with hyphens.
+ * If the text contains multiple lines, each line is slugified separately.
  * @param text - The string to slugify.
+ * @param separator - The separator to use (default: "-")
  * @returns The slugified version of the string.
  */
 export function slugify(text: string, separator: string = "-"): string {
     if (typeof text !== "string") {
         return text;
     }
+    
+    // Check if text contains line breaks - if so, process each line separately
+    if (text.includes("\n") || text.includes("\r")) {
+        // Split while capturing the delimiters
+        const parts = text.split(/(\r?\n)/);
+        
+        let result = "";
 
+        for (let i = 0; i < parts.length; i++) {
+            const part = parts[i];
+            
+            if (part === "\n" || part === "\r\n" || part === "\r") { // If it's a line break delimiter, preserve it as-is
+                result += part;
+            } else if (part.length > 0) { // If it's actual content, slugify it
+                result += slugifySingleLine(part, separator);
+            }
+
+            // Empty strings (from consecutive line breaks) are skipped
+        }
+        
+        return result;
+    }
+    
+    // Single line processing
+    return slugifySingleLine(text, separator);
+}
+
+/**
+ * Slugifies a single line of text, preserving file extensions if present.
+ */
+function slugifySingleLine(text: string, separator: string): string {
     // Find the last dot position
     const lastDotIndex = text.lastIndexOf(".");
-
+    
     // Quick check if there might be a file extension (contains a dot)
     if (lastDotIndex === -1 || lastDotIndex === text.length - 1) {
         return slugifyHelper(text, separator);
     }
-
+    
     // Check if what follows the dot looks like a valid file extension
     const possibleExt = text.substring(lastDotIndex);
-
     if (!possibleExt.match(/(\.[a-zA-Z0-9]{2,11})$/)) {
         return slugifyHelper(text, separator);
     }
-
+    
     // Process only the base name (everything except the extension)
     const baseName = text.substring(0, lastDotIndex);
-
+    
     // Apply slugify to base name and reattach extension
     return slugifyHelper(baseName, separator) + possibleExt;
 }
@@ -202,21 +233,20 @@ export function slugify(text: string, separator: string = "-"): string {
 function slugifyHelper(text: string, separator: string): string {
     // Remove diacritics (accent marks) and convert to lowercase in one step
     let normalized = text.normalize("NFD");
-
+    
     // Remove combining marks and special characters in one regex operation
     normalized = normalized.replace(/[\u0300-\u036f]/g, "").toLowerCase();
-
+    
     // Remove non-alphanumeric characters (except spaces)
     normalized = normalized.replace(new RegExp(`[^a-z0-9\s${separator}]`, "g"), " ");
-
     normalized = normalized.trim();
-
+    
     // Replace spaces with hyphens
     normalized = normalized.replace(/\s+/g, separator);
-
+    
     // Replace multiple hyphens with a single hyphen
     normalized = normalized.replace(new RegExp(`${separator}+`, "g"), separator);
-
+    
     return normalized;
 }
 

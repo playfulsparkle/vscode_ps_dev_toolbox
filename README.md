@@ -77,6 +77,12 @@ If you encounter any of these or other issues, please report them on the [GitHub
 
 ## Release Notes
 
+### 0.0.13
+
+* Fixed single block selection for URL slugify
+* Added support for multi-line text selection - each line is now slugified separately
+* Preserved original line ending delimiters (LF, CRLF, or mixed) when processing multi-line selections
+
 ### 0.0.12
 
 * URL slugify supports multi-cursor editing.

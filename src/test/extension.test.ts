@@ -204,6 +204,17 @@ suite("Dev Toolbox Tests", () => {
 			);
 		});
 
+		test("slugify single large 'selection'", () => {
+			assert.strictEqual(
+				utils.slugify("Document Version 1.0.pdf\r\nDocument Version 2.0.pdf"),
+				"document-version-1-0.pdf\r\ndocument-version-2-0.pdf"
+			);
+			assert.strictEqual(
+				utils.slugify("Image with spaces 1.jpeg\r\nImage with spaces 2.jpeg"),
+				"image-with-spaces-1.jpeg\r\nimage-with-spaces-2.jpeg"
+			);
+		});
+
 		test("slugify handles special characters", () => {
 			assert.strictEqual(
 				utils.slugify("Modülär Ärchïtecture~!@#$%^&*().txt"),
