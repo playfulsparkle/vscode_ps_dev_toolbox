@@ -298,12 +298,12 @@ export function activate(context: vscode.ExtensionContext) {
 		[CommandId.ToTrainCase]: createTextTransformCommand(utils.toTrainCase),
 		[CommandId.ToFlatCase]: createTextTransformCommand(utils.toFlatCase),
 		[CommandId.ToUpperCase]: createTextTransformCommand(utils.toUpperCase),
-		[CommandId.Slugify]: createTextTransformCommand(text => {
+		[CommandId.Slugify]: async () => {
 			const config = vscode.workspace.getConfiguration("ps-dev-toolbox");
 			const separator = config.get<string>("slugifySeparator", "-");
 
-			return utils.slugify(text, separator);
-		}),
+			return processTextInEditor(text => utils.slugify(text, separator));
+		},
 		[CommandId.MakeLowercase]: async () => {
 			const localesInput = await localesPrompt();
 
