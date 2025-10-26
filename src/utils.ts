@@ -1186,32 +1186,32 @@ export function decodeHexEntities(text: string): string {
  * prefixed with "0x". Control characters (U+0000 to U+001F) are preserved as is.
  *
  * @param {string} text The string to encode.
- * @param {boolean} [separate=false] If true, each encoded code point will be separated by a space.
  * @returns {string} The encoded string. If the input is not a string, it is returned as is.
  * @see decodeHexCodePoints
  */
-export function encodeHexCodePoints(text: string, separate: boolean = false): string {
+export function encodeHexCodePoints(text: string): string {
     if (typeof text !== "string") {
         return text;
     }
 
     let result = "";
 
-    for (const char of text) {
-        const codePoint = char.codePointAt(0);
+    for (let i = 0; i < text.length;) {
+        const codePoint = text.codePointAt(i);
 
         if (codePoint === undefined) {
+            result += text[i];
+            i++;
             continue;
         }
 
-        // Preserve all control characters (0x00-0x1F)
-        if (codePoint <= 0x1F) {
-            result += char;
-        } else {
-            const hex = codePoint.toString(16).toUpperCase();
+        // Non-ASCII without named entity, encode as hex entity
+        const entity = codePoint.toString(16).toUpperCase();
 
-            result += `0x${hex}` + (separate ? " " : "");
-        }
+        result += `0x${entity} `;
+
+        // Move to the next code point, handling surrogate pairs
+        i += codePoint > 0xFFFF ? 2 : 1;
     }
 
     return result.trimEnd();
