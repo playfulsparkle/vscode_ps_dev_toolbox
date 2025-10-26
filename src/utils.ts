@@ -232,7 +232,7 @@ function normalizeToWords(text: string): string[] {
     const withSplitCase = text
         .replace(/([a-z0-9])([A-Z])/g, "$1 $2")    // Split camelCase
         .replace(/([A-Z])([A-Z][a-z])/g, "$1 $2"); // Split PascalCase/HTTPRequests
-    
+
     // Step 2: Normalize text
     const normalized = withSplitCase
         .normalize("NFD")                        // Normalize diacritics
@@ -240,7 +240,7 @@ function normalizeToWords(text: string): string[] {
         .toLowerCase()                           // Convert to lowercase
         .replace(/[^a-z0-9\s]/g, " ")            // Remove non-alphanumeric characters (except spaces)
         .trim();                                 // Remove leading/trailing spaces
-    
+
     // Step 3: Split and filter
     return normalized.split(/[\s\-_]+/).filter(word => word.length > 0);
 }
@@ -452,35 +452,62 @@ export function encodeNamedHtmlEntities(text: string): string {
 
         if (codePoint === undefined) {
             result += text[i];
-
             i++;
-
+            continue;
+        }
+        
+        // Encode special HTML characters
+        if (codePoint === 0x26) { // &
+            result += "&amp;";
+            i++;
             continue;
         }
 
-        // Preserve control characters (0x00-0x1F) and space (0x20)
-        if (codePoint <= 0x20) {
-            result += text[i];
-
+        if (codePoint === 0x3C) { // 
+            result += "&lt;";
             i++;
-        } else {
-            const entityName = namedentities.codePointToEntityName[codePoint];
-
-            if (entityName) {
-                result += `&${entityName};`;
-            } else {
-                // Check if the code point is ASCII printable (0x21-0x7E)
-                if (codePoint <= 0x7E) {
-                    result += String.fromCodePoint(codePoint);
-                } else {
-                    // Non-ASCII, encode as hex entity
-                    result += `&#x${codePoint.toString(16).toUpperCase().padStart(4, "0")};`;
-                }
-            }
-
-            // Move to the next code point, handling surrogate pairs
-            i += codePoint > 0xFFFF ? 2 : 1;
+            continue;
         }
+
+        if (codePoint === 0x3E) { // >
+            result += "&gt;";
+            i++;
+            continue;
+        }
+
+        if (codePoint === 0x22) { // "
+            result += "&quot;";
+            i++;
+            continue;
+        }
+
+        if (codePoint === 0x27) { // '
+            result += "&apos;";
+            i++;
+            continue;
+        }
+
+        // Preserve all ASCII characters (0x00-0x7F) including control characters
+        if (codePoint <= 0x7F) {
+            result += text[i];
+            i++;
+            continue;
+        }
+        
+        // For non-ASCII characters (0x80 and above), try named entity first
+        const entityName = namedentities.codePointToEntityName[codePoint];
+
+        if (entityName) {
+            result += `&${entityName};`;
+        } else {
+            // Non-ASCII without named entity, encode as hex entity
+            const entity = codePoint.toString(16).toUpperCase().padStart(4, "0");
+
+            result += `&#x${entity};`;
+        }
+        
+        // Move to the next code point, handling surrogate pairs
+        i += codePoint > 0xFFFF ? 2 : 1;
     }
 
     return result;
@@ -582,7 +609,6 @@ export function encodeHtmlHexEntities(text: string): string {
 
     let result = "";
 
-    // Process the string code point by code point, not character by character
     for (let i = 0; i < text.length;) {
         const codePoint = text.codePointAt(i);
 
@@ -593,10 +619,11 @@ export function encodeHtmlHexEntities(text: string): string {
         }
 
         // Format the code point as a hex entity
-        result += `&#x${codePoint.toString(16).toUpperCase().padStart(4, "0")};`;
+        const entity = codePoint.toString(16).toUpperCase().padStart(4, "0");
 
-        // Move to the next code point
-        // For surrogate pairs (like emojis), this will move ahead by 2
+        result += `&#x${entity};`;
+
+        // Move to the next code point, handling surrogate pairs
         i += codePoint > 0xFFFF ? 2 : 1;
     }
 
@@ -644,7 +671,6 @@ export function encodeHtmlDecimalEntities(text: string): string {
 
     let result = "";
 
-    // Process the string code point by code point, not character by character
     for (let i = 0; i < text.length;) {
         const codePoint = text.codePointAt(i);
 
@@ -657,8 +683,7 @@ export function encodeHtmlDecimalEntities(text: string): string {
         // Format the code point as a decimal entity (without leading zeros)
         result += `&#${codePoint};`;
 
-        // Move to the next code point
-        // For surrogate pairs (like emojis), this will move ahead by 2
+        // Move to the next code point, handling surrogate pairs
         i += codePoint > 0xFFFF ? 2 : 1;
     }
 
@@ -729,7 +754,7 @@ export function encodeJavaScriptUnicodeEscapes(text: string): string {
             const hexCode = codePoint.toString(16).padStart(4, "0");
 
             // Use uppercase for all non-digits in the hex string
-            const formattedHex = hexCode.replace(/[a-f]/g, char => char.toUpperCase());
+            const formattedHex = hexCode.toUpperCase();
 
             result += `\\u${formattedHex}`;
             i++;
@@ -866,7 +891,9 @@ export function encodeUnicodeCodePoints(text: string): string {
                 throw new Error("Invalid Unicode character");
             }
 
-            return "U+" + codePoint.toString(16).toUpperCase().padStart(4, "0");
+            const value = codePoint.toString(16).toUpperCase().padStart(4, "0");
+
+            return `U+${value}`;
         })
         .join(" ");
 }
