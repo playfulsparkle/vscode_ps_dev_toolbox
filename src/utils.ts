@@ -901,7 +901,7 @@ export function encodeCssUnicodeEscape(text: string): string {
             result += String.fromCodePoint(codePoint);
             i += 1;
         } else if (codePoint <= 0xffff) {
-             // This is a character outside the BMP (Basic Multilingual Plane)
+            // This is a character outside the BMP (Basic Multilingual Plane)
             const hex = codePoint.toString(16).padStart(6, "0").toUpperCase();
 
             result += `\\${hex} `;
@@ -909,7 +909,7 @@ export function encodeCssUnicodeEscape(text: string): string {
             // Move to the next code point, handling surrogate pairs
             i += codePoint > 0xFFFF ? 2 : 1;
         } else {
-           // This is a non-ASCII character
+            // This is a non-ASCII character
             const hex = codePoint.toString(16).padStart(4, "0").toUpperCase();
 
             result += `\\${hex} `;
@@ -966,19 +966,27 @@ export function encodeUnicodeCodePoints(text: string): string {
         return text;
     }
 
-    return Array.from(text)
-        .map((char) => {
-            const codePoint = char.codePointAt(0);
+    let result = "";
 
-            if (codePoint === undefined) {
-                throw new Error("Invalid Unicode character");
-            }
+    for (let i = 0; i < text.length;) {
+        const codePoint = text.codePointAt(i);
 
-            const value = codePoint.toString(16).toUpperCase().padStart(4, "0");
+        if (codePoint === undefined) {
+            result += text[i];
+            i++;
+            continue;
+        }
 
-            return `U+${value}`;
-        })
-        .join(" ");
+        // Non-ASCII without named entity, encode as hex entity
+        const entity = codePoint.toString(16).toUpperCase().padStart(4, "0");
+
+        result += `U+${entity} `;
+
+        // Move to the next code point, handling surrogate pairs
+        i += codePoint > 0xFFFF ? 2 : 1;
+    }
+
+    return result.trimEnd();
 }
 
 /**
@@ -1030,8 +1038,7 @@ export function decodeUnicodeCodePoints(text: string): string {
         });
 
         return characters.join("");
-    }
-    );
+    });
 }
 
 /**
