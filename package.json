@@ -267,14 +267,14 @@
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },
       {
-        "command": "ps-dev-toolbox.encodeExtendedHexEscape",
-        "title": "%extension.command.encodeExtendedHexEscape.title%",
+        "command": "ps-dev-toolbox.encodeHexEntities",
+        "title": "%extension.command.encodeHexEntities.title%",
         "category": "Playful Sparkle",
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },
       {
-        "command": "ps-dev-toolbox.decodeExtendedHexEscape",
-        "title": "%extension.command.decodeExtendedHexEscape.title%",
+        "command": "ps-dev-toolbox.decodeHexEntities",
+        "title": "%extension.command.decodeHexEntities.title%",
         "category": "Playful Sparkle",
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },

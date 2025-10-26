@@ -1119,9 +1119,9 @@ export function decodeES6UnicodeCodePointEscape(text: string): string {
  * 
  * @param {string} text - The string to encode
  * @returns {string} - The encoded string with hexadecimal escape sequences
- * @see decodeExtendedHexEscape
+ * @see decodeHexEntities
  */
-export function encodeExtendedHexEscape(text: string): string {
+export function encodeHexEntities(text: string): string {
     if (typeof text !== "string") {
         return text;
     }
@@ -1163,9 +1163,9 @@ export function encodeExtendedHexEscape(text: string): string {
  * 
  * @param {string} text - The string with hexadecimal escape sequences to decode
  * @returns {string} - The decoded string with actual Unicode characters
- * @see encodeExtendedHexEscape
+ * @see encodeHexEntities
  */
-export function decodeExtendedHexEscape(text: string): string {
+export function decodeHexEntities(text: string): string {
     if (typeof text !== "string") {
         return "";
     }

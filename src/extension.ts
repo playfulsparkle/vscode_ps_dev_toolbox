@@ -42,8 +42,8 @@ export function activate(context: vscode.ExtensionContext) {
 		DecodeUnicodeCodePoints = "ps-dev-toolbox.decodeUnicodeCodePoints",
 		EncodeES6UnicodeCodePointEscape = "ps-dev-toolbox.encodeES6UnicodeCodePointEscape",
 		DecodeES6UnicodeCodePointEscape = "ps-dev-toolbox.decodeES6UnicodeCodePointEscape",
-		EncodeExtendedHexEscape = "ps-dev-toolbox.encodeExtendedHexEscape",
-		DecodeExtendedHexEscape = "ps-dev-toolbox.decodeExtendedHexEscape",
+		EncodeExtendedHexEscape = "ps-dev-toolbox.encodeHexEntities",
+		DecodeExtendedHexEscape = "ps-dev-toolbox.decodeHexEntities",
 		EncodeHexCodePoints = "ps-dev-toolbox.encodeHexCodePoints",
 		DecodeHexCodePoints = "ps-dev-toolbox.decodeHexCodePoints"
 	}
@@ -360,8 +360,8 @@ export function activate(context: vscode.ExtensionContext) {
 		[CommandId.DecodeUnicodeCodePoints]: async () => processTextInEditor(utils.decodeUnicodeCodePoints),
 		[CommandId.EncodeES6UnicodeCodePointEscape]: async () => processTextInEditor(utils.encodeES6UnicodeCodePointEscape),
 		[CommandId.DecodeES6UnicodeCodePointEscape]: async () => processTextInEditor(utils.decodeES6UnicodeCodePointEscape),
-		[CommandId.EncodeExtendedHexEscape]: async () => processTextInEditor(utils.encodeExtendedHexEscape),
-		[CommandId.DecodeExtendedHexEscape]: async () => processTextInEditor(utils.decodeExtendedHexEscape),
+		[CommandId.EncodeExtendedHexEscape]: async () => processTextInEditor(utils.encodeHexEntities),
+		[CommandId.DecodeExtendedHexEscape]: async () => processTextInEditor(utils.decodeHexEntities),
 		[CommandId.EncodeHexCodePoints]: async () => processTextInEditor(utils.encodeHexCodePoints),
 		[CommandId.DecodeHexCodePoints]: async () => processTextInEditor(utils.decodeHexCodePoints)
 	};
