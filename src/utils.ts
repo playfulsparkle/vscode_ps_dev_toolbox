@@ -1128,21 +1128,29 @@ export function encodeExtendedHexEscape(text: string): string {
 
     let result = "";
 
-    for (const char of text) {
-        const codePoint = char.codePointAt(0);
+    for (let i = 0; i < text.length;) {
+        const codePoint = text.codePointAt(i);
 
         if (codePoint === undefined) {
+            result += text[i];
+            i++;
             continue;
         }
 
-        // Preserve all control characters (0x00-0x1F) and space (0x20)
-        if (codePoint <= 127) {
-            result += char;
-        } else {
-            const hex = codePoint.toString(16).toUpperCase();
-
-            result += `\\x{${hex}}`;
+       // Preserve all ASCII characters (0x00-0x7F) including control characters
+        if (codePoint <= 0x7F) {
+            result += text[i];
+            i++;
+            continue;
         }
+
+        // Non-ASCII without named entity, encode as hex entity
+        const entity = codePoint.toString(16).toUpperCase();
+
+        result += `\\x{${entity}}`;
+
+        // Move to the next code point, handling surrogate pairs
+        i += codePoint > 0xFFFF ? 2 : 1;
     }
 
     return result;
