@@ -848,15 +848,24 @@ export function decodeJavaScriptUnicodeEscapes(text: string): string {
     if (typeof text !== "string") {
         return "";
     }
-
+    
     // Pattern matches both \Uxxxxxxxx and \uxxxx formats, case insensitive for hex digits
-    return text.replace(/\\U([0-9a-fA-F]{8})|\\u([0-9a-fA-F]{4})/g, (_, u8, u4) => {
+    return text.replace(/\\U([0-9a-fA-F]{8})|\\u([0-9a-fA-F]{4})/g, (match, u8, u4) => {
         if (u8) {
-            return String.fromCodePoint(parseInt(u8, 16));
+            const codePoint = parseInt(u8, 16);
+            // Check if it's a valid Unicode code point
+            if (codePoint >= 0xD800 && codePoint <= 0xDFFF) {
+                return match; // Return the original escape sequence
+            }
+            return String.fromCodePoint(codePoint);
         } else if (u4) {
-            return String.fromCharCode(parseInt(u4, 16));
+            const codePoint = parseInt(u4, 16);
+            // Check if it's a lone surrogate (0xD800-0xDFFF)
+            if (codePoint >= 0xD800 && codePoint <= 0xDFFF) {
+                return match; // Return the original escape sequence
+            }
+            return String.fromCharCode(codePoint);
         }
-
         return "";
     });
 }
