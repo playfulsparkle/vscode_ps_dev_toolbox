@@ -618,33 +618,29 @@ export function encodeHtmlHexEntities(text: string): string {
             continue;
         }
 
-        // Encode special HTML characters
+        // Encode special HTML characters as hex entities
         if (codePoint === 0x26) { // &
-            result += "&amp;";
+            result += "&#x26;";
             i++;
             continue;
         }
-
         if (codePoint === 0x3C) { // <
-            result += "&lt;";
+            result += "&#x3C;";
             i++;
             continue;
         }
-
         if (codePoint === 0x3E) { // >
-            result += "&gt;";
+            result += "&#x3E;";
             i++;
             continue;
         }
-
         if (codePoint === 0x22) { // "
-            result += "&quot;";
+            result += "&#x22;";
             i++;
             continue;
         }
-
         if (codePoint === 0x27) { // '
-            result += "&apos;";
+            result += "&#x27;";
             i++;
             continue;
         }
@@ -713,8 +709,42 @@ export function encodeHtmlDecimalEntities(text: string): string {
         const codePoint = text.codePointAt(i);
 
         if (codePoint === undefined) {
+            result += text[i];
             i++;
+            continue;
+        }
 
+        // Encode special HTML characters as decimal entities
+        if (codePoint === 0x26) { // &
+            result += "&#38;";
+            i++;
+            continue;
+        }
+        if (codePoint === 0x3C) { // 
+            result += "&#60;";
+            i++;
+            continue;
+        }
+        if (codePoint === 0x3E) { // >
+            result += "&#62;";
+            i++;
+            continue;
+        }
+        if (codePoint === 0x22) { // "
+            result += "&#34;";
+            i++;
+            continue;
+        }
+        if (codePoint === 0x27) { // '
+            result += "&#39;";
+            i++;
+            continue;
+        }
+
+        // Preserve all ASCII characters (0x00-0x7F) including control characters
+        if (codePoint <= 0x7F) {
+            result += text[i];
+            i++;
             continue;
         }
 
