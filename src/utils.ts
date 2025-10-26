@@ -455,7 +455,7 @@ export function encodeNamedHtmlEntities(text: string): string {
             i++;
             continue;
         }
-        
+
         // Encode special HTML characters
         if (codePoint === 0x26) { // &
             result += "&amp;";
@@ -463,7 +463,7 @@ export function encodeNamedHtmlEntities(text: string): string {
             continue;
         }
 
-        if (codePoint === 0x3C) { // 
+        if (codePoint === 0x3C) { // <
             result += "&lt;";
             i++;
             continue;
@@ -493,7 +493,7 @@ export function encodeNamedHtmlEntities(text: string): string {
             i++;
             continue;
         }
-        
+
         // For non-ASCII characters (0x80 and above), try named entity first
         const entityName = namedentities.codePointToEntityName[codePoint];
 
@@ -505,7 +505,7 @@ export function encodeNamedHtmlEntities(text: string): string {
 
             result += `&#x${entity};`;
         }
-        
+
         // Move to the next code point, handling surrogate pairs
         i += codePoint > 0xFFFF ? 2 : 1;
     }
@@ -613,12 +613,50 @@ export function encodeHtmlHexEntities(text: string): string {
         const codePoint = text.codePointAt(i);
 
         if (codePoint === undefined) {
+            result += text[i];
             i++;
-
             continue;
         }
 
-        // Format the code point as a hex entity
+        // Encode special HTML characters
+        if (codePoint === 0x26) { // &
+            result += "&amp;";
+            i++;
+            continue;
+        }
+
+        if (codePoint === 0x3C) { // <
+            result += "&lt;";
+            i++;
+            continue;
+        }
+
+        if (codePoint === 0x3E) { // >
+            result += "&gt;";
+            i++;
+            continue;
+        }
+
+        if (codePoint === 0x22) { // "
+            result += "&quot;";
+            i++;
+            continue;
+        }
+
+        if (codePoint === 0x27) { // '
+            result += "&apos;";
+            i++;
+            continue;
+        }
+
+        // Preserve all ASCII characters (0x00-0x7F) including control characters
+        if (codePoint <= 0x7F) {
+            result += text[i];
+            i++;
+            continue;
+        }
+
+        // Non-ASCII without named entity, encode as hex entity
         const entity = codePoint.toString(16).toUpperCase().padStart(4, "0");
 
         result += `&#x${entity};`;
