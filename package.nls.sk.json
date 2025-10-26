@@ -11,6 +11,7 @@
   "extension.config.removeEmptyLines.considerWhitespaceEmpty.desc": "Ak je hodnota true, riadky obsahujúce iba prázdne znaky (medzery, tabulátory) sa považujú za prázdne. Ak je hodnota false, odstránia sa iba úplne prázdne riadky.",
   "extension.command.reportIssue.title": "Nahlásiť problém",
   "extension.command.slugify.title": "Generovať URL Slug",
+  "extension.command.slugifyFileOrFolder.title": "Generate URL Slug",
   "extension.command.toCamelCase.title": "Previesť na camelCase (myVariableName)",
   "extension.command.toPascalCase.title": "Previesť na PascalCase (MyClassName)",
   "extension.command.toSnakeCase.title": "Previesť na snake_case (my_variable_name)",

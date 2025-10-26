@@ -11,6 +11,7 @@
   "extension.config.removeEmptyLines.considerWhitespaceEmpty.desc": "Если значение истинно, строки, содержащие только пробельные символы (пробелы, табуляции), считаются пустыми. Если значение ложно, удаляются только полностью пустые строки.",
   "extension.command.reportIssue.title": "Сообщить о проблеме",
   "extension.command.slugify.title": "Сгенерировать URL Slug",
+  "extension.command.slugifyFileOrFolder.title": "Generate URL Slug",
   "extension.command.toCamelCase.title": "Преобразовать в camelCase (myVariableName)",
   "extension.command.toPascalCase.title": "Преобразовать в PascalCase (MyClassName)",
   "extension.command.toSnakeCase.title": "Преобразовать в snake_case (my_variable_name)",

@@ -1,4 +1,10 @@
 {
-    "Enter the locales to use for the transformation (comma-separated)": "Zadajte lokality, ktoré sa majú použiť na transformáciu (oddelené čiarkou)",
-    "e.g. hu, sk, en-US": "napr. sk, en-US"
+    "Enter the locales to use for the transformation (comma-separated)": "Zadajte miestne nastavenia na transformáciu (oddelené čiarkami)",
+    "e.g. hu, sk, en-US": "napr. sk, en-US",
+    "'{0}' already exists. Do you want to overwrite it?": "'{0}' už existuje. Chcete ho prepísať?",
+    "Yes": "Áno",
+    "No": "Nie",
+    "Renamed: {0} to {1}": "Premenované: {0} na {1}",
+    "Failed to rename '{0}': {1}": "Nepodarilo sa premenovať „{0}“: {1}",
+    "{0} items slugified successfully.": "{0} položiek bolo úspešne skonvertovaných na slug."
 }

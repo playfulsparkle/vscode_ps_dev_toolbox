@@ -11,6 +11,7 @@
   "extension.config.removeEmptyLines.considerWhitespaceEmpty.desc": "Wenn 'true', werden Zeilen, die nur Leerraumzeichen (Leerzeichen, Tabulatoren) enthalten, als leer betrachtet. Wenn 'false', werden nur vollständig leere Zeilen entfernt.",
   "extension.command.reportIssue.title": "Problem melden",
   "extension.command.slugify.title": "URL-Slug generieren",
+  "extension.command.slugifyFileOrFolder.title": "Generate URL Slug",
   "extension.command.toCamelCase.title": "In camelCase konvertieren (myVariableName)",
   "extension.command.toPascalCase.title": "In PascalCase konvertieren (MyClassName)",
   "extension.command.toSnakeCase.title": "In snake_case konvertieren (my_variable_name)",

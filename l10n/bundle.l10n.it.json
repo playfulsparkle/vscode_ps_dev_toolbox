@@ -1,4 +1,10 @@
 {
-    "Enter the locales to use for the transformation (comma-separated)": "Inserisci le lingue da utilizzare per la trasformazione (separate da virgole)",
-    "e.g. hu, sk, en-US": "es. it, en-US"
+    "Enter the locales to use for the transformation (comma-separated)": "Inserisci le impostazioni locali da usare per la trasformazione (separate da virgole)",
+    "e.g. hu, sk, en-US": "es. it, en-US",
+    "'{0}' already exists. Do you want to overwrite it?": "'{0}' esiste già. Vuoi sovrascriverlo?",
+    "Yes": "Sì",
+    "No": "No",
+    "Renamed: {0} to {1}": "Rinominato: {0} in {1}",
+    "Failed to rename '{0}': {1}": "Impossibile rinominare '{0}': {1}",
+    "{0} items slugified successfully.": "{0} elementi convertiti in slug con successo."
 }

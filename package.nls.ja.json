@@ -11,6 +11,7 @@
   "extension.config.removeEmptyLines.considerWhitespaceEmpty.desc": "true の場合、空白文字 (スペース、タブ) のみの行も空行とみなされます。false の場合、完全に空の行のみが削除されます。",
   "extension.command.reportIssue.title": "問題を報告する",
   "extension.command.slugify.title": "URL スラッグを生成",
+  "extension.command.slugifyFileOrFolder.title": "Generate URL Slug",
   "extension.command.toCamelCase.title": "camelCase に変換 (myVariableName)",
   "extension.command.toPascalCase.title": "PascalCase に変換 (MyClassName)",
   "extension.command.toSnakeCase.title": "snake_case に変換 (my_variable_name)",

@@ -1,4 +1,10 @@
 {
-    "Enter the locales to use for the transformation (comma-separated)": "Geben Sie die zu verwendenden Sprachen für die Transformation ein (durch Kommas getrennt)",
-    "e.g. hu, sk, en-US": "z. B. de, en-US"
+    "Enter the locales to use for the transformation (comma-separated)": "Geben Sie die für die Umwandlung zu verwendenden Gebietsschemata ein (durch Kommas getrennt)",
+    "e.g. hu, sk, en-US": "z. B. de, en-US",
+    "'{0}' already exists. Do you want to overwrite it?": "'{0}' ist bereits vorhanden. Möchten Sie es überschreiben?",
+    "Yes": "Ja",
+    "No": "Nein",
+    "Renamed: {0} to {1}": "Umbenannt: {0} in {1}",
+    "Failed to rename '{0}': {1}": "Umbenennen von '{0}' fehlgeschlagen: {1}",
+    "{0} items slugified successfully.": "{0} Elemente erfolgreich in Slugs umgewandelt."
 }

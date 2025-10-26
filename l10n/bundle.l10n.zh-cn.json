@@ -1,4 +1,10 @@
 {
-    "Enter the locales to use for the transformation (comma-separated)": "输入要用于转换的区域设置（用逗号分隔）",
-    "e.g. hu, sk, en-US": "例如：zh-CN, zh-TW, en-US"
+    "Enter the locales to use for the transformation (comma-separated)": "请输入用于转换的语言环境（以逗号分隔）",
+    "e.g. hu, sk, en-US": "例如：zh-CN, en-US",
+    "'{0}' already exists. Do you want to overwrite it?": "“{0}”已存在。是否要覆盖？",
+    "Yes": "是",
+    "No": "否",
+    "Renamed: {0} to {1}": "已重命名：{0} → {1}",
+    "Failed to rename '{0}': {1}": "重命名“{0}”失败：{1}",
+    "{0} items slugified successfully.": "已成功将 {0} 个项目转换为 slug。"
 }

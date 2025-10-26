@@ -68,6 +68,10 @@
   "contributes": {
     "commands": [
       {
+        "command": "ps-dev-toolbox.slugifyFileOrFolder",
+        "title": "%extension.command.slugifyFileOrFolder.title%"
+      },
+      {
         "command": "ps-dev-toolbox.toCamelCase",
         "title": "%extension.command.toCamelCase.title%",
         "category": "Playful Sparkle",
@@ -297,6 +301,18 @@
       }
     ],
     "menus": {
+      "explorer/context": [
+        {
+          "command": "ps-dev-toolbox.slugifyFileOrFolder",
+          "group": "7_modification",
+          "when": "explorerResourceIsFolder == false"
+        },
+        {
+          "command": "ps-dev-toolbox.slugifyFileOrFolder",
+          "group": "7_modification",
+          "when": "explorerResourceIsFolder == true"
+        }
+      ],
       "issue/reporter": [
         {
           "command": "ps-dev-toolbox.reportIssue"

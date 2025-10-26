@@ -11,6 +11,7 @@
   "extension.config.removeEmptyLines.considerWhitespaceEmpty.desc": "Когато е true, редове, съдържащи само празни символи (интервали, табулации), се считат за празни. Когато е false, се премахват само напълно празни редове.",
   "extension.command.reportIssue.title": "Докладване на проблем",
   "extension.command.slugify.title": "Генериране на URL Slug",
+  "extension.command.slugifyFileOrFolder.title": "Generate URL Slug",
   "extension.command.toCamelCase.title": "Преобразуване в camelCase (myVariableName)",
   "extension.command.toPascalCase.title": "Преобразуване в PascalCase (MyClassName)",
   "extension.command.toSnakeCase.title": "Преобразуване в snake_case (my_variable_name)",

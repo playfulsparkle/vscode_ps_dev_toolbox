@@ -1,4 +1,10 @@
 {
     "Enter the locales to use for the transformation (comma-separated)": "変換に使用するロケールを入力してください（カンマ区切り）",
-    "e.g. hu, sk, en-US": "例：ja, en-US"
+    "e.g. hu, sk, en-US": "例: ja, en-US",
+    "'{0}' already exists. Do you want to overwrite it?": "'{0}' は既に存在します。上書きしますか？",
+    "Yes": "はい",
+    "No": "いいえ",
+    "Renamed: {0} to {1}": "名前を変更しました: {0} → {1}",
+    "Failed to rename '{0}': {1}": "「{0}」の名前変更に失敗しました: {1}",
+    "{0} items slugified successfully.": "{0} 件の項目をスラッグに変換しました。"
 }

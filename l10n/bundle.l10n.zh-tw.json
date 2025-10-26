@@ -1,4 +1,10 @@
 {
-    "Enter the locales to use for the transformation (comma-separated)": "輸入要用於轉換的區域設置（以逗號分隔）",
-    "e.g. hu, sk, en-US": "例如：zh-TW, zh-CN, en-US"
+    "Enter the locales to use for the transformation (comma-separated)": "請輸入要用於轉換的地區設定（以逗號分隔）",
+    "e.g. hu, sk, en-US": "例如：zh-TW, en-US",
+    "'{0}' already exists. Do you want to overwrite it?": "「{0}」已存在。要覆寫嗎？",
+    "Yes": "是",
+    "No": "否",
+    "Renamed: {0} to {1}": "已重新命名：{0} → {1}",
+    "Failed to rename '{0}': {1}": "無法重新命名「{0}」：{1}",
+    "{0} items slugified successfully.": "已成功將 {0} 個項目轉換為 slug。"
 }

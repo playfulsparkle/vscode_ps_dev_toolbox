@@ -11,6 +11,7 @@
   "extension.config.removeEmptyLines.considerWhitespaceEmpty.desc": "Doğru olduğunda, yalnızca boşluk (boşluklar, sekmeler) içeren satırlar boş kabul edilir. Yanlış olduğunda, yalnızca tamamen boş satırlar kaldırılır.",
   "extension.command.reportIssue.title": "Sorun Bildir",
   "extension.command.slugify.title": "URL Slug'u Oluştur",
+  "extension.command.slugifyFileOrFolder.title": "Generate URL Slug",
   "extension.command.toCamelCase.title": "camelCase'e dönüştür (myVariableName)",
   "extension.command.toPascalCase.title": "PascalCase'e dönüştür (MyClassName)",
   "extension.command.toSnakeCase.title": "snake_case'e dönüştür (my_variable_name)",

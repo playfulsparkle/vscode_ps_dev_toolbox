@@ -1,4 +1,6 @@
 import * as vscode from "vscode";
+import * as path from "path";
+import * as fs from "fs";
 import * as utils from "./utils";
 
 
@@ -9,6 +11,7 @@ export function activate(context: vscode.ExtensionContext) {
 	enum CommandId {
 		ReportIssue = "ps-dev-toolbox.reportIssue",
 		Slugify = "ps-dev-toolbox.slugify",
+		SlugifyFilename = "ps-dev-toolbox.slugifyFilename",
 		ToCamelCase = "ps-dev-toolbox.toCamelCase",
 		ToPascalCase = "ps-dev-toolbox.toPascalCase",
 		ToSnakeCase = "ps-dev-toolbox.toSnakeCase",
@@ -288,6 +291,46 @@ export function activate(context: vscode.ExtensionContext) {
 		return localesPrompt ? localesPrompt.split(",").map(locale => locale.trim()) : [];
 	};
 
+	const renameToSlug = async (uri: vscode.Uri, separator: string) => {
+		const oldPath = uri.fsPath;
+		const pathSeparator = oldPath.includes("\\") ? "\\" : "/";
+		const pathParts = oldPath.split(/[/\\]/);
+		const itemName = pathParts[pathParts.length - 1];
+		const slugifiedName = utils.slugify(itemName, separator);
+
+		// Skip if name doesn't change
+		if (itemName === slugifiedName) {
+			return;
+		}
+
+		const parentPath = pathParts.slice(0, -1).join(pathSeparator);
+		const newPath = `${parentPath}${pathSeparator}${slugifiedName}`;
+
+		if (fs.existsSync(newPath)) {
+			const overwrite = await vscode.window.showWarningMessage(
+				vscode.l10n.t("'{0}' already exists. Do you want to overwrite it?", slugifiedName),
+				{ modal: true },
+				vscode.l10n.t("Yes"),
+				vscode.l10n.t("No")
+			);
+
+			if (overwrite !== vscode.l10n.t("Yes")) {
+				return;
+			}
+		}
+
+		try {
+			await vscode.workspace.fs.rename(uri, vscode.Uri.file(newPath));
+			vscode.window.showInformationMessage(
+				vscode.l10n.t("Renamed: {0} to {1}", itemName, slugifiedName)
+			);
+		} catch (error) {
+			vscode.window.showErrorMessage(
+				vscode.l10n.t("Failed to rename '{0}': {1}", itemName, (error as Error).message)
+			);
+		}
+	};
+
 	const commandHandlers = {
 		[CommandId.ReportIssue]: () => vscode.env.openExternal(vscode.Uri.parse("https://github.com/playfulsparkle/vscode_ps_dev_toolbox/issues")),
 		[CommandId.ToCamelCase]: createTextTransformCommand(utils.toCamelCase),
@@ -303,6 +346,28 @@ export function activate(context: vscode.ExtensionContext) {
 			const separator = config.get<string>("slugifySeparator", "-");
 
 			return processTextInEditor(text => utils.slugify(text, separator));
+		},
+		[CommandId.SlugifyFilename]: async (uri: vscode.Uri, selectedUris?: vscode.Uri[]) => {
+			if (!uri) {
+				vscode.window.showErrorMessage(vscode.l10n.t("No file or folder selected."));
+				return;
+			}
+
+			const config = vscode.workspace.getConfiguration("ps-dev-toolbox");
+			const separator = config.get<string>("slugifySeparator", "-");
+
+			// Handle multiple selection
+			const urisToRename = selectedUris && selectedUris.length > 0 ? selectedUris : [uri];
+
+			for (const currentUri of urisToRename) {
+				await renameToSlug(currentUri, separator);
+			}
+
+			if (urisToRename.length > 1) {
+				vscode.window.showInformationMessage(
+					vscode.l10n.t("{0} items slugified successfully.", urisToRename.length)
+				);
+			}
 		},
 		[CommandId.MakeLowercase]: async () => {
 			const localesInput = await localesPrompt();

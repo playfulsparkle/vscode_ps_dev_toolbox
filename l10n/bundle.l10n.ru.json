@@ -1,4 +1,10 @@
 {
-    "Enter the locales to use for the transformation (comma-separated)": "Введите локали, которые будут использоваться для трансформации (разделенные запятыми)",
-    "e.g. hu, sk, en-US": "напр. ru, en-US"
+    "Enter the locales to use for the transformation (comma-separated)": "Введите локали для преобразования, через запятую",
+    "e.g. hu, sk, en-US": "например: ru, en-US",
+    "'{0}' already exists. Do you want to overwrite it?": "'{0}' уже существует. Перезаписать?",
+    "Yes": "Да",
+    "No": "Нет",
+    "Renamed: {0} to {1}": "Переименовано: {0} → {1}",
+    "Failed to rename '{0}': {1}": "Не удалось переименовать «{0}»: {1}",
+    "{0} items slugified successfully.": "{0} элементов успешно преобразовано в slug."
 }

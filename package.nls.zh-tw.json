@@ -11,6 +11,7 @@
   "extension.config.removeEmptyLines.considerWhitespaceEmpty.desc": "如果為 true，則僅包含空白字元（空格、Tab）的行也會被視為空行。如果為 false，則僅移除完全空白的行。",
   "extension.command.reportIssue.title": "報告問題",
   "extension.command.slugify.title": "產生 URL Slug",
+  "extension.command.slugifyFileOrFolder.title": "Generate URL Slug",
   "extension.command.toCamelCase.title": "轉換為 camelCase (myVariableName)",
   "extension.command.toPascalCase.title": "轉換為 PascalCase (MyClassName)",
   "extension.command.toSnakeCase.title": "轉換為 snake_case (my_variable_name)",

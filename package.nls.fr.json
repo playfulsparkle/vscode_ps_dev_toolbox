@@ -11,6 +11,7 @@
   "extension.config.removeEmptyLines.considerWhitespaceEmpty.desc": "Lorsque la valeur est 'true', les lignes contenant uniquement des espaces blancs (espaces, tabulations) sont considérées comme vides. Lorsque la valeur est 'false', seules les lignes complètement vides sont supprimées.",
   "extension.command.reportIssue.title": "Signaler un problème",
   "extension.command.slugify.title": "Générer un slug d'URL",
+  "extension.command.slugifyFileOrFolder.title": "Generate URL Slug",
   "extension.command.toCamelCase.title": "Convertir en camelCase (myVariableName)",
   "extension.command.toPascalCase.title": "Convertir en PascalCase (MyClassName)",
   "extension.command.toSnakeCase.title": "Convertir en snake_case (my_variable_name)",
