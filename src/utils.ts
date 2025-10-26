@@ -848,7 +848,7 @@ export function decodeJavaScriptUnicodeEscapes(text: string): string {
     if (typeof text !== "string") {
         return "";
     }
-    
+
     // Pattern matches both \Uxxxxxxxx and \uxxxx formats, case insensitive for hex digits
     return text.replace(/\\U([0-9a-fA-F]{8})|\\u([0-9a-fA-F]{4})/g, (match, u8, u4) => {
         if (u8) {
@@ -873,7 +873,7 @@ export function decodeJavaScriptUnicodeEscapes(text: string): string {
 /**
  * Converts a string to CSS Unicode escape sequences.
  * Non-ASCII characters (excluding non-breaking space) and characters outside the BMP 
- * are encoded as "\\XXXXXX " (uppercase hex followed by a space).
+ * are encoded as "\\XXXXXX" (uppercase hex followed by a space).
  * 
  * This is the standard escape format used in CSS for representing Unicode characters.
  *
@@ -888,32 +888,38 @@ export function encodeCssUnicodeEscape(text: string): string {
 
     let result = "";
 
-    // Process each character in the input string
-    for (let i = 0; i < text.length; i++) {
-        const code = text.codePointAt(i);
+    for (let i = 0; i < text.length;) {
+        const codePoint = text.codePointAt(i);
 
-        if (code === undefined) { continue; }
+        if (codePoint === undefined) {
+            result += text[i];
+            i += 1;
+            continue;
+        }
 
-        // Handle surrogate pairs and other special characters
-        if (code > 0xFFFF) {
-            // This is a character outside the BMP (Basic Multilingual Plane)
-            const hex = code.toString(16).padStart(6, "0").toUpperCase();
-
-            result += `\\${hex} `;
-            // Skip the low surrogate
-            i++;
-        } else if (code > 127 && code !== 160) { // 160 is non-breaking space
-            // This is a non-ASCII character
-            const hex = code.toString(16).padStart(4, "0").toUpperCase();
+        if (codePoint <= 0x7f) {
+            result += String.fromCodePoint(codePoint);
+            i += 1;
+        } else if (codePoint <= 0xffff) {
+             // This is a character outside the BMP (Basic Multilingual Plane)
+            const hex = codePoint.toString(16).padStart(6, "0").toUpperCase();
 
             result += `\\${hex} `;
+
+            // Move to the next code point, handling surrogate pairs
+            i += codePoint > 0xFFFF ? 2 : 1;
         } else {
-            // Regular ASCII character or space
-            result += text.charAt(i);
+           // This is a non-ASCII character
+            const hex = codePoint.toString(16).padStart(4, "0").toUpperCase();
+
+            result += `\\${hex} `;
+
+            // Move to the next code point, handling surrogate pairs
+            i += codePoint > 0xFFFF ? 2 : 1;
         }
     }
 
-    return result; // Trim any trailing space added by the last escape
+    return result;
 }
 
 /**
@@ -930,11 +936,17 @@ export function decodeCssUnicodeEscape(text: string): string {
         return "";
     }
 
-    // Match Unicode escape sequences followed by an optional space
-    return text.replace(/\\([0-9a-fA-F]{4,6}) ?/g, (_, hexCode) => {
-        const codePoint = parseInt(hexCode, 16);
-
-        return String.fromCodePoint(codePoint);
+    // Pattern matches \\XXXXXX formats, case insensitive for hex digits
+    return text.replace(/\\([0-9a-fA-F]{4,6}) ?/g, (match, hexCode) => {
+        if (hexCode) {
+            const codePoint = parseInt(hexCode, 16);
+            // Check if it's a valid Unicode code point
+            if (codePoint >= 0xD800 && codePoint <= 0xDFFF) {
+                return match; // Return the original escape sequence
+            }
+            return String.fromCodePoint(codePoint);
+        }
+        return "";
     });
 }
 
