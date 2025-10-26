@@ -11,7 +11,7 @@ export function activate(context: vscode.ExtensionContext) {
 	enum CommandId {
 		ReportIssue = "ps-dev-toolbox.reportIssue",
 		Slugify = "ps-dev-toolbox.slugify",
-		SlugifyFilename = "ps-dev-toolbox.slugifyFilename",
+		SlugifyFilename = "ps-dev-toolbox.slugifyFileOrFolder",
 		ToCamelCase = "ps-dev-toolbox.toCamelCase",
 		ToPascalCase = "ps-dev-toolbox.toPascalCase",
 		ToSnakeCase = "ps-dev-toolbox.toSnakeCase",
@@ -299,7 +299,11 @@ export function activate(context: vscode.ExtensionContext) {
 		const slugifiedName = utils.slugify(itemName, separator);
 
 		// Skip if name doesn't change
+
 		if (itemName === slugifiedName) {
+			vscode.window.showWarningMessage(
+				vscode.l10n.t("'{0}' is already slugified.", itemName)
+			);
 			return;
 		}
 
@@ -349,7 +353,6 @@ export function activate(context: vscode.ExtensionContext) {
 		},
 		[CommandId.SlugifyFilename]: async (uri: vscode.Uri, selectedUris?: vscode.Uri[]) => {
 			if (!uri) {
-				vscode.window.showErrorMessage(vscode.l10n.t("No file or folder selected."));
 				return;
 			}
 

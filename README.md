@@ -77,6 +77,10 @@ If you encounter any of these or other issues, please report them on the [GitHub
 
 ## Release Notes
 
+### 0.0.14
+
+* Added "Convert to URL Slug" command to Explorer context menu for renaming files and folders to URL-safe format (supports multi-selection)
+
 ### 0.0.13
 
 * Fixed single block selection for URL slugify

@@ -1,10 +1,11 @@
 {
-    "Enter the locales to use for the transformation (comma-separated)": "변환에 사용할 로케일을 입력하세요(쉼표로 구분)",
-    "e.g. hu, sk, en-US": "예: ko, en-US",
-    "'{0}' already exists. Do you want to overwrite it?": "'{0}'이(가) 이미 존재합니다. 덮어쓰시겠습니까?",
-    "Yes": "예",
-    "No": "아니요",
-    "Renamed: {0} to {1}": "이름 변경: {0} → {1}",
-    "Failed to rename '{0}': {1}": "'{0}' 이름 변경에 실패했습니다: {1}",
-    "{0} items slugified successfully.": "{0}개 항목을 슬러그로 변환했습니다."
+  "Enter the locales to use for the transformation (comma-separated)": "변환에 사용할 로케일을 입력하세요(쉼표로 구분)",
+  "e.g. hu, sk, en-US": "예: ko, en-US",
+  "'{0}' is already slugified.": "“{0}”는 이미 슬러그 형식입니다.",
+  "'{0}' already exists. Do you want to overwrite it?": "“{0}”이(가) 이미 존재합니다. 덮어쓰시겠습니까?",
+  "Yes": "예",
+  "No": "아니요",
+  "Renamed: {0} to {1}": "이름 변경: {0} → {1}",
+  "Failed to rename '{0}': {1}": "“{0}” 이름 변경에 실패했습니다: {1}",
+  "{0} items slugified successfully.": "{0}개 항목을 슬러그로 변환했습니다."
 }

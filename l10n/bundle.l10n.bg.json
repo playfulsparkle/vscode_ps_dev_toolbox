@@ -1,10 +1,11 @@
 {
     "Enter the locales to use for the transformation (comma-separated)": "Въведете локалите за преобразуването (разделени със запетая)",
     "e.g. hu, sk, en-US": "напр. bg, ru, en-US",
-    "'{0}' already exists. Do you want to overwrite it?": "'{0}' вече съществува. Искате ли да го презапишете?",
+    "'{0}' is already slugified.": "„{0}“ вече е в slug формат.",
+    "'{0}' already exists. Do you want to overwrite it?": "„{0}“ вече съществува. Искате ли да го презапишете?",
     "Yes": "Да",
     "No": "Не",
     "Renamed: {0} to {1}": "Преименувано: {0} на {1}",
-    "Failed to rename '{0}': {1}": "Неуспешно преименуване на '{0}': {1}",
+    "Failed to rename '{0}': {1}": "Неуспешно преименуване на „{0}“: {1}",
     "{0} items slugified successfully.": "{0} елемента бяха успешно преобразувани в slug."
 }

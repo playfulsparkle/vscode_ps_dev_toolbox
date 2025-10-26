@@ -1,10 +1,11 @@
 {
-    "Enter the locales to use for the transformation (comma-separated)": "Wprowadź ustawienia regionalne do użycia przy transformacji (oddzielone przecinkami)",
-    "e.g. hu, sk, en-US": "np. pl, en-US",
-    "'{0}' already exists. Do you want to overwrite it?": "'{0}' już istnieje. Czy chcesz go nadpisać?",
-    "Yes": "Tak",
-    "No": "Nie",
-    "Renamed: {0} to {1}": "Zmieniono nazwę: {0} → {1}",
-    "Failed to rename '{0}': {1}": "Nie udało się zmienić nazwy „{0}”: {1}",
-    "{0} items slugified successfully.": "Pomyślnie przekształcono {0} elementów na slug."
+  "Enter the locales to use for the transformation (comma-separated)": "Wprowadź ustawienia regionalne do użycia przy transformacji (oddzielone przecinkami)",
+  "e.g. hu, sk, en-US": "np. pl, en-US",
+  "'{0}' is already slugified.": "„{0}” jest już w formacie slug.",
+  "'{0}' already exists. Do you want to overwrite it?": "„{0}” już istnieje. Czy chcesz go nadpisać?",
+  "Yes": "Tak",
+  "No": "Nie",
+  "Renamed: {0} to {1}": "Zmieniono nazwę: {0} → {1}",
+  "Failed to rename '{0}': {1}": "Nie udało się zmienić nazwy „{0}”: {1}",
+  "{0} items slugified successfully.": "Pomyślnie przekształcono {0} elementów na slug."
 }

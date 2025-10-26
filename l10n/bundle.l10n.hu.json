@@ -1,10 +1,11 @@
 {
     "Enter the locales to use for the transformation (comma-separated)": "Adja meg az átalakításhoz használandó területi beállításokat (vesszővel elválasztva)",
     "e.g. hu, sk, en-US": "pl. hu, sk, en-US",
-    "'{0}' already exists. Do you want to overwrite it?": "A(z) '{0}' már létezik. Szeretné felülírni?",
+    "'{0}' is already slugified.": "„{0}” már slug formátumú.",
+    "'{0}' already exists. Do you want to overwrite it?": "A(z) „{0}” már létezik. Szeretné felülírni?",
     "Yes": "Igen",
     "No": "Nem",
     "Renamed: {0} to {1}": "Átnevezve: {0} → {1}",
-    "Failed to rename '{0}': {1}": "Nem sikerült átnevezni: '{0}': {1}",
+    "Failed to rename '{0}': {1}": "Nem sikerült átnevezni: „{0}”: {1}",
     "{0} items slugified successfully.": "{0} elem sikeresen slug formára alakítva."
 }

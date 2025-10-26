@@ -1,10 +1,11 @@
 {
     "Enter the locales to use for the transformation (comma-separated)": "Saisissez les paramètres régionaux à utiliser pour la transformation (séparés par des virgules)",
     "e.g. hu, sk, en-US": "p. ex. fr, en-US",
-    "'{0}' already exists. Do you want to overwrite it?": "'{0}' existe déjà. Voulez-vous l'écraser ?",
+    "'{0}' is already slugified.": "« {0} » est déjà au format slug.",
+    "'{0}' already exists. Do you want to overwrite it?": "« {0} » existe déjà. Voulez-vous l'écraser ?",
     "Yes": "Oui",
     "No": "Non",
     "Renamed: {0} to {1}": "Renommé : {0} en {1}",
-    "Failed to rename '{0}': {1}": "Échec du renommage de '{0}' : {1}",
+    "Failed to rename '{0}': {1}": "Échec du renommage de « {0} » : {1}",
     "{0} items slugified successfully.": "{0} éléments convertis en slugs avec succès."
 }

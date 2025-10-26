@@ -1,6 +1,7 @@
 {
     "Enter the locales to use for the transformation (comma-separated)": "请输入用于转换的语言环境（以逗号分隔）",
     "e.g. hu, sk, en-US": "例如：zh-CN, en-US",
+    "'{0}' is already slugified.": "“{0}” 已是 slug 格式。",
     "'{0}' already exists. Do you want to overwrite it?": "“{0}”已存在。是否要覆盖？",
     "Yes": "是",
     "No": "否",

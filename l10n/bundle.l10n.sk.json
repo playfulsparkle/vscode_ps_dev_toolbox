@@ -1,7 +1,8 @@
 {
     "Enter the locales to use for the transformation (comma-separated)": "Zadajte miestne nastavenia na transformáciu (oddelené čiarkami)",
     "e.g. hu, sk, en-US": "napr. sk, en-US",
-    "'{0}' already exists. Do you want to overwrite it?": "'{0}' už existuje. Chcete ho prepísať?",
+    "'{0}' is already slugified.": "„{0}“ je už vo formáte slug.",
+    "'{0}' already exists. Do you want to overwrite it?": "„{0}“ už existuje. Chcete ho prepísať?",
     "Yes": "Áno",
     "No": "Nie",
     "Renamed: {0} to {1}": "Premenované: {0} na {1}",
