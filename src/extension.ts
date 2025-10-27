@@ -282,13 +282,38 @@ export function activate(context: vscode.ExtensionContext) {
 	};
 
 	const localesPrompt = async () => {
-		const localesPrompt = await vscode.window.showInputBox({
+		const currentLocale = vscode.env.language || "en";
+		const localesInput = await vscode.window.showInputBox({
 			prompt: vscode.l10n.t("Enter the locales to use for the transformation (comma-separated)"),
 			placeHolder: vscode.l10n.t("e.g. hu, sk, en-US"),
-			value: vscode.env.language,
+			value: currentLocale,
 		});
 
-		return localesPrompt ? localesPrompt.split(",").map(locale => locale.trim()) : [];
+		if (!localesInput) {
+			return [currentLocale];
+		}
+
+		return [...new Set(
+			localesInput.split(",")
+				.map(locale => locale.trim())
+				.filter(locale => {
+					if (locale.length < 2) {
+						return false;
+					}
+
+					try {
+						// Use Intl to check if it's a valid locale
+						const intlLocale = new Intl.Locale(locale);
+
+						return intlLocale.language.length >= 2;
+					} catch {
+						// If Intl.Locale fails, fall back to basic pattern check
+						const basicPattern = /^[a-zA-Z]{2,3}(-[a-zA-Z0-9]+)*$/;
+
+						return basicPattern.test(locale);
+					}
+				})
+		)];
 	};
 
 	const renameToSlug = async (uri: vscode.Uri, separator: string) => {
@@ -310,22 +335,32 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 
 		const newPath = path.join(parentPath, slugifiedName);
+		const newUri = vscode.Uri.file(newPath);
+		let shouldOverwrite = false;
 
-		if (fs.existsSync(newPath)) {
-			const overwrite = await vscode.window.showWarningMessage(
+		// Check existence using VS Code API (avoids race condition)
+		try {
+			await vscode.workspace.fs.stat(newUri);
+
+			// File exists - prompt user
+			const overwritePrompt = await vscode.window.showWarningMessage(
 				vscode.l10n.t("'{0}' already exists. Do you want to overwrite it?", slugifiedName),
 				{ modal: true },
 				vscode.l10n.t("Yes"),
 				vscode.l10n.t("No")
 			);
 
-			if (overwrite !== vscode.l10n.t("Yes")) {
-				return;
+			if (overwritePrompt === vscode.l10n.t("Yes")) {
+				shouldOverwrite = true;
+			} else if (overwritePrompt === vscode.l10n.t("No")) {
+				return; // User chose not to overwrite
 			}
+		} catch (_) {
+			// File doesn't exist - this is fine, continue
 		}
 
 		try {
-			await vscode.workspace.fs.rename(uri, vscode.Uri.file(newPath));
+			await vscode.workspace.fs.rename(uri, vscode.Uri.file(newPath), { overwrite: shouldOverwrite });
 
 			vscode.window.showInformationMessage(
 				vscode.l10n.t("Renamed: {0} to {1}", itemName, slugifiedName)
