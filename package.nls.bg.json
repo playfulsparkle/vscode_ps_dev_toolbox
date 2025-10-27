@@ -1,5 +1,6 @@
 {
   "extension.config.title": "Dev Toolbox",
+  "extension.config.encoding.doubleEncode.desc": "Превключване на повторното кодиране на вече екранирани последователности. Когато е изключено, енкодерите оставят без промяна съществуващите екранирания, които генерират. Отнася се за всички енкодери. По подразбиране изключено.",
   "extension.config.slugify.desc": "Знак, използван като разделител в текст, преобразуван до slug.",
   "extension.config.slugify.dash.desc": "Използвайте тире (-) като разделител",
   "extension.config.slugify.underscore.desc": "Използвайте долна черта (_) като разделител",

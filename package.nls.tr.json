@@ -1,5 +1,6 @@
 {
   "extension.config.title": "Dev Toolbox",
+  "extension.config.encoding.doubleEncode.desc": "Zaten kaçış uygulanmış dizilerin yeniden kodlanmasını açıp kapatır. Kapalıyken kodlayıcılar ürettikleri mevcut kaçışları olduğu gibi bırakır. Tüm kodlayıcılara uygulanır. Varsayılan: kapalı.",
   "extension.config.slugify.desc": "Slug’a dönüştürülmüş metinde ayırıcı olarak kullanılan karakter.",
   "extension.config.slugify.dash.desc": "Ayraç olarak kısa çizgi (-) kullan",
   "extension.config.slugify.underscore.desc": "Ayraç olarak alt çizgi (_) kullan",

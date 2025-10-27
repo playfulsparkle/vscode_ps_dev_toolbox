@@ -1,5 +1,6 @@
 {
   "extension.config.title": "Dev Toolbox",
+  "extension.config.encoding.doubleEncode.desc": "Activer ou désactiver le ré-encodage des séquences déjà échappées. Lorsque c’est désactivé, les encodeurs laissent inchangés les échappements existants qu’ils produisent. S’applique à tous les encodeurs. Par défaut : désactivé.",
   "extension.config.slugify.desc": "Caractère utilisé comme séparateur dans un texte transformé en slug.",
   "extension.config.slugify.dash.desc": "Utiliser un tiret (-) comme séparateur",
   "extension.config.slugify.underscore.desc": "Utiliser un tiret bas (_) comme séparateur",

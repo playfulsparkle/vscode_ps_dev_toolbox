@@ -1,5 +1,6 @@
 {
   "extension.config.title": "Dev Toolbox",
+  "extension.config.encoding.doubleEncode.desc": "既にエスケープ済みのシーケンスを再エンコードするかを切り替えます。オフの場合、エンコーダーは自分が生成した既存のエスケープを変更しません。すべてのエンコーダーに適用されます。既定はオフです.",
   "extension.config.slugify.desc": "スラッグ化したテキストで区切りとして使用する文字。",
   "extension.config.slugify.dash.desc": "区切りとしてハイフン (-) を使用",
   "extension.config.slugify.underscore.desc": "区切りとしてアンダースコア (_) を使用",

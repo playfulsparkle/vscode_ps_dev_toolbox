@@ -1,5 +1,6 @@
 {
   "extension.config.title": "Dev Toolbox",
+  "extension.config.encoding.doubleEncode.desc": "Umschalten der erneuten Kodierung bereits maskierter Sequenzen. Wenn deaktiviert, lassen Encoder die von ihnen erzeugten vorhandenen Maskierungen unverändert. Gilt für alle Encoder. Standardmäßig aus.",
   "extension.config.slugify.desc": "Zeichen, das als Trennzeichen in Slug-Text verwendet wird.",
   "extension.config.slugify.dash.desc": "Bindestrich (-) als Trennzeichen verwenden",
   "extension.config.slugify.underscore.desc": "Unterstrich (_) als Trennzeichen verwenden",

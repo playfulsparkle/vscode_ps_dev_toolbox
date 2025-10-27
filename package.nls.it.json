@@ -1,5 +1,6 @@
 {
   "extension.config.title": "Dev Toolbox",
+  "extension.config.encoding.doubleEncode.desc": "Attiva o disattiva la ricodifica delle sequenze già con escape applicato. Quando è disattivato, i codificatori lasciano invariati gli escape esistenti che producono. Si applica a tutti i codificatori. Predefinito: disattivato.",
   "extension.config.slugify.desc": "Carattere usato come separatore nel testo convertito in slug.",
   "extension.config.slugify.dash.desc": "Usa un trattino (-) come separatore",
   "extension.config.slugify.underscore.desc": "Usa un trattino basso (_) come separatore",

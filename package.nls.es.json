@@ -1,5 +1,6 @@
 {
   "extension.config.title": "Dev Toolbox",
+  "extension.config.encoding.doubleEncode.desc": "Activar o desactivar la recodificación de secuencias ya escapadas. Si está desactivado, los codificadores dejan sin cambios los escapes existentes que generan. Se aplica a todos los codificadores. Valor predeterminado: desactivado.",
   "extension.config.slugify.desc": "Carácter usado como separador en el texto convertido en slug.",
   "extension.config.slugify.dash.desc": "Usar un guion (-) como separador",
   "extension.config.slugify.underscore.desc": "Usar un guion bajo (_) como separador",

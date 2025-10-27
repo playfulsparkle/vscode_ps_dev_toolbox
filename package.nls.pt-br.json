@@ -1,5 +1,6 @@
 {
   "extension.config.title": "Dev Toolbox",
+  "extension.config.encoding.doubleEncode.desc": "Alternar a recodificação de sequências já com escape. Quando desativado, os codificadores mantêm inalterados os escapes existentes que produzem. Aplica-se a todos os codificadores. Padrão: desativado.",
   "extension.config.slugify.desc": "Caractere usado como separador no texto convertido em slug.",
   "extension.config.slugify.dash.desc": "Usar hífen (-) como separador",
   "extension.config.slugify.underscore.desc": "Usar sublinhado (_) como separador",

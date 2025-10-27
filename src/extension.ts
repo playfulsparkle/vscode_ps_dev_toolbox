@@ -440,7 +440,12 @@ export function activate(context: vscode.ExtensionContext) {
 		[CommandId.RemoveEmptyLinesSelection]: async () => removeEmptyLinesCommand(true),
 		[CommandId.RemoveNonPrintableChars]: removeNonPrintableCharactersCommand,
 		[CommandId.RemoveLeadingTrailingWhitespace]: removeLeadingTrailingWhitespaceCommand,
-		[CommandId.EncodeNamedHtmlEntities]: async () => processTextInEditor(utils.encodeNamedHtmlEntities),
+		[CommandId.EncodeNamedHtmlEntities]: async () => {
+			const config = vscode.workspace.getConfiguration("ps-dev-toolbox.encoding");
+			const doubleEncode = config.get<boolean>("doubleEncode", false);
+
+			await processTextInEditor(text => utils.encodeNamedHtmlEntities(text, doubleEncode));
+		},
 		[CommandId.DecodeNamedHtmlEntities]: async () => processTextInEditor(utils.decodeNamedHtmlEntities),
 		[CommandId.EncodeHtmlHexEntities]: async () => processTextInEditor(utils.encodeHtmlHexEntities),
 		[CommandId.DecodeHtmlHexEntities]: async () => processTextInEditor(utils.decodeHtmlHexEntities),

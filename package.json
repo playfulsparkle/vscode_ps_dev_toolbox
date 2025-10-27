@@ -322,6 +322,11 @@
     "configuration": {
       "title": "Dev Toolbox",
       "properties": {
+        "ps-dev-toolbox.encoding.doubleEncode": {
+          "type": "boolean",
+          "default": false,
+          "description": "%extension.config.encoding.doubleEncode.desc%"
+        },
         "ps-dev-toolbox.slugifySeparator": {
           "type": "string",
           "default": "-",

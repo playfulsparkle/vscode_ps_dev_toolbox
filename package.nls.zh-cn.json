@@ -1,5 +1,6 @@
 {
   "extension.config.title": "Dev Toolbox",
+  "extension.config.encoding.doubleEncode.desc": "切换对已转义序列的重新编码。关闭时，编码器会保持其生成的现有转义不变。适用于所有编码器。默认关闭。",
   "extension.config.slugify.desc": "在转换为 slug 的文本中用作分隔符的字符。",
   "extension.config.slugify.dash.desc": "使用连字符 (-) 作为分隔符",
   "extension.config.slugify.underscore.desc": "使用下划线 (_) 作为分隔符",

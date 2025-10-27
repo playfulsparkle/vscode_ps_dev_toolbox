@@ -1,5 +1,6 @@
 {
   "extension.config.title": "Dev Toolbox",
+  "extension.config.encoding.doubleEncode.desc": "Prepína opätovné kódovanie už escapovaných sekvencií. Ak je vypnuté, kódovače ponechajú bez zmeny existujúce escapovania, ktoré vytvárajú. Platí pre všetky kódovače. Predvolené nastavenie: vypnuté.",
   "extension.config.slugify.desc": "Znak používaný ako oddeľovač v texte skonvertovanom na slug.",
   "extension.config.slugify.dash.desc": "Použiť pomlčku (-) ako oddeľovač",
   "extension.config.slugify.underscore.desc": "Použiť podčiarkovník (_) ako oddeľovač",

@@ -1,5 +1,6 @@
 {
   "extension.config.title": "Dev Toolbox",
+  "extension.config.encoding.doubleEncode.desc": "Az előre már escape-elt szekvenciák újrakódolásának kapcsolója. Kikapcsolva a kódolók változatlanul hagyják a általuk létrehozott meglévő escape-eket. Minden kódolóra vonatkozik. Alapértelmezett: kikapcsolva.",
   "extension.config.slugify.desc": "A slugolt szövegben használt elválasztó karakter.",
   "extension.config.slugify.dash.desc": "Kötőjel (-) használata elválasztóként",
   "extension.config.slugify.underscore.desc": "Aláhúzásjel (_) használata elválasztóként",
