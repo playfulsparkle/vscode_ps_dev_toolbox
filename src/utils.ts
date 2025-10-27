@@ -589,7 +589,7 @@ export function encodePercentUri(text: string, doubleEncode: boolean = false): s
 
         // Encode the character as UTF-8 bytes
         const bytes = utf8Encode(codePoint);
-        
+
         for (const byte of bytes) {
             result += `%${byte.toString(16).toUpperCase().padStart(2, "0")}`;
         }
@@ -602,24 +602,30 @@ export function encodePercentUri(text: string, doubleEncode: boolean = false): s
 }
 
 function utf8Encode(codePoint: number): number[] {
+    // Validate code point range
+    if (codePoint < 0 || codePoint > 0x10FFFF) {
+        throw new RangeError(`Invalid code point: ${codePoint}`);
+    }
+
+    // Check for surrogate pair range (invalid for UTF-8)
+    if (codePoint >= 0xD800 && codePoint <= 0xDFFF) {
+        throw new RangeError(`Surrogate code points (0xD800-0xDFFF) are invalid: ${codePoint}`);
+    }
+
     if (codePoint <= 0x7F) {
-        // 1-byte sequence
         return [codePoint];
     } else if (codePoint <= 0x7FF) {
-        // 2-byte sequence
         return [
             0xC0 | (codePoint >> 6),
             0x80 | (codePoint & 0x3F)
         ];
     } else if (codePoint <= 0xFFFF) {
-        // 3-byte sequence
         return [
             0xE0 | (codePoint >> 12),
             0x80 | ((codePoint >> 6) & 0x3F),
             0x80 | (codePoint & 0x3F)
         ];
     } else {
-        // 4-byte sequence
         return [
             0xF0 | (codePoint >> 18),
             0x80 | ((codePoint >> 12) & 0x3F),
