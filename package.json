@@ -294,18 +294,6 @@
         "category": "Dev Toolbox",
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },
-        {
-        "command": "ps-dev-toolbox.encodePercentUri",
-        "title": "%extension.command.encodePercentUri.title%",
-        "category": "Dev Toolbox",
-        "enablement": "editorHasSelection || editorHasMultipleSelections"
-      },
-      {
-        "command": "ps-dev-toolbox.decodePercentUri",
-        "title": "%extension.command.decodePercentUri.title%",
-        "category": "Dev Toolbox",
-        "enablement": "editorHasSelection || editorHasMultipleSelections"
-      },
       {
         "command": "ps-dev-toolbox.reportIssue",
         "title": "%extension.command.reportIssue.title%",

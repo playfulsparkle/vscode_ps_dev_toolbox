@@ -48,9 +48,7 @@ export function activate(context: vscode.ExtensionContext) {
 		EncodeExtendedHexEscape = "ps-dev-toolbox.encodeHexEntities",
 		DecodeExtendedHexEscape = "ps-dev-toolbox.decodeHexEntities",
 		EncodeHexCodePoints = "ps-dev-toolbox.encodeHexCodePoints",
-		DecodeHexCodePoints = "ps-dev-toolbox.decodeHexCodePoints",
-		EncodePercentUri = "ps-dev-toolbox.encodePercentUri",
-		DecodePercentUri = "ps-dev-toolbox.decodePercentUri",
+		DecodeHexCodePoints = "ps-dev-toolbox.decodeHexCodePoints"
 	}
 
 	// Create a factory function for text transformation commands
@@ -504,14 +502,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 			await processTextInEditor(text => utils.encodeHexCodePoints(text, doubleEncode));
 		},
-		[CommandId.DecodeHexCodePoints]: async () => processTextInEditor(utils.decodeHexCodePoints),
-		[CommandId.EncodePercentUri]: async () => {
-			const config = vscode.workspace.getConfiguration("ps-dev-toolbox.encoding");
-			const doubleEncode = config.get<boolean>("doubleEncode", false);
-
-			await processTextInEditor(text => utils.encodePercentUri(text, doubleEncode));
-		},
-		[CommandId.DecodePercentUri]: async () => processTextInEditor(utils.decodePercentUri)
+		[CommandId.DecodeHexCodePoints]: async () => processTextInEditor(utils.decodeHexCodePoints)
 	};
 
 	// Register all commands

@@ -49,7 +49,5 @@
   "extension.command.encodeHexEntities.title": "Koduj rozszerzone szesnastkowe sekwencje escape (\\x{XXXXXX})",
   "extension.command.decodeHexEntities.title": "Dekoduj rozszerzone szesnastkowe sekwencje escape (\\x{XXXXXX})",
   "extension.command.encodeHexCodePoints.title": "Koduj szesnastkowe punkty kodowe (0xXXXX)",
-  "extension.command.decodeHexCodePoints.title": "Dekoduj szesnastkowe punkty kodowe (0xXXXX)",
-  "extension.command.encodePercentUri.title": "Kodowanie sekwencji URI zakodowanych procentowo (%XX)",
-  "extension.command.decodePercentUri.title": "Dekodowanie sekwencji URI zakodowanych procentowo (%XX)"
+  "extension.command.decodeHexCodePoints.title": "Dekoduj szesnastkowe punkty kodowe (0xXXXX)"
 }
