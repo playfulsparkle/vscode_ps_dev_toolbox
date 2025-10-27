@@ -520,7 +520,7 @@ const DECIMAL_ENTITY_REGEX = /^&#[0-9]+;/;                   // &#DDDD;
 const UNICODE_4_REGEX = /^\\u[0-9A-Fa-f]{4}/;             // \uXXXX
 const UNICODE_8_REGEX = /^\\U[0-9A-Fa-f]{8}/;             // \UXXXXXXXX
 const BACKSLASH_HEX_REGEX = /^\\[0-9A-Fa-f]{6}\s?/;             // \XXXXXX
-const UPLUS_REGEX = /^U\+[0-9A-Fa-f]{4,6}\s?/;            // U+XXXX or U+XXXXXX
+const UPLUS_REGEX = /^U\+[0-9A-Fa-f]{4,6}/;            // U+XXXX or U+XXXXXX
 const UNICODE_BRACE_REGEX = /^\\u\{[0-9A-Fa-f]+\}/;       // \u{XXX}
 const HEX_BRACE_REGEX = /^\\x\{[0-9A-Fa-f]+\}/;           // \x{XXX}
 const HEX_0X_REGEX = /^0x[0-9A-Fa-f]+/;                // 0xXXX
@@ -1220,10 +1220,17 @@ export function encodeUnicodeCodePoints(text: string, doubleEncode: boolean = fa
             }
         }
 
+        // Preserve all ASCII characters (0x00-0x7F) including control characters
+        if (codePoint <= 0x7F) {
+            result += text[i];
+            i++;
+            continue;
+        }
+
         // Non-ASCII without named entity, encode as hex entity
         const entity = codePoint.toString(16).toUpperCase().padStart(4, "0");
 
-        result += `U+${entity} `;
+        result += `U+${entity}`;
 
         // Move to the next code point, handling surrogate pairs
         i += codePoint > 0xFFFF ? 2 : 1;
