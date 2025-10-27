@@ -46,6 +46,7 @@ Seamlessly integrate these essential features into your coding environment to si
 * **ES6 Unicode Code Point Escape Sequences:** Encodes characters using the ECMAScript 6 (ES6) specific format (e.g., `\u{XXXXXX}`, like `&á🚀` to `&\u{E1}\u{1F680}`) and parses/converts these escape sequences back to their original characters (e.g., `\u{61}` to `a`).
 * **Extended Hex Escape Sequences:** Encodes characters using extended hexadecimal escape sequences (e.g., `\x{XXXXXX}`, like `'å😂` to `\x{E5}\x{1F602}`) and converts these escape sequences back to their corresponding characters (e.g., `\x{44}` to `D`).
 * **Hex Code Points:** Represents characters using their hexadecimal code point value (e.g., `0xXXXX`, like `(è🎉` to `0x28 0xE8 0x1F389`) and converts these hexadecimal code point strings back to their corresponding characters (e.g., `0x65` to `e`).
+* **Percent Encoded URI Sequence:** Encodes characters to `%XX` bytes for URIs using UTF-8 (e.g., `Ω` to `%CE%A9`, space to `%20`) and decodes `%XX` sequences back to characters (e.g., `%2F` to `/`, `%E2%9C%93` to `✓`).
 * **Multi-Language Support**: The extension's user interface and informational messages are available in English (en), Magyar (hu), Slovenčina (sk), Čeština (cs), Deutsch (de), Français (fr), Polski (pl), Български (bg), Español (es), Italiano (it), 日本語 (ja), 한국어 (ko), Português do Brasil (pt-br), Русский (ru), Türkçe (tr), 简体中文 (zh-cn), 繁體中文 (zh-tw) languages.
 
 ---
@@ -76,6 +77,10 @@ If you encounter any of these or other issues, please report them on the [GitHub
 ---
 
 ## Release Notes
+
+### 0.0.15
+
+* Added support for encoding and decoding percent-encoded URI sequences.
 
 ### 0.0.14
 

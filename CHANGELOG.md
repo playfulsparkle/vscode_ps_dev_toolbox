@@ -2,6 +2,10 @@
 
 All notable changes to the "Playful Sparkle: Dev Toolbox" extension will be documented in this file.
 
+## [0.0.15] - 2025-10-28
+
+* Added support for encoding and decoding percent-encoded URI sequences.
+
 ## [0.0.14] - 2025-10-27
 
 * Added "Convert to URL Slug" command to Explorer context menu for renaming files and folders to URL-safe format (supports multi-selection)
