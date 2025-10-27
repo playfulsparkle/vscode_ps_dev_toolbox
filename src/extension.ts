@@ -293,12 +293,14 @@ export function activate(context: vscode.ExtensionContext) {
 
 	const renameToSlug = async (uri: vscode.Uri, separator: string) => {
 		const oldPath = uri.fsPath;
-		const pathSeparator = oldPath.includes("\\") ? "\\" : "/";
-		const pathParts = oldPath.split(/[/\\]/);
-		const itemName = pathParts[pathParts.length - 1];
+
+		const itemName = path.basename(oldPath);
+		const parentPath = path.dirname(oldPath);
 		const slugifiedName = utils.slugify(itemName, separator);
 
-		// Skip if name doesn't change
+		if (slugifiedName.trim().length === 0) {
+			return;
+		}
 
 		if (itemName === slugifiedName) {
 			vscode.window.showWarningMessage(
@@ -307,8 +309,7 @@ export function activate(context: vscode.ExtensionContext) {
 			return;
 		}
 
-		const parentPath = pathParts.slice(0, -1).join(pathSeparator);
-		const newPath = `${parentPath}${pathSeparator}${slugifiedName}`;
+		const newPath = path.join(parentPath, slugifiedName);
 
 		if (fs.existsSync(newPath)) {
 			const overwrite = await vscode.window.showWarningMessage(
@@ -325,6 +326,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 		try {
 			await vscode.workspace.fs.rename(uri, vscode.Uri.file(newPath));
+
 			vscode.window.showInformationMessage(
 				vscode.l10n.t("Renamed: {0} to {1}", itemName, slugifiedName)
 			);
