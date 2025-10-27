@@ -80,6 +80,7 @@ If you encounter any of these or other issues, please report them on the [GitHub
 ### 0.0.14
 
 * Added "Convert to URL Slug" command to Explorer context menu for renaming files and folders to URL-safe format (supports multi-selection)
+* Updated locale handling in text transformation commands
 
 ### 0.0.13
 

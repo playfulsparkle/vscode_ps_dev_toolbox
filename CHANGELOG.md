@@ -5,6 +5,7 @@ All notable changes to the "Playful Sparkle: Dev Toolbox" extension will be docu
 ## [0.0.14] - 2025-10-27
 
 * Added "Convert to URL Slug" command to Explorer context menu for renaming files and folders to URL-safe format (supports multi-selection)
+* Updated locale handling in text transformation commands
 
 ## [0.0.13] - 2025-10-26
 
