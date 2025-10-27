@@ -524,6 +524,133 @@ const UPLUS_REGEX = /^U\+[0-9A-Fa-f]{4,6}/;            // U+XXXX or U+XXXXXX
 const UNICODE_BRACE_REGEX = /^\\u\{[0-9A-Fa-f]+\}/;       // \u{XXX}
 const HEX_BRACE_REGEX = /^\\x\{[0-9A-Fa-f]+\}/;           // \x{XXX}
 const HEX_0X_REGEX = /^0x[0-9A-Fa-f]+/;                // 0xXXX
+const PERCENT_ENCODED_REGEX = /^%[0-9A-F]{2}/i;
+
+/**
+ * Encodes a string using percent-encoding (URL encoding) for use in URIs.
+ * Encodes all characters except unreserved characters (A-Z, a-z, 0-9, -, _, ., ~).
+ * Creates entities in the format %XX where XX is the hexadecimal byte value.
+ * Handles multi-byte UTF-8 sequences correctly.
+ *
+ * @param text The string to encode.
+ * @param doubleEncode If false, skips characters that are already percent-encoded.
+ * @returns The percent-encoded string (e.g., "almás kenyér" -> "alm%C3%A1s%20keny%C3%A9r").
+ */
+function isPercentEncoded(str: string, idx: number): number {
+    const s = str.slice(idx);
+    let m = PERCENT_ENCODED_REGEX.exec(s);
+    if (m) {
+        return m[0].length;
+    }
+    return 0;
+}
+
+export function encodePercentUri(text: string, doubleEncode: boolean = false): string {
+    if (typeof text !== "string") {
+        return text;
+    }
+
+    let result = "";
+
+    for (let i = 0; i < text.length;) {
+        const codePoint = text.codePointAt(i);
+
+        if (codePoint === undefined) {
+            result += text[i];
+            i++;
+            continue;
+        }
+
+        // Check if already percent-encoded (skip if doubleEncode is false)
+        if (!doubleEncode && text[i] === "%") {
+            const len = isPercentEncoded(text, i);
+            if (len) {
+                result += text.slice(i, i + len);
+                i += len;
+                continue;
+            }
+        }
+
+        // Unreserved characters: A-Z, a-z, 0-9, -, _, ., ~
+        // These should NOT be encoded according to RFC 3986
+        if (
+            (codePoint >= 0x41 && codePoint <= 0x5A) || // A-Z
+            (codePoint >= 0x61 && codePoint <= 0x7A) || // a-z
+            (codePoint >= 0x30 && codePoint <= 0x39) || // 0-9
+            codePoint === 0x2D || // -
+            codePoint === 0x5F || // _
+            codePoint === 0x2E || // .
+            codePoint === 0x7E    // ~
+        ) {
+            result += text[i];
+            i++;
+            continue;
+        }
+
+        // Encode the character as UTF-8 bytes
+        const bytes = utf8Encode(codePoint);
+        
+        for (const byte of bytes) {
+            result += `%${byte.toString(16).toUpperCase().padStart(2, "0")}`;
+        }
+
+        // Move to the next code point, handling surrogate pairs
+        i += codePoint > 0xFFFF ? 2 : 1;
+    }
+
+    return result;
+}
+
+function utf8Encode(codePoint: number): number[] {
+    if (codePoint <= 0x7F) {
+        // 1-byte sequence
+        return [codePoint];
+    } else if (codePoint <= 0x7FF) {
+        // 2-byte sequence
+        return [
+            0xC0 | (codePoint >> 6),
+            0x80 | (codePoint & 0x3F)
+        ];
+    } else if (codePoint <= 0xFFFF) {
+        // 3-byte sequence
+        return [
+            0xE0 | (codePoint >> 12),
+            0x80 | ((codePoint >> 6) & 0x3F),
+            0x80 | (codePoint & 0x3F)
+        ];
+    } else {
+        // 4-byte sequence
+        return [
+            0xF0 | (codePoint >> 18),
+            0x80 | ((codePoint >> 12) & 0x3F),
+            0x80 | ((codePoint >> 6) & 0x3F),
+            0x80 | (codePoint & 0x3F)
+        ];
+    }
+}
+
+/**
+ * Decodes a percent-encoded URI string back to the original string.
+ * Decodes entities in the format %XX where XX is the hexadecimal byte value.
+ * Handles multi-byte UTF-8 sequences correctly.
+ *
+ * @param text The percent-encoded string to decode (e.g., "alm%C3%A1s%20keny%C3%A9r").
+ * @returns The decoded string with original characters.
+ */
+export function decodePercentUri(text: string): string {
+    if (typeof text !== "string") {
+        return "";
+    }
+
+    try {
+        // Use built-in decodeURIComponent which handles UTF-8 correctly
+        return decodeURIComponent(text);
+    } catch (e) {
+        // If decoding fails (malformed URI), return original string
+        console.warn("Failed to decode URI:", e);
+        return text;
+    }
+}
 
 /**
  * Converts a string to HTML/XML entity representation using named HTML entities.
