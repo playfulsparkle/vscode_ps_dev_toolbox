@@ -523,7 +523,7 @@ const BACKSLASH_HEX_REGEX = /^\\[0-9A-Fa-f]{6}\s?/;             // \XXXXXX
 const UPLUS_REGEX = /^U\+[0-9A-Fa-f]{4,6}\s?/;            // U+XXXX or U+XXXXXX
 const UNICODE_BRACE_REGEX = /^\\u\{[0-9A-Fa-f]+\}/;       // \u{XXX}
 const HEX_BRACE_REGEX = /^\\x\{[0-9A-Fa-f]+\}/;           // \x{XXX}
-const HEX_0X_REGEX = /^0x[0-9A-Fa-f]+\s?/;                // 0xXXX
+const HEX_0X_REGEX = /^0x[0-9A-Fa-f]+/;                // 0xXXX
 
 /**
  * Converts a string to HTML/XML entity representation using named HTML entities.
@@ -1009,7 +1009,7 @@ export function encodeJavaScriptUnicodeEscapes(text: string, doubleEncode: boole
         //     i += 1;
         //     continue;
         // } 
-        
+
         if (codePoint <= 0xffff) {
             const hex = codePoint.toString(16).toUpperCase().padStart(4, "0");
 
@@ -1115,12 +1115,12 @@ export function encodeCssUnicodeEscape(text: string, doubleEncode: boolean = fal
             }
         }
 
-        // if (codePoint <= 0x7f) {
-        //     result += String.fromCodePoint(codePoint);
-        //     i += 1;
-        //     continue;
-        // } 
-        
+        if (codePoint <= 0x7f) {
+            result += String.fromCodePoint(codePoint);
+            i += 1;
+            continue;
+        }
+
         if (codePoint <= 0xffff) {
             // This is a character outside the BMP (Basic Multilingual Plane)
             const hex = codePoint.toString(16).padStart(6, "0").toUpperCase();
@@ -1514,10 +1514,17 @@ export function encodeHexCodePoints(text: string, doubleEncode: boolean = false)
             }
         }
 
+        // Preserve all ASCII characters (0x00-0x7F) including control characters
+        if (codePoint <= 0x7F) {
+            result += text[i];
+            i++;
+            continue;
+        }
+
         // Non-ASCII without named entity, encode as hex entity
         const entity = codePoint.toString(16).toUpperCase();
 
-        result += `0x${entity} `;
+        result += `0x${entity}`;
 
         // Move to the next code point, handling surrogate pairs
         i += codePoint > 0xFFFF ? 2 : 1;
@@ -1541,7 +1548,7 @@ export function decodeHexCodePoints(text: string): string {
         return "";
     }
 
-    return text.replace(/0x([0-9A-Fa-f]+)\s*(?=0x|$)/g, (_, hex) => {
+    return text.replace(/0x([0-9A-Fa-f]+)/g, (_, hex) => {
         const codePoint = parseInt(hex, 16);
 
         try {

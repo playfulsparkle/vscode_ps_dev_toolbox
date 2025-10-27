@@ -479,21 +479,21 @@ export function activate(context: vscode.ExtensionContext) {
 			const config = vscode.workspace.getConfiguration("ps-dev-toolbox.encoding");
 			const doubleEncode = config.get<boolean>("doubleEncode", false);
 
-			await processTextInEditor(text => utils.encodeUnicodeCodePoints(text, doubleEncode));
+			await processTextInEditor(text => utils.encodeUnicodeCodePoints(text, doubleEncode)); // ok
 		},
 		[CommandId.DecodeUnicodeCodePoints]: async () => processTextInEditor(utils.decodeUnicodeCodePoints),
 		[CommandId.EncodeES6UnicodeCodePointEscape]: async () => {
 			const config = vscode.workspace.getConfiguration("ps-dev-toolbox.encoding");
 			const doubleEncode = config.get<boolean>("doubleEncode", false);
 
-			await processTextInEditor(text => utils.encodeES6UnicodeCodePointEscape(text, doubleEncode));
+			await processTextInEditor(text => utils.encodeES6UnicodeCodePointEscape(text, doubleEncode)); // ok
 		},
 		[CommandId.DecodeES6UnicodeCodePointEscape]: async () => processTextInEditor(utils.decodeES6UnicodeCodePointEscape),
 		[CommandId.EncodeExtendedHexEscape]: async () => {
 			const config = vscode.workspace.getConfiguration("ps-dev-toolbox.encoding");
 			const doubleEncode = config.get<boolean>("doubleEncode", false);
 
-			await processTextInEditor(text => utils.encodeHexEntities(text, doubleEncode));
+			await processTextInEditor(text => utils.encodeHexEntities(text, doubleEncode)); // ok
 		},
 		[CommandId.DecodeExtendedHexEscape]: async () => processTextInEditor(utils.decodeHexEntities),
 		[CommandId.EncodeHexCodePoints]: async () => {
