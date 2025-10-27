@@ -74,224 +74,224 @@
       {
         "command": "ps-dev-toolbox.toCamelCase",
         "title": "%extension.command.toCamelCase.title%",
-        "category": "Playful Sparkle",
+        "category": "Dev Toolbox",
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },
       {
         "command": "ps-dev-toolbox.toPascalCase",
         "title": "%extension.command.toPascalCase.title%",
-        "category": "Playful Sparkle",
+        "category": "Dev Toolbox",
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },
       {
         "command": "ps-dev-toolbox.toSnakeCase",
         "title": "%extension.command.toSnakeCase.title%",
-        "category": "Playful Sparkle",
+        "category": "Dev Toolbox",
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },
       {
         "command": "ps-dev-toolbox.toScreamingSnakeCase",
         "title": "%extension.command.toScreamingSnakeCase.title%",
-        "category": "Playful Sparkle",
+        "category": "Dev Toolbox",
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },
       {
         "command": "ps-dev-toolbox.toKebabCase",
         "title": "%extension.command.toKebabCase.title%",
-        "category": "Playful Sparkle",
+        "category": "Dev Toolbox",
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },
       {
         "command": "ps-dev-toolbox.toTrainCase",
         "title": "%extension.command.toTrainCase.title%",
-        "category": "Playful Sparkle",
+        "category": "Dev Toolbox",
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },
       {
         "command": "ps-dev-toolbox.toFlatCase",
         "title": "%extension.command.toFlatCase.title%",
-        "category": "Playful Sparkle",
+        "category": "Dev Toolbox",
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },
       {
         "command": "ps-dev-toolbox.toUpperCase",
         "title": "%extension.command.toUpperCase.title%",
-        "category": "Playful Sparkle",
+        "category": "Dev Toolbox",
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },
       {
         "command": "ps-dev-toolbox.slugify",
         "title": "%extension.command.slugify.title%",
-        "category": "Playful Sparkle",
+        "category": "Dev Toolbox",
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },
       {
         "command": "ps-dev-toolbox.makeLowercase",
         "title": "%extension.command.makeLowercase.title%",
-        "category": "Playful Sparkle",
+        "category": "Dev Toolbox",
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },
       {
         "command": "ps-dev-toolbox.makeUppercase",
         "title": "%extension.command.makeUppercase.title%",
-        "category": "Playful Sparkle",
+        "category": "Dev Toolbox",
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },
       {
         "command": "ps-dev-toolbox.base64Encode",
         "title": "%extension.command.base64Encode.title%",
-        "category": "Playful Sparkle",
+        "category": "Dev Toolbox",
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },
       {
         "command": "ps-dev-toolbox.base64Decode",
         "title": "%extension.command.base64Decode.title%",
-        "category": "Playful Sparkle",
+        "category": "Dev Toolbox",
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },
       {
         "command": "ps-dev-toolbox.urlEncode",
         "title": "%extension.command.urlEncode.title%",
-        "category": "Playful Sparkle",
+        "category": "Dev Toolbox",
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },
       {
         "command": "ps-dev-toolbox.urlDecode",
         "title": "%extension.command.urlDecode.title%",
-        "category": "Playful Sparkle",
+        "category": "Dev Toolbox",
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },
       {
         "command": "ps-dev-toolbox.generateGuid",
         "title": "%extension.command.generateGuid.title%",
-        "category": "Playful Sparkle"
+        "category": "Dev Toolbox"
       },
       {
         "command": "ps-dev-toolbox.removeEmptyLinesDocument",
         "title": "%extension.command.removeEmptyLinesDocument.title%",
-        "category": "Playful Sparkle"
+        "category": "Dev Toolbox"
       },
       {
         "command": "ps-dev-toolbox.removeEmptyLinesSelection",
         "title": "%extension.command.removeEmptyLinesSelection.title%",
-        "category": "Playful Sparkle"
+        "category": "Dev Toolbox"
       },
       {
         "command": "ps-dev-toolbox.removeNonPrintableChars",
         "title": "%extension.command.removeNonPrintableChars.title%",
-        "category": "Playful Sparkle"
+        "category": "Dev Toolbox"
       },
       {
         "command": "ps-dev-toolbox.removeLeadingTrailingWhitespaceDocument",
         "title": "%extension.command.removeLeadingTrailingWhitespace.title%",
-        "category": "Playful Sparkle"
+        "category": "Dev Toolbox"
       },
       {
         "command": "ps-dev-toolbox.encodeNamedHtmlEntities",
         "title": "%extension.command.encodeNamedHtmlEntities.title%",
-        "category": "Playful Sparkle",
+        "category": "Dev Toolbox",
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },
       {
         "command": "ps-dev-toolbox.decodeNamedHtmlEntities",
         "title": "%extension.command.decodeNamedHtmlEntities.title%",
-        "category": "Playful Sparkle",
+        "category": "Dev Toolbox",
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },
       {
         "command": "ps-dev-toolbox.encodeHtmlHexEntities",
         "title": "%extension.command.encodeHtmlHexEntities.title%",
-        "category": "Playful Sparkle",
+        "category": "Dev Toolbox",
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },
       {
         "command": "ps-dev-toolbox.decodeHtmlHexEntities",
         "title": "%extension.command.decodeHtmlHexEntities.title%",
-        "category": "Playful Sparkle",
+        "category": "Dev Toolbox",
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },
       {
         "command": "ps-dev-toolbox.encodeHtmlDecimalEntities",
         "title": "%extension.command.encodeHtmlDecimalEntities.title%",
-        "category": "Playful Sparkle",
+        "category": "Dev Toolbox",
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },
       {
         "command": "ps-dev-toolbox.decodeHtmlDecimalEntities",
         "title": "%extension.command.decodeHtmlDecimalEntities.title%",
-        "category": "Playful Sparkle",
+        "category": "Dev Toolbox",
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },
       {
         "command": "ps-dev-toolbox.encodeJavaScriptUnicodeEscapes",
         "title": "%extension.command.encodeJavaScriptUnicodeEscapes.title%",
-        "category": "Playful Sparkle",
+        "category": "Dev Toolbox",
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },
       {
         "command": "ps-dev-toolbox.decodeJavaScriptUnicodeEscapes",
         "title": "%extension.command.decodeJavaScriptUnicodeEscapes.title%",
-        "category": "Playful Sparkle",
+        "category": "Dev Toolbox",
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },
       {
         "command": "ps-dev-toolbox.encodeCssUnicodeEscape",
         "title": "%extension.command.encodeCssUnicodeEscape.title%",
-        "category": "Playful Sparkle",
+        "category": "Dev Toolbox",
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },
       {
         "command": "ps-dev-toolbox.decodeCssUnicodeEscape",
         "title": "%extension.command.decodeCssUnicodeEscape.title%",
-        "category": "Playful Sparkle",
+        "category": "Dev Toolbox",
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },
       {
         "command": "ps-dev-toolbox.encodeUnicodeCodePoints",
         "title": "%extension.command.encodeUnicodeCodePoints.title%",
-        "category": "Playful Sparkle",
+        "category": "Dev Toolbox",
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },
       {
         "command": "ps-dev-toolbox.decodeUnicodeCodePoints",
         "title": "%extension.command.decodeUnicodeCodePoints.title%",
-        "category": "Playful Sparkle",
+        "category": "Dev Toolbox",
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },
       {
         "command": "ps-dev-toolbox.encodeES6UnicodeCodePointEscape",
         "title": "%extension.command.encodeES6UnicodeCodePointEscape.title%",
-        "category": "Playful Sparkle",
+        "category": "Dev Toolbox",
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },
       {
         "command": "ps-dev-toolbox.decodeES6UnicodeCodePointEscape",
         "title": "%extension.command.decodeES6UnicodeCodePointEscape.title%",
-        "category": "Playful Sparkle",
+        "category": "Dev Toolbox",
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },
       {
         "command": "ps-dev-toolbox.encodeHexEntities",
         "title": "%extension.command.encodeHexEntities.title%",
-        "category": "Playful Sparkle",
+        "category": "Dev Toolbox",
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },
       {
         "command": "ps-dev-toolbox.decodeHexEntities",
         "title": "%extension.command.decodeHexEntities.title%",
-        "category": "Playful Sparkle",
+        "category": "Dev Toolbox",
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },
       {
         "command": "ps-dev-toolbox.encodeHexCodePoints",
         "title": "%extension.command.encodeHexCodePoints.title%",
-        "category": "Playful Sparkle",
+        "category": "Dev Toolbox",
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },
       {
         "command": "ps-dev-toolbox.decodeHexCodePoints",
         "title": "%extension.command.decodeHexCodePoints.title%",
-        "category": "Playful Sparkle",
+        "category": "Dev Toolbox",
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },
       {
@@ -320,7 +320,7 @@
       ]
     },
     "configuration": {
-      "title": "%extension.config.title%",
+      "title": "Dev Toolbox",
       "properties": {
         "ps-dev-toolbox.slugifySeparator": {
           "type": "string",
