@@ -49,5 +49,7 @@
   "extension.command.encodeHexEntities.title": "Kiterjesztett hex escape sorozatok kódolása (\\x{XXXXXX})",
   "extension.command.decodeHexEntities.title": "Kiterjesztett hex escape sorozatok dekódolása (\\x{XXXXXX})",
   "extension.command.encodeHexCodePoints.title": "Hex kódpontok kódolása (0xXXXX)",
-  "extension.command.decodeHexCodePoints.title": "Hex kódpontok dekódolása (0xXXXX)"
+  "extension.command.decodeHexCodePoints.title": "Hex kódpontok dekódolása (0xXXXX)",
+  "extension.command.encodePercentUri.title": "Százalékosan kódolt URI-szekvenciák kódolása (%XX)",
+  "extension.command.decodePercentUri.title": "Százalékosan kódolt URI-szekvenciák dekódolása (%XX)"
 }

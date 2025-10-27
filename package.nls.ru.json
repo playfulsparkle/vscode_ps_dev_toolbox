@@ -49,5 +49,7 @@
   "extension.command.encodeHexEntities.title": "Кодировать расширенные шестнадцатеричные последовательности экранирования (\\x{XXXXXX})",
   "extension.command.decodeHexEntities.title": "Декодировать расширенные шестнадцатеричные последовательности экранирования (\\x{XXXXXX})",
   "extension.command.encodeHexCodePoints.title": "Кодировать шестнадцатеричные кодовые точки (0xXXXX)",
-  "extension.command.decodeHexCodePoints.title": "Декодировать шестнадцатеричные кодовые точки (0xXXXX)"
+  "extension.command.decodeHexCodePoints.title": "Декодировать шестнадцатеричные кодовые точки (0xXXXX)",
+  "extension.command.encodePercentUri.title": "Кодировать процентно закодированные последовательности URI (%XX)",
+  "extension.command.decodePercentUri.title": "Декодировать процентно закодированные последовательности URI (%XX)"
 }

@@ -49,5 +49,7 @@
   "extension.command.encodeHexEntities.title": "Genişletilmiş onaltılık kaçış dizilerini kodла (\\x{XXXXXX})",
   "extension.command.decodeHexEntities.title": "Genişletilmiş onaltılık kaçış dizilerinin kodunu çöz (\\x{XXXXXX})",
   "extension.command.encodeHexCodePoints.title": "Onaltılık kod noktalarını kodла (0xXXXX)",
-  "extension.command.decodeHexCodePoints.title": "Onaltılık kod noktalarının kodunu çöz (0xXXXX)"
+  "extension.command.decodeHexCodePoints.title": "Onaltılık kod noktalarının kodunu çöz (0xXXXX)",
+  "extension.command.encodePercentUri.title": "Yüzde kodlaması yapılmış URI dizilerini kodla (%XX)",
+  "extension.command.decodePercentUri.title": "Yüzde kodlaması yapılmış URI dizilerini çöz (%XX)"
 }

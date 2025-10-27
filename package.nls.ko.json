@@ -49,5 +49,7 @@
   "extension.command.encodeHexEntities.title": "확장 16진 이스케이프 시퀀스 인코딩 (\\x{XXXXXX})",
   "extension.command.decodeHexEntities.title": "확장 16진 이스케이프 시퀀스 디코딩 (\\x{XXXXXX})",
   "extension.command.encodeHexCodePoints.title": "16진 코드 포인트 인코딩 (0xXXXX)",
-  "extension.command.decodeHexCodePoints.title": "16진 코드 포인트 디코딩 (0xXXXX)"
+  "extension.command.decodeHexCodePoints.title": "16진 코드 포인트 디코딩 (0xXXXX)",
+  "extension.command.encodePercentUri.title": "퍼센트 인코딩된 URI 시퀀스 인코딩 (%XX)",
+  "extension.command.decodePercentUri.title": "퍼센트 인코딩된 URI 시퀀스 디코딩 (%XX)"
 }

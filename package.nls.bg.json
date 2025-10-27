@@ -49,5 +49,7 @@
   "extension.command.encodeHexEntities.title": "Кодиране на разширени шестнадесетични escape последователности (\\x{XXXXXX})",
   "extension.command.decodeHexEntities.title": "Декодиране на разширени шестнадесетични escape последователности (\\x{XXXXXX})",
   "extension.command.encodeHexCodePoints.title": "Кодиране на шестнадесетични кодови точки (0xXXXX)",
-  "extension.command.decodeHexCodePoints.title": "Декодиране на шестнадесетични кодови точки (0xXXXX)"
+  "extension.command.decodeHexCodePoints.title": "Декодиране на шестнадесетични кодови точки (0xXXXX)",
+  "extension.command.encodePercentUri.title": "Кодиране на процентно кодирани URI последователности (%XX)",
+  "extension.command.decodePercentUri.title": "Декодиране на процентно кодирани URI последователности (%XX)"
 }

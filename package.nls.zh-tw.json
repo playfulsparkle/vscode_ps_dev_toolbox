@@ -49,5 +49,7 @@
   "extension.command.encodeHexEntities.title": "編碼擴充十六進位跳脫序列 (\\x{XXXXXX})",
   "extension.command.decodeHexEntities.title": "解碼擴充十六進位跳脫序列 (\\x{XXXXXX})",
   "extension.command.encodeHexCodePoints.title": "編碼 十六進位碼位 (0xXXXX)",
-  "extension.command.decodeHexCodePoints.title": "解碼 十六進位碼位 (0xXXXX)"
+  "extension.command.decodeHexCodePoints.title": "解碼 十六進位碼位 (0xXXXX)",
+  "extension.command.encodePercentUri.title": "對百分號編碼的 URI 序列進行編碼 (%XX)",
+  "extension.command.decodePercentUri.title": "對百分號編碼的 URI 序列進行解碼 (%XX)"
 }

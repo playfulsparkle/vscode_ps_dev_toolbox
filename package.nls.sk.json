@@ -49,5 +49,7 @@
   "extension.command.encodeHexEntities.title": "Kódovať rozšírené hexadecimálne escape sekvencie (\\x{XXXXXX})",
   "extension.command.decodeHexEntities.title": "Dekódovať rozšírené hexadecimálne escape sekvencie (\\x{XXXXXX})",
   "extension.command.encodeHexCodePoints.title": "Kódovať hexadecimálne кódové body (0xXXXX)",
-  "extension.command.decodeHexCodePoints.title": "Dekódovať hexadecimálne кódové body (0xXXXX)"
+  "extension.command.decodeHexCodePoints.title": "Dekódovať hexadecimálne кódové body (0xXXXX)",
+  "extension.command.encodePercentUri.title": "Kódovať percentuálne kódované sekvencie URI (%XX)",
+  "extension.command.decodePercentUri.title": "Dekódovať percentuálne kódované sekvencie URI (%XX)"
 }

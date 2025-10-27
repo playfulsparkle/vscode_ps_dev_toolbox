@@ -49,5 +49,7 @@
   "extension.command.encodeHexEntities.title": "Codificar sequências de escape hex estendidas (\\x{XXXXXX})",
   "extension.command.decodeHexEntities.title": "Decodificar sequências de escape hex estendidas (\\x{XXXXXX})",
   "extension.command.encodeHexCodePoints.title": "Codificar pontos de código hexadecimais (0xXXXX)",
-  "extension.command.decodeHexCodePoints.title": "Decodificar pontos de código hexadecimais (0xXXXX)"
+  "extension.command.decodeHexCodePoints.title": "Decodificar pontos de código hexadecimais (0xXXXX)",
+  "extension.command.encodePercentUri.title": "Codificar sequências de URI com codificação percentual (%XX)",
+  "extension.command.decodePercentUri.title": "Decodificar sequências de URI com codificação percentual (%XX)"
 }
