@@ -1,5 +1,6 @@
 {
     "Enter the locales to use for the transformation (comma-separated)": "Saisissez les paramètres régionaux à utiliser pour la transformation (séparés par des virgules)",
+    "Using default '{1}'. Invalid locales: '{0}'.": "Utilisation de la valeur par défaut « {1} ». Paramètres régionaux non valides : « {0} ».",
     "e.g. hu, sk, en-US": "p. ex. fr, en-US",
     "'{0}' is already slugified.": "« {0} » est déjà au format slug.",
     "'{0}' already exists. Do you want to overwrite it?": "« {0} » existe déjà. Voulez-vous l'écraser ?",

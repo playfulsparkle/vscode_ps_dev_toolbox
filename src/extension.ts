@@ -282,38 +282,27 @@ export function activate(context: vscode.ExtensionContext) {
 	};
 
 	const localesPrompt = async () => {
-		const currentLocale = vscode.env.language || "en";
+		const defaultLocale = vscode.env.language || "en";
+
 		const localesInput = await vscode.window.showInputBox({
 			prompt: vscode.l10n.t("Enter the locales to use for the transformation (comma-separated)"),
 			placeHolder: vscode.l10n.t("e.g. hu, sk, en-US"),
-			value: currentLocale,
+			value: defaultLocale,
 		});
 
-		if (!localesInput) {
-			return [currentLocale];
+		if (localesInput) {
+			try {
+				return utils.filterUserLocaleInput(defaultLocale, localesInput);
+			} catch (error) {
+				vscode.window.showErrorMessage(
+					vscode.l10n.t("Using default '{1}'. Invalid locales: '{0}'.", localesInput, defaultLocale)
+				);
+
+				return [defaultLocale];
+			}
 		}
 
-		return [...new Set(
-			localesInput.split(",")
-				.map(locale => locale.trim())
-				.filter(locale => {
-					if (locale.length < 2) {
-						return false;
-					}
-
-					try {
-						// Use Intl to check if it's a valid locale
-						const intlLocale = new Intl.Locale(locale);
-
-						return intlLocale.language.length >= 2;
-					} catch {
-						// If Intl.Locale fails, fall back to basic pattern check
-						const basicPattern = /^[a-zA-Z]{2,3}(-[a-zA-Z0-9]+)*$/;
-
-						return basicPattern.test(locale);
-					}
-				})
-		)];
+		return [defaultLocale];
 	};
 
 	const renameToSlug = async (uri: vscode.Uri, separator: string) => {

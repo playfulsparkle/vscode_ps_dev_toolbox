@@ -1,5 +1,6 @@
 {
   "Enter the locales to use for the transformation (comma-separated)": "Dönüşümde kullanılacak yerelleri girin (virgülle ayırın)",
+  "Using default '{1}'. Invalid locales: '{0}'.": "Varsayılan değer “{1}” kullanılıyor. Geçersiz yerel ayarlar: “{0}”.",
   "e.g. hu, sk, en-US": "ör. tr, en-US",
   "'{0}' is already slugified.": "“{0}” zaten slug biçiminde.",
   "'{0}' already exists. Do you want to overwrite it?": "“{0}” zaten var. Üzerine yazmak istiyor musunuz?",

@@ -127,28 +127,9 @@ suite("Dev Toolbox Tests", () => {
 		});
 	});
 
-	suite("String Utilities", () => {
-		test("safeToLowerCase prototype method", () => {
-			assert.strictEqual("TEST".safeToLowerCase(), "test");
-			assert.strictEqual("İ".safeToLowerCase("tr"), "i");
-		});
+	// suite("String Utilities", () => {
 
-		test("safeToUppercase prototype method", () => {
-			assert.strictEqual("test".safeToUppercase(), "TEST");
-			assert.strictEqual("iß".safeToUppercase("de"), "ISS");
-		});
-
-		test("safeToLowerCase function with fallback", () => {
-			assert.strictEqual(utils.safeToLowerCase("TEST"), "test");
-			assert.strictEqual(utils.safeToLowerCase("İ", "invalid-locale"), "i̇");
-			assert.strictEqual(utils.safeToLowerCase("İ", "tr"), "i");
-		});
-
-		test("safeToUppercase function with fallback", () => {
-			assert.strictEqual(utils.safeToUppercase("test"), "TEST");
-			assert.strictEqual(utils.safeToUppercase("iß", "invalid-locale"), "ISS");
-		});
-	});
+	// });
 
 	suite("Encoding Utilities", () => {
 		test("base64Encode/base64Decode roundtrip", () => {

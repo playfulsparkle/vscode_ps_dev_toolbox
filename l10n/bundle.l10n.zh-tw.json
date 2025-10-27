@@ -1,5 +1,6 @@
 {
   "Enter the locales to use for the transformation (comma-separated)": "請輸入要用於轉換的地區設定（以逗號分隔）",
+  "Using default '{1}'. Invalid locales: '{0}'.": "使用預設值「{1}」。無效的語言環境：「{0}」。",
   "e.g. hu, sk, en-US": "例如：zh-TW, en-US",
   "'{0}' is already slugified.": "「{0}」已是 slug 格式。",
   "'{0}' already exists. Do you want to overwrite it?": "「{0}」已存在。要覆寫嗎？",

@@ -1,5 +1,6 @@
 {
     "Enter the locales to use for the transformation (comma-separated)": "Geben Sie die für die Umwandlung zu verwendenden Gebietsschemata ein (durch Kommas getrennt)",
+    "Using default '{1}'. Invalid locales: '{0}'.": "Standardwert „{1}“ wird verwendet. Ungültige Gebietsschemata: „{0}“.",
     "e.g. hu, sk, en-US": "z. B. de, en-US",
     "'{0}' is already slugified.": "„{0}“ ist bereits im Slug-Format.",
     "'{0}' already exists. Do you want to overwrite it?": "„{0}“ ist bereits vorhanden. Möchten Sie es überschreiben?",

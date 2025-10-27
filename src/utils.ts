@@ -36,7 +36,11 @@ export function safeToLowerCase(text: string, locale: string[]): string {
     }
 
     if (locale.length > 0) {
-        return text.toLocaleLowerCase(locale);
+        try {
+            return text.toLocaleLowerCase(locale);
+        } catch (_) {
+            return text.toLowerCase();
+        }
     } else {
         return text.toLowerCase();
     }
@@ -55,10 +59,50 @@ export function safeToUppercase(text: string, locale: string[]): string {
     }
 
     if (locale.length > 0) {
-        return text.toLocaleUpperCase(locale);
+        try {
+            return text.toLocaleUpperCase(locale);
+        } catch (_) {
+            return text.toUpperCase();
+        }
     } else {
         return text.toUpperCase();
     }
+}
+
+export function filterUserLocaleInput(defaultLocale: string, userLocaleInput: string): string[] {
+    if (defaultLocale.length === 0) {
+        throw new Error("Current locale cannot be empty.");
+    }
+
+    if (userLocaleInput.length === 0) {
+        throw new Error("User locale input cannot be empty.");
+    }
+
+    const newLocales = userLocaleInput.split(",")
+        .map(locale => locale.trim())
+        .filter(locale => {
+            if (locale.length < 2) {
+                return false;
+            }
+
+            try {
+                // Use Intl to check if it's a valid locale
+                const intlLocale = new Intl.Locale(locale);
+
+                return intlLocale.language.length >= 2;
+            } catch {
+                // If Intl.Locale fails, fall back to basic pattern check
+                const basicPattern = /^[a-zA-Z]{2,3}(-[a-zA-Z0-9]+)*$/;
+
+                return basicPattern.test(locale);
+            }
+        });
+
+    if (newLocales.length > 0) {
+        return [...new Set(newLocales)];
+    }
+
+    throw new Error(`No valid locales found in input: "${userLocaleInput}".`);
 }
 
 /**

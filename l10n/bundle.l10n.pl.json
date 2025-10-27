@@ -1,5 +1,6 @@
 {
   "Enter the locales to use for the transformation (comma-separated)": "Wprowadź ustawienia regionalne do użycia przy transformacji (oddzielone przecinkami)",
+  "Using default '{1}'. Invalid locales: '{0}'.": "Użyto wartości domyślnej „{1}”. Nieprawidłowe ustawienia regionalne: „{0}”.",
   "e.g. hu, sk, en-US": "np. pl, en-US",
   "'{0}' is already slugified.": "„{0}” jest już w formacie slug.",
   "'{0}' already exists. Do you want to overwrite it?": "„{0}” już istnieje. Czy chcesz go nadpisać?",

@@ -1,5 +1,6 @@
 {
     "Enter the locales to use for the transformation (comma-separated)": "Adja meg az átalakításhoz használandó területi beállításokat (vesszővel elválasztva)",
+    "Using default '{1}'. Invalid locales: '{0}'.": "Az alapértelmezett érték használata: „{1}”. Érvénytelen területi beállítások: „{0}”.",
     "e.g. hu, sk, en-US": "pl. hu, sk, en-US",
     "'{0}' is already slugified.": "„{0}” már slug formátumú.",
     "'{0}' already exists. Do you want to overwrite it?": "A(z) „{0}” már létezik. Szeretné felülírni?",

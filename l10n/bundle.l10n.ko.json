@@ -1,5 +1,6 @@
 {
   "Enter the locales to use for the transformation (comma-separated)": "변환에 사용할 로케일을 입력하세요(쉼표로 구분)",
+  "Using default '{1}'. Invalid locales: '{0}'.": "기본값 “{1}”을 사용합니다. 잘못된 로캘: “{0}”.",
   "e.g. hu, sk, en-US": "예: ko, en-US",
   "'{0}' is already slugified.": "“{0}”는 이미 슬러그 형식입니다.",
   "'{0}' already exists. Do you want to overwrite it?": "“{0}”이(가) 이미 존재합니다. 덮어쓰시겠습니까?",

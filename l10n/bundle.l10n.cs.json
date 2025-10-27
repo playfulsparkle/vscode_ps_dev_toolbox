@@ -1,5 +1,6 @@
 {
     "Enter the locales to use for the transformation (comma-separated)": "Zadejte místní nastavení pro transformaci (oddělená čárkami)",
+    "Using default '{1}'. Invalid locales: '{0}'.": "Použita výchozí hodnota „{1}“. Neplatná místní nastavení: „{0}“.",
     "e.g. hu, sk, en-US": "např. cs, sk, en-US",
     "'{0}' is already slugified.": "„{0}“ je již ve formátu slug.",
     "'{0}' already exists. Do you want to overwrite it?": "„{0}“ již existuje. Chcete jej přepsat?",

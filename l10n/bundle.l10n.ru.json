@@ -1,5 +1,6 @@
 {
   "Enter the locales to use for the transformation (comma-separated)": "Введите локали для преобразования, через запятую",
+  "Using default '{1}'. Invalid locales: '{0}'.": "Используется значение по умолчанию «{1}». Недопустимые локали: «{0}».",
   "e.g. hu, sk, en-US": "например: ru, en-US",
   "'{0}' is already slugified.": "«{0}» уже в формате slug.",
   "'{0}' already exists. Do you want to overwrite it?": "«{0}» уже существует. Перезаписать?",
