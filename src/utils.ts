@@ -511,6 +511,23 @@ export function generateGuid(): string {
     }).toUpperCase();
 }
 
+const validEntityNames = new Set(Object.values(namedentities.codePointToEntityName));
+
+const namedHtmlEntityAt = (str: string, idx: number): number => {
+    const s = str.slice(idx);
+    // Your hex numeric form: &#xHHHH; with uppercase hex, 4+ digits
+    let m = /^&#x[0-9A-F]{4,};/.exec(s);
+    if (m) {
+        return m[0].length;
+    }
+    // Your named form: &name; and name must exist in the entity list
+    m = /^&([A-Za-z][A-Za-z0-9]{1,31});/.exec(s);
+    if (m && validEntityNames.has(m[1])) {
+        return m[0].length;
+    }
+    return 0;
+};
+
 /**
  * Converts a string to HTML/XML entity representation using named HTML entities.
  * Handles common named HTML entities.
@@ -518,7 +535,7 @@ export function generateGuid(): string {
  * @param text The string to encode.
  * @returns The encoded string with named HTML entities (e.g., "&amp;" for "&").
  */
-export function encodeNamedHtmlEntities(text: string): string {
+export function encodeNamedHtmlEntities(text: string, doubleEncode: boolean = false): string {
     if (typeof text !== "string") {
         return text;
     }
@@ -532,6 +549,16 @@ export function encodeNamedHtmlEntities(text: string): string {
             result += text[i];
             i++;
             continue;
+        }
+
+        if (!doubleEncode && codePoint === 0x26) { // &
+            const len = namedHtmlEntityAt(text, i);
+
+            if (len) {
+                result += text.slice(i, i + len);
+                i += len;
+                continue;
+            }
         }
 
         // Encode special HTML characters
