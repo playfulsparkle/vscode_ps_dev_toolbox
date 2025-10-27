@@ -447,21 +447,61 @@ export function activate(context: vscode.ExtensionContext) {
 			await processTextInEditor(text => utils.encodeNamedHtmlEntities(text, doubleEncode));
 		},
 		[CommandId.DecodeNamedHtmlEntities]: async () => processTextInEditor(utils.decodeNamedHtmlEntities),
-		[CommandId.EncodeHtmlHexEntities]: async () => processTextInEditor(utils.encodeHtmlHexEntities),
+		[CommandId.EncodeHtmlHexEntities]: async () => {
+			const config = vscode.workspace.getConfiguration("ps-dev-toolbox.encoding");
+			const doubleEncode = config.get<boolean>("doubleEncode", false);
+
+			await processTextInEditor(text => utils.encodeHtmlHexEntities(text, doubleEncode));
+		},
 		[CommandId.DecodeHtmlHexEntities]: async () => processTextInEditor(utils.decodeHtmlHexEntities),
-		[CommandId.EncodeHtmlDecimalEntities]: async () => processTextInEditor(utils.encodeHtmlDecimalEntities),
+		[CommandId.EncodeHtmlDecimalEntities]: async () => {
+			const config = vscode.workspace.getConfiguration("ps-dev-toolbox.encoding");
+			const doubleEncode = config.get<boolean>("doubleEncode", false);
+
+			await processTextInEditor(text => utils.encodeHtmlDecimalEntities(text, doubleEncode));
+		},
 		[CommandId.DecodeHtmlDecimalEntities]: async () => processTextInEditor(utils.decodeHtmlDecimalEntities),
-		[CommandId.encodeJavaScriptUnicodeEscapes]: async () => processTextInEditor(utils.encodeJavaScriptUnicodeEscapes),
+		[CommandId.encodeJavaScriptUnicodeEscapes]: async () => {
+			const config = vscode.workspace.getConfiguration("ps-dev-toolbox.encoding");
+			const doubleEncode = config.get<boolean>("doubleEncode", false);
+
+			await processTextInEditor(text => utils.encodeJavaScriptUnicodeEscapes(text, doubleEncode));
+		},
 		[CommandId.decodeJavaScriptUnicodeEscapes]: async () => processTextInEditor(utils.decodeJavaScriptUnicodeEscapes),
-		[CommandId.EncodeCssUnicodeEscape]: async () => processTextInEditor(utils.encodeCssUnicodeEscape),
+		[CommandId.EncodeCssUnicodeEscape]: async () => {
+			const config = vscode.workspace.getConfiguration("ps-dev-toolbox.encoding");
+			const doubleEncode = config.get<boolean>("doubleEncode", false);
+
+			await processTextInEditor(text => utils.encodeCssUnicodeEscape(text, doubleEncode));
+		},
 		[CommandId.DecodeCssUnicodeEscape]: async () => processTextInEditor(utils.decodeCssUnicodeEscape),
-		[CommandId.EncodeUnicodeCodePoints]: async () => processTextInEditor(utils.encodeUnicodeCodePoints),
+		[CommandId.EncodeUnicodeCodePoints]: async () => {
+			const config = vscode.workspace.getConfiguration("ps-dev-toolbox.encoding");
+			const doubleEncode = config.get<boolean>("doubleEncode", false);
+
+			await processTextInEditor(text => utils.encodeUnicodeCodePoints(text, doubleEncode));
+		},
 		[CommandId.DecodeUnicodeCodePoints]: async () => processTextInEditor(utils.decodeUnicodeCodePoints),
-		[CommandId.EncodeES6UnicodeCodePointEscape]: async () => processTextInEditor(utils.encodeES6UnicodeCodePointEscape),
+		[CommandId.EncodeES6UnicodeCodePointEscape]: async () => {
+			const config = vscode.workspace.getConfiguration("ps-dev-toolbox.encoding");
+			const doubleEncode = config.get<boolean>("doubleEncode", false);
+
+			await processTextInEditor(text => utils.encodeES6UnicodeCodePointEscape(text, doubleEncode));
+		},
 		[CommandId.DecodeES6UnicodeCodePointEscape]: async () => processTextInEditor(utils.decodeES6UnicodeCodePointEscape),
-		[CommandId.EncodeExtendedHexEscape]: async () => processTextInEditor(utils.encodeHexEntities),
+		[CommandId.EncodeExtendedHexEscape]: async () => {
+			const config = vscode.workspace.getConfiguration("ps-dev-toolbox.encoding");
+			const doubleEncode = config.get<boolean>("doubleEncode", false);
+
+			await processTextInEditor(text => utils.encodeHexEntities(text, doubleEncode));
+		},
 		[CommandId.DecodeExtendedHexEscape]: async () => processTextInEditor(utils.decodeHexEntities),
-		[CommandId.EncodeHexCodePoints]: async () => processTextInEditor(utils.encodeHexCodePoints),
+		[CommandId.EncodeHexCodePoints]: async () => {
+			const config = vscode.workspace.getConfiguration("ps-dev-toolbox.encoding");
+			const doubleEncode = config.get<boolean>("doubleEncode", false);
+
+			await processTextInEditor(text => utils.encodeHexCodePoints(text, doubleEncode));
+		},
 		[CommandId.DecodeHexCodePoints]: async () => processTextInEditor(utils.decodeHexCodePoints)
 	};
 
