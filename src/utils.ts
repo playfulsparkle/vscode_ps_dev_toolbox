@@ -1353,12 +1353,12 @@ export function encodeUnicodeCodePoints(text: string, doubleEncode: boolean = fa
             }
         }
 
-        // Preserve all ASCII characters (0x00-0x7F) including control characters
-        if (codePoint <= 0x7F) {
-            result += text[i];
-            i++;
-            continue;
-        }
+        // // Preserve all ASCII characters (0x00-0x7F) including control characters
+        // if (codePoint <= 0x7F) {
+        //     result += text[i];
+        //     i++;
+        //     continue;
+        // }
 
         // Non-ASCII without named entity, encode as hex entity
         const entity = codePoint.toString(16).toUpperCase().padStart(4, "0");
@@ -1613,6 +1613,7 @@ export function decodeHexEntities(text: string): string {
  * prefixed with "0x". Control characters (U+0000 to U+001F) are preserved as is.
  *
  * @param {string} text The string to encode.
+ * @param {boolean} [separate=false] If true, each encoded code point will be separated by a space.
  * @returns {string} The encoded string. If the input is not a string, it is returned as is.
  * @see decodeHexCodePoints
  */
@@ -1655,11 +1656,11 @@ export function encodeHexCodePoints(text: string, doubleEncode: boolean = false)
         }
 
         // Preserve all ASCII characters (0x00-0x7F) including control characters
-        if (codePoint <= 0x7F) {
-            result += text[i];
-            i++;
-            continue;
-        }
+        // if (codePoint <= 0x7F) {
+        //     result += text[i];
+        //     i++;
+        //     continue;
+        // }
 
         // Non-ASCII without named entity, encode as hex entity
         const entity = codePoint.toString(16).toUpperCase();
@@ -1688,7 +1689,7 @@ export function decodeHexCodePoints(text: string): string {
         return "";
     }
 
-    return text.replace(/0x([0-9A-Fa-f]+)/g, (_, hex) => {
+    return text.replace(/0x([0-9A-Fa-f]+)\s*(?=0x|$)/g, (_, hex) => {
         const codePoint = parseInt(hex, 16);
 
         try {
