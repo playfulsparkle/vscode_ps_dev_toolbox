@@ -513,18 +513,97 @@ export function generateGuid(): string {
 
 const validEntityNames = new Set(Object.values(namedentities.codePointToEntityName));
 
-const namedHtmlEntityAt = (str: string, idx: number): number => {
+// Cache regex patterns at module level
+const HEX_ENTITY_REGEX = /^&#[Xx][0-9A-F]{4,};/;
+const NAMED_ENTITY_REGEX = /^&([A-Za-z][A-Za-z0-9]{1,31});/;
+const DECIMAL_ENTITY_REGEX = /^&#[0-9]+;/;
+
+// Unicode and hex escape sequence patterns
+const UNICODE_4_REGEX = /^\\[Uu][0-9A-Fa-f]{4}/;           // \uXXXX
+const UNICODE_8_REGEX = /^\\[Uu][0-9A-Fa-f]{8}/;           // \UXXXXXXXX
+const BACKTICK_HEX_REGEX = /^`\\[0-9A-Fa-f]{6}/;        // `\XXXXXX
+const UPLUS_REGEX = /^[Uu]\+[0-9A-Fa-f]{4,6}\s?/;             // U+XXXX or U+XXXXXX
+const UNICODE_BRACE_REGEX = /^\\[Uu]\{[0-9A-Fa-f]+\}/;     // \u{XXX}
+const HEX_BRACE_REGEX = /^\\[Xx]\{[0-9A-Fa-f]+\}/;         // \x{XXX}
+const HEX_0X_REGEX = /^0[Xx][0-9A-Fa-f]+\s?/;                 // 0xXXX
+
+/**
+ * Checks if there's a valid HTML entity at the given position in the string.
+ * Returns the length of the entity if found, 0 otherwise.
+ */
+const htmlEntityAt = (str: string, idx: number): number => {
     const s = str.slice(idx);
-    // Your hex numeric form: &#xHHHH; with uppercase hex, 4+ digits
-    let m = /^&#x[0-9A-F]{4,};/.exec(s);
+
+    // Hex numeric form: &#xHHHH;
+    let m = HEX_ENTITY_REGEX.exec(s);
     if (m) {
         return m[0].length;
     }
-    // Your named form: &name; and name must exist in the entity list
-    m = /^&([A-Za-z][A-Za-z0-9]{1,31});/.exec(s);
+
+    // Decimal numeric form: &#1234;
+    m = DECIMAL_ENTITY_REGEX.exec(s);
+    if (m) {
+        return m[0].length;
+    }
+
+    // Named form: &name;
+    m = NAMED_ENTITY_REGEX.exec(s);
     if (m && validEntityNames.has(m[1])) {
         return m[0].length;
     }
+
+    return 0;
+};
+
+/**
+ * Checks if there's a valid Unicode/hex escape sequence at the given position.
+ * Returns the length of the sequence if found, 0 otherwise.
+ */
+const unicodeEscapeAt = (str: string, idx: number): number => {
+    const s = str.slice(idx);
+
+    // \uXXXX (4 hex digits)
+    let m = UNICODE_4_REGEX.exec(s);
+    if (m) {
+        return m[0].length;
+    }
+
+    // \UXXXXXXXX (8 hex digits)
+    m = UNICODE_8_REGEX.exec(s);
+    if (m) {
+        return m[0].length;
+    }
+
+    // `\XXXXXX (backtick + backslash + 6 hex digits)
+    m = BACKTICK_HEX_REGEX.exec(s);
+    if (m) {
+        return m[0].length;
+    }
+
+    // U+XXXX or U+XXXXXX
+    m = UPLUS_REGEX.exec(s);
+    if (m) {
+        return m[0].length;
+    }
+
+    // \u{XXX} (braced, variable length)
+    m = UNICODE_BRACE_REGEX.exec(s);
+    if (m) {
+        return m[0].length;
+    }
+
+    // \x{XXX} (braced, variable length)
+    m = HEX_BRACE_REGEX.exec(s);
+    if (m) {
+        return m[0].length;
+    }
+
+    // 0xXXX (hex literal)
+    m = HEX_0X_REGEX.exec(s);
+    if (m) {
+        return m[0].length;
+    }
+
     return 0;
 };
 
@@ -552,7 +631,7 @@ export function encodeNamedHtmlEntities(text: string, doubleEncode: boolean = fa
         }
 
         if (!doubleEncode && codePoint === 0x26) { // &
-            const len = namedHtmlEntityAt(text, i);
+            const len = htmlEntityAt(text, i);
 
             if (len) {
                 result += text.slice(i, i + len);
@@ -707,7 +786,7 @@ export function decodeNamedHtmlEntities(text: string): string {
  * @param text The string to encode.
  * @returns The encoded string with each code point represented as a hexadecimal entity (e.g., "&#x0012;").
  */
-export function encodeHtmlHexEntities(text: string): string {
+export function encodeHtmlHexEntities(text: string, doubleEncode: boolean = false): string {
     if (typeof text !== "string") {
         return text;
     }
@@ -721,6 +800,16 @@ export function encodeHtmlHexEntities(text: string): string {
             result += text[i];
             i++;
             continue;
+        }
+
+        if (!doubleEncode && codePoint === 0x26) { // &
+            const len = htmlEntityAt(text, i);
+
+            if (len) {
+                result += text.slice(i, i + len);
+                i += len;
+                continue;
+            }
         }
 
         // Encode special HTML characters as hex entities
@@ -803,7 +892,7 @@ export function decodeHtmlHexEntities(text: string): string {
  * @param text The string to encode.
  * @returns The encoded string with each code point represented as a decimal entity (e.g., "&#123;").
  */
-export function encodeHtmlDecimalEntities(text: string): string {
+export function encodeHtmlDecimalEntities(text: string, doubleEncode: boolean = false): string {
     if (typeof text !== "string") {
         return text;
     }
@@ -817,6 +906,16 @@ export function encodeHtmlDecimalEntities(text: string): string {
             result += text[i];
             i++;
             continue;
+        }
+
+        if (!doubleEncode && codePoint === 0x26) { // &
+            const len = htmlEntityAt(text, i);
+
+            if (len) {
+                result += text.slice(i, i + len);
+                i += len;
+                continue;
+            }
         }
 
         // Encode special HTML characters as decimal entities
@@ -900,7 +999,7 @@ export function decodeHtmlDecimalEntities(text: string): string {
  * @returns The encoded string with Unicode escape sequences.
  * @see decodeJavaScriptUnicodeEscapes
  */
-export function encodeJavaScriptUnicodeEscapes(text: string): string {
+export function encodeJavaScriptUnicodeEscapes(text: string, doubleEncode: boolean = false): string {
     if (typeof text !== "string") {
         return text;
     }
@@ -914,6 +1013,16 @@ export function encodeJavaScriptUnicodeEscapes(text: string): string {
             result += text[i];
             i += 1;
             continue;
+        }
+
+        if (!doubleEncode && codePoint === 0x5C) { // \uXXXX
+            const len = unicodeEscapeAt(text, i);
+
+            if (len) {
+                result += text.slice(i, i + len);
+                i += len;
+                continue;
+            }
         }
 
         if (codePoint <= 0x7f) {
@@ -986,7 +1095,7 @@ export function decodeJavaScriptUnicodeEscapes(text: string): string {
  * @returns A string with CSS Unicode escape sequences.
  * @see decodeCssUnicodeEscape
  */
-export function encodeCssUnicodeEscape(text: string): string {
+export function encodeCssUnicodeEscape(text: string, doubleEncode: boolean = false): string {
     if (typeof text !== "string") {
         return text;
     }
@@ -1000,6 +1109,16 @@ export function encodeCssUnicodeEscape(text: string): string {
             result += text[i];
             i += 1;
             continue;
+        }
+
+        if (!doubleEncode && codePoint === 0x5C) { // \XXXXXX
+            const len = unicodeEscapeAt(text, i);
+
+            if (len) {
+                result += text.slice(i, i + len);
+                i += len;
+                continue;
+            }
         }
 
         if (codePoint <= 0x7f) {
@@ -1066,7 +1185,7 @@ export function decodeCssUnicodeEscape(text: string): string {
  * @returns The Unicode code point notation string (e.g., "U+0041 U+1F600").
  * @see decodeUnicodeCodePoints
  */
-export function encodeUnicodeCodePoints(text: string): string {
+export function encodeUnicodeCodePoints(text: string, doubleEncode: boolean = false): string {
     if (typeof text !== "string") {
         return text;
     }
@@ -1080,6 +1199,16 @@ export function encodeUnicodeCodePoints(text: string): string {
             result += text[i];
             i++;
             continue;
+        }
+
+        if (!doubleEncode && codePoint === 0x55 && i + 1 < text.length && text.codePointAt(i + 1) === 0x2B) { // U+
+            const len = unicodeEscapeAt(text, i);
+
+            if (len) {
+                result += text.slice(i, i + len);
+                i += len;
+                continue;
+            }
         }
 
         // Non-ASCII without named entity, encode as hex entity
@@ -1156,7 +1285,7 @@ export function decodeUnicodeCodePoints(text: string): string {
  * @returns {string} - The encoded string with Unicode escape sequences
  * @see decodeES6UnicodeCodePointEscape
  */
-export function encodeES6UnicodeCodePointEscape(text: string): string {
+export function encodeES6UnicodeCodePointEscape(text: string, doubleEncode: boolean = false): string {
     if (typeof text !== "string") {
         return text;
     }
@@ -1170,6 +1299,16 @@ export function encodeES6UnicodeCodePointEscape(text: string): string {
             result += text[i];
             i++;
             continue;
+        }
+
+        if (!doubleEncode && codePoint === 0x5C) { // \u{XXXX}
+            const len = unicodeEscapeAt(text, i);
+
+            if (len) {
+                result += text.slice(i, i + len);
+                i += len;
+                continue;
+            }
         }
 
         // Preserve all ASCII characters (0x00-0x7F) including control characters
@@ -1226,7 +1365,7 @@ export function decodeES6UnicodeCodePointEscape(text: string): string {
  * @returns {string} - The encoded string with hexadecimal escape sequences
  * @see decodeHexEntities
  */
-export function encodeHexEntities(text: string): string {
+export function encodeHexEntities(text: string, doubleEncode: boolean = false): string {
     if (typeof text !== "string") {
         return text;
     }
@@ -1240,6 +1379,16 @@ export function encodeHexEntities(text: string): string {
             result += text[i];
             i++;
             continue;
+        }
+
+        if (!doubleEncode && codePoint === 0x5C) { // \x{XXXX}
+            const len = unicodeEscapeAt(text, i);
+
+            if (len) {
+                result += text.slice(i, i + len);
+                i += len;
+                continue;
+            }
         }
 
         // Preserve all ASCII characters (0x00-0x7F) including control characters
@@ -1294,7 +1443,7 @@ export function decodeHexEntities(text: string): string {
  * @returns {string} The encoded string. If the input is not a string, it is returned as is.
  * @see decodeHexCodePoints
  */
-export function encodeHexCodePoints(text: string): string {
+export function encodeHexCodePoints(text: string, doubleEncode: boolean = false): string {
     if (typeof text !== "string") {
         return text;
     }
@@ -1308,6 +1457,16 @@ export function encodeHexCodePoints(text: string): string {
             result += text[i];
             i++;
             continue;
+        }
+
+        if (!doubleEncode && codePoint === 0x30 && i + 1 < text.length && text.codePointAt(i + 1) === 0x78) { // 0xXX
+            const len = unicodeEscapeAt(text, i);
+
+            if (len) {
+                result += text.slice(i, i + len);
+                i += len;
+                continue;
+            }
         }
 
         // Non-ASCII without named entity, encode as hex entity
