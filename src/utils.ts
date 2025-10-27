@@ -519,7 +519,7 @@ const NAMED_ENTITY_REGEX = /^&([A-Za-z][A-Za-z0-9]{1,31});/; // &name;
 const DECIMAL_ENTITY_REGEX = /^&#[0-9]+;/;                   // &#DDDD;
 const UNICODE_4_REGEX = /^\\u[0-9A-Fa-f]{4}/;             // \uXXXX
 const UNICODE_8_REGEX = /^\\U[0-9A-Fa-f]{8}/;             // \UXXXXXXXX
-const BACKSLASH_HEX_REGEX = /^\\[0-9A-Fa-f]{6}/;             // \XXXXXX
+const BACKSLASH_HEX_REGEX = /^\\[0-9A-Fa-f]{6}\s?/;             // \XXXXXX
 const UPLUS_REGEX = /^U\+[0-9A-Fa-f]{4,6}\s?/;            // U+XXXX or U+XXXXXX
 const UNICODE_BRACE_REGEX = /^\\u\{[0-9A-Fa-f]+\}/;       // \u{XXX}
 const HEX_BRACE_REGEX = /^\\x\{[0-9A-Fa-f]+\}/;           // \x{XXX}
@@ -1004,10 +1004,13 @@ export function encodeJavaScriptUnicodeEscapes(text: string, doubleEncode: boole
             }
         }
 
-        if (codePoint <= 0x7f) {
-            result += String.fromCodePoint(codePoint);
-            i += 1;
-        } else if (codePoint <= 0xffff) {
+        // if (codePoint <= 0x7f) {
+        //     result += String.fromCodePoint(codePoint);
+        //     i += 1;
+        //     continue;
+        // } 
+        
+        if (codePoint <= 0xffff) {
             const hex = codePoint.toString(16).toUpperCase().padStart(4, "0");
 
             result += `\\u${hex}`;
@@ -1112,10 +1115,13 @@ export function encodeCssUnicodeEscape(text: string, doubleEncode: boolean = fal
             }
         }
 
-        if (codePoint <= 0x7f) {
-            result += String.fromCodePoint(codePoint);
-            i += 1;
-        } else if (codePoint <= 0xffff) {
+        // if (codePoint <= 0x7f) {
+        //     result += String.fromCodePoint(codePoint);
+        //     i += 1;
+        //     continue;
+        // } 
+        
+        if (codePoint <= 0xffff) {
             // This is a character outside the BMP (Basic Multilingual Plane)
             const hex = codePoint.toString(16).padStart(6, "0").toUpperCase();
 
