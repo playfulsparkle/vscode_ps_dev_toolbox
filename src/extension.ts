@@ -41,8 +41,8 @@ export function activate(context: vscode.ExtensionContext) {
 		decodeJavaScriptUnicodeEscapes = "ps-dev-toolbox.decodeJavaScriptUnicodeEscapes",
 		EncodeCssUnicodeEscape = "ps-dev-toolbox.encodeCssUnicodeEscape",
 		DecodeCssUnicodeEscape = "ps-dev-toolbox.decodeCssUnicodeEscape",
-		EncodeUnicodeCodePoints = "ps-dev-toolbox.encodeUnicodeCodePoints",
-		DecodeUnicodeCodePoints = "ps-dev-toolbox.decodeUnicodeCodePoints",
+		EncodeUnicodeCodePointNotation = "ps-dev-toolbox.encodeUnicodeCodePointNotation",
+		DecodeUnicodeCodePointNotation = "ps-dev-toolbox.decodeUnicodeCodePointNotation",
 		EncodeES6UnicodeCodePointEscape = "ps-dev-toolbox.encodeES6UnicodeCodePointEscape",
 		DecodeES6UnicodeCodePointEscape = "ps-dev-toolbox.decodeES6UnicodeCodePointEscape",
 		EncodeExtendedHexEscape = "ps-dev-toolbox.encodeHexEntities",
@@ -475,13 +475,13 @@ export function activate(context: vscode.ExtensionContext) {
 			await processTextInEditor(text => utils.encodeCssUnicodeEscape(text, doubleEncode)); // ok
 		},
 		[CommandId.DecodeCssUnicodeEscape]: async () => processTextInEditor(utils.decodeCssUnicodeEscape),
-		[CommandId.EncodeUnicodeCodePoints]: async () => {
+		[CommandId.EncodeUnicodeCodePointNotation]: async () => {
 			const config = vscode.workspace.getConfiguration("ps-dev-toolbox.encoding");
 			const doubleEncode = config.get<boolean>("doubleEncode", false);
 
-			await processTextInEditor(text => utils.encodeUnicodeCodePoints(text, doubleEncode)); // ok
+			await processTextInEditor(text => utils.encodeUnicodeCodePointNotation(text, doubleEncode)); // ok
 		},
-		[CommandId.DecodeUnicodeCodePoints]: async () => processTextInEditor(utils.decodeUnicodeCodePoints),
+		[CommandId.DecodeUnicodeCodePointNotation]: async () => processTextInEditor(utils.decodeUnicodeCodePointNotation),
 		[CommandId.EncodeES6UnicodeCodePointEscape]: async () => {
 			const config = vscode.workspace.getConfiguration("ps-dev-toolbox.encoding");
 			const doubleEncode = config.get<boolean>("doubleEncode", false);

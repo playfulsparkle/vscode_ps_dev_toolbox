@@ -1180,9 +1180,9 @@ export function decodeCssUnicodeEscape(text: string): string {
  *
  * @param text The input string to encode.
  * @returns The Unicode code point notation string (e.g., "U+0041 U+1F600").
- * @see decodeUnicodeCodePoints
+ * @see decodeUnicodeCodePointNotation
  */
-function isUnicodeCodePoint(str: string, idx: number): number {
+function isUnicodeCodePointNotation(str: string, idx: number): number {
     const s = str.slice(idx);
 
     // U+XXXX or U+XXXXXX
@@ -1194,7 +1194,7 @@ function isUnicodeCodePoint(str: string, idx: number): number {
     return 0;
 }
 
-export function encodeUnicodeCodePoints(text: string, doubleEncode: boolean = false): string {
+export function encodeUnicodeCodePointNotation(text: string, doubleEncode: boolean = false): string {
     if (typeof text !== "string") {
         return text;
     }
@@ -1211,7 +1211,7 @@ export function encodeUnicodeCodePoints(text: string, doubleEncode: boolean = fa
         }
 
         if (!doubleEncode && codePoint === 0x55 && i + 1 < text.length && text.codePointAt(i + 1) === 0x2B) { // U+
-            const len = isUnicodeCodePoint(text, i);
+            const len = isUnicodeCodePointNotation(text, i);
 
             if (len) {
                 result += text.slice(i, i + len);
@@ -1248,9 +1248,9 @@ export function encodeUnicodeCodePoints(text: string, doubleEncode: boolean = fa
  *
  * @param text The Unicode code point notation string to decode (e.g., "U+0041 U+1F600").
  * @returns The decoded string with the original characters.
- * @see encodeUnicodeCodePoints
+ * @see encodeUnicodeCodePointNotation
  */
-export function decodeUnicodeCodePoints(text: string): string {
+export function decodeUnicodeCodePointNotation(text: string): string {
     if (typeof text !== "string") {
         return "";
     }

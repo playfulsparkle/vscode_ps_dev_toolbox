@@ -87,14 +87,14 @@ suite("Dev Toolbox Tests", () => {
 	suite("Encode/Decode to Unicode Codepoint", () => {
 		test("Complex unicode characters", () => {
 			const encoded = "U+0110U+0111U+0129U+0128U+0169U+0168U+01A1U+01A0U+01B0U+01AFU+1EA1U+1EA0U+1EA3U+1EA2U+1EA5U+1EA4U+1EA7U+1EA6U+1EA9U+1EA8U+1EABU+1EAAU+1EADU+1EACU+1EAFU+1EAEU+1EB1U+1EB0U+1EB3U+1EB2U+1EB5U+1EB4U+1EB7U+1EB6U+1EB9U+1EB8U+1EBBU+1EBAU+1EBDU+1EBCU+1EBFU+1EBEU+1EC1U+1EC0U+1EC3U+1EC2U+1EC5U+1EC4U+1EC7U+1EC6U+1EC9U+1EC8U+1ECBU+1ECAU+1ECDU+1ECCU+1ECFU+1ECEU+1ED1U+1ED0U+1ED3U+1ED2U+1ED5U+1ED4U+1ED7U+1ED6U+1ED9U+1ED8U+1EDBU+1EDAU+1EDDU+1EDCU+1EDFU+1EDEU+1EE1U+1EE0U+1EE3U+1EE2U+1EE5U+1EE4U+1EE7U+1EE6U+1EE9U+1EE8U+1EEBU+1EEAU+1EEDU+1EECU+1EEFU+1EEEU+1EF1U+1EF0U+1EF3U+1EF2U+1EF5U+1EF4U+1EF7U+1EF6U+1EF9U+1EF8";
-			assert.strictEqual(utils.encodeUnicodeCodePoints(complexUnicode), encoded);
-			assert.strictEqual(utils.decodeUnicodeCodePoints(encoded), complexUnicode);
+			assert.strictEqual(utils.encodeUnicodeCodePointNotation(complexUnicode), encoded);
+			assert.strictEqual(utils.decodeUnicodeCodePointNotation(encoded), complexUnicode);
 		});
 
 		test("Complex emoji", () => {
 			const encoded = "U+1F3F4U+E0067U+E0062U+E0077U+E006CU+E0073U+E007FU+0020U+1F9D1U+200DU+1F91DU+200DU+1F9D1U+0020U+1F468U+200DU+1F469U+200DU+1F466U+200DU+1F466U+0020U+1F469U+200DU+1F469U+200DU+1F467U+200DU+1F467U+0020U+1F469U+200DU+2764U+FE0FU+200DU+1F48BU+200DU+1F469U+0020U+1F3F4";
-			assert.strictEqual(utils.encodeUnicodeCodePoints(complexEmoji), encoded);
-			assert.strictEqual(utils.decodeUnicodeCodePoints(encoded), complexEmoji);
+			assert.strictEqual(utils.encodeUnicodeCodePointNotation(complexEmoji), encoded);
+			assert.strictEqual(utils.decodeUnicodeCodePointNotation(encoded), complexEmoji);
 		});
 	});
 
