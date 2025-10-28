@@ -37,16 +37,15 @@ Seamlessly integrate these essential features into your coding environment to si
     * Only removes completely empty lines when false.
 * **Remove Non-Printable Characters:** Removes characters that are not typically intended for printing or display.
 * **Remove Leading and Trailing Whitespace:** Trims whitespace (spaces, tabs, newlines) from the beginning and end of strings.
-* **Named HTML Entities:** Converts applicable characters to their corresponding named HTML entity representation (e.g., `<>` to `&lt;&gt;`, `é` to `&eacute;`) and reverses the process, transforming named HTML entities back into their original character form (e.g., `&quot;` to `"`).
-* **HTML Hex Entities:** Encodes characters using their hexadecimal Unicode code point representation in the HTML entity format (e.g., `!ü🔥` to `&#x21;&#xFC;&#x1F525;`) and interprets/converts HTML hexadecimal entities back to their original characters (e.g., `&#x41;` to `A`).
-* **HTML Decimal Entities:** Encodes characters using their decimal Unicode code point representation in the HTML entity format (e.g., `"à👍` to `&#34;&#224;&#128077;`) and converts HTML decimal entities back to their corresponding characters (e.g., `&#97;` to `a`).
-* **JavaScript Unicode Escape Sequences:** Transforms characters into their JavaScript-style Unicode escape sequence representation (e.g., `\uXXXX` or `\UXXXXXXXX`, like `$ñ✨` to `$\u00F1\u2728`) and parses/converts these escape sequences back to their original characters (e.g., `\u00E9` to `é`).
-* **CSS Unicode Escape Sequences:** Encodes characters into the format used within CSS (e.g., `\XXXXXX`, like `#ô❤️` to `#\00F4 \2764 \FE0F `) and interprets/converts these escape sequences back to their original characters (e.g., `\0042` to `B`).
-* **Unicode Code Points:** Represents characters using the standard Unicode code point notation (e.g., `U+XXXX, U+XXXXX`, like `%ç🤔` to `U+0025 U+00E7 U+1F914`) and converts strings in this format back to their corresponding Unicode characters (e.g., `U+0043` to `C`).
-* **ES6 Unicode Code Point Escape Sequences:** Encodes characters using the ECMAScript 6 (ES6) specific format (e.g., `\u{XXXXXX}`, like `&á🚀` to `&\u{E1}\u{1F680}`) and parses/converts these escape sequences back to their original characters (e.g., `\u{61}` to `a`).
-* **Extended Hex Escape Sequences:** Encodes characters using extended hexadecimal escape sequences (e.g., `\x{XXXXXX}`, like `'å😂` to `\x{E5}\x{1F602}`) and converts these escape sequences back to their corresponding characters (e.g., `\x{44}` to `D`).
-* **Hex Code Points:** Represents characters using their hexadecimal code point value (e.g., `0xXX, 0xXXXXX`, like `(è🎉` to `0x28 0xE8 0x1F389`) and converts these hexadecimal code point strings back to their corresponding characters (e.g., `0x65` to `e`).
-* **Percent Encoded URI Sequence:** Encodes characters to `%XX` bytes for URIs using UTF-8 (e.g., `Ω` to `%CE%A9`, space to `%20`) and decodes `%XX` sequences back to characters (e.g., `%2F` to `/`, `%E2%9C%93` to `✓`).
+* **Named HTML entities:** Convert characters to named entities and back. Format: `&name;`. Examples: `é` to `&eacute;`, `<` to `&lt;`, `"` to `&quot;`.
+* **HTML hexadecimal character reference:** Use hex numeric entities for any code point. Format: `&#xXXXX;`, `&#xXXXXXX;`. Examples: `é` to `&#x00E9;`, `🔥` to `&#x1F525;`.
+* **HTML decimal character reference:** Use decimal numeric entities for any code point. Format: `&#XXX;`, `&#XXXXXX;`. Examples: `é` to `&#233;`, `🔥` to `&#128293;`.
+* **JavaScript UTF-16 escape sequences:** Encode as UTF-16 units for JS strings, supports surrogate pairs. Format: `\XXXX`, `\XXXXXX` (pair shown as two `\XXXX`). Examples: `é` to `\u00E9`, `🔥` to `\uD83D\uDD25`.
+* **CSS Unicode escape sequences:** Encode for CSS strings and identifiers, allows optional trailing space. Format: `\XXXX`, `\XXXXXX`. Examples: `é` to `\00E9`, `🔥` to `\1F525`.
+* **Unicode code point notation:** Represent characters as code points for docs and debugging. Format: `U+XXXX`, `U+XXXXX`. Examples: `é` to `U+00E9`, `🔥` to `U+1F525`.
+* **Unicode code point escape sequence (ES2015):** Encode code points for modern JS. Format: `\u{XX}`, `\u{XXXXX}`. Examples: `é` to `\u{00E9}`, `🔥` to `\u{1F525}`.
+* **PCRE Unicode hexadecimal escapes:** Encode for PCRE-compatible regex engines. Format: `\x{XX}`, `\x{XXXXX}`. Examples: `é` to `\x{00E9}`, `🔥` to `\x{1F525}`.
+* **Hex code points:** Show code points with `0x` prefix, useful for debugging. Format: `0xXX`, `0xXXXXX`. Examples: `é` to `0x00E9`, `🔥` to `0x1F525`.
 * **Multi-Language Support**: The extension's user interface and informational messages are available in English (en), Magyar (hu), Slovenčina (sk), Čeština (cs), Deutsch (de), Français (fr), Polski (pl), Български (bg), Español (es), Italiano (it), 日本語 (ja), 한국어 (ko), Português do Brasil (pt-br), Русский (ru), Türkçe (tr), 简体中文 (zh-cn), 繁體中文 (zh-tw) languages.
 
 ---
