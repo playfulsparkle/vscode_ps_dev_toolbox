@@ -1069,7 +1069,7 @@ export function decodeJavaScriptUTF16EscapeSequence(text: string): string {
 /**
  * Converts a string to CSS Unicode escape sequences.
  * Non-ASCII characters (excluding non-breaking space) and characters outside the BMP 
- * are encoded as "\\XXXXXX" (uppercase hex followed by a space).
+ * are encoded as "\XXXXXX", "\XXXX" (uppercase hex followed by a space).
  * 
  * This is the standard escape format used in CSS for representing Unicode characters.
  *
@@ -1145,7 +1145,7 @@ export function encodeCssUnicodeEscape(text: string, doubleEncode: boolean = fal
 
 /**
  * Converts a string containing CSS Unicode escape sequences back to the original string.
- * Matches Unicode escape sequences in the format "\\XXXX " or "\\XXXXXX " 
+ * Matches Unicode escape sequences in the format "\XXXXXX", "\XXXX" 
  * (hex digits followed by an optional space).
  *
  * @param text The input string containing CSS Unicode escape sequences.
@@ -1157,7 +1157,7 @@ export function decodeCssUnicodeEscape(text: string): string {
         return "";
     }
 
-    // Pattern matches \\XXXXXX formats, case insensitive for hex digits
+    // Pattern matches \XXXXXX, \XXXX formats, case insensitive for hex digits
     return text.replace(/\\([0-9a-fA-F]{4,6}) ?/g, (match, hexCode) => {
         if (hexCode) {
             const codePoint = parseInt(hexCode, 16);
