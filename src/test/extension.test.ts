@@ -59,14 +59,14 @@ suite("Dev Toolbox Tests", () => {
 	suite("Encode/Decode to Unicode Escape", () => {
 		test("Complex unicode characters", () => {
 			const encoded = "\\u0110\\u0111\\u0129\\u0128\\u0169\\u0168\\u01A1\\u01A0\\u01B0\\u01AF\\u1EA1\\u1EA0\\u1EA3\\u1EA2\\u1EA5\\u1EA4\\u1EA7\\u1EA6\\u1EA9\\u1EA8\\u1EAB\\u1EAA\\u1EAD\\u1EAC\\u1EAF\\u1EAE\\u1EB1\\u1EB0\\u1EB3\\u1EB2\\u1EB5\\u1EB4\\u1EB7\\u1EB6\\u1EB9\\u1EB8\\u1EBB\\u1EBA\\u1EBD\\u1EBC\\u1EBF\\u1EBE\\u1EC1\\u1EC0\\u1EC3\\u1EC2\\u1EC5\\u1EC4\\u1EC7\\u1EC6\\u1EC9\\u1EC8\\u1ECB\\u1ECA\\u1ECD\\u1ECC\\u1ECF\\u1ECE\\u1ED1\\u1ED0\\u1ED3\\u1ED2\\u1ED5\\u1ED4\\u1ED7\\u1ED6\\u1ED9\\u1ED8\\u1EDB\\u1EDA\\u1EDD\\u1EDC\\u1EDF\\u1EDE\\u1EE1\\u1EE0\\u1EE3\\u1EE2\\u1EE5\\u1EE4\\u1EE7\\u1EE6\\u1EE9\\u1EE8\\u1EEB\\u1EEA\\u1EED\\u1EEC\\u1EEF\\u1EEE\\u1EF1\\u1EF0\\u1EF3\\u1EF2\\u1EF5\\u1EF4\\u1EF7\\u1EF6\\u1EF9\\u1EF8";
-			assert.strictEqual(utils.encodeJavaScriptUnicodeEscapes(complexUnicode), encoded);
-			assert.strictEqual(utils.decodeJavaScriptUnicodeEscapes(encoded), complexUnicode);
+			assert.strictEqual(utils.encodeJavaScriptUTF16EscapeSequence(complexUnicode), encoded);
+			assert.strictEqual(utils.decodeJavaScriptUTF16EscapeSequence(encoded), complexUnicode);
 		});
 
 		test("Complex emoji", () => {
 			const encoded = "\\U0001F3F4\\U000E0067\\U000E0062\\U000E0077\\U000E006C\\U000E0073\\U000E007F\\u0020\\U0001F9D1\\u200D\\U0001F91D\\u200D\\U0001F9D1\\u0020\\U0001F468\\u200D\\U0001F469\\u200D\\U0001F466\\u200D\\U0001F466\\u0020\\U0001F469\\u200D\\U0001F469\\u200D\\U0001F467\\u200D\\U0001F467\\u0020\\U0001F469\\u200D\\u2764\\uFE0F\\u200D\\U0001F48B\\u200D\\U0001F469\\u0020\\U0001F3F4";
-			assert.strictEqual(utils.encodeJavaScriptUnicodeEscapes(complexEmoji), encoded);
-			assert.strictEqual(utils.decodeJavaScriptUnicodeEscapes(encoded), complexEmoji);
+			assert.strictEqual(utils.encodeJavaScriptUTF16EscapeSequence(complexEmoji), encoded);
+			assert.strictEqual(utils.decodeJavaScriptUTF16EscapeSequence(encoded), complexEmoji);
 		});
 	});
 

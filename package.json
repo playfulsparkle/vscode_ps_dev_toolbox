@@ -223,14 +223,14 @@
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },
       {
-        "command": "ps-dev-toolbox.encodeJavaScriptUnicodeEscapes",
-        "title": "%extension.command.encodeJavaScriptUnicodeEscapes.title%",
+        "command": "ps-dev-toolbox.encodeJavaScriptUTF16EscapeSequences",
+        "title": "%extension.command.encodeJavaScriptUTF16EscapeSequences.title%",
         "category": "Dev Toolbox",
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },
       {
-        "command": "ps-dev-toolbox.decodeJavaScriptUnicodeEscapes",
-        "title": "%extension.command.decodeJavaScriptUnicodeEscapes.title%",
+        "command": "ps-dev-toolbox.decodeJavaScriptUTF16EscapeSequences",
+        "title": "%extension.command.decodeJavaScriptUTF16EscapeSequences.title%",
         "category": "Dev Toolbox",
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },

@@ -37,8 +37,8 @@ export function activate(context: vscode.ExtensionContext) {
 		DecodeHtmlHexEntities = "ps-dev-toolbox.decodeHtmlHexEntities",
 		EncodeHtmlDecimalEntities = "ps-dev-toolbox.encodeHtmlDecimalEntities",
 		DecodeHtmlDecimalEntities = "ps-dev-toolbox.decodeHtmlDecimalEntities",
-		encodeJavaScriptUnicodeEscapes = "ps-dev-toolbox.encodeJavaScriptUnicodeEscapes",
-		decodeJavaScriptUnicodeEscapes = "ps-dev-toolbox.decodeJavaScriptUnicodeEscapes",
+		encodeJavaScriptUTF16EscapeSequences = "ps-dev-toolbox.encodeJavaScriptUTF16EscapeSequences",
+		decodeJavaScriptUTF16EscapeSequences = "ps-dev-toolbox.decodeJavaScriptUTF16EscapeSequences",
 		EncodeCssUnicodeEscape = "ps-dev-toolbox.encodeCssUnicodeEscape",
 		DecodeCssUnicodeEscape = "ps-dev-toolbox.decodeCssUnicodeEscape",
 		EncodeUnicodeCodePointNotation = "ps-dev-toolbox.encodeUnicodeCodePointNotation",
@@ -461,13 +461,13 @@ export function activate(context: vscode.ExtensionContext) {
 			await processTextInEditor(text => utils.encodeHtmlDecimalEntities(text, doubleEncode)); // ok
 		},
 		[CommandId.DecodeHtmlDecimalEntities]: async () => processTextInEditor(utils.decodeHtmlDecimalEntities),
-		[CommandId.encodeJavaScriptUnicodeEscapes]: async () => {
+		[CommandId.encodeJavaScriptUTF16EscapeSequences]: async () => {
 			const config = vscode.workspace.getConfiguration("ps-dev-toolbox.encoding");
 			const doubleEncode = config.get<boolean>("doubleEncode", false);
 
-			await processTextInEditor(text => utils.encodeJavaScriptUnicodeEscapes(text, doubleEncode)); // ok
+			await processTextInEditor(text => utils.encodeJavaScriptUTF16EscapeSequence(text, doubleEncode)); // ok
 		},
-		[CommandId.decodeJavaScriptUnicodeEscapes]: async () => processTextInEditor(utils.decodeJavaScriptUnicodeEscapes),
+		[CommandId.decodeJavaScriptUTF16EscapeSequences]: async () => processTextInEditor(utils.decodeJavaScriptUTF16EscapeSequence),
 		[CommandId.EncodeCssUnicodeEscape]: async () => {
 			const config = vscode.workspace.getConfiguration("ps-dev-toolbox.encoding");
 			const doubleEncode = config.get<boolean>("doubleEncode", false);

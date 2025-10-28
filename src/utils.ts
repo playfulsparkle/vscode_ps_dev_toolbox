@@ -957,10 +957,10 @@ export function decodeHtmlDecimalEntities(text: string): string {
  *
  * @param text The string to encode.
  * @returns The encoded string with Unicode escape sequences.
- * @see decodeJavaScriptUnicodeEscapes
+ * @see decodeJavaScriptUTF16EscapeSequences
  */
 
-function isJavaScriptUnicodeEscape(str: string, idx: number): number {
+function isJavaScriptUTF16EscapeSequence(str: string, idx: number): number {
     const s = str.slice(idx);
 
     // \uXXXX (4 hex digits)
@@ -978,7 +978,7 @@ function isJavaScriptUnicodeEscape(str: string, idx: number): number {
     return 0;
 }
 
-export function encodeJavaScriptUnicodeEscapes(text: string, doubleEncode: boolean = false): string {
+export function encodeJavaScriptUTF16EscapeSequence(text: string, doubleEncode: boolean = false): string {
     if (typeof text !== "string") {
         return text;
     }
@@ -995,7 +995,7 @@ export function encodeJavaScriptUnicodeEscapes(text: string, doubleEncode: boole
         }
 
         if (!doubleEncode && codePoint === 0x5C && i + 1 < text.length && text.codePointAt(i + 1) === 0x75) { // \uXXXX
-            const len = isJavaScriptUnicodeEscape(text, i);
+            const len = isJavaScriptUTF16EscapeSequence(text, i);
 
             if (len) {
                 result += text.slice(i, i + len);
@@ -1038,9 +1038,9 @@ export function encodeJavaScriptUnicodeEscapes(text: string, doubleEncode: boole
  *
  * @param text The string with Unicode escape sequences.
  * @returns The decoded string with original characters.
- * @see encodeJavaScriptUnicodeEscapes
+ * @see encodeJavaScriptUTF16EscapeSequences
  */
-export function decodeJavaScriptUnicodeEscapes(text: string): string {
+export function decodeJavaScriptUTF16EscapeSequence(text: string): string {
     if (typeof text !== "string") {
         return "";
     }
