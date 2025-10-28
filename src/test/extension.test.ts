@@ -101,14 +101,14 @@ suite("Dev Toolbox Tests", () => {
 	suite("Encode/Decode ES6 Unicode Code Point Escape", () => {
 		test("Complex unicode characters", () => {
 			const encoded = "\\u{110}\\u{111}\\u{129}\\u{128}\\u{169}\\u{168}\\u{1A1}\\u{1A0}\\u{1B0}\\u{1AF}\\u{1EA1}\\u{1EA0}\\u{1EA3}\\u{1EA2}\\u{1EA5}\\u{1EA4}\\u{1EA7}\\u{1EA6}\\u{1EA9}\\u{1EA8}\\u{1EAB}\\u{1EAA}\\u{1EAD}\\u{1EAC}\\u{1EAF}\\u{1EAE}\\u{1EB1}\\u{1EB0}\\u{1EB3}\\u{1EB2}\\u{1EB5}\\u{1EB4}\\u{1EB7}\\u{1EB6}\\u{1EB9}\\u{1EB8}\\u{1EBB}\\u{1EBA}\\u{1EBD}\\u{1EBC}\\u{1EBF}\\u{1EBE}\\u{1EC1}\\u{1EC0}\\u{1EC3}\\u{1EC2}\\u{1EC5}\\u{1EC4}\\u{1EC7}\\u{1EC6}\\u{1EC9}\\u{1EC8}\\u{1ECB}\\u{1ECA}\\u{1ECD}\\u{1ECC}\\u{1ECF}\\u{1ECE}\\u{1ED1}\\u{1ED0}\\u{1ED3}\\u{1ED2}\\u{1ED5}\\u{1ED4}\\u{1ED7}\\u{1ED6}\\u{1ED9}\\u{1ED8}\\u{1EDB}\\u{1EDA}\\u{1EDD}\\u{1EDC}\\u{1EDF}\\u{1EDE}\\u{1EE1}\\u{1EE0}\\u{1EE3}\\u{1EE2}\\u{1EE5}\\u{1EE4}\\u{1EE7}\\u{1EE6}\\u{1EE9}\\u{1EE8}\\u{1EEB}\\u{1EEA}\\u{1EED}\\u{1EEC}\\u{1EEF}\\u{1EEE}\\u{1EF1}\\u{1EF0}\\u{1EF3}\\u{1EF2}\\u{1EF5}\\u{1EF4}\\u{1EF7}\\u{1EF6}\\u{1EF9}\\u{1EF8}";
-			assert.strictEqual(utils.encodeES6UnicodeCodePointEscape(complexUnicode), encoded);
-			assert.strictEqual(utils.decodeES6UnicodeCodePointEscape(encoded), complexUnicode);
+			assert.strictEqual(utils.encodeUnicodeCodePointEscapeSequence(complexUnicode), encoded);
+			assert.strictEqual(utils.decodeUnicodeCodePointEscapeSequence(encoded), complexUnicode);
 		});
 
 		test("Complex emoji", () => {
 			const encoded = "\\u{1F3F4}\\u{E0067}\\u{E0062}\\u{E0077}\\u{E006C}\\u{E0073}\\u{E007F} \\u{1F9D1}\\u{200D}\\u{1F91D}\\u{200D}\\u{1F9D1} \\u{1F468}\\u{200D}\\u{1F469}\\u{200D}\\u{1F466}\\u{200D}\\u{1F466} \\u{1F469}\\u{200D}\\u{1F469}\\u{200D}\\u{1F467}\\u{200D}\\u{1F467} \\u{1F469}\\u{200D}\\u{2764}\\u{FE0F}\\u{200D}\\u{1F48B}\\u{200D}\\u{1F469} \\u{1F3F4}";
-			assert.strictEqual(utils.encodeES6UnicodeCodePointEscape(complexEmoji), encoded);
-			assert.strictEqual(utils.decodeES6UnicodeCodePointEscape(encoded), complexEmoji);
+			assert.strictEqual(utils.encodeUnicodeCodePointEscapeSequence(complexEmoji), encoded);
+			assert.strictEqual(utils.decodeUnicodeCodePointEscapeSequence(encoded), complexEmoji);
 		});
 	});
 

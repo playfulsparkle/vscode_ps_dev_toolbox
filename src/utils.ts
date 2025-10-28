@@ -1299,9 +1299,9 @@ export function decodeUnicodeCodePointNotation(text: string): string {
  * 
  * @param {string} text - The string to encode
  * @returns {string} - The encoded string with Unicode escape sequences
- * @see decodeES6UnicodeCodePointEscape
+ * @see decodeUnicodeCodePointEscapeSequence
  */
-function isES6UnicodeCodePointEscape(str: string, idx: number): number {
+function isUnicodeCodePointEscapeSequence(str: string, idx: number): number {
     const s = str.slice(idx);
 
     // \u{XXX} (braced, variable length)
@@ -1313,7 +1313,7 @@ function isES6UnicodeCodePointEscape(str: string, idx: number): number {
     return 0;
 }
 
-export function encodeES6UnicodeCodePointEscape(text: string, doubleEncode: boolean = false): string {
+export function encodeUnicodeCodePointEscapeSequence(text: string, doubleEncode: boolean = false): string {
     if (typeof text !== "string") {
         return text;
     }
@@ -1330,7 +1330,7 @@ export function encodeES6UnicodeCodePointEscape(text: string, doubleEncode: bool
         }
 
         if (!doubleEncode && codePoint === 0x5C && i + 1 < text.length && text.codePointAt(i + 1) === 0x75) { // \u{XXXX}
-            const len = isES6UnicodeCodePointEscape(text, i);
+            const len = isUnicodeCodePointEscapeSequence(text, i);
 
             if (len) {
                 result += text.slice(i, i + len);
@@ -1365,9 +1365,9 @@ export function encodeES6UnicodeCodePointEscape(text: string, doubleEncode: bool
  * 
  * @param {string} text - The string with Unicode escape sequences to decode
  * @returns {string} - The decoded string with actual Unicode characters
- * @see encodeES6UnicodeCodePointEscape
+ * @see encodeUnicodeCodePointEscapeSequence
  */
-export function decodeES6UnicodeCodePointEscape(text: string): string {
+export function decodeUnicodeCodePointEscapeSequence(text: string): string {
     if (typeof text !== "string") {
         return "";
     }

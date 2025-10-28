@@ -259,14 +259,14 @@
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },
       {
-        "command": "ps-dev-toolbox.encodeES6UnicodeCodePointEscape",
-        "title": "%extension.command.encodeES6UnicodeCodePointEscape.title%",
+        "command": "ps-dev-toolbox.encodeUnicodeCodePointEscapeSequence",
+        "title": "%extension.command.encodeUnicodeCodePointEscapeSequence.title%",
         "category": "Dev Toolbox",
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },
       {
-        "command": "ps-dev-toolbox.decodeES6UnicodeCodePointEscape",
-        "title": "%extension.command.decodeES6UnicodeCodePointEscape.title%",
+        "command": "ps-dev-toolbox.decodeUnicodeCodePointEscapeSequence",
+        "title": "%extension.command.decodeUnicodeCodePointEscapeSequence.title%",
         "category": "Dev Toolbox",
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },

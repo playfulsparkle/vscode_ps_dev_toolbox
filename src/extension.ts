@@ -43,8 +43,8 @@ export function activate(context: vscode.ExtensionContext) {
 		DecodeCssUnicodeEscape = "ps-dev-toolbox.decodeCssUnicodeEscape",
 		EncodeUnicodeCodePointNotation = "ps-dev-toolbox.encodeUnicodeCodePointNotation",
 		DecodeUnicodeCodePointNotation = "ps-dev-toolbox.decodeUnicodeCodePointNotation",
-		EncodeES6UnicodeCodePointEscape = "ps-dev-toolbox.encodeES6UnicodeCodePointEscape",
-		DecodeES6UnicodeCodePointEscape = "ps-dev-toolbox.decodeES6UnicodeCodePointEscape",
+		EncodeUnicodeCodePointEscapeSequence = "ps-dev-toolbox.encodeUnicodeCodePointEscapeSequence",
+		DecodeUnicodeCodePointEscapeSequence = "ps-dev-toolbox.decodeUnicodeCodePointEscapeSequence",
 		EncodeExtendedHexEscape = "ps-dev-toolbox.encodeHexEntities",
 		DecodeExtendedHexEscape = "ps-dev-toolbox.decodeHexEntities",
 		EncodeHexCodePoints = "ps-dev-toolbox.encodeHexCodePoints",
@@ -482,13 +482,13 @@ export function activate(context: vscode.ExtensionContext) {
 			await processTextInEditor(text => utils.encodeUnicodeCodePointNotation(text, doubleEncode)); // ok
 		},
 		[CommandId.DecodeUnicodeCodePointNotation]: async () => processTextInEditor(utils.decodeUnicodeCodePointNotation),
-		[CommandId.EncodeES6UnicodeCodePointEscape]: async () => {
+		[CommandId.EncodeUnicodeCodePointEscapeSequence]: async () => {
 			const config = vscode.workspace.getConfiguration("ps-dev-toolbox.encoding");
 			const doubleEncode = config.get<boolean>("doubleEncode", false);
 
-			await processTextInEditor(text => utils.encodeES6UnicodeCodePointEscape(text, doubleEncode)); // ok
+			await processTextInEditor(text => utils.encodeUnicodeCodePointEscapeSequence(text, doubleEncode)); // ok
 		},
-		[CommandId.DecodeES6UnicodeCodePointEscape]: async () => processTextInEditor(utils.decodeES6UnicodeCodePointEscape),
+		[CommandId.DecodeUnicodeCodePointEscapeSequence]: async () => processTextInEditor(utils.decodeUnicodeCodePointEscapeSequence),
 		[CommandId.EncodeExtendedHexEscape]: async () => {
 			const config = vscode.workspace.getConfiguration("ps-dev-toolbox.encoding");
 			const doubleEncode = config.get<boolean>("doubleEncode", false);
