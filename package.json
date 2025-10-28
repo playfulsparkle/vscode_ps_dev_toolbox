@@ -187,14 +187,14 @@
         "category": "Dev Toolbox"
       },
       {
-        "command": "ps-dev-toolbox.encodeNamedHtmlEntities",
-        "title": "%extension.command.encodeNamedHtmlEntities.title%",
+        "command": "ps-dev-toolbox.encodeHTMLNamedCharacterEntitys",
+        "title": "%extension.command.encodeHTMLNamedCharacterEntitys.title%",
         "category": "Dev Toolbox",
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },
       {
-        "command": "ps-dev-toolbox.decodeNamedHtmlEntities",
-        "title": "%extension.command.decodeNamedHtmlEntities.title%",
+        "command": "ps-dev-toolbox.decodeHTMLNamedCharacterEntitys",
+        "title": "%extension.command.decodeHTMLNamedCharacterEntitys.title%",
         "category": "Dev Toolbox",
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },

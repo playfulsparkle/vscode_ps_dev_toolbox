@@ -532,7 +532,7 @@ const HEX_0X_REGEX = /^0x[0-9A-Fa-f]+/;                // 0xXXX
  * @param text The string to encode.
  * @returns The encoded string with named HTML entities (e.g., "&amp;" for "&").
  */
-function isNamedHtmlEntity(str: string, idx: number): number {
+function isHTMLNamedCharacterEntity(str: string, idx: number): number {
     const s = str.slice(idx);
 
     // Hex numeric form: &#xHHHH;
@@ -550,7 +550,7 @@ function isNamedHtmlEntity(str: string, idx: number): number {
     return 0;
 }
 
-export function encodeNamedHtmlEntities(text: string, doubleEncode: boolean = false): string {
+export function encodeHTMLNamedCharacterEntity(text: string, doubleEncode: boolean = false): string {
     if (typeof text !== "string") {
         return text;
     }
@@ -567,7 +567,7 @@ export function encodeNamedHtmlEntities(text: string, doubleEncode: boolean = fa
         }
 
         if (!doubleEncode && codePoint === 0x26) { // &
-            const len = isNamedHtmlEntity(text, i);
+            const len = isHTMLNamedCharacterEntity(text, i);
 
             if (len) {
                 result += text.slice(i, i + len);
@@ -640,7 +640,7 @@ export function encodeNamedHtmlEntities(text: string, doubleEncode: boolean = fa
  * @param text The string to decode.
  * @returns The decoded string with named HTML entities resolved.
  */
-export function decodeNamedHtmlEntities(text: string): string {
+export function decodeHTMLNamedCharacterEntity(text: string): string {
     if (typeof text !== "string") {
         return "";
     }

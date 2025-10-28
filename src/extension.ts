@@ -30,8 +30,8 @@ export function activate(context: vscode.ExtensionContext) {
 		RemoveEmptyLinesSelection = "ps-dev-toolbox.removeEmptyLinesSelection",
 		RemoveNonPrintableChars = "ps-dev-toolbox.removeNonPrintableChars",
 		RemoveLeadingTrailingWhitespace = "ps-dev-toolbox.removeLeadingTrailingWhitespace",
-		EncodeNamedHtmlEntities = "ps-dev-toolbox.encodeNamedHtmlEntities",
-		DecodeNamedHtmlEntities = "ps-dev-toolbox.decodeNamedHtmlEntities",
+		EncodeHTMLNamedCharacterEntitys = "ps-dev-toolbox.encodeHTMLNamedCharacterEntitys",
+		DecodeHTMLNamedCharacterEntitys = "ps-dev-toolbox.decodeHTMLNamedCharacterEntitys",
 		EncodeHTMLHexadecimalCharacterReference = "ps-dev-toolbox.encodeHTMLHexadecimalCharacterReference",
 		DecodeHTMLHexadecimalCharacterReference = "ps-dev-toolbox.decodeHTMLHexadecimalCharacterReference",
 		EncodeHtmlDecimalEntities = "ps-dev-toolbox.encodeHtmlDecimalEntities",
@@ -439,13 +439,13 @@ export function activate(context: vscode.ExtensionContext) {
 		[CommandId.RemoveEmptyLinesSelection]: async () => removeEmptyLinesCommand(true),
 		[CommandId.RemoveNonPrintableChars]: removeNonPrintableCharactersCommand,
 		[CommandId.RemoveLeadingTrailingWhitespace]: removeLeadingTrailingWhitespaceCommand,
-		[CommandId.EncodeNamedHtmlEntities]: async () => {
+		[CommandId.EncodeHTMLNamedCharacterEntitys]: async () => {
 			const config = vscode.workspace.getConfiguration("ps-dev-toolbox.encoding");
 			const doubleEncode = config.get<boolean>("doubleEncode", false);
 
-			await processTextInEditor(text => utils.encodeNamedHtmlEntities(text, doubleEncode)); // ok
+			await processTextInEditor(text => utils.encodeHTMLNamedCharacterEntity(text, doubleEncode)); // ok
 		},
-		[CommandId.DecodeNamedHtmlEntities]: async () => processTextInEditor(utils.decodeNamedHtmlEntities),
+		[CommandId.DecodeHTMLNamedCharacterEntitys]: async () => processTextInEditor(utils.decodeHTMLNamedCharacterEntity),
 		[CommandId.EncodeHTMLHexadecimalCharacterReference]: async () => {
 			const config = vscode.workspace.getConfiguration("ps-dev-toolbox.encoding");
 			const doubleEncode = config.get<boolean>("doubleEncode", false);
