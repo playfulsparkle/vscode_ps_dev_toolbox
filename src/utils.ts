@@ -1115,28 +1115,27 @@ export function encodeCssUnicodeEscape(text: string, doubleEncode: boolean = fal
             }
         }
 
+        // ASCII characters (0x00-0x7F) - pass through
         if (codePoint <= 0x7f) {
             result += String.fromCodePoint(codePoint);
             i += 1;
             continue;
         }
 
+        // BMP characters (0x80-0xFFFF) - use 4 hex digits
         if (codePoint <= 0xffff) {
-            // This is a character outside the BMP (Basic Multilingual Plane)
-            const hex = codePoint.toString(16).padStart(6, "0").toUpperCase();
+            const hex = codePoint.toString(16).toUpperCase().padStart(4, "0");
 
             result += `\\${hex} `;
 
-            // Move to the next code point, handling surrogate pairs
-            i += codePoint > 0xFFFF ? 2 : 1;
+            i += 1;
         } else {
-            // This is a non-ASCII character
-            const hex = codePoint.toString(16).padStart(4, "0").toUpperCase();
+            // Non-BMP characters (0x10000-0x10FFFF) - use 6 hex digits
+            const hex = codePoint.toString(16).toUpperCase().padStart(6, "0");
 
             result += `\\${hex} `;
 
-            // Move to the next code point, handling surrogate pairs
-            i += codePoint > 0xFFFF ? 2 : 1;
+            i += 2; // Surrogate pairs take 2 positions in UTF-16
         }
     }
 
