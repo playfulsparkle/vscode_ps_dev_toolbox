@@ -115,14 +115,14 @@ suite("Dev Toolbox Tests", () => {
 	suite("Encode/Decode Extended Hex Escape", () => {
 		test("Complex unicode characters", () => {
 			const encoded = "\\x{110}\\x{111}\\x{129}\\x{128}\\x{169}\\x{168}\\x{1A1}\\x{1A0}\\x{1B0}\\x{1AF}\\x{1EA1}\\x{1EA0}\\x{1EA3}\\x{1EA2}\\x{1EA5}\\x{1EA4}\\x{1EA7}\\x{1EA6}\\x{1EA9}\\x{1EA8}\\x{1EAB}\\x{1EAA}\\x{1EAD}\\x{1EAC}\\x{1EAF}\\x{1EAE}\\x{1EB1}\\x{1EB0}\\x{1EB3}\\x{1EB2}\\x{1EB5}\\x{1EB4}\\x{1EB7}\\x{1EB6}\\x{1EB9}\\x{1EB8}\\x{1EBB}\\x{1EBA}\\x{1EBD}\\x{1EBC}\\x{1EBF}\\x{1EBE}\\x{1EC1}\\x{1EC0}\\x{1EC3}\\x{1EC2}\\x{1EC5}\\x{1EC4}\\x{1EC7}\\x{1EC6}\\x{1EC9}\\x{1EC8}\\x{1ECB}\\x{1ECA}\\x{1ECD}\\x{1ECC}\\x{1ECF}\\x{1ECE}\\x{1ED1}\\x{1ED0}\\x{1ED3}\\x{1ED2}\\x{1ED5}\\x{1ED4}\\x{1ED7}\\x{1ED6}\\x{1ED9}\\x{1ED8}\\x{1EDB}\\x{1EDA}\\x{1EDD}\\x{1EDC}\\x{1EDF}\\x{1EDE}\\x{1EE1}\\x{1EE0}\\x{1EE3}\\x{1EE2}\\x{1EE5}\\x{1EE4}\\x{1EE7}\\x{1EE6}\\x{1EE9}\\x{1EE8}\\x{1EEB}\\x{1EEA}\\x{1EED}\\x{1EEC}\\x{1EEF}\\x{1EEE}\\x{1EF1}\\x{1EF0}\\x{1EF3}\\x{1EF2}\\x{1EF5}\\x{1EF4}\\x{1EF7}\\x{1EF6}\\x{1EF9}\\x{1EF8}";
-			assert.strictEqual(utils.encodeHexEntities(complexUnicode), encoded);
-			assert.strictEqual(utils.decodeHexEntities(encoded), complexUnicode);
+			assert.strictEqual(utils.encodePCREUnicodeHexadecimalEcape(complexUnicode), encoded);
+			assert.strictEqual(utils.decodePCREUnicodeHexadecimalEcape(encoded), complexUnicode);
 		});
 
 		test("Complex emoji", () => {
 			const encoded = "\\x{1F3F4}\\x{E0067}\\x{E0062}\\x{E0077}\\x{E006C}\\x{E0073}\\x{E007F} \\x{1F9D1}\\x{200D}\\x{1F91D}\\x{200D}\\x{1F9D1} \\x{1F468}\\x{200D}\\x{1F469}\\x{200D}\\x{1F466}\\x{200D}\\x{1F466} \\x{1F469}\\x{200D}\\x{1F469}\\x{200D}\\x{1F467}\\x{200D}\\x{1F467} \\x{1F469}\\x{200D}\\x{2764}\\x{FE0F}\\x{200D}\\x{1F48B}\\x{200D}\\x{1F469} \\x{1F3F4}";
-			assert.strictEqual(utils.encodeHexEntities(complexEmoji), encoded);
-			assert.strictEqual(utils.decodeHexEntities(encoded), complexEmoji);
+			assert.strictEqual(utils.encodePCREUnicodeHexadecimalEcape(complexEmoji), encoded);
+			assert.strictEqual(utils.decodePCREUnicodeHexadecimalEcape(encoded), complexEmoji);
 		});
 	});
 

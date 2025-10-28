@@ -46,8 +46,8 @@
   "extension.command.decodeUnicodeCodePointNotation.title": "Décoder la notation de point de code Unicode (U+XXXX)",
   "extension.command.encodeUnicodeCodePointEscapeSequence.title": "Encoder la séquence d’échappement du point de code Unicode (\\u{XXXXXX})",
   "extension.command.decodeUnicodeCodePointEscapeSequence.title": "Décoder la séquence d’échappement du point de code Unicode (\\u{XXXXXX})",
-  "extension.command.encodeHexEntities.title": "Encoder les séquences d’échappement hex étendues (\\x{XXXXXX})",
-  "extension.command.decodeHexEntities.title": "Décoder les séquences d’échappement hex étendues (\\x{XXXXXX})",
+  "extension.command.encodePCREUnicodeHexadecimalEcape.title": "Encoder les séquences d’échappement hexadécimales Unicode dans PCRE (\\x{XXXX})",
+  "extension.command.decodePCREUnicodeHexadecimalEcape.title": "Décoder les séquences d’échappement hexadécimales Unicode dans PCRE (\\x{XXXX})",
   "extension.command.encodeHexCodePoints.title": "Encoder les points de code hexadécimaux (0xXXXX)",
   "extension.command.decodeHexCodePoints.title": "Décoder les points de code hexadécimaux (0xXXXX)"
 }

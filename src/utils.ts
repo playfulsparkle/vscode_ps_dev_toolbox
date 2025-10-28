@@ -1390,9 +1390,9 @@ export function decodeUnicodeCodePointEscapeSequence(text: string): string {
  * 
  * @param {string} text - The string to encode
  * @returns {string} - The encoded string with hexadecimal escape sequences
- * @see decodeHexEntities
+ * @see decodePCREUnicodeHexadecimalEcape
  */
-function isHexEntity(str: string, idx: number): number {
+function isPCREUnicodeHexadecimalEcape(str: string, idx: number): number {
     const s = str.slice(idx);
 
     // \x{XXX} (braced, variable length)
@@ -1404,7 +1404,7 @@ function isHexEntity(str: string, idx: number): number {
     return 0;
 }
 
-export function encodeHexEntities(text: string, doubleEncode: boolean = false): string {
+export function encodePCREUnicodeHexadecimalEcape(text: string, doubleEncode: boolean = false): string {
     if (typeof text !== "string") {
         return text;
     }
@@ -1421,7 +1421,7 @@ export function encodeHexEntities(text: string, doubleEncode: boolean = false): 
         }
 
         if (!doubleEncode && codePoint === 0x5C && i + 1 < text.length && text.codePointAt(i + 1) === 0x78) { // \x{XXXX}
-            const len = isHexEntity(text, i);
+            const len = isPCREUnicodeHexadecimalEcape(text, i);
 
             if (len) {
                 result += text.slice(i, i + len);
@@ -1456,9 +1456,9 @@ export function encodeHexEntities(text: string, doubleEncode: boolean = false): 
  * 
  * @param {string} text - The string with hexadecimal escape sequences to decode
  * @returns {string} - The decoded string with actual Unicode characters
- * @see encodeHexEntities
+ * @see encodePCREUnicodeHexadecimalEcape
  */
-export function decodeHexEntities(text: string): string {
+export function decodePCREUnicodeHexadecimalEcape(text: string): string {
     if (typeof text !== "string") {
         return "";
     }

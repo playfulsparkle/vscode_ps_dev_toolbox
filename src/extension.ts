@@ -1,6 +1,5 @@
 import * as vscode from "vscode";
 import * as path from "path";
-import * as fs from "fs";
 import * as utils from "./utils";
 
 
@@ -45,8 +44,8 @@ export function activate(context: vscode.ExtensionContext) {
 		DecodeUnicodeCodePointNotation = "ps-dev-toolbox.decodeUnicodeCodePointNotation",
 		EncodeUnicodeCodePointEscapeSequence = "ps-dev-toolbox.encodeUnicodeCodePointEscapeSequence",
 		DecodeUnicodeCodePointEscapeSequence = "ps-dev-toolbox.decodeUnicodeCodePointEscapeSequence",
-		EncodeExtendedHexEscape = "ps-dev-toolbox.encodeHexEntities",
-		DecodeExtendedHexEscape = "ps-dev-toolbox.decodeHexEntities",
+		EncodeExtendedHexEscape = "ps-dev-toolbox.encodePCREUnicodeHexadecimalEcape",
+		DecodeExtendedHexEscape = "ps-dev-toolbox.decodePCREUnicodeHexadecimalEcape",
 		EncodeHexCodePoints = "ps-dev-toolbox.encodeHexCodePoints",
 		DecodeHexCodePoints = "ps-dev-toolbox.decodeHexCodePoints"
 	}
@@ -493,9 +492,9 @@ export function activate(context: vscode.ExtensionContext) {
 			const config = vscode.workspace.getConfiguration("ps-dev-toolbox.encoding");
 			const doubleEncode = config.get<boolean>("doubleEncode", false);
 
-			await processTextInEditor(text => utils.encodeHexEntities(text, doubleEncode)); // ok
+			await processTextInEditor(text => utils.encodePCREUnicodeHexadecimalEcape(text, doubleEncode)); // ok
 		},
-		[CommandId.DecodeExtendedHexEscape]: async () => processTextInEditor(utils.decodeHexEntities),
+		[CommandId.DecodeExtendedHexEscape]: async () => processTextInEditor(utils.decodePCREUnicodeHexadecimalEcape),
 		[CommandId.EncodeHexCodePoints]: async () => {
 			const config = vscode.workspace.getConfiguration("ps-dev-toolbox.encoding");
 			const doubleEncode = config.get<boolean>("doubleEncode", false);

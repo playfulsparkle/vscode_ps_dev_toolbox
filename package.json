@@ -271,14 +271,14 @@
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },
       {
-        "command": "ps-dev-toolbox.encodeHexEntities",
-        "title": "%extension.command.encodeHexEntities.title%",
+        "command": "ps-dev-toolbox.encodePCREUnicodeHexadecimalEcape",
+        "title": "%extension.command.encodePCREUnicodeHexadecimalEcape.title%",
         "category": "Dev Toolbox",
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },
       {
-        "command": "ps-dev-toolbox.decodeHexEntities",
-        "title": "%extension.command.decodeHexEntities.title%",
+        "command": "ps-dev-toolbox.decodePCREUnicodeHexadecimalEcape",
+        "title": "%extension.command.decodePCREUnicodeHexadecimalEcape.title%",
         "category": "Dev Toolbox",
         "enablement": "editorHasSelection || editorHasMultipleSelections"
       },

@@ -46,8 +46,8 @@
   "extension.command.decodeUnicodeCodePointNotation.title": "Unicode kod noktası gösteriminin kodunu çöz (U+XXXX)",
   "extension.command.encodeUnicodeCodePointEscapeSequence.title": "Unicode kod noktası kaçış dizisini kodla (\\u{XXXXXX})",
   "extension.command.decodeUnicodeCodePointEscapeSequence.title": "Unicode kod noktası kaçış dizisini çöz (\\u{XXXXXX})",
-  "extension.command.encodeHexEntities.title": "Genişletilmiş onaltılık kaçış dizilerini kodла (\\x{XXXXXX})",
-  "extension.command.decodeHexEntities.title": "Genişletilmiş onaltılık kaçış dizilerinin kodunu çöz (\\x{XXXXXX})",
+  "extension.command.encodePCREUnicodeHexadecimalEcape.title": "PCRE'de Unicode onaltılık kaçış dizilerini kodla (\\x{XXXX})",
+  "extension.command.decodePCREUnicodeHexadecimalEcape.title": "PCRE'de Unicode onaltılık kaçış dizilerinin kodunu çöz (\\x{XXXX})",
   "extension.command.encodeHexCodePoints.title": "Onaltılık kod noktalarını kodла (0xXXXX)",
   "extension.command.decodeHexCodePoints.title": "Onaltılık kod noktalarının kodunu çöz (0xXXXX)"
 }
