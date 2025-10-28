@@ -722,7 +722,7 @@ export function decodeNamedHtmlEntities(text: string): string {
  * @param text The string to encode.
  * @returns The encoded string with each code point represented as a hexadecimal entity (e.g., "&#x0012;").
  */
-function isHtmlHexEntity(str: string, idx: number): number {
+function isHTMLHexadecimalCharacterReference(str: string, idx: number): number {
     const s = str.slice(idx);
 
     // Hex numeric form: &#xHHHH;
@@ -734,7 +734,7 @@ function isHtmlHexEntity(str: string, idx: number): number {
     return 0;
 }
 
-export function encodeHtmlHexEntities(text: string, doubleEncode: boolean = false): string {
+export function encodeHTMLHexadecimalCharacterReference(text: string, doubleEncode: boolean = false): string {
     if (typeof text !== "string") {
         return text;
     }
@@ -751,7 +751,7 @@ export function encodeHtmlHexEntities(text: string, doubleEncode: boolean = fals
         }
 
         if (!doubleEncode && codePoint === 0x26) { // &
-            const len = isHtmlHexEntity(text, i);
+            const len = isHTMLHexadecimalCharacterReference(text, i);
 
             if (len) {
                 result += text.slice(i, i + len);
@@ -813,7 +813,7 @@ export function encodeHtmlHexEntities(text: string, doubleEncode: boolean = fals
  * @param text The string with HTML/XML entities to decode (e.g., "&#x0012;").
  * @returns The decoded string with original characters.
  */
-export function decodeHtmlHexEntities(text: string): string {
+export function decodeHTMLHexadecimalCharacterReference(text: string): string {
     if (typeof text !== "string") {
         return "";
     }

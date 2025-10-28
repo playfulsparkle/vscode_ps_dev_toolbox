@@ -31,14 +31,14 @@ suite("Dev Toolbox Tests", () => {
 	suite("Encode/Decode to HTML Entities", () => {
 		test("Complex unicode characters", () => {
 			const encoded = "&#x0110;&#x0111;&#x0129;&#x0128;&#x0169;&#x0168;&#x01A1;&#x01A0;&#x01B0;&#x01AF;&#x1EA1;&#x1EA0;&#x1EA3;&#x1EA2;&#x1EA5;&#x1EA4;&#x1EA7;&#x1EA6;&#x1EA9;&#x1EA8;&#x1EAB;&#x1EAA;&#x1EAD;&#x1EAC;&#x1EAF;&#x1EAE;&#x1EB1;&#x1EB0;&#x1EB3;&#x1EB2;&#x1EB5;&#x1EB4;&#x1EB7;&#x1EB6;&#x1EB9;&#x1EB8;&#x1EBB;&#x1EBA;&#x1EBD;&#x1EBC;&#x1EBF;&#x1EBE;&#x1EC1;&#x1EC0;&#x1EC3;&#x1EC2;&#x1EC5;&#x1EC4;&#x1EC7;&#x1EC6;&#x1EC9;&#x1EC8;&#x1ECB;&#x1ECA;&#x1ECD;&#x1ECC;&#x1ECF;&#x1ECE;&#x1ED1;&#x1ED0;&#x1ED3;&#x1ED2;&#x1ED5;&#x1ED4;&#x1ED7;&#x1ED6;&#x1ED9;&#x1ED8;&#x1EDB;&#x1EDA;&#x1EDD;&#x1EDC;&#x1EDF;&#x1EDE;&#x1EE1;&#x1EE0;&#x1EE3;&#x1EE2;&#x1EE5;&#x1EE4;&#x1EE7;&#x1EE6;&#x1EE9;&#x1EE8;&#x1EEB;&#x1EEA;&#x1EED;&#x1EEC;&#x1EEF;&#x1EEE;&#x1EF1;&#x1EF0;&#x1EF3;&#x1EF2;&#x1EF5;&#x1EF4;&#x1EF7;&#x1EF6;&#x1EF9;&#x1EF8;";
-			assert.strictEqual(utils.encodeHtmlHexEntities(complexUnicode), encoded);
-			assert.strictEqual(utils.decodeHtmlHexEntities(encoded), complexUnicode);
+			assert.strictEqual(utils.encodeHTMLHexadecimalCharacterReference(complexUnicode), encoded);
+			assert.strictEqual(utils.decodeHTMLHexadecimalCharacterReference(encoded), complexUnicode);
 		});
 
 		test("Complex emoji", () => {
 			const encoded = "&#x1F3F4;&#xE0067;&#xE0062;&#xE0077;&#xE006C;&#xE0073;&#xE007F; &#x1F9D1;&#x200D;&#x1F91D;&#x200D;&#x1F9D1; &#x1F468;&#x200D;&#x1F469;&#x200D;&#x1F466;&#x200D;&#x1F466; &#x1F469;&#x200D;&#x1F469;&#x200D;&#x1F467;&#x200D;&#x1F467; &#x1F469;&#x200D;&#x2764;&#xFE0F;&#x200D;&#x1F48B;&#x200D;&#x1F469; &#x1F3F4;";
-			assert.strictEqual(utils.encodeHtmlHexEntities(complexEmoji), encoded);
-			assert.strictEqual(utils.decodeHtmlHexEntities(encoded), complexEmoji);
+			assert.strictEqual(utils.encodeHTMLHexadecimalCharacterReference(complexEmoji), encoded);
+			assert.strictEqual(utils.decodeHTMLHexadecimalCharacterReference(encoded), complexEmoji);
 		});
 	});
 

@@ -32,8 +32,8 @@ export function activate(context: vscode.ExtensionContext) {
 		RemoveLeadingTrailingWhitespace = "ps-dev-toolbox.removeLeadingTrailingWhitespace",
 		EncodeNamedHtmlEntities = "ps-dev-toolbox.encodeNamedHtmlEntities",
 		DecodeNamedHtmlEntities = "ps-dev-toolbox.decodeNamedHtmlEntities",
-		EncodeHtmlHexEntities = "ps-dev-toolbox.encodeHtmlHexEntities",
-		DecodeHtmlHexEntities = "ps-dev-toolbox.decodeHtmlHexEntities",
+		EncodeHTMLHexadecimalCharacterReference = "ps-dev-toolbox.encodeHTMLHexadecimalCharacterReference",
+		DecodeHTMLHexadecimalCharacterReference = "ps-dev-toolbox.decodeHTMLHexadecimalCharacterReference",
 		EncodeHtmlDecimalEntities = "ps-dev-toolbox.encodeHtmlDecimalEntities",
 		DecodeHtmlDecimalEntities = "ps-dev-toolbox.decodeHtmlDecimalEntities",
 		encodeJavaScriptUTF16EscapeSequences = "ps-dev-toolbox.encodeJavaScriptUTF16EscapeSequences",
@@ -446,13 +446,13 @@ export function activate(context: vscode.ExtensionContext) {
 			await processTextInEditor(text => utils.encodeNamedHtmlEntities(text, doubleEncode)); // ok
 		},
 		[CommandId.DecodeNamedHtmlEntities]: async () => processTextInEditor(utils.decodeNamedHtmlEntities),
-		[CommandId.EncodeHtmlHexEntities]: async () => {
+		[CommandId.EncodeHTMLHexadecimalCharacterReference]: async () => {
 			const config = vscode.workspace.getConfiguration("ps-dev-toolbox.encoding");
 			const doubleEncode = config.get<boolean>("doubleEncode", false);
 
-			await processTextInEditor(text => utils.encodeHtmlHexEntities(text, doubleEncode)); // ok
+			await processTextInEditor(text => utils.encodeHTMLHexadecimalCharacterReference(text, doubleEncode)); // ok
 		},
-		[CommandId.DecodeHtmlHexEntities]: async () => processTextInEditor(utils.decodeHtmlHexEntities),
+		[CommandId.DecodeHTMLHexadecimalCharacterReference]: async () => processTextInEditor(utils.decodeHTMLHexadecimalCharacterReference),
 		[CommandId.EncodeHtmlDecimalEntities]: async () => {
 			const config = vscode.workspace.getConfiguration("ps-dev-toolbox.encoding");
 			const doubleEncode = config.get<boolean>("doubleEncode", false);
