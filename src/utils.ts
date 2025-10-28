@@ -520,7 +520,7 @@ const DECIMAL_ENTITY_REGEX = /^&#[0-9]+;/;                   // &#DDDD;
 const UNICODE_4_REGEX = /^\\u[0-9A-Fa-f]{4}/;             // \uXXXX
 const UNICODE_8_REGEX = /^\\U[0-9A-Fa-f]{8}/;             // \UXXXXXXXX
 const BACKSLASH_HEX_REGEX = /^\\[0-9A-Fa-f]{6}\s?/;             // \XXXXXX
-const UPLUS_REGEX = /^U\+[0-9A-Fa-f]{4,6}/;            // U+XXXX or U+XXXXXX
+const UPLUS_REGEX = /^U\+[0-9A-Fa-f]{4,6}/;            // U+XXXX, U+XXXXX or U+XXXXXX
 const UNICODE_BRACE_REGEX = /^\\u\{[0-9A-Fa-f]+\}/;       // \u{XXX}
 const HEX_BRACE_REGEX = /^\\x\{[0-9A-Fa-f]+\}/;           // \x{XXX}
 const HEX_0X_REGEX = /^0x[0-9A-Fa-f]+/;                // 0xXXX
@@ -835,10 +835,10 @@ export function decodeHTMLHexadecimalCharacterReference(text: string): string {
 /**
  * Converts a string to HTML/XML entity representation using decimal code points.
  * Handles ASCII characters, Unicode characters, emojis, and composite emojis.
- * Creates entities in the format &#123; where 123 is the decimal code point.
+ * Creates entities in the format &#XXX;, &#XXXXXX; where 123 is the decimal code point.
  *
  * @param text The string to encode.
- * @returns The encoded string with each code point represented as a decimal entity (e.g., "&#123;").
+ * @returns The encoded string with each code point represented as a decimal entity (e.g., "&#XXX;, &#XXXXXX;").
  */
 function isHtmlDecimalEntity(str: string, idx: number): number {
     const s = str.slice(idx);
@@ -924,7 +924,7 @@ export function encodeHtmlDecimalEntities(text: string, doubleEncode: boolean = 
 
 /**
  * Converts a string with HTML/XML decimal entity representations back to the original string.
- * Decodes entities in the format &#123; where 123 is the decimal code point.
+ * Decodes entities in the format &#XXX;, &#XXXXXX; where 123 is the decimal code point.
  *
  * @param text The string with HTML/XML decimal entities to decode.
  * @returns The decoded string with original characters.
@@ -1171,7 +1171,7 @@ export function decodeCssUnicodeEscape(text: string): string {
 }
 
 /**
- * Encodes a string into a Unicode code point notation sequence in the format "U+XXXX".
+ * Encodes a string into a Unicode code point notation sequence in the format "U+XXXX, U+XXXXX".
  * Each character's code point is converted to its hexadecimal representation 
  * (uppercase, padded to 4 digits) and prefixed with "U+".
  * This is the standard format used in Unicode specifications and documentation.
@@ -1184,7 +1184,7 @@ export function decodeCssUnicodeEscape(text: string): string {
 function isUnicodeCodePointNotation(str: string, idx: number): number {
     const s = str.slice(idx);
 
-    // U+XXXX or U+XXXXXX
+    // U+XXXX, U+XXXXX or U+XXXXXX
     let m = UPLUS_REGEX.exec(s);
     if (m) {
         return m[0].length;
@@ -1241,7 +1241,7 @@ export function encodeUnicodeCodePointNotation(text: string, doubleEncode: boole
 /**
  * Decodes a Unicode code point notation sequence back to a string.
  * Each token in the sequence (separated by spaces) is expected to be in the 
- * format "U+XXXX" (4 to 6 hexadecimal digits).
+ * format "U+XXXX, U+XXXXX" (4 to 6 hexadecimal digits).
  * This format is the standard notation used in Unicode specifications and documentation.
  * Surrogate code points are handled as individual code units.
  *
@@ -1476,7 +1476,7 @@ export function decodePCREUnicodeHexadecimalEcape(text: string): string {
 
 /**
  * Encodes a string into a sequence of hexadecimal representations of its Unicode code points,
- * prefixed with "0x". Control characters (U+0000 to U+001F) are preserved as is.
+ * prefixed with "0xXX", "0xXXXXX". Control characters (U+0000 to U+001F) are preserved as is.
  *
  * @param {string} text The string to encode.
  * @param {boolean} [separate=false] If true, each encoded code point will be separated by a space.
