@@ -23,6 +23,7 @@ Seamlessly integrate these essential features into your coding environment to si
   * **Uppercase** - all characters uppercase without separators (e.g., `MYVARIABLENAME`)
 * **Safe Locale-Aware Case Conversion:** Provides `safeToLowerCase` and `safeToUppercase` functions that attempt to use locale-specific case conversion via `toLocaleLowerCase` and `toLocaleUpperCase`. Includes a robust fallback to standard `toLowerCase` and `toUpperCase` to ensure consistent behavior across different environments. Allows for optional locale parameters to handle language-specific case conversion rules.
 * **Intelligent Slugification:** Offers a `slugify` function that converts strings into URL-friendly slugs; removes diacritics, special characters, and replaces spaces with hyphens. Attempts to preserve file extensions during slugification, intelligently differentiating between file extensions and other dot-separated text.
+![URL Slugify](img/generate-url-slug.gif "URL Slugify")
 * **Base64 Encoding/Decoding:** Implements `base64Encode` and `base64Decode` functions for seamless Base64 encoding and decoding of strings.
 * **URL Encoding/Decoding:** Provides `urlEncode` and `urlDecode` functions for encoding and decoding strings for use in URLs.
 * **GUID Generation:** Generates Globally Unique Identifiers (GUIDs) with the following formatting options:
@@ -30,6 +31,7 @@ Seamlessly integrate these essential features into your coding environment to si
     * **Registry format:** `{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}` (e.g., `{a1b2c3d4-e5f6-7890-9abc-c1d2e3f4a5b6}`)
     * **Square brackets format:** `[Guid("xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx")]` (e.g., `[Guid("a1b2c3d4-e5f6-7890-9abc-c1d2e3f4a5b6")]`)
     * **Less than sign format:** `<Guid("xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx")>` (e.g., `<Guid("a1b2c3d4-e5f6-7890-9abc-c1d2e3f4a5b6")>`)
+![GUID Generation](img/guid.gif "GUID Generation")
 * **Remove Empty Lines:** Provides functionality to remove empty lines from text with the following options:
     * When true, removes all empty lines.
     * When false, only removes consecutive empty lines, keeping single empty lines intact.
@@ -46,6 +48,7 @@ Seamlessly integrate these essential features into your coding environment to si
 * **Unicode code point escape sequence (ES2015):** Encode code points for modern JS. Format: `\u{XX}`, `\u{XXXXX}`. Examples: `é` to `\u{00E9}`, `🔥` to `\u{1F525}`.
 * **PCRE Unicode hexadecimal escapes:** Encode for PCRE-compatible regex engines. Format: `\x{XX}`, `\x{XXXXX}`. Examples: `é` to `\x{00E9}`, `🔥` to `\x{1F525}`.
 * **Hex code points:** Show code points with `0x` prefix, useful for debugging. Format: `0xXX`, `0xXXXXX`. Examples: `é` to `0x00E9`, `🔥` to `0x1F525`.
+![Various encoding functions](img/encode.gif "Various encoding functions")
 * **Multi-Language Support**: The extension's user interface and informational messages are available in English (en), Magyar (hu), Slovenčina (sk), Čeština (cs), Deutsch (de), Français (fr), Polski (pl), Български (bg), Español (es), Italiano (it), 日本語 (ja), 한국어 (ko), Português do Brasil (pt-br), Русский (ru), Türkçe (tr), 简体中文 (zh-cn), 繁體中文 (zh-tw) languages.
 
 ---
