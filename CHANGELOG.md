@@ -2,6 +2,10 @@
 
 All notable changes to the "Playful Sparkle: Dev Toolbox" extension will be documented in this file.
 
+## [0.0.16] - 2025-10-29
+
+Translated Command Palette category
+
 ## [0.0.15] - 2025-10-28
 
 * Added support for encoding and decoding percent-encoded URI sequences.

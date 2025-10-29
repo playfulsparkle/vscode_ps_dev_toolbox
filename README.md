@@ -77,6 +77,10 @@ If you encounter any of these or other issues, please report them on the [GitHub
 
 ## Release Notes
 
+### 0.0.16
+
+Translated Command Palette category
+
 ### 0.0.15
 
 * Added support for encoding and decoding percent-encoded URI sequences.
