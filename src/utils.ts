@@ -308,8 +308,8 @@ function slugifyHelper(text: string, separator: string): string {
 function normalizeToWords(text: string): string[] {
     // Step 1: Split camel/pascal case words
     const withSplitCase = text
-        .replace(/([a-z0-9])([A-Z])/g, "$1 $2")    // Split camelCase
-        .replace(/([A-Z])([A-Z][a-z])/g, "$1 $2"); // Split PascalCase/HTTPRequests
+        .replace(/([a-z0-9])([A-Z])/g, "$1 $2")   // Split camelCase: myVariable -> my Variable
+        .replace(/([A-Z])([A-Z][a-z])/g, "$1 $2"); // Split PascalCase: MyClass -> My Class
 
     // Step 2: Normalize text
     const normalized = withSplitCase
