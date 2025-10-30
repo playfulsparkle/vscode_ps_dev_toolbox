@@ -77,15 +77,6 @@ This extension has no special requirements or dependencies. It works directly wi
 
 ## Known Issues
 
-* **Locale-Specific Case Conversion Inconsistencies:**
-    * The `safeToLowerCase` and `safeToUppercase` functions rely on `toLocaleLowerCase` and `toLocaleUpperCase`, respectively, which can exhibit inconsistencies across different JavaScript environments and operating systems. This can lead to unexpected results when converting text with locale-specific rules.
-    * While a fallback to `toLowerCase` and `toUpperCase` is implemented, this fallback might not provide the desired locale-specific behavior, potentially resulting in incorrect case conversions for certain languages.
-    * When using locale parameters, it is possible that some environments do not contain the locale data, causing the function to fail.
-
-* **Slugification Limitations with Complex File Names:**
-    * The `slugify` function attempts to preserve file extensions but might not handle all edge cases correctly. For instance, file names with multiple dots or unusual extension patterns could lead to unintended slugification outcomes.
-    * The function's reliance on regular expressions for character removal and replacement might not cover all possible non-alphanumeric characters, potentially leaving some unwanted characters in the slugified output.
-
 * **GUID Generation Predictability:**
     * The `generateGuid` function uses `Math.random()` for GUID generation, which is not cryptographically secure. While suitable for most general-purpose use cases, it should not be used for applications requiring high levels of security or uniqueness.
     * While the GUID generated is very unlikely to be the same, there is still a very small risk of collision.
@@ -96,9 +87,13 @@ If you encounter any of these or other issues, please report them on the [GitHub
 
 ## Release Notes
 
+### 0.0.17
+
+Improved decoding across all encoders, added input validation.
+
 ### 0.0.16
 
-Translated Command Palette category
+Translated Command Palette category.
 
 ### 0.0.15
 

@@ -2,9 +2,13 @@
 
 All notable changes to the "Playful Sparkle: Dev Toolbox" extension will be documented in this file.
 
+## [0.0.17] - 2025-10-30
+
+Improved decoding across all encoders, added input validation.
+
 ## [0.0.16] - 2025-10-29
 
-Translated Command Palette category
+Translated Command Palette category.
 
 ## [0.0.15] - 2025-10-28
 
