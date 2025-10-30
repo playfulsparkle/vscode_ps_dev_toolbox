@@ -40,7 +40,7 @@ Seamlessly integrate these essential features into your coding environment to si
     * **Uppercase.** All characters uppercase without separators. Example: `MYVARIABLENAME`.
   * **Locale aware case conversion.** Provides local aware functions that use locale specific case conversion via `toLocaleLowerCase` and `toLocaleUpperCase`. Includes a fallback to standard `toLowerCase` and `toUpperCase` to ensure consistent behavior across different environments. Allows optional locale parameters to handle language specific case conversion rules.
 * **Utilities**
-  * **Slugify text** (make text URL safe). Offers a `slugify` function that converts strings into URL friendly slugs, removes diacritics, special characters, and replaces spaces with hyphens. Attempts to preserve file extensions during slugification, intelligently differentiating between file extensions and other dot separated text.
+  * **Slugify text (make text URL safe).** Converts text into URL friendly slugs, removes diacritics, special characters, and replaces spaces with hyphens. Attempts to preserve file extensions during slugification, intelligently differentiating between file extensions and other dot separated text.
   * **GUID generation.** Generates Globally Unique Identifiers (GUIDs) with the following formatting options:
     * _Raw format:_ `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx` (example: `a1b2c3d4-e5f6-7890-9abc-c1d2e3f4a5b6`).
     * _Registry format:_ `{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}` (example: `{a1b2c3d4-e5f6-7890-9abc-c1d2e3f4a5b6}`).
@@ -51,16 +51,16 @@ Seamlessly integrate these essential features into your coding environment to si
     * When false, only removes consecutive empty lines, keeping single empty lines intact.
     * Considers lines with only whitespace (spaces, tabs) as empty when true.
     * Only removes completely empty lines when false.
-  * Remove non printable characters. Removes characters that are not typically intended for printing or display.
-  * **Remove leading and trailing whitespace.** Trims whitespace (spaces, tabs, newlines) from the beginning and end of strings.
+  * **Remove non printable characters.** Removes characters that are not typically intended for printing or display.
+  * **Remove leading and trailing whitespace.** Trims whitespace (spaces, tabs, newlines) from the beginning and end of text.
 * **Encoding and conversions**
-  * **Base64 encoding/decoding.** Implements `base64Encode` and `base64Decode` functions for seamless Base64 encoding and decoding of strings.
-  * **URL encoding/decoding.** Provides `urlEncode` and `urlDecode` functions for encoding and decoding strings for use in URLs.
+  * **Base64 encoding/decoding.** Implements `base64Encode` and `base64Decode` functions for seamless Base64 encoding and decoding of text.
+  * **URL encoding/decoding.** Provides `urlEncode` and `urlDecode` functions for encoding and decoding text for use in URLs.
   * **Named HTML entities.** Convert characters to named entities and back. Format: `&name;`. Examples: `é` to `&eacute;`, `<` to `&lt;`, `"` to `&quot;`.
   * **HTML hexadecimal character reference**. Use hex numeric entities for any code point. Format: `&#xXXXX;`, `&#xXXXXXX;`. Examples: `é` to `&#x00E9;`, `🔥` to `&#x1F525;`.
   * **HTML decimal character reference.** Use decimal numeric entities for any code point. Format: `&#XXX;`, `&#XXXXXX;`. Examples: `é` to `&#233;`, `🔥` to `&#128293;`.
-  * **JavaScript UTF-16 escape sequences.** Encode as UTF 16 units for JS strings, supports surrogate pairs. Format: `\XXXX`, `\XXXXXX` (pair shown as two `\XXXX`). Examples: `é` to `\u00E9`, `🔥` to `\uD83D\uDD25`.
-  * **CSS Unicode escape sequences.** Encode for CSS strings and identifiers, allows optional trailing space. Format: `\XXXX`, `\XXXXXX`. Examples: `é` to `\00E9`, `🔥` to `\1F525`.
+  * **JavaScript UTF-16 escape sequences.** Encode as UTF 16 units for JS text, supports surrogate pairs. Format: `\XXXX`, `\XXXXXX` (pair shown as two `\XXXX`). Examples: `é` to `\u00E9`, `🔥` to `\uD83D\uDD25`.
+  * **CSS Unicode escape sequences.** Encode for CSS text and identifiers, allows optional trailing space. Format: `\XXXX`, `\XXXXXX`. Examples: `é` to `\00E9`, `🔥` to `\1F525`.
   * **Unicode code point notation.** Represent characters as code points for docs and debugging. Format: `U+XXXX`, `U+XXXXX`. Examples: `é` to `U+00E9`, `🔥` to `U+1F525`.
   * **Unicode code point escape sequence.** Encode code points for modern JS. Format: `\u{XX}`, `\u{XXXXX}`. Examples: `é` to `\u{00E9}`, `🔥` to `\u{1F525}`.
   * **PCRE Unicode hexadecimal escapes.** Encode for PCRE compatible regex engines. Format: `\x{XX}`, `\x{XXXXX}`. Examples: `é` to `\x{00E9}`, `🔥` to `\x{1F525}`.
