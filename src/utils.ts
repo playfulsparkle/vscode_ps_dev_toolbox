@@ -1043,43 +1043,24 @@ export function decodeJavaScriptUTF16EscapeSequence(text: string): string {
         return "";
     }
 
-    // Pattern matches both \Uxxxxxxxx and \uxxxx formats, case insensitive for hex digits
     return text.replace(/\\U([0-9a-fA-F]{8})|\\u([0-9a-fA-F]{4})/g, (match, u8, u4) => {
-        if (u8) {
-            try {
-                const codePoint = parseInt(u8, 16);
-
-                // Validate Unicode range (0 to 0x10FFFF)
-                if (codePoint > 0x10FFFF) {
-                    return match;
-                }
-
-                // Reject surrogate code points for \U format (not valid as standalone)
-                if (codePoint >= 0xD800 && codePoint <= 0xDFFF) {
-                    return match;
-                }
-
-                return String.fromCodePoint(codePoint);
-            } catch (_) { }
-        } else if (u4) {
-            try {
-                const codePoint = parseInt(u4, 16);
-
-                // Validate Unicode range (0 to 0x10FFFF)
-                if (codePoint > 0x10FFFF) {
-                    return match;
-                }
-
-                // Reject surrogate code points for \U format (not valid as standalone)
-                if (codePoint >= 0xD800 && codePoint <= 0xDFFF) {
-                    return match;
-                }
-
-                return String.fromCharCode(codePoint);
-            } catch (_) { }
+        try {
+            const codePoint = parseInt(u8 || u4, 16);
+            
+            // Common validation
+            if (codePoint > 0x10FFFF) {
+                return match;
+            }
+            
+            // Only reject isolated surrogates for \U format
+            if (u8 && codePoint >= 0xD800 && codePoint <= 0xDFFF) {
+                return match;
+            }
+            
+            return String.fromCodePoint(codePoint);
+        } catch (error) {
+            return match;
         }
-
-        return match;
     });
 }
 
