@@ -12,43 +12,59 @@ Seamlessly integrate these essential features into your coding environment to si
 
 ## Features
 
-* **Text Case Conversion Commands:** Easily convert selected text into various common programming case formats:
-  * **Camel case** - lowercase first word, uppercase subsequent words (e.g., `myVariableName`)
-  * **Pascal case** - each word starts with an uppercase letter (e.g., `MyClassName`)
-  * **Snake case** - words separated by underscores, all lowercase (e.g., `my_variable_name`)
-  * **Screaming snake case** - words separated by underscores, all uppercase (e.g., `MY_CONSTANT_NAME`)
-  * **Kebab case** - words separated by hyphens, all lowercase (e.g., `my-variable-name`)
-  * **Train case** - words separated by hyphens, all uppercase (e.g., `MY-VARIABLE-NAME`)
-  * **Flat case** - all words joined without separators, all lowercase (e.g., `myvariablename`)
-  * **Uppercase** - all characters uppercase without separators (e.g., `MYVARIABLENAME`)
-* **Safe Locale-Aware Case Conversion:** Provides `safeToLowerCase` and `safeToUppercase` functions that attempt to use locale-specific case conversion via `toLocaleLowerCase` and `toLocaleUpperCase`. Includes a robust fallback to standard `toLowerCase` and `toUpperCase` to ensure consistent behavior across different environments. Allows for optional locale parameters to handle language-specific case conversion rules.
-* **Intelligent Slugification:** Offers a `slugify` function that converts strings into URL-friendly slugs; removes diacritics, special characters, and replaces spaces with hyphens. Attempts to preserve file extensions during slugification, intelligently differentiating between file extensions and other dot-separated text.
-![URL Slugify](img/generate-url-slug.gif "URL Slugify")
-* **Base64 Encoding/Decoding:** Implements `base64Encode` and `base64Decode` functions for seamless Base64 encoding and decoding of strings.
-* **URL Encoding/Decoding:** Provides `urlEncode` and `urlDecode` functions for encoding and decoding strings for use in URLs.
-* **GUID Generation:** Generates Globally Unique Identifiers (GUIDs) with the following formatting options:
-    * **Raw format:** `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx` (e.g., `a1b2c3d4-e5f6-7890-9abc-c1d2e3f4a5b6`)
-    * **Registry format:** `{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}` (e.g., `{a1b2c3d4-e5f6-7890-9abc-c1d2e3f4a5b6}`)
-    * **Square brackets format:** `[Guid("xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx")]` (e.g., `[Guid("a1b2c3d4-e5f6-7890-9abc-c1d2e3f4a5b6")]`)
-    * **Less than sign format:** `<Guid("xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx")>` (e.g., `<Guid("a1b2c3d4-e5f6-7890-9abc-c1d2e3f4a5b6")>`)
-![GUID Generation](img/guid.gif "GUID Generation")
-* **Remove Empty Lines:** Provides functionality to remove empty lines from text with the following options:
+### Text case conversion
+
+![Text case conversion](img/text-case.gif "Text case conversion")
+
+### Slugify text (make text URL safe)
+
+![Slugify text (make text URL safe)](img/generate-url-slug.gif "Slugify text (make text URL safe)")
+
+### GUID generation
+
+![GUID generation](img/guid.gif "GUID generation")
+
+### Encoding and conversions
+
+![Encoding and conversions](img/encode.gif "Encoding and conversions")
+
+* **Text formatting**
+  * Text case conversion commands. Easily convert selected text into various common programming case formats:
+    * **Camel case.** Lowercase first word, uppercase subsequent words. Example: `myVariableName`.
+    * **Pascal case.** Each word starts with an uppercase letter. Example: `MyClassName`.
+    * **Snake case.** Words separated by underscores, all lowercase. Example: `my_variable_name`.
+    * **Screaming snake case.** Words separated by underscores, all uppercase. Example: `MY_CONSTANT_NAME`.
+    * **Kebab case.** Words separated by hyphens, all lowercase. Example: `my-variable-name`.
+    * **Train case.** Words separated by hyphens, all uppercase. Example: `MY-VARIABLE-NAME`.
+    * **Flat case.** All words joined without separators, all lowercase. Example: `myvariablename`.
+    * **Uppercase.** All characters uppercase without separators. Example: `MYVARIABLENAME`.
+  * **Locale aware case conversion.** Provides local aware functions that use locale specific case conversion via `toLocaleLowerCase` and `toLocaleUpperCase`. Includes a fallback to standard `toLowerCase` and `toUpperCase` to ensure consistent behavior across different environments. Allows optional locale parameters to handle language specific case conversion rules.
+* **Utilities**
+  * **Slugify text** (make text URL safe). Offers a `slugify` function that converts strings into URL friendly slugs, removes diacritics, special characters, and replaces spaces with hyphens. Attempts to preserve file extensions during slugification, intelligently differentiating between file extensions and other dot separated text.
+  * **GUID generation.** Generates Globally Unique Identifiers (GUIDs) with the following formatting options:
+    * _Raw format:_ `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx` (example: `a1b2c3d4-e5f6-7890-9abc-c1d2e3f4a5b6`).
+    * _Registry format:_ `{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}` (example: `{a1b2c3d4-e5f6-7890-9abc-c1d2e3f4a5b6}`).
+    * _Square brackets format:_ `[Guid("xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx")]` (example: `[Guid("a1b2c3d4-e5f6-7890-9abc-c1d2e3f4a5b6")]`).
+    * _Less than sign format:_ `<Guid("xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx")>` (example: `<Guid("a1b2c3d4-e5f6-7890-9abc-c1d2e3f4a5b6")>`).
+  * **Remove empty lines.** Provides functionality to remove empty lines from text with the following options:
     * When true, removes all empty lines.
     * When false, only removes consecutive empty lines, keeping single empty lines intact.
     * Considers lines with only whitespace (spaces, tabs) as empty when true.
     * Only removes completely empty lines when false.
-* **Remove Non-Printable Characters:** Removes characters that are not typically intended for printing or display.
-* **Remove Leading and Trailing Whitespace:** Trims whitespace (spaces, tabs, newlines) from the beginning and end of strings.
-* **Named HTML entities:** Convert characters to named entities and back. Format: `&name;`. Examples: `é` to `&eacute;`, `<` to `&lt;`, `"` to `&quot;`.
-* **HTML hexadecimal character reference:** Use hex numeric entities for any code point. Format: `&#xXXXX;`, `&#xXXXXXX;`. Examples: `é` to `&#x00E9;`, `🔥` to `&#x1F525;`.
-* **HTML decimal character reference:** Use decimal numeric entities for any code point. Format: `&#XXX;`, `&#XXXXXX;`. Examples: `é` to `&#233;`, `🔥` to `&#128293;`.
-* **JavaScript UTF-16 escape sequences:** Encode as UTF-16 units for JS strings, supports surrogate pairs. Format: `\XXXX`, `\XXXXXX` (pair shown as two `\XXXX`). Examples: `é` to `\u00E9`, `🔥` to `\uD83D\uDD25`.
-* **CSS Unicode escape sequences:** Encode for CSS strings and identifiers, allows optional trailing space. Format: `\XXXX`, `\XXXXXX`. Examples: `é` to `\00E9`, `🔥` to `\1F525`.
-* **Unicode code point notation:** Represent characters as code points for docs and debugging. Format: `U+XXXX`, `U+XXXXX`. Examples: `é` to `U+00E9`, `🔥` to `U+1F525`.
-* **Unicode code point escape sequence (ES2015):** Encode code points for modern JS. Format: `\u{XX}`, `\u{XXXXX}`. Examples: `é` to `\u{00E9}`, `🔥` to `\u{1F525}`.
-* **PCRE Unicode hexadecimal escapes:** Encode for PCRE-compatible regex engines. Format: `\x{XX}`, `\x{XXXXX}`. Examples: `é` to `\x{00E9}`, `🔥` to `\x{1F525}`.
-* **Hex code points:** Show code points with `0x` prefix, useful for debugging. Format: `0xXX`, `0xXXXXX`. Examples: `é` to `0x00E9`, `🔥` to `0x1F525`.
-![Various encoding functions](img/encode.gif "Various encoding functions")
+  * Remove non printable characters. Removes characters that are not typically intended for printing or display.
+  * **Remove leading and trailing whitespace.** Trims whitespace (spaces, tabs, newlines) from the beginning and end of strings.
+* **Encoding and conversions**
+  * **Base64 encoding/decoding.** Implements `base64Encode` and `base64Decode` functions for seamless Base64 encoding and decoding of strings.
+  * **URL encoding/decoding.** Provides `urlEncode` and `urlDecode` functions for encoding and decoding strings for use in URLs.
+  * **Named HTML entities.** Convert characters to named entities and back. Format: `&name;`. Examples: `é` to `&eacute;`, `<` to `&lt;`, `"` to `&quot;`.
+  * **HTML hexadecimal character reference**. Use hex numeric entities for any code point. Format: `&#xXXXX;`, `&#xXXXXXX;`. Examples: `é` to `&#x00E9;`, `🔥` to `&#x1F525;`.
+  * **HTML decimal character reference.** Use decimal numeric entities for any code point. Format: `&#XXX;`, `&#XXXXXX;`. Examples: `é` to `&#233;`, `🔥` to `&#128293;`.
+  * **JavaScript UTF-16 escape sequences.** Encode as UTF 16 units for JS strings, supports surrogate pairs. Format: `\XXXX`, `\XXXXXX` (pair shown as two `\XXXX`). Examples: `é` to `\u00E9`, `🔥` to `\uD83D\uDD25`.
+  * **CSS Unicode escape sequences.** Encode for CSS strings and identifiers, allows optional trailing space. Format: `\XXXX`, `\XXXXXX`. Examples: `é` to `\00E9`, `🔥` to `\1F525`.
+  * **Unicode code point notation.** Represent characters as code points for docs and debugging. Format: `U+XXXX`, `U+XXXXX`. Examples: `é` to `U+00E9`, `🔥` to `U+1F525`.
+  * **Unicode code point escape sequence.** Encode code points for modern JS. Format: `\u{XX}`, `\u{XXXXX}`. Examples: `é` to `\u{00E9}`, `🔥` to `\u{1F525}`.
+  * **PCRE Unicode hexadecimal escapes.** Encode for PCRE compatible regex engines. Format: `\x{XX}`, `\x{XXXXX}`. Examples: `é` to `\x{00E9}`, `🔥` to `\x{1F525}`.
+  * **Hex code points.** Show code points with `0x` prefix, useful for debugging. Format: `0xXX`, `0xXXXXX`. Examples: `é` to `0x00E9`, `🔥` to `0x1F525`.
 * **Multi-Language Support**: The extension's user interface and informational messages are available in English (en), Magyar (hu), Slovenčina (sk), Čeština (cs), Deutsch (de), Français (fr), Polski (pl), Български (bg), Español (es), Italiano (it), 日本語 (ja), 한국어 (ko), Português do Brasil (pt-br), Русский (ru), Türkçe (tr), 简体中文 (zh-cn), 繁體中文 (zh-tw) languages.
 
 ---
