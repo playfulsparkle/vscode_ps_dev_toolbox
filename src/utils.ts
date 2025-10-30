@@ -1271,39 +1271,29 @@ export function decodeUnicodeCodePointNotation(text: string): string {
         return "";
     }
 
-    return text.replace(/(U\+[0-9A-Fa-f]{4,6}(?:\s+U\+[0-9A-Fa-f]{4,6})*)/g, match => {
-        // Split code point sequence into individual tokens
-        const tokens = match.split(/\s+/);
+    if (text.length === 0) {
+        return "";
+    }
 
-        const characters = tokens.map(token => {
-            // Validate token format
-            if (!/^U\+[0-9A-Fa-f]{4,6}$/.test(token)) {
-                throw new Error(`Invalid Unicode token: ${token}`);
-            }
+    // Match individual U+XXXX tokens
+    return text.replace(/U\+([0-9A-Fa-f]{4,6})/g, (match, hex) => {
+        const codePoint = parseInt(hex, 16);
 
-            const hex = token.slice(2);
+        // Comprehensive validation
+        if (isNaN(codePoint) ||
+            codePoint < 1 ||  // Reject NULL character (0)
+            codePoint > 0x10FFFF ||
+            (codePoint >= 0xD800 && codePoint <= 0xDFFF) || // Surrogates
+            codePoint === 0xFFFE ||
+            codePoint === 0xFFFF) {
+            return String.fromCodePoint(0xFFFD); // �
+        }
 
-            const codePoint = parseInt(hex, 16);
-
-            // Validate numerical range
-            if (isNaN(codePoint) || codePoint < 0x0000 || codePoint > 0x10FFFF) {
-                throw new Error(`Invalid code point: ${token}`);
-            }
-
-            // Handle surrogate pairs
-            if (codePoint >= 0xD800 && codePoint <= 0xDFFF) {
-                return String.fromCharCode(codePoint);
-            }
-
-            // Convert valid code points
-            try {
-                return String.fromCodePoint(codePoint);
-            } catch (e) {
-                throw new Error(`Invalid code point: ${token}`);
-            }
-        });
-
-        return characters.join("");
+        try {
+            return String.fromCodePoint(codePoint);
+        } catch {
+            return String.fromCodePoint(0xFFFD); // �
+        }
     });
 }
 
