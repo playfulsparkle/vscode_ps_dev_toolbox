@@ -816,23 +816,23 @@ export function decodeHTMLHexadecimalCharacterReference(text: string): string {
         return "";
     }
 
-    return text.replace(/&#x([0-9a-fA-F]{1,8});|&#(\d+);/g, (match, hex, decimal) => {
+    return text.replace(/&#x([0-9a-fA-F]{1,8});|&#([0-9]{1,7});/g, (match, hex, decimal) => {
         const codePoint = hex ? parseInt(hex, 16) : parseInt(decimal, 10);
         
-        // Common validation for both hex and decimal
+         // Common validation for both hex and decimal
         if (isNaN(codePoint) ||
-            codePoint < 0 ||
+            codePoint < 1 ||  // Reject NULL character (0)
             codePoint > 0x10FFFF ||
             (codePoint >= 0xD800 && codePoint <= 0xDFFF) || // Surrogates
             codePoint === 0xFFFE ||
             codePoint === 0xFFFF) {
-            return match;
+            return String.fromCodePoint(0xFFFD); // �
         }
 
         try {
             return String.fromCodePoint(codePoint);
         } catch {
-            return match;
+            return String.fromCodePoint(0xFFFD); // �
         }
     });
 }
@@ -941,12 +941,21 @@ export function decodeHtmlDecimalEntities(text: string): string {
 
     // Pattern to match decimal entities (&#[0-9]+;)
     return text.replace(/&#([0-9]{1,7});/g, (match, decimal) => {
-        try {
-            const codePoint = parseInt(decimal, 10);
+        const codePoint = parseInt(decimal, 10);
+        
+         // Common validation for both hex and decimal
+        if (isNaN(codePoint) ||
+            codePoint < 1 ||  // Reject NULL character (0)
+            codePoint > 0x10FFFF ||
+            (codePoint >= 0xD800 && codePoint <= 0xDFFF) || // Surrogates
+            codePoint === 0xFFFE ||
+            codePoint === 0xFFFF) {
+            return String.fromCodePoint(0xFFFD); // �
+        }
 
+        try {
             return String.fromCodePoint(codePoint);
-        } catch (error) {
-            // If conversion fails (invalid code point), return the original match
+        } catch {
             return match;
         }
     });
