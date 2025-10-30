@@ -8,7 +8,19 @@ declare global {
 }
 
 const re = {
-    base64: /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/
+    fileExtension: /(\.[a-zA-Z0-9]{2,11})$/,
+    base64: /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/,
+    locale: /^[a-zA-Z]{2,3}(-[a-zA-Z0-9]+)*$/,
+    hexNumericEntity: /^&#x[0-9A-F]{4,};/,            // &#xHHHH;
+    namedEntity: /^&([A-Za-z][A-Za-z0-9]{1,31});/,    // &name;
+    decimalEntity: /^&#[0-9]+;/,                      // &#DDDD;
+    unicode4HexDigit: /^\\u[0-9A-Fa-f]{4}/,           // \uXXXX
+    unicode8HexDigit: /^\\U[0-9A-Fa-f]{8}/,           // \UXXXXXXXX
+    backslash6HexDigit: /^\\[0-9A-Fa-f]{6}\s?/,       // \XXXXXX
+    uPlusCodePoint: /^U\+[0-9A-Fa-f]{4,6}/,           // U+XXXX, U+XXXXX or U+XXXXXX
+    unicodeBracedCodePoint: /^\\u\{[0-9A-Fa-f]+\}/,   // \u{XXX}
+    unicodeBracedHexadecimal: /^\\x\{[0-9A-Fa-f]+\}/, // \x{XXX}
+    hexCodePoint: /^0x[0-9A-Fa-f]+/,                  // 0xXXX
 };
 
 if (!String.prototype.safeToLowerCase) {
@@ -92,9 +104,7 @@ export function filterUserLocaleInput(defaultLocale: string, userLocaleInput: st
                 return intlLocale.language.length >= 2;
             } catch {
                 // If Intl.Locale fails, fall back to basic pattern check
-                const basicPattern = /^[a-zA-Z]{2,3}(-[a-zA-Z0-9]+)*$/;
-
-                return basicPattern.test(locale);
+                return re.locale.test(locale);
             }
         });
 
@@ -266,7 +276,7 @@ function slugifySingleLine(text: string, separator: string): string {
 
     // Check if what follows the dot looks like a valid file extension
     const possibleExt = text.substring(lastDotIndex);
-    if (!possibleExt.match(/(\.[a-zA-Z0-9]{2,11})$/)) {
+    if (!possibleExt.match(re.fileExtension)) {
         return slugifyHelper(text, separator);
     }
 
@@ -513,18 +523,6 @@ export function generateGuid(): string {
 
 const validEntityNames = new Set(Object.values(namedentities.codePointToEntityName));
 
-// Regex patterns for different entity types
-const HEX_ENTITY_REGEX = /^&#x[0-9A-F]{4,};/;             // &#xHHHH;
-const NAMED_ENTITY_REGEX = /^&([A-Za-z][A-Za-z0-9]{1,31});/; // &name;
-const DECIMAL_ENTITY_REGEX = /^&#[0-9]+;/;                   // &#DDDD;
-const UNICODE_4_REGEX = /^\\u[0-9A-Fa-f]{4}/;             // \uXXXX
-const UNICODE_8_REGEX = /^\\U[0-9A-Fa-f]{8}/;             // \UXXXXXXXX
-const BACKSLASH_HEX_REGEX = /^\\[0-9A-Fa-f]{6}\s?/;             // \XXXXXX
-const UPLUS_REGEX = /^U\+[0-9A-Fa-f]{4,6}/;            // U+XXXX, U+XXXXX or U+XXXXXX
-const UNICODE_BRACE_REGEX = /^\\u\{[0-9A-Fa-f]+\}/;       // \u{XXX}
-const HEX_BRACE_REGEX = /^\\x\{[0-9A-Fa-f]+\}/;           // \x{XXX}
-const HEX_0X_REGEX = /^0x[0-9A-Fa-f]+/;                // 0xXXX
-
 /**
  * Converts a string to HTML/XML entity representation using named HTML entities.
  * Handles common named HTML entities.
@@ -536,13 +534,13 @@ function isHTMLNamedCharacterEntity(str: string, idx: number): number {
     const s = str.slice(idx);
 
     // Hex numeric form: &#xHHHH;
-    let m = HEX_ENTITY_REGEX.exec(s);
+    let m = re.hexNumericEntity.exec(s);
     if (m) {
         return m[0].length;
     }
 
     // Named form: &name;
-    m = NAMED_ENTITY_REGEX.exec(s);
+    m = re.namedEntity.exec(s);
     if (m && validEntityNames.has(m[1])) {
         return m[0].length;
     }
@@ -726,7 +724,7 @@ function isHTMLHexadecimalCharacterReference(str: string, idx: number): number {
     const s = str.slice(idx);
 
     // Hex numeric form: &#xHHHH;
-    let m = HEX_ENTITY_REGEX.exec(s);
+    let m = re.hexNumericEntity.exec(s);
     if (m) {
         return m[0].length;
     }
@@ -844,7 +842,7 @@ function isHtmlDecimalEntity(str: string, idx: number): number {
     const s = str.slice(idx);
 
     // Decimal numeric form: &#1234;
-    let m = DECIMAL_ENTITY_REGEX.exec(s);
+    let m = re.decimalEntity.exec(s);
     if (m) {
         return m[0].length;
     }
@@ -935,7 +933,7 @@ export function decodeHtmlDecimalEntities(text: string): string {
     }
 
     // Pattern to match decimal entities (&#[0-9]+;)
-    return text.replace(/&#([0-9]+);/g, (match, decimal) => {
+    return text.replace(/&#([0-9]{1,7});/g, (match, decimal) => {
         try {
             const codePoint = parseInt(decimal, 10);
 
@@ -964,13 +962,13 @@ function isJavaScriptUTF16EscapeSequence(str: string, idx: number): number {
     const s = str.slice(idx);
 
     // \uXXXX (4 hex digits)
-    let m = UNICODE_4_REGEX.exec(s);
+    let m = re.unicode4HexDigit.exec(s);
     if (m) {
         return m[0].length;
     }
 
     // \UXXXXXXXX (8 hex digits)
-    m = UNICODE_8_REGEX.exec(s);
+    m = re.unicode8HexDigit.exec(s);
     if (m) {
         return m[0].length;
     }
@@ -1048,21 +1046,40 @@ export function decodeJavaScriptUTF16EscapeSequence(text: string): string {
     // Pattern matches both \Uxxxxxxxx and \uxxxx formats, case insensitive for hex digits
     return text.replace(/\\U([0-9a-fA-F]{8})|\\u([0-9a-fA-F]{4})/g, (match, u8, u4) => {
         if (u8) {
-            const codePoint = parseInt(u8, 16);
-            // Check if it's a valid Unicode code point
-            if (codePoint >= 0xD800 && codePoint <= 0xDFFF) {
-                return match; // Return the original escape sequence
-            }
-            return String.fromCodePoint(codePoint);
+            try {
+                const codePoint = parseInt(u8, 16);
+
+                // Validate Unicode range (0 to 0x10FFFF)
+                if (codePoint > 0x10FFFF) {
+                    return match;
+                }
+
+                // Reject surrogate code points for \U format (not valid as standalone)
+                if (codePoint >= 0xD800 && codePoint <= 0xDFFF) {
+                    return match;
+                }
+
+                return String.fromCodePoint(codePoint);
+            } catch (_) { }
         } else if (u4) {
-            const codePoint = parseInt(u4, 16);
-            // Check if it's a lone surrogate (0xD800-0xDFFF)
-            if (codePoint >= 0xD800 && codePoint <= 0xDFFF) {
-                return match; // Return the original escape sequence
-            }
-            return String.fromCharCode(codePoint);
+            try {
+                const codePoint = parseInt(u4, 16);
+
+                // Validate Unicode range (0 to 0x10FFFF)
+                if (codePoint > 0x10FFFF) {
+                    return match;
+                }
+
+                // Reject surrogate code points for \U format (not valid as standalone)
+                if (codePoint >= 0xD800 && codePoint <= 0xDFFF) {
+                    return match;
+                }
+
+                return String.fromCharCode(codePoint);
+            } catch (_) { }
         }
-        return "";
+
+        return match;
     });
 }
 
@@ -1081,7 +1098,7 @@ function isCssUnicodeEscape(str: string, idx: number): number {
     const s = str.slice(idx);
 
     // \XXXXXX (backslash + 6 hex digits)
-    let m = BACKSLASH_HEX_REGEX.exec(s);
+    let m = re.backslash6HexDigit.exec(s);
     if (m) {
         return m[0].length;
     }
@@ -1185,7 +1202,7 @@ function isUnicodeCodePointNotation(str: string, idx: number): number {
     const s = str.slice(idx);
 
     // U+XXXX, U+XXXXX or U+XXXXXX
-    let m = UPLUS_REGEX.exec(s);
+    let m = re.uPlusCodePoint.exec(s);
     if (m) {
         return m[0].length;
     }
@@ -1304,7 +1321,7 @@ function isUnicodeCodePointEscapeSequence(str: string, idx: number): number {
     const s = str.slice(idx);
 
     // \u{XXX} (braced, variable length)
-    let m = UNICODE_BRACE_REGEX.exec(s);
+    let m = re.unicodeBracedCodePoint.exec(s);
     if (m) {
         return m[0].length;
     }
@@ -1396,7 +1413,7 @@ function isPCREUnicodeHexadecimalEcape(str: string, idx: number): number {
     const s = str.slice(idx);
 
     // \x{XXX} (braced, variable length)
-    let m = HEX_BRACE_REGEX.exec(s);
+    let m = re.unicodeBracedHexadecimal.exec(s);
     if (m) {
         return m[0].length;
     }
@@ -1487,7 +1504,7 @@ function isHexCodePoint(str: string, idx: number): number {
     const s = str.slice(idx);
 
     // 0xXXX (hex literal)
-    let m = HEX_0X_REGEX.exec(s);
+    let m = re.hexCodePoint.exec(s);
     if (m) {
         return m[0].length;
     }
