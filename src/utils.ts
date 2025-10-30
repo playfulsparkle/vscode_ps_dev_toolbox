@@ -816,17 +816,24 @@ export function decodeHTMLHexadecimalCharacterReference(text: string): string {
         return "";
     }
 
-    // Pattern to match both hex (&#x[0-9a-fA-F]+;) entities
-    return text.replace(/&#x([0-9a-fA-F]+);/g, (match, hex, decimal) => {
-        if (hex !== undefined) {
-            // Convert hex entity to character
-            return String.fromCodePoint(parseInt(hex, 16));
-        } else if (decimal !== undefined) {
-            // Convert decimal entity to character
-            return String.fromCodePoint(parseInt(decimal, 10));
+    return text.replace(/&#x([0-9a-fA-F]{1,8});|&#(\d+);/g, (match, hex, decimal) => {
+        const codePoint = hex ? parseInt(hex, 16) : parseInt(decimal, 10);
+        
+        // Common validation for both hex and decimal
+        if (isNaN(codePoint) ||
+            codePoint < 0 ||
+            codePoint > 0x10FFFF ||
+            (codePoint >= 0xD800 && codePoint <= 0xDFFF) || // Surrogates
+            codePoint === 0xFFFE ||
+            codePoint === 0xFFFF) {
+            return match;
         }
 
-        return match; // This should never happen given the regex
+        try {
+            return String.fromCodePoint(codePoint);
+        } catch {
+            return match;
+        }
     });
 }
 
@@ -1046,19 +1053,19 @@ export function decodeJavaScriptUTF16EscapeSequence(text: string): string {
     return text.replace(/\\U([0-9a-fA-F]{8})|\\u([0-9a-fA-F]{4})/g, (match, u8, u4) => {
         try {
             const codePoint = parseInt(u8 || u4, 16);
-            
+
             // Common validation
             if (codePoint > 0x10FFFF) {
                 return match;
             }
-            
+
             // Only reject isolated surrogates for \U format
             if (u8 && codePoint >= 0xD800 && codePoint <= 0xDFFF) {
                 return match;
             }
-            
+
             return String.fromCodePoint(codePoint);
-        } catch (error) {
+        } catch (_) {
             return match;
         }
     });
