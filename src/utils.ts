@@ -643,73 +643,45 @@ export function decodeHTMLNamedCharacterEntity(text: string): string {
         return "";
     }
 
-    let result = "";
-
-    let i = 0;
-
-    while (i < text.length) {
-        if (text[i] === "&") {
-            const end = text.indexOf(";", i + 1);
-
-            if (end === -1) {
-                result += text[i];
-
-                i++;
-
-                continue;
-            }
-
-            const entity = text.slice(i, end + 1);
-
-            let codePoint: number | undefined;
-
-            // Check named entity
-            const nameMatch = entity.match(/^&([A-Za-z]+);$/);
-
-            if (nameMatch) {
-                const name = nameMatch[1];
-
-                codePoint = namedentities.entityNameToCodePoint[name];
-            } else {
-                // Check hex entity
-                const hexMatch = entity.match(/^&#x([0-9A-Fa-f]+);$/);
-
-                if (hexMatch) {
-                    codePoint = parseInt(hexMatch[1], 16);
-                } else {
-                    // Check decimal entity
-                    const decMatch = entity.match(/^&#(\d+);$/);
-
-                    if (decMatch) {
-                        codePoint = parseInt(decMatch[1], 10);
-                    }
-                }
-            }
-
-            if (codePoint !== undefined && !isNaN(codePoint)) {
-                try {
-                    result += String.fromCodePoint(codePoint);
-
-                    i = end + 1;
-
-                    continue;
-                } catch {
-                    // Invalid code point, fall through
-                }
-            }
-
-            // Append the original entity if it's invalid
-            result += entity;
-
-            i = end + 1;
-        } else {
-            result += text[i];
-
-            i++;
-        }
+    if (text.length === 0) {
+        return "";
     }
 
-    return result;
+    // Remove the decimal entity capture group from regex since you don't need it
+    return text.replace(/&([A-Za-z]{1,32});|&#x([0-9a-fA-F]{1,8});/g, (match, name, hex) => {
+        if (name) {
+            // Handle named entity
+            const codePoint = namedentities.entityNameToCodePoint[name];
+
+            if (codePoint) {
+                try {
+                    return String.fromCodePoint(codePoint);
+                } catch {
+                    return String.fromCodePoint(0xFFFD); // � if conversion fails
+                }
+            }
+        } else if (hex) {
+            // Handle numeric entity hex
+            const codePoint = parseInt(hex, 16);
+
+            if (isNaN(codePoint) ||
+                codePoint < 1 ||
+                codePoint > 0x10FFFF ||
+                (codePoint >= 0xD800 && codePoint <= 0xDFFF) || // Surrogates
+                codePoint === 0xFFFE ||
+                codePoint === 0xFFFF) {
+                return String.fromCodePoint(0xFFFD); // �
+            }
+
+            try {
+                return String.fromCodePoint(codePoint);
+            } catch {
+                return String.fromCodePoint(0xFFFD); // �
+            }
+        }
+
+        return match;
+    });
 }
 
 /**
@@ -816,24 +788,32 @@ export function decodeHTMLHexadecimalCharacterReference(text: string): string {
         return "";
     }
 
+    if (text.length === 0) {
+        return "";
+    }
+
     return text.replace(/&#x([0-9a-fA-F]{1,8});|&#([0-9]{1,7});/g, (match, hex, decimal) => {
-        const codePoint = hex ? parseInt(hex, 16) : parseInt(decimal, 10);
-        
-         // Common validation for both hex and decimal
-        if (isNaN(codePoint) ||
-            codePoint < 1 ||  // Reject NULL character (0)
-            codePoint > 0x10FFFF ||
-            (codePoint >= 0xD800 && codePoint <= 0xDFFF) || // Surrogates
-            codePoint === 0xFFFE ||
-            codePoint === 0xFFFF) {
-            return String.fromCodePoint(0xFFFD); // �
+        if (decimal || hex) {
+            const codePoint = hex ? parseInt(hex, 16) : parseInt(decimal, 10);
+
+            // Common validation for both hex and decimal
+            if (isNaN(codePoint) ||
+                codePoint < 1 ||  // Reject NULL character (0)
+                codePoint > 0x10FFFF ||
+                (codePoint >= 0xD800 && codePoint <= 0xDFFF) || // Surrogates
+                codePoint === 0xFFFE ||
+                codePoint === 0xFFFF) {
+                return String.fromCodePoint(0xFFFD); // �
+            }
+
+            try {
+                return String.fromCodePoint(codePoint);
+            } catch {
+                return String.fromCodePoint(0xFFFD); // �
+            }
         }
 
-        try {
-            return String.fromCodePoint(codePoint);
-        } catch {
-            return String.fromCodePoint(0xFFFD); // �
-        }
+        return match;
     });
 }
 
@@ -939,25 +919,33 @@ export function decodeHtmlDecimalEntities(text: string): string {
         return "";
     }
 
+    if (text.length === 0) {
+        return "";
+    }
+
     // Pattern to match decimal entities (&#[0-9]+;)
     return text.replace(/&#([0-9]{1,7});/g, (match, decimal) => {
-        const codePoint = parseInt(decimal, 10);
-        
-         // Common validation for both hex and decimal
-        if (isNaN(codePoint) ||
-            codePoint < 1 ||  // Reject NULL character (0)
-            codePoint > 0x10FFFF ||
-            (codePoint >= 0xD800 && codePoint <= 0xDFFF) || // Surrogates
-            codePoint === 0xFFFE ||
-            codePoint === 0xFFFF) {
-            return String.fromCodePoint(0xFFFD); // �
+        if (decimal) {
+            const codePoint = parseInt(decimal, 10);
+
+            // Common validation for both hex and decimal
+            if (isNaN(codePoint) ||
+                codePoint < 1 ||  // Reject NULL character (0)
+                codePoint > 0x10FFFF ||
+                (codePoint >= 0xD800 && codePoint <= 0xDFFF) || // Surrogates
+                codePoint === 0xFFFE ||
+                codePoint === 0xFFFF) {
+                return String.fromCodePoint(0xFFFD); // �
+            }
+
+            try {
+                return String.fromCodePoint(codePoint);
+            } catch {
+                return String.fromCodePoint(0xFFFD); // �
+            }
         }
 
-        try {
-            return String.fromCodePoint(codePoint);
-        } catch {
-            return match;
-        }
+        return match;
     });
 }
 
