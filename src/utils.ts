@@ -1484,13 +1484,27 @@ export function decodePCREUnicodeHexadecimalEcape(text: string): string {
         return "";
     }
 
-    return text.replace(/\\x\{([0-9A-Fa-f]+)\}/g, (_, hex) => {
+    if (text.length === 0) {
+        return "";
+    }
+
+    return text.replace(/\\x\{([0-9A-Fa-f]{1,6})\}/g, (match, hex) => {
         const codePoint = parseInt(hex, 16);
+
+        // Comprehensive validation
+        if (isNaN(codePoint) ||
+            codePoint < 1 ||  // Reject NULL character (0)
+            codePoint > 0x10FFFF ||
+            (codePoint >= 0xD800 && codePoint <= 0xDFFF) || // Surrogates
+            codePoint === 0xFFFE ||
+            codePoint === 0xFFFF) {
+            return String.fromCodePoint(0xFFFD); // �
+        }
 
         try {
             return String.fromCodePoint(codePoint);
-        } catch (e) {
-            return "";
+        } catch {
+            return String.fromCodePoint(0xFFFD); // �
         }
     });
 }
@@ -1576,13 +1590,27 @@ export function decodeHexCodePoints(text: string): string {
         return "";
     }
 
-    return text.replace(/0x([0-9A-Fa-f]+)\s*(?=0x|$)/g, (_, hex) => {
+    if (text.length === 0) {
+        return "";
+    }
+
+    return text.replace(/0x([0-9A-Fa-f]+)\s*(?=0x|$)/g, (match, hex) => {
         const codePoint = parseInt(hex, 16);
+
+        // Comprehensive validation
+        if (isNaN(codePoint) ||
+            codePoint < 1 ||
+            codePoint > 0x10FFFF ||
+            (codePoint >= 0xD800 && codePoint <= 0xDFFF) ||
+            codePoint === 0xFFFE ||
+            codePoint === 0xFFFF) {
+            return String.fromCodePoint(0xFFFD);
+        }
 
         try {
             return String.fromCodePoint(codePoint);
-        } catch (e) {
-            return "";
+        } catch {
+            return String.fromCodePoint(0xFFFD);
         }
     });
 }
