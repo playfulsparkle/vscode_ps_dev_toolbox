@@ -1158,17 +1158,32 @@ export function decodeCssUnicodeEscape(text: string): string {
         return "";
     }
 
-    // Pattern matches \XXXXXX, \XXXX formats, case insensitive for hex digits
-    return text.replace(/\\([0-9a-fA-F]{4,6}) ?/g, (match, hexCode) => {
-        if (hexCode) {
-            const codePoint = parseInt(hexCode, 16);
-            // Check if it's a valid Unicode code point
-            if (codePoint >= 0xD800 && codePoint <= 0xDFFF) {
-                return match; // Return the original escape sequence
-            }
-            return String.fromCodePoint(codePoint);
-        }
+    if (text.length === 0) {
         return "";
+    }
+
+    // Match CSS unicode escape with optional trailing space
+    return text.replace(/\\([0-9a-fA-F]{1,6})(?: |(?=[^0-9a-fA-F]|$))/g, (match, hexCode, space) => {
+        if (hexCode.length < 1 || hexCode.length > 6) {
+            return match;
+        }
+
+        const codePoint = parseInt(hexCode, 16);
+
+        if (isNaN(codePoint) ||
+            codePoint < 1 ||  // Reject NULL character (0)
+            codePoint > 0x10FFFF ||
+            (codePoint >= 0xD800 && codePoint <= 0xDFFF) || // Surrogates
+            codePoint === 0xFFFE ||
+            codePoint === 0xFFFF) {
+            return String.fromCodePoint(0xFFFD); // �
+        }
+
+        try {
+            return String.fromCodePoint(codePoint);
+        } catch {
+            return String.fromCodePoint(0xFFFD); // �
+        }
     });
 }
 
