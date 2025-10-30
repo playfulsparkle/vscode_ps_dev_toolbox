@@ -1051,19 +1051,19 @@ export function decodeJavaScriptUTF16EscapeSequence(text: string): string {
         try {
             const codePoint = parseInt(u8 || u4, 16);
 
-            // Common validation
-            if (codePoint > 0x10FFFF) {
-                return match;
-            }
-
-            // Only reject isolated surrogates for \U format
-            if (u8 && codePoint >= 0xD800 && codePoint <= 0xDFFF) {
-                return match;
+            // Comprehensive validation
+            if (isNaN(codePoint) ||
+                codePoint < 1 ||  // Reject NULL character (0)
+                codePoint > 0x10FFFF ||
+                (u8 && codePoint >= 0xD800 && codePoint <= 0xDFFF) || // Surrogates only for \U
+                codePoint === 0xFFFE ||
+                codePoint === 0xFFFF) {
+                return match; // Return original for invalid sequences
             }
 
             return String.fromCodePoint(codePoint);
         } catch (_) {
-            return match;
+            return match; // Return original on any error
         }
     });
 }
