@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
 import * as path from "path";
 import * as utils from "./utils";
-
+import * as sortUtils from "./sortUtils";
 
 /** Activates the extension
  * @param {vscode.ExtensionContext} context - The extension context
@@ -47,8 +47,81 @@ export function activate(context: vscode.ExtensionContext) {
 		EncodeExtendedHexEscape = "ps-dev-toolbox.encodePCREUnicodeHexadecimalEcape",
 		DecodeExtendedHexEscape = "ps-dev-toolbox.decodePCREUnicodeHexadecimalEcape",
 		EncodeHexCodePoints = "ps-dev-toolbox.encodeHexCodePoints",
-		DecodeHexCodePoints = "ps-dev-toolbox.decodeHexCodePoints"
+		DecodeHexCodePoints = "ps-dev-toolbox.decodeHexCodePoints",
+		SortLinesAscending = "ps-dev-toolbox.sortLinesAscending",
+		SortLinesDescending = "ps-dev-toolbox.sortLinesDescending"
 	}
+
+	const sortLinesCommand = async (descending: boolean) => {
+		const editor = vscode.window.activeTextEditor;
+
+		if (!editor) {
+			return;
+		}
+
+		const document = editor.document;
+		const selections = editor.selections;
+
+		const defaultLocale = vscode.env.language || "en";
+
+		// Get configuration
+		const config = vscode.workspace.getConfiguration("ps-dev-toolbox.sorting");
+
+		const useNumericSorting = config.get<boolean>("useNumericSorting", true);
+		const sortIgnoreCase = config.get<boolean>("sortIgnoreCase", true);
+		const sortLocale = config.get<string>("sortLocale", defaultLocale);
+
+		// Determine locale(s) to use
+		let locales: string | string[];
+
+		if (sortLocale && sortLocale.trim().length > 0) {
+			try {
+				locales = utils.filterUserLocaleInput(defaultLocale, sortLocale);
+			} catch (error) {
+				locales = defaultLocale;
+			}
+		} else {
+			locales = defaultLocale;
+		}
+
+		const sortOptions = {
+			descending: descending,
+			locales: locales,
+			ignoreCase: sortIgnoreCase,
+			numeric: useNumericSorting
+		};
+
+		// If there are no selections or only empty selections, sort the entire document
+		if (!selections.length || selections.every(s => s.isEmpty)) {
+			const entireDocumentRange = new vscode.Range(0, 0, document.lineCount - 1, document.lineAt(document.lineCount - 1).text.length);
+			const text = document.getText(entireDocumentRange);
+			const sortedText = sortUtils.sortLines(text, sortOptions);
+
+			await editor.edit(editBuilder => {
+				editBuilder.replace(entireDocumentRange, sortedText);
+			});
+			return;
+		}
+
+		// Process each selection
+		await editor.edit(editBuilder => {
+			for (const selection of selections) {
+				if (selection.isEmpty) {
+					continue;
+				}
+
+				// Expand selection to include full lines
+				const startLine = document.lineAt(selection.start.line);
+				const endLine = document.lineAt(selection.end.line);
+				const rangeToProcess = new vscode.Range(startLine.range.start, endLine.range.end);
+
+				const selectedText = document.getText(rangeToProcess);
+				const sortedText = sortUtils.sortLines(selectedText, sortOptions);
+
+				editBuilder.replace(rangeToProcess, sortedText);
+			}
+		});
+	};
 
 	// Create a factory function for text transformation commands
 	const createTextTransformCommand = (transformFn: (text: string) => string) => {
@@ -501,7 +574,9 @@ export function activate(context: vscode.ExtensionContext) {
 
 			await processTextInEditor(text => utils.encodeHexCodePoints(text, doubleEncode));
 		},
-		[CommandId.DecodeHexCodePoints]: async () => processTextInEditor(utils.decodeHexCodePoints)
+		[CommandId.DecodeHexCodePoints]: async () => processTextInEditor(utils.decodeHexCodePoints),
+		[CommandId.SortLinesAscending]: async () => sortLinesCommand(false),
+		[CommandId.SortLinesDescending]: async () => sortLinesCommand(true),
 	};
 
 	// Register all commands

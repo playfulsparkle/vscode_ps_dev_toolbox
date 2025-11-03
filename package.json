@@ -164,6 +164,16 @@
         "category": "%extension.category.utilities.title%"
       },
       {
+        "command": "ps-dev-toolbox.sortLinesAscending",
+        "title": "%extension.command.sortLinesAscending.title%",
+        "category": "%extension.category.utilities.title%"
+      },
+      {
+        "command": "ps-dev-toolbox.sortLinesDescending",
+        "title": "%extension.command.sortLinesDescending.title%",
+        "category": "%extension.category.utilities.title%"
+      },
+      {
         "command": "ps-dev-toolbox.base64Encode",
         "title": "%extension.command.base64Encode.title%",
         "category": "%extension.category.encoding.title%",
