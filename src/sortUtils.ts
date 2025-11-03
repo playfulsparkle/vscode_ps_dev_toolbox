@@ -13,6 +13,10 @@
  * @module LineSorting
  */
 
+// Pre-compiled regex patterns for better performance
+const DIACRITIC_PATTERN = /[áàâäéèêëíìîïóòôöúùûüñçÁÀÂÄÉÈÊËÍÌÎÏÓÒÔÖÚÙÛÜÑÇ]/;
+const LINE_SPLIT_PATTERN = /(\r?\n)/;
+
 /**
  * Configuration options for line sorting operations
  * 
@@ -28,6 +32,13 @@ export interface SortOptions {
     locales?: string | string[];
     numeric?: boolean;
     baseFirst?: boolean;
+}
+
+// Type-safe collator options interface
+interface CollatorOptions {
+    sensitivity: "base" | "accent" | "case" | "variant";
+    numeric: boolean;
+    caseFirst: "upper" | "lower" | "false";
 }
 
 /**
@@ -53,149 +64,172 @@ export interface SortOptions {
  * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Collator | MDN: Intl.Collator}
  */
 export function sortLines(text: string, options: SortOptions = {}): string {
-    // Default options
+    if (typeof text !== "string") {
+        throw new TypeError("Input must be a string");
+    }
+
+    // Fast path for empty or single-line text
+    if (!text || text.indexOf("\n") === -1) {
+        return text;
+    }
+
     const {
         descending = false,
         ignoreCase = false,
         locales = "en",
         numeric = true,
-        baseFirst = true  // Default to base letters first for consistent behavior
+        baseFirst = true
     } = options;
 
-    // Split into lines while preserving line endings
-    const lines = text.split(/(\r?\n)/);
-    
-    // Separate actual content lines from line endings
+    // Parse lines once and reuse
+    const { contentLines, lineEndings } = parseLines(text);
+
+    // Create collators once and reuse
+    const collators = createCollators(locales, ignoreCase, numeric);
+
+    // Sort using appropriate strategy
+    const indices = baseFirst 
+        ? sortWithBaseFirst(contentLines, collators, descending)
+        : sortStandard(contentLines, collators.standard, descending);
+
+    return reconstructSortedText(contentLines, lineEndings, indices);
+}
+
+/**
+ * Parses text into content lines and line endings in a single pass
+ */
+function parseLines(text: string): { contentLines: string[], lineEndings: string[] } {
+    const lines = text.split(LINE_SPLIT_PATTERN);
     const contentLines: string[] = [];
     const lineEndings: string[] = [];
     
-    for (let i = 0; i < lines.length; i++) {
+    const length = lines.length;
+    for (let i = 0; i < length; i++) {
         if (i % 2 === 0) {
-            contentLines.push(lines[i]); // Content line
+            contentLines.push(lines[i]);
         } else {
-            lineEndings.push(lines[i]); // Line ending
+            lineEndings.push(lines[i]);
         }
     }
-
-    // For base-first sorting, we need a custom comparison function
-    if (baseFirst) {
-        return sortLinesWithBaseFirst(contentLines, lineEndings, {
-            descending, ignoreCase, locales, numeric
-        });
-    } else {
-        // Use standard Intl.Collator sorting
-        return sortLinesStandard(contentLines, lineEndings, {
-            descending, ignoreCase, locales, numeric
-        });
-    }
+    
+    return { contentLines, lineEndings };
 }
 
 /**
- * Sorts lines using standard Intl.Collator (locale-specific diacritic order)
+ * Creates and caches collator instances for reuse
  */
-function sortLinesStandard(
-    contentLines: string[], 
-    lineEndings: string[], 
-    options: Omit<SortOptions, "baseFirst">
-): string {
-    const { descending, ignoreCase, locales, numeric } = options;
-
-    const collator = new Intl.Collator(locales, {
-        sensitivity: ignoreCase ? "base" : "variant",
-        numeric: numeric,
+function createCollators(
+    locales: string | string[], 
+    ignoreCase: boolean, 
+    numeric: boolean
+): { base: Intl.Collator; standard: Intl.Collator } {
+    // Use type-safe objects with explicit sensitivity values
+    const baseOptions: CollatorOptions = {
+        sensitivity: "base",
+        numeric,
         caseFirst: "false"
-    });
+    };
 
-    const indices = contentLines.map((_, i) => i);
+    const standardOptions: CollatorOptions = {
+        sensitivity: ignoreCase ? "base" : "variant",
+        numeric,
+        caseFirst: "false"
+    };
+
+    return {
+        base: new Intl.Collator(locales, baseOptions),
+        standard: new Intl.Collator(locales, standardOptions)
+    };
+}
+
+/**
+ * Standard locale-aware sorting
+ */
+function sortStandard(
+    contentLines: string[], 
+    collator: Intl.Collator, 
+    descending: boolean
+): number[] {
+    const indices = createIndices(contentLines.length);
     
     indices.sort((a, b) => {
-        const lineA = contentLines[a];
-        const lineB = contentLines[b];
-        const result = collator.compare(lineA, lineB);
+        const result = collator.compare(contentLines[a], contentLines[b]);
         return descending ? -result : result;
     });
-
-    return reconstructSortedText(contentLines, lineEndings, indices);
+    
+    return indices;
 }
 
 /**
- * Sorts lines ensuring base letters come before accented variants
+ * Base-first diacritic-aware sorting
  */
-function sortLinesWithBaseFirst(
+function sortWithBaseFirst(
     contentLines: string[], 
-    lineEndings: string[], 
-    options: Omit<SortOptions, "baseFirst">
-): string {
-    const { descending, ignoreCase, locales, numeric } = options;
-
-    // Create collator for primary comparison
-    const collator = new Intl.Collator(locales, {
-        sensitivity: ignoreCase ? "base" : "variant",
-        numeric: numeric,
-        caseFirst: "false"
-    });
-
-    const indices = contentLines.map((_, i) => i);
+    collators: { base: Intl.Collator; standard: Intl.Collator }, 
+    descending: boolean
+): number[] {
+    const { base: baseCollator, standard: standardCollator } = collators;
     
+    // Precompute diacritic flags to avoid repeated calculations
+    const hasDiacriticsCache = contentLines.map(hasDiacritics);
+    const indices = createIndices(contentLines.length);
+
     indices.sort((a, b) => {
         const lineA = contentLines[a];
         const lineB = contentLines[b];
         
-        // First, compare using base sensitivity (ignores diacritics)
-        const baseCollator = new Intl.Collator(locales, {
-            sensitivity: "base",
-            numeric: numeric,
-            caseFirst: "false"
-        });
-        
+        // First compare base letters (ignoring diacritics)
         const baseResult = baseCollator.compare(lineA, lineB);
         
         if (baseResult !== 0) {
-            // If base letters are different, use that result
             return descending ? -baseResult : baseResult;
         }
+
+        // Base letters are the same, handle diacritics
+        const aHasDiacritics = hasDiacriticsCache[a];
+        const bHasDiacritics = hasDiacriticsCache[b];
         
-        // Base letters are the same, now consider diacritics
-        // For base-first sorting, words without diacritics come first
-        const aHasDiacritics = hasDiacritics(lineA);
-        const bHasDiacritics = hasDiacritics(lineB);
-        
-        if (aHasDiacritics && !bHasDiacritics) {
-            // A has diacritics, B doesn't - B comes first
-            return descending ? -1 : 1;
-        } else if (!aHasDiacritics && bHasDiacritics) {
-            // A doesn't have diacritics, B does - A comes first
-            return descending ? 1 : -1;
-        } else {
-            // Both have diacritics or both don't, use normal collator
-            const result = collator.compare(lineA, lineB);
+        if (aHasDiacritics !== bHasDiacritics) {
+            // Prefer non-diacritic version
+            const result = aHasDiacritics ? 1 : -1;
             return descending ? -result : result;
         }
+
+        // Both have same diacritic status, use standard collator
+        const result = standardCollator.compare(lineA, lineB);
+        return descending ? -result : result;
     });
 
-    return reconstructSortedText(contentLines, lineEndings, indices);
+    return indices;
 }
 
 /**
- * Checks if a string contains diacritic characters
+ * Creates an array of indices [0, 1, 2, ..., length-1]
+ */
+function createIndices(length: number): number[] {
+    const indices = new Array<number>(length);
+    for (let i = 0; i < length; i++) {
+        indices[i] = i;
+    }
+    return indices;
+}
+
+/**
+ * Efficient diacritic detection with caching
  */
 function hasDiacritics(str: string): boolean {
-    // Normalize to NFD form (separates base characters from diacritics)
-    const normalized = str.normalize("NFD");
-    
-    // If the normalized string is different from the original,
-    // it means there were combining characters (diacritics)
-    if (normalized !== str) {
+    // Quick check with pre-compiled pattern
+    if (DIACRITIC_PATTERN.test(str)) {
         return true;
     }
     
-    // Additional check for common precomposed characters that might not normalize differently
-    const diacriticPattern = /[áàâäéèêëíìîïóòôöúùûüñçÁÀÂÄÉÈÊËÍÌÎÏÓÒÔÖÚÙÛÜÑÇ]/;
-    return diacriticPattern.test(str);
+    // Fallback to normalization check for less common diacritics
+    const normalized = str.normalize("NFD");
+    return normalized !== str;
 }
 
 /**
- * Reconstructs the final sorted text from sorted indices
+ * Reconstructs text from sorted indices
  */
 function reconstructSortedText(
     contentLines: string[], 
@@ -203,12 +237,12 @@ function reconstructSortedText(
     indices: number[]
 ): string {
     const sortedLines: string[] = [];
+    const contentLength = contentLines.length;
+    const endingsLength = lineEndings.length;
 
-    for (let i = 0; i < indices.length; i++) {
-        const idx = indices[i];
-        sortedLines.push(contentLines[idx]);
-        
-        if (i < lineEndings.length) {
+    for (let i = 0; i < contentLength; i++) {
+        sortedLines.push(contentLines[indices[i]]);
+        if (i < endingsLength) {
             sortedLines.push(lineEndings[i]);
         }
     }
