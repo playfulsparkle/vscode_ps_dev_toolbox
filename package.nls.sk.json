@@ -25,8 +25,8 @@
   "extension.command.toTrainCase.title": "Konvertovať na TRAIN-CASE (MY-VARIABLE-NAME)",
   "extension.command.toFlatCase.title": "Konvertovať na flatcase (myvariablename)",
   "extension.command.toUpperCase.title": "Konvertovať na UPPERCASE (MYVARIABLENAME)",
-  "extension.command.makeLowercase.title": "Konvertovať na lowercase (myvariablename)",
-  "extension.command.makeUppercase.title": "Konvertovať na UPPERCASE (MYVARIABLENAME)",
+  "extension.command.makeLowercase.title": "Previesť na malé písmená (myvariablename)",
+  "extension.command.makeUppercase.title": "Previesť na VEĽKÉ PÍSMENÁ (MYVARIABLENAME)",
   "extension.command.base64Encode.title": "Kódovať Base64",
   "extension.command.base64Decode.title": "Dekódovať Base64",
   "extension.command.urlEncode.title": "Kódovať URL (%XX)",
@@ -53,5 +53,7 @@
   "extension.command.encodePCREUnicodeHexadecimalEcape.title": "Kódovať hexadecimálne escape sekvencie Unicode v PCRE (\\x{XX}, \\x{XXXXX})",
   "extension.command.decodePCREUnicodeHexadecimalEcape.title": "Dekódovať hexadecimálne escape sekvencie Unicode v PCRE (\\x{XX}, \\x{XXXXX})",
   "extension.command.encodeHexCodePoints.title": "Kódovať hexadecimálne кódové body (0xXX, 0xXXXXX)",
-  "extension.command.decodeHexCodePoints.title": "Dekódovať hexadecimálne кódové body (0xXX, 0xXXXXX)"
+  "extension.command.decodeHexCodePoints.title": "Dekódovať hexadecimálne кódové body (0xXX, 0xXXXXX)",
+  "extension.command.sortLinesAscending.title": "Zoradiť riadky vzostupne",
+  "extension.command.sortLinesDescending.title": "Zoradiť riadky zostupne"
 }

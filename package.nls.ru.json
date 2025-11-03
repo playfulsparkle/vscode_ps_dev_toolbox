@@ -25,8 +25,8 @@
   "extension.command.toTrainCase.title": "Преобразовать в TRAIN-CASE (MY-VARIABLE-NAME)",
   "extension.command.toFlatCase.title": "Преобразовать в flatcase (myvariablename)",
   "extension.command.toUpperCase.title": "Преобразовать в UPPERCASE (MYVARIABLENAME)",
-  "extension.command.makeLowercase.title": "Преобразовать в lowercase (myvariablename)",
-  "extension.command.makeUppercase.title": "Преобразовать в UPPERCASE (MYVARIABLENAME)",
+  "extension.command.makeLowercase.title": "Преобразовать в строчные буквы (myvariablename)",
+  "extension.command.makeUppercase.title": "Преобразовать в ПРОПИСНЫЕ БУКВЫ (MYVARIABLENAME)",
   "extension.command.base64Encode.title": "Кодировать в Base64",
   "extension.command.base64Decode.title": "Декодировать Base64",
   "extension.command.urlEncode.title": "Кодировать URL (%XX)",
@@ -53,5 +53,7 @@
   "extension.command.encodePCREUnicodeHexadecimalEcape.title": "Кодировать шестнадцатеричные экранирующие последовательности Unicode в PCRE (\\x{XX}, \\x{XXXXX})",
   "extension.command.decodePCREUnicodeHexadecimalEcape.title": "Декодировать шестнадцатеричные экранирующие последовательности Unicode в PCRE (\\x{XX}, \\x{XXXXX})",
   "extension.command.encodeHexCodePoints.title": "Кодировать шестнадцатеричные кодовые точки (0xXX, 0xXXXXX)",
-  "extension.command.decodeHexCodePoints.title": "Декодировать шестнадцатеричные кодовые точки (0xXX, 0xXXXXX)"
+  "extension.command.decodeHexCodePoints.title": "Декодировать шестнадцатеричные кодовые точки (0xXX, 0xXXXXX)",
+  "extension.command.sortLinesAscending.title": "Сортировать строки по возрастанию",
+  "extension.command.sortLinesDescending.title": "Сортировать строки по убыванию"
 }

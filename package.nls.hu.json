@@ -25,8 +25,8 @@
   "extension.command.toTrainCase.title": "Átalakítás TRAIN-CASE formára (MY-VARIABLE-NAME)",
   "extension.command.toFlatCase.title": "Átalakítás flatcase formára (myvariablename)",
   "extension.command.toUpperCase.title": "Átalakítás UPPERCASE formára (MYVARIABLENAME)",
-  "extension.command.makeLowercase.title": "Átalakítás lowercase formára (myvariablename)",
-  "extension.command.makeUppercase.title": "Átalakítás UPPERCASE formára (MYVARIABLENAME)",
+  "extension.command.makeLowercase.title": "Átalakítás kisbetűssé (myvariablename)",
+  "extension.command.makeUppercase.title": "Átalakítás NAGYBETŰSSÉ (MYVARIABLENAME)",
   "extension.command.base64Encode.title": "Base64 kódolás",
   "extension.command.base64Decode.title": "Base64 dekódolás",
   "extension.command.urlEncode.title": "URL kódolás (%XX)",
@@ -53,5 +53,7 @@
   "extension.command.encodePCREUnicodeHexadecimalEcape.title": "PCRE Unicode hexadecimális escape szekvenciák kódolása (\\x{XX}, \\x{XXXXX})",
   "extension.command.decodePCREUnicodeHexadecimalEcape.title": "PCRE Unicode hexadecimális escape szekvenciák dekódolása (\\x{XX}, \\x{XXXXX})",
   "extension.command.encodeHexCodePoints.title": "Hex kódpontok kódolása (0xXX, 0xXXXXX)",
-  "extension.command.decodeHexCodePoints.title": "Hex kódpontok dekódolása (0xXX, 0xXXXXX)"
+  "extension.command.decodeHexCodePoints.title": "Hex kódpontok dekódolása (0xXX, 0xXXXXX)",
+  "extension.command.sortLinesAscending.title": "Sorok rendezése növekvő sorrendben",
+  "extension.command.sortLinesDescending.title": "Sorok rendezése csökkenő sorrendben"
 }

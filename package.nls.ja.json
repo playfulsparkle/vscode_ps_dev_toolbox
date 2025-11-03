@@ -25,8 +25,8 @@
   "extension.command.toTrainCase.title": "TRAIN-CASE に変換 (MY-VARIABLE-NAME)",
   "extension.command.toFlatCase.title": "flatcase に変換 (myvariablename)",
   "extension.command.toUpperCase.title": "UPPERCASE に変換 (MYVARIABLENAME)",
-  "extension.command.makeLowercase.title": "lowercase に変換 (myvariablename)",
-  "extension.command.makeUppercase.title": "UPPERCASE に変換 (MYVARIABLENAME)",
+  "extension.command.makeLowercase.title": "小文字に変換 (myvariablename)",
+  "extension.command.makeUppercase.title": "大文字に変換 (MYVARIABLENAME)",
   "extension.command.base64Encode.title": "Base64 エンコード",
   "extension.command.base64Decode.title": "Base64 デコード",
   "extension.command.urlEncode.title": "URL エンコード (%XX)",
@@ -53,5 +53,7 @@
   "extension.command.encodePCREUnicodeHexadecimalEcape.title": "PCRE における Unicode 16進エスケープシーケンスをエンコード (\\x{XX}, \\x{XXXXX})",
   "extension.command.decodePCREUnicodeHexadecimalEcape.title": "PCRE における Unicode 16進エスケープシーケンスをデコード (\\x{XX}, \\x{XXXXX})",
   "extension.command.encodeHexCodePoints.title": "16 進の符号位置をエンコード (0xXX, 0xXXXXX)",
-  "extension.command.decodeHexCodePoints.title": "16 進の符号位置をデコード (0xXX, 0xXXXXX)"
+  "extension.command.decodeHexCodePoints.title": "16 進の符号位置をデコード (0xXX, 0xXXXXX)",
+  "extension.command.sortLinesAscending.title": "行を昇順で並べ替え",
+  "extension.command.sortLinesDescending.title": "行を降順で並べ替え"
 }

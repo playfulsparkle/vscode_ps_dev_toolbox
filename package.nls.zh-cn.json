@@ -25,8 +25,8 @@
   "extension.command.toTrainCase.title": "转换为 TRAIN-CASE (MY-VARIABLE-NAME)",
   "extension.command.toFlatCase.title": "转换为 flatcase (myvariablename)",
   "extension.command.toUpperCase.title": "转换为 UPPERCASE (MYVARIABLENAME)",
-  "extension.command.makeLowercase.title": "转换为 lowercase (myvariablename)",
-  "extension.command.makeUppercase.title": "转换为 UPPERCASE (MYVARIABLENAME)",
+  "extension.command.makeLowercase.title": "转换为小写 (myvariablename)",
+  "extension.command.makeUppercase.title": "转换为大写 (MYVARIABLENAME)",
   "extension.command.base64Encode.title": "Base64 编码",
   "extension.command.base64Decode.title": "Base64 解码",
   "extension.command.urlEncode.title": "URL 编码 (%XX)",
@@ -53,5 +53,7 @@
   "extension.command.encodePCREUnicodeHexadecimalEcape.title": "在 PCRE 中编码 Unicode 十六进制转义序列 (\\x{XX}, \\x{XXXXX})",
   "extension.command.decodePCREUnicodeHexadecimalEcape.title": "在 PCRE 中解码 Unicode 十六进制转义序列 (\\x{XX}, \\x{XXXXX})",
   "extension.command.encodeHexCodePoints.title": "编码十六进制码位 (0xXX, 0xXXXXX)",
-  "extension.command.decodeHexCodePoints.title": "解码十六进制码位 (0xXX, 0xXXXXX)"
+  "extension.command.decodeHexCodePoints.title": "解码十六进制码位 (0xXX, 0xXXXXX)",
+  "extension.command.sortLinesAscending.title": "将行按升序排序",
+  "extension.command.sortLinesDescending.title": "将行按降序排序"
 }

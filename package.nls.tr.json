@@ -25,8 +25,8 @@
   "extension.command.toTrainCase.title": "TRAIN-CASE’e dönüştür (MY-VARIABLE-NAME)",
   "extension.command.toFlatCase.title": "flatcase’e dönüştür (myvariablename)",
   "extension.command.toUpperCase.title": "UPPERCASE’e dönüştür (MYVARIABLENAME)",
-  "extension.command.makeLowercase.title": "lowercase’e dönüştür (myvariablename)",
-  "extension.command.makeUppercase.title": "UPPERCASE’e dönüştür (MYVARIABLENAME)",
+  "extension.command.makeLowercase.title": "Küçük harfe dönüştür (myvariablename)",
+  "extension.command.makeUppercase.title": "BÜYÜK HARFE dönüştür (MYVARIABLENAME)",
   "extension.command.base64Encode.title": "Base64 kodla",
   "extension.command.base64Decode.title": "Base64 çöz",
   "extension.command.urlEncode.title": "URL kodla (%XX)",
@@ -53,5 +53,7 @@
   "extension.command.encodePCREUnicodeHexadecimalEcape.title": "PCRE'de Unicode onaltılık kaçış dizilerini kodla (\\x{XX}, \\x{XXXXX})",
   "extension.command.decodePCREUnicodeHexadecimalEcape.title": "PCRE'de Unicode onaltılık kaçış dizilerinin kodunu çöz (\\x{XX}, \\x{XXXXX})",
   "extension.command.encodeHexCodePoints.title": "Onaltılık kod noktalarını kodла (0xXX, 0xXXXXX)",
-  "extension.command.decodeHexCodePoints.title": "Onaltılık kod noktalarının kodunu çöz (0xXX, 0xXXXXX)"
+  "extension.command.decodeHexCodePoints.title": "Onaltılık kod noktalarının kodunu çöz (0xXX, 0xXXXXX)",
+  "extension.command.sortLinesAscending.title": "Satırları artan sırada sırala",
+  "extension.command.sortLinesDescending.title": "Satırları azalan sırada sırala"
 }

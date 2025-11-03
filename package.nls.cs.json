@@ -25,8 +25,8 @@
   "extension.command.toTrainCase.title": "Převést na TRAIN-CASE (MY-VARIABLE-NAME)",
   "extension.command.toFlatCase.title": "Převést na flatcase (myvariablename)",
   "extension.command.toUpperCase.title": "Převést na UPPERCASE (MYVARIABLENAME)",
-  "extension.command.makeLowercase.title": "Převést na lowercase (myvariablename)",
-  "extension.command.makeUppercase.title": "Převést na UPPERCASE (MYVARIABLENAME)",
+  "extension.command.makeLowercase.title": "Převést na malá písmena (myvariablename)",
+  "extension.command.makeUppercase.title": "Převést na VELKÁ PÍSMENA (MYVARIABLENAME)",
   "extension.command.base64Encode.title": "Zakódovat Base64",
   "extension.command.base64Decode.title": "Dekódovat Base64",
   "extension.command.urlEncode.title": "Zakódovat URL (%XX)",
@@ -53,5 +53,7 @@
   "extension.command.encodePCREUnicodeHexadecimalEcape.title": "Kódovat hexadecimální escape sekvence Unicode v PCRE (\\x{XX}, \\x{XXXXX})",
   "extension.command.decodePCREUnicodeHexadecimalEcape.title": "Dekódovat hexadecimální escape sekvence Unicode v PCRE (\\x{XX}, \\x{XXXXX})",
   "extension.command.encodeHexCodePoints.title": "Kódovat hexadecimální kódové body (0xXX, 0xXXXXX)",
-  "extension.command.decodeHexCodePoints.title": "Dekódovat hexadecimální kódové body (0xXX, 0xXXXXX)"
+  "extension.command.decodeHexCodePoints.title": "Dekódovat hexadecimální kódové body (0xXX, 0xXXXXX)",
+  "extension.command.sortLinesAscending.title": "Seřadit řádky vzestupně",
+  "extension.command.sortLinesDescending.title": "Seřadit řádky sestupně"
 }

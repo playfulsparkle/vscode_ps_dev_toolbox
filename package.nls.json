@@ -26,7 +26,7 @@
   "extension.command.toFlatCase.title": "Convert to flatcase (myvariablename)",
   "extension.command.toUpperCase.title": "Convert to UPPERCASE (MYVARIABLENAME)",
   "extension.command.makeLowercase.title": "Convert to lowercase (myvariablename)",
-  "extension.command.makeUppercase.title": "Convert to uppercase (MYVARIABLENAME)",
+  "extension.command.makeUppercase.title": "Convert to UPPERCASE (MYVARIABLENAME)",
   "extension.command.base64Encode.title": "Base64 Encode",
   "extension.command.base64Decode.title": "Base64 Decode",
   "extension.command.urlEncode.title": "URL Encode (%XX)",

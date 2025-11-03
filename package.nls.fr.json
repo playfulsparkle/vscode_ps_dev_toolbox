@@ -25,8 +25,8 @@
   "extension.command.toTrainCase.title": "Convertir en TRAIN-CASE (MY-VARIABLE-NAME)",
   "extension.command.toFlatCase.title": "Convertir en flatcase (myvariablename)",
   "extension.command.toUpperCase.title": "Convertir en UPPERCASE (MYVARIABLENAME)",
-  "extension.command.makeLowercase.title": "Convertir en lowercase (myvariablename)",
-  "extension.command.makeUppercase.title": "Convertir en UPPERCASE (MYVARIABLENAME)",
+  "extension.command.makeLowercase.title": "Convertir en minuscules (myvariablename)",
+  "extension.command.makeUppercase.title": "Convertir en MAJUSCULES (MYVARIABLENAME)",
   "extension.command.base64Encode.title": "Encoder en Base64",
   "extension.command.base64Decode.title": "Décoder Base64",
   "extension.command.urlEncode.title": "Encoder l’URL (%XX)",
@@ -53,5 +53,7 @@
   "extension.command.encodePCREUnicodeHexadecimalEcape.title": "Encoder les séquences d’échappement hexadécimales Unicode dans PCRE (\\x{XX}, \\x{XXXXX})",
   "extension.command.decodePCREUnicodeHexadecimalEcape.title": "Décoder les séquences d’échappement hexadécimales Unicode dans PCRE (\\x{XX}, \\x{XXXXX})",
   "extension.command.encodeHexCodePoints.title": "Encoder les points de code hexadécimaux (0xXX, 0xXXXXX)",
-  "extension.command.decodeHexCodePoints.title": "Décoder les points de code hexadécimaux (0xXX, 0xXXXXX)"
+  "extension.command.decodeHexCodePoints.title": "Décoder les points de code hexadécimaux (0xXX, 0xXXXXX)",
+  "extension.command.sortLinesAscending.title": "Trier les lignes par ordre croissant",
+  "extension.command.sortLinesDescending.title": "Trier les lignes par ordre décroissant"
 }
