@@ -1,4 +1,16 @@
-// Mapping from Unicode code points to HTML entity names
+/**
+ * Mapping from Unicode code points to HTML entity names
+ * 
+ * Provides a comprehensive lookup table for converting Unicode code points
+ * to their corresponding HTML entity names. This mapping is used for encoding
+ * special characters and symbols into HTML/XML compliant entity references.
+ * 
+ * @constant {Object.<number, string>} codePointToEntityName
+ * @global
+ * 
+ * @see {@link https://html.spec.whatwg.org/multipage/named-characters.html | HTML Living Standard: Named Character References}
+ * @see {@link https://www.w3.org/TR/html4/sgml/entities.html | HTML 4.01 Specification: Character Entity References}
+ */
 export const codePointToEntityName: { [codePoint: number]: string } = {
     198: "AElig",
     193: "Aacute",
