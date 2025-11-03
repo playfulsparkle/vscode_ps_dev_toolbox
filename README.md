@@ -46,6 +46,11 @@ Seamlessly integrate these essential features into your coding environment to si
     * _Registry format:_ `{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}` (example: `{a1b2c3d4-e5f6-7890-9abc-c1d2e3f4a5b6}`).
     * _Square brackets format:_ `[Guid("xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx")]` (example: `[Guid("a1b2c3d4-e5f6-7890-9abc-c1d2e3f4a5b6")]`).
     * _Less than sign format:_ `<Guid("xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx")>` (example: `<Guid("a1b2c3d4-e5f6-7890-9abc-c1d2e3f4a5b6")>`).
+ * **Sort lines (ascending/descending).** Provides advanced Unicode-aware line sorting with the following features:
+    * _Locale-aware sorting:_ Supports multiple languages and locales for accurate Unicode character sorting.
+    * _Case handling:_ Option to ignore or respect case sensitivity during sorting.
+    * _Numeric sorting:_ Natural numeric sorting where "10" comes after "2" (when enabled).
+    * _Base letters first:_ Option to sort base letters before accented variants (e.g., 'a' before 'á').
   * **Remove empty lines.** Provides functionality to remove empty lines from text with the following options:
     * When true, removes all empty lines.
     * When false, only removes consecutive empty lines, keeping single empty lines intact.
@@ -86,6 +91,10 @@ If you encounter any of these or other issues, please report them on the [GitHub
 ---
 
 ## Release Notes
+
+### 0.0.18
+
+Added Sort Lines Ascending/Descending which provides advanced, fast, Unicode-aware sorting for entire documents or text selections.
 
 ### 0.0.17
 

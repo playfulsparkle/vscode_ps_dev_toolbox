@@ -2,6 +2,10 @@
 
 All notable changes to the "Playful Sparkle: Dev Toolbox" extension will be documented in this file.
 
+## [0.0.18] - 2025-11-03
+
+Added Sort Lines Ascending/Descending which provides advanced, fast, Unicode-aware sorting for entire documents or text selections.
+
 ## [0.0.17] - 2025-10-30
 
 Improved decoding across all encoders, added input validation.

@@ -1,7 +1,7 @@
 {
   "name": "ps-dev-toolbox",
   "displayName": "Dev Toolbox",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "publisher": "playful-sparkle",
   "description": "All-in-one toolset for URL slug generation, Base64/URL encoding/decoding, GUID generation, and removing empty lines, non-printable characters, whitespace and many more.",
   "author": {
