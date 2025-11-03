@@ -372,6 +372,21 @@
             "%extension.config.uuid.squareFormat.desc%",
             "%extension.config.uuid.lessThanSignFormat.desc%"
           ]
+        },
+        "ps-dev-toolbox.sorting.useNumericSorting": {
+          "type": "boolean",
+          "default": true,
+          "description": "%extension.config.sorting.useNumericSorting%"
+        },
+        "ps-dev-toolbox.sorting.sortIgnoreCase": {
+          "type": "boolean",
+          "default": true,
+          "description": "%extension.config.sorting.sortIgnoreCase%"
+        },
+        "ps-dev-toolbox.sorting.sortLocale": {
+          "type": "string",
+          "default": "",
+          "description": "%extension.config.sorting.sortLocale%"
         }
       }
     },
