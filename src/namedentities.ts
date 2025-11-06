@@ -1,17 +1,62 @@
 /**
  * Mapping from Unicode code points to HTML entity names
  * 
+ * This interface defines an indexable type where numeric Unicode code points
+ * are mapped to their corresponding HTML entity name strings.
+ * 
+ * @interface CodePointToEntityNameInterface
+ * 
+ * @property {string} [codePoint] - The HTML entity name for the given Unicode code point
+ * 
+ * @see {@link https://html.spec.whatwg.org/multipage/named-characters.html | HTML Living Standard: Named Character References}
+ */
+export interface CodePointToEntityNameInterface {
+    [codePoint: number]: string;
+}
+
+
+/**
+ * Mapping from HTML entity names to Unicode code points
+ * 
+ * This interface defines an indexable type where HTML entity name strings
+ * are mapped to their corresponding numeric Unicode code points.
+ * 
+ * @interface EntityNameToCodePointInterface
+ * 
+ * @property {number} [name] - The Unicode code point corresponding to the HTML entity name
+ * 
+ * @see {@link https://html.spec.whatwg.org/multipage/named-characters.html | HTML Living Standard: Named Character References}
+ */
+export interface EntityNameToCodePointInterface {
+    [name: string]: number;
+}
+
+/**
+ * Interface for a Set of valid HTML entity names
+ * 
+ * Represents a collection of valid HTML entity names that can be used
+ * for encoding/decoding validation and lookup operations.
+ * 
+ * @interface EntityNamesInterface
+ * 
+ * @extends {Set<string>}
+ */
+export interface EntityNamesInterface extends Set<string> { }
+
+/**
+ * Mapping from Unicode code points to HTML entity names
+ * 
  * Provides a comprehensive lookup table for converting Unicode code points
  * to their corresponding HTML entity names. This mapping is used for encoding
  * special characters and symbols into HTML/XML compliant entity references.
  * 
- * @constant {Object.<number, string>} codePointToEntityName
+ * @constant {CodePointToEntityNameInterface} codePointToEntityName
  * @global
  * 
  * @see {@link https://html.spec.whatwg.org/multipage/named-characters.html | HTML Living Standard: Named Character References}
  * @see {@link https://www.w3.org/TR/html4/sgml/entities.html | HTML 4.01 Specification: Character Entity References}
  */
-export const codePointToEntityName: { [codePoint: number]: string } = {
+export const codePointToEntityName: CodePointToEntityNameInterface = {
     198: "AElig",
     193: "Aacute",
     258: "Abreve",
@@ -1456,11 +1501,26 @@ export const codePointToEntityName: { [codePoint: number]: string } = {
     8204: "zwnj"
 };
 
-// Reverse mapping from entity names to code points
-export const entityNameToCodePoint: { [name: string]: number } = {};
+/**
+ * Reverse mapping from HTML entity names to Unicode code points
+ * 
+ * Provides a lookup table for converting HTML entity names back to their
+ * corresponding Unicode code points. This is the inverse of the
+ * `codePointToEntityName` mapping.
+ * 
+ * @constant {EntityNameToCodePointInterface} entityNameToCodePoint
+ * @global
 
-Object.entries(codePointToEntityName).forEach(([codePointStr, name]) => {
-    const codePoint = parseInt(codePointStr, 10);
+ * @see {@link https://html.spec.whatwg.org/multipage/named-characters.html | HTML Living Standard: Named Character References}
+ */
+export const entityNameToCodePoint: EntityNameToCodePointInterface = Object.fromEntries(
+    Object.entries(codePointToEntityName).map(([codePoint, name]) => [name, parseInt(codePoint, 10)])
+);
 
-    entityNameToCodePoint[name] = codePoint;
-});
+/**
+ * Set containing all valid HTML entity names for encoding/decoding operations
+ *
+ * @constant {EntityNamesInterface} uniqueEntityNames
+ * @global
+ */
+export const uniqueEntityNames: EntityNamesInterface = new Set(Object.values(codePointToEntityName));

@@ -1,4 +1,4 @@
-import * as namedentities from "./namedentities";
+import { uniqueEntityNames, codePointToEntityName, entityNameToCodePoint } from "./namedentities";
 
 /**
  * Global type extensions for String prototype
@@ -13,7 +13,7 @@ declare global {
          * @returns {string} The lowercase version of the string
          */
         safeToLowerCase(locale?: string | string[]): string;
-        
+
         /**
          * Converts a string to uppercase safely using the specified locale
          * @param {string|string[]} [locale] - Optional locale(s) to use for the conversion
@@ -651,9 +651,6 @@ export function generateGuid(): string {
     }).toUpperCase();
 }
 
-// Valid HTML entity names for encoding/decoding
-const validEntityNames = new Set(Object.values(namedentities.codePointToEntityName));
-
 /**
  * Checks if a string contains an HTML named character entity at the given position
  * @private
@@ -673,7 +670,7 @@ function isHTMLNamedCharacterEntity(str: string, idx: number): number {
 
     // Named form: &name;
     m = re.namedEntity.exec(s);
-    if (m && validEntityNames.has(m[1])) {
+    if (m && uniqueEntityNames.has(m[1])) {
         return m[0].length;
     }
 
@@ -756,7 +753,7 @@ export function encodeHTMLNamedCharacterEntity(text: string, doubleEncode: boole
         }
 
         // For non-ASCII characters (0x80 and above), try named entity first
-        const entityName = namedentities.codePointToEntityName[codePoint];
+        const entityName = codePointToEntityName[codePoint];
 
         if (entityName) {
             result += `&${entityName};`;
@@ -797,7 +794,7 @@ export function decodeHTMLNamedCharacterEntity(text: string): string {
     return text.replace(/&([A-Za-z]{1,32});|&#x([0-9a-fA-F]{1,8});/g, (match, name, hex) => {
         if (name) {
             // Handle named entity
-            const codePoint = namedentities.entityNameToCodePoint[name];
+            const codePoint = entityNameToCodePoint[name];
 
             if (codePoint) {
                 try {
