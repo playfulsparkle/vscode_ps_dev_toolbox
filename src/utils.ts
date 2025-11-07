@@ -57,6 +57,55 @@ const re = {
     hexCodePoint: /^0x[0-9A-Fa-f]+/,                  // 0xXXX
 };
 
+// Common dash characters to normalize to standard hyphen (U+002D)
+const dashCharacters = new Set([
+    0x2010, // ‐ HYPHEN
+    0x2011, // ‑ NON-BREAKING HYPHEN
+    0x2012, // ‒ FIGURE DASH
+    0x2013, // – EN DASH
+    0x2014, // — EM DASH
+    0x2015, // ― HORIZONTAL BAR
+    0x2053, // ⁓ SWUNG DASH
+    0x207B, // ⁻ SUPERSCRIPT MINUS
+    0x208B, // ₋ SUBSCRIPT MINUS
+    0x2212, // − MINUS SIGN
+    0x2E3A, // ⸺ TWO-EM DASH
+    0x2E3B, // ⸻ THREE-EM DASH
+    0xFE58, // ﹘ SMALL EM DASH
+    0xFE63, // ﹣ SMALL HYPHEN-MINUS
+    0xFF0D, // － FULLWIDTH HYPHEN-MINUS
+]);
+
+// Space characters to normalize to standard space (U+0020)
+const spaceCharacters = new Set([
+    0x00A0, //   NO-BREAK SPACE
+    0x1680, //   OGHAM SPACE MARK
+    0x2000, //   EN QUAD
+    0x2001, //   EM QUAD
+    0x2002, //   EN SPACE
+    0x2003, //   EM SPACE
+    0x2004, //   THREE-PER-EM SPACE
+    0x2005, //   FOUR-PER-EM SPACE
+    0x2006, //   SIX-PER-EM SPACE
+    0x2007, //   FIGURE SPACE
+    0x2008, //   PUNCTUATION SPACE
+    0x2009, //   THIN SPACE
+    0x200A, //   HAIR SPACE
+    0x202F, //   NARROW NO-BREAK SPACE
+    0x205F, //   MEDIUM MATHEMATICAL SPACE
+    0x3000, // 　 IDEOGRAPHIC SPACE
+    0xFEFF, // ﻿ ZERO WIDTH NO-BREAK SPACE (BOM)
+]);
+
+// Invisible/zero-width characters to remove (not convert to space)
+const invisibleCharacters = new Set([
+    0x200B, // ZERO WIDTH SPACE
+    0x200C, // ZERO WIDTH NON-JOINER
+    // 0x200D, // ZERO WIDTH JOINER - Preserve zero width joiner
+    0x2060, // WORD JOINER - Remove invisible spaces
+    0xFEFF, // ZERO WIDTH NO-BREAK SPACE (when not at start)
+]);
+
 // Add safe string methods to String prototype if they don't exist
 if (!String.prototype.safeToLowerCase) {
     String.prototype.safeToLowerCase = function (locale?: string | string[]): string {
@@ -190,81 +239,77 @@ export function filterUserLocaleInput(defaultLocale: string, userLocaleInput: st
  * 
  * @returns {string} The text with non-printable characters removed or replaced with spaces
  */
-export function removeNonPrintableCharacters(text: string): string {
+export function cleanText(text: string): string {
     if (typeof text !== "string") {
         return text;
     }
 
-    // Set of control characters and invisible whitespace (including \u0000 and \u200B)
-    const replaceWithSpace = new Set<number>([
-        // C0 controls (0x00-0x1F) excluding tab, lf, cr
-        ...Array.from({ length: 32 }, (_, i) => i).filter(c => ![9, 10, 13].includes(c)),
-        // DEL and C1 controls (0x7F-0x9F)
-        ...Array.from({ length: 33 }, (_, i) => i + 0x7F),
-        // Special whitespace and invisible characters
-        0x00A0, 0x1680, 0x180E, 0x2000, 0x2001, 0x2002, 0x2003, 0x2004, 0x2005,
-        0x2006, 0x2007, 0x2008, 0x2009, 0x200A, 0x200B, 0x202F, 0x205F, 0x3000,
-        0xFEFF, 0xFFFE, 0xFFFF
-    ]);
-
-    // Characters that should be preserved only when part of larger clusters
-    const preserveInClusters = new Set<number>([
-        0x200C, 0x200D,  // ZWJ/ZWNJ
-        ...Array.from({ length: 16 }, (_, i) => 0xFE00 + i)  // Variation selectors
-    ]);
-
     let result = "";
     let i = 0;
-    const len = text.length;
 
-    while (i < len) {
+    while (i < text.length) {
+        const char = text[i];
         const code = text.charCodeAt(i);
 
-        // Handle surrogate pairs
-        if (code >= 0xD800 && code <= 0xDBFF && i + 1 < len) {
+        // Check for dash characters to normalize
+        if (dashCharacters.has(code)) {
+            result += "-"; // Normalize to standard hyphen
+            i++;
+            continue;
+        }
+
+        // Check for space characters to normalize
+        if (spaceCharacters.has(code)) {
+            result += " "; // Normalize to standard space
+            i++;
+            continue;
+        }
+
+        // Remove invisible characters
+        if (invisibleCharacters.has(code)) {
+            i++;
+            continue;
+        }
+
+        // Fast path for common printable ASCII
+        if (code >= 0x20 && code <= 0x7E) {
+            result += char;
+            i++;
+            continue;
+        }
+
+        // Preserve common whitespace and line endings
+        if (code === 0x09 || code === 0x0A || code === 0x0D) { // \t, \n, \r
+            result += char;
+            i++;
+            continue;
+        }
+
+        // Handle Unicode characters and surrogate pairs
+        if (code >= 0xA0 && code <= 0xD7FF) {
+            result += char;
+            i++;
+        } else if (code >= 0xE000 && code <= 0xFFFF) {
+            result += char;
+            i++;
+        } else if (code >= 0xD800 && code <= 0xDBFF && i + 1 < text.length) {
+            // Potential surrogate pair
             const nextCode = text.charCodeAt(i + 1);
             if (nextCode >= 0xDC00 && nextCode <= 0xDFFF) {
-                // Valid surrogate pair
-                const codePoint = (code - 0xD800) * 0x400 + (nextCode - 0xDC00) + 0x10000;
-                if (replaceWithSpace.has(codePoint)) {
-                    result += " ";
-                } else {
-                    result += text[i] + text[i + 1];
-                }
+                // Valid surrogate pair - preserve emojis and extended chars
+                result += char + text[i + 1];
                 i += 2;
-                continue;
+            } else {
+                // Isolated high surrogate - remove
+                i++;
             }
-        }
-
-        // Handle invalid surrogates
-        if ((code >= 0xDC00 && code <= 0xDFFF) ||  // Lone low surrogate
-            (code >= 0xD800 && code <= 0xDBFF)) { // Lone high surrogate
+        } else if (code >= 0xDC00 && code <= 0xDFFF) {
+            // Isolated low surrogate - remove
             i++;
-            continue;
-        }
-
-        // Handle characters that need replacement
-        if (replaceWithSpace.has(code)) {
-            result += " ";
+        } else {
+            // Remove control characters and other non-printables
             i++;
-            continue;
         }
-
-        // Handle characters that should be preserved only in clusters
-        if (preserveInClusters.has(code)) {
-            // Check if previous or next character forms a cluster
-            const isInCluster =
-                (i > 0 && !replaceWithSpace.has(text.charCodeAt(i - 1))) ||
-                (i < len - 1 && !replaceWithSpace.has(text.charCodeAt(i + 1)));
-
-            result += isInCluster ? text[i] : " ";
-            i++;
-            continue;
-        }
-
-        // Keep all other valid characters
-        result += text[i];
-        i++;
     }
 
     return result;
@@ -1432,7 +1477,7 @@ function isUnicodeCodePointNotation(str: string, idx: number): number {
  * 
  * @see decodeUnicodeCodePointNotation
  */
-export function encodeUnicodeCodePointNotation(text: string, doubleEncode: boolean = false): string {
+export function encodeUnicodeCodePointNotation(text: string, doubleEncode: boolean = false, separate: boolean = false): string {
     if (typeof text !== "string") {
         return text;
     }
@@ -1468,7 +1513,9 @@ export function encodeUnicodeCodePointNotation(text: string, doubleEncode: boole
         // Non-ASCII without named entity, encode as hex entity
         const entity = codePoint.toString(16).toUpperCase().padStart(4, "0");
 
-        result += `U+${entity} `;
+        const space = separate ? " " : "";
+
+        result += `U+${entity}${space}`;
 
         // Move to the next code point, handling surrogate pairs
         i += codePoint > 0xFFFF ? 2 : 1;
@@ -1502,7 +1549,7 @@ export function decodeUnicodeCodePointNotation(text: string): string {
     }
 
     // Match individual U+XXXX tokens
-    return text.replace(/U\+([0-9A-Fa-f]{4,6})/g, (match, hex) => {
+    return text.replace(/U\+([0-9A-Fa-f]{4,6})\s?/g, (match, hex) => {
         const codePoint = parseInt(hex, 16);
 
         // Comprehensive validation
@@ -1808,7 +1855,7 @@ function isHexCodePoint(str: string, idx: number): number {
  * 
  * @see decodeHexCodePoints
  */
-export function encodeHexCodePoints(text: string, doubleEncode: boolean = false): string {
+export function encodeHexCodePoints(text: string, doubleEncode: boolean = false, separate: boolean = false): string {
     if (typeof text !== "string") {
         return text;
     }
@@ -1844,7 +1891,9 @@ export function encodeHexCodePoints(text: string, doubleEncode: boolean = false)
         // Non-ASCII without named entity, encode as hex entity
         const entity = codePoint.toString(16).toUpperCase();
 
-        result += `0x${entity} `;
+        const space = separate ? " " : "";
+
+        result += `0x${entity}${space}`;
 
         // Move to the next code point, handling surrogate pairs
         i += codePoint > 0xFFFF ? 2 : 1;

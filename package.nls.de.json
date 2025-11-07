@@ -37,7 +37,7 @@
   "extension.command.generateGuid.title": "UUID/GUID erzeugen",
   "extension.command.removeEmptyLinesDocument.title": "Leere Zeilen aus Dokument entfernen",
   "extension.command.removeEmptyLinesSelection.title": "Leere Zeilen aus Auswahl entfernen",
-  "extension.command.removeNonPrintableChars.title": "Nicht druckbare Zeichen entfernen",
+  "extension.command.cleanText.title": "Text bereinigen (nicht druckbare Zeichen entfernen und normalisieren)",
   "extension.command.removeLeadingTrailingWhitespace.title": "Führende und nachgestellte Leerzeichen entfernen",
   "extension.command.encodeHTMLNamedCharacterEntitys.title": "Benannte HTML-Zeichenentitäten kodieren (&aacute;, &#xXXXX;, &#xXXXXX;)",
   "extension.command.decodeHTMLNamedCharacterEntitys.title": "Benannte HTML-Zeichenentitäten dekodieren (&aacute;, &#xXXXX;, &#xXXXXX;)",

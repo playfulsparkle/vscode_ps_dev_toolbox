@@ -37,7 +37,7 @@
   "extension.command.generateGuid.title": "UUID/GUID generálása",
   "extension.command.removeEmptyLinesDocument.title": "Üres sorok eltávolítása a dokumentumból",
   "extension.command.removeEmptyLinesSelection.title": "Üres sorok eltávolítása a kijelölésből",
-  "extension.command.removeNonPrintableChars.title": "Nem nyomtatható karakterek eltávolítása",
+  "extension.command.cleanText.title": "Szöveg tisztítása (nem nyomtatható karakterek eltávolítása és normalizálása)",
   "extension.command.removeLeadingTrailingWhitespace.title": "Vezető és záró szóközök eltávolítása",
   "extension.command.encodeHTMLNamedCharacterEntitys.title": "HTML nevesített karakterentitások kódolása (&aacute;, &#xXXXX;, &#xXXXXX;)",
   "extension.command.decodeHTMLNamedCharacterEntitys.title": "HTML nevesített karakterentitások dekódolása (&aacute;, &#xXXXX;, &#xXXXXX;)",

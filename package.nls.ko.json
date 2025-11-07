@@ -37,7 +37,7 @@
   "extension.command.generateGuid.title": "UUID/GUID 생성",
   "extension.command.removeEmptyLinesDocument.title": "문서에서 빈 줄 제거",
   "extension.command.removeEmptyLinesSelection.title": "선택 영역에서 빈 줄 제거",
-  "extension.command.removeNonPrintableChars.title": "인쇄 불가능한 문자 제거",
+  "extension.command.cleanText.title": "텍스트 정리(인쇄 불가 문자 제거 및 정규화)",
   "extension.command.removeLeadingTrailingWhitespace.title": "앞뒤 공백 제거",
   "extension.command.encodeHTMLNamedCharacterEntitys.title": "HTML 명명된 문자 엔터티 인코딩 (&aacute;, &#xXXXX;, &#xXXXXX;)",
   "extension.command.decodeHTMLNamedCharacterEntitys.title": "HTML 명명된 문자 엔터티 디코딩 (&aacute;, &#xXXXX;, &#xXXXXX;)",

@@ -76,7 +76,7 @@ export function activate(context: vscode.ExtensionContext) {
 		/** Removes empty lines from current selection */
 		RemoveEmptyLinesSelection = "ps-dev-toolbox.removeEmptyLinesSelection",
 		/** Removes non-printable characters from text */
-		RemoveNonPrintableChars = "ps-dev-toolbox.removeNonPrintableChars",
+		CleanText = "ps-dev-toolbox.cleanText",
 		/** Removes leading and trailing whitespace */
 		RemoveLeadingTrailingWhitespace = "ps-dev-toolbox.removeLeadingTrailingWhitespace",
 		/** Encodes text to HTML named character entities */
@@ -476,9 +476,9 @@ export function activate(context: vscode.ExtensionContext) {
 	 * 
 	 * @returns {Promise<void>}
 	 */
-	const removeNonPrintableCharactersCommand = async (): Promise<void> => {
+	const cleanTextCommand = async (): Promise<void> => {
 		await processTextInEditor(
-			utils.removeNonPrintableCharacters,
+			utils.cleanText,
 			false // Don't expand to full lines (process exact selection)
 		);
 	};
@@ -784,7 +784,7 @@ export function activate(context: vscode.ExtensionContext) {
 		 * 
 		 * @returns {Promise<void>}
 		 */
-		[CommandId.RemoveNonPrintableChars]: removeNonPrintableCharactersCommand,
+		[CommandId.CleanText]: cleanTextCommand,
 
 		/**
 		 * Removes leading and trailing whitespace

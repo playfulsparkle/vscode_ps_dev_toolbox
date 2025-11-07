@@ -37,7 +37,7 @@
   "extension.command.generateGuid.title": "Vygenerovať UUID/GUID",
   "extension.command.removeEmptyLinesDocument.title": "Odstrániť prázdne riadky z dokumentu",
   "extension.command.removeEmptyLinesSelection.title": "Odstrániť prázdne riadky z výberu",
-  "extension.command.removeNonPrintableChars.title": "Odstrániť netlačiteľné znaky",
+  "extension.command.cleanText.title": "Vyčistiť text (odstrániť netlačiteľné znaky a normalizovať)",
   "extension.command.removeLeadingTrailingWhitespace.title": "Odstrániť počiatočné a koncové medzery",
   "extension.command.encodeHTMLNamedCharacterEntitys.title": "Kódovať pomenované znakové entity HTML (&aacute;, &#xXXXX;, &#xXXXXX;)",
   "extension.command.decodeHTMLNamedCharacterEntitys.title": "Dekódovať pomenované znakové entity HTML (&aacute;, &#xXXXX;, &#xXXXXX;)",

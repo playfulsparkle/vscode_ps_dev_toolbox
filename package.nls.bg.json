@@ -37,7 +37,7 @@
   "extension.command.generateGuid.title": "Генериране на UUID/GUID",
   "extension.command.removeEmptyLinesDocument.title": "Премахване на празни редове от документ",
   "extension.command.removeEmptyLinesSelection.title": "Премахване на празни редове от избора",
-  "extension.command.removeNonPrintableChars.title": "Премахване на недрукуеми знаци",
+  "extension.command.cleanText.title": "Почистване на текст (премахване на непечатаеми знаци и нормализиране)",
   "extension.command.removeLeadingTrailingWhitespace.title": "Премахване на водещи и следващи празни интервали",
   "extension.command.encodeHTMLNamedCharacterEntitys.title": "Кодиране на именувани HTML знакови ентитети (&aacute;, &#xXXXX;, &#xXXXXX;)",
   "extension.command.decodeHTMLNamedCharacterEntitys.title": "Декодиране на именувани HTML знакови ентитети (&aacute;, &#xXXXX;, &#xXXXXX;)",

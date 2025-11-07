@@ -37,7 +37,7 @@
   "extension.command.generateGuid.title": "UUID/GUID üret",
   "extension.command.removeEmptyLinesDocument.title": "Belgeden boş satırları kaldır",
   "extension.command.removeEmptyLinesSelection.title": "Seçimden boş satırları kaldır",
-  "extension.command.removeNonPrintableChars.title": "Yazdırılamayan karakterleri kaldır",
+  "extension.command.cleanText.title": "Metni temizle (yazdırılamayan karakterleri kaldır ve normalleştir)",
   "extension.command.removeLeadingTrailingWhitespace.title": "Baş ve sondaki boşlukları kaldır",
   "extension.command.encodeHTMLNamedCharacterEntitys.title": "HTML adlandırılmış karakter varlıklarını kodla (&aacute;, &#xXXXX;, &#xXXXXX;)",
   "extension.command.decodeHTMLNamedCharacterEntitys.title": "HTML adlandırılmış karakter varlıklarının kodunu çöz (&aacute;, &#xXXXX;, &#xXXXXX;)",

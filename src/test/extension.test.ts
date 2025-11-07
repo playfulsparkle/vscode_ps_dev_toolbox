@@ -84,7 +84,7 @@ suite("Dev Toolbox Tests", () => {
 		});
 	});
 
-	suite("Encode/Decode to Unicode Codepoint", () => {
+	suite("Encode/Decode to Unicode Codepoint (non-separated)", () => {
 		test("Complex unicode characters", () => {
 			const encoded = "U+0110U+0111U+0129U+0128U+0169U+0168U+01A1U+01A0U+01B0U+01AFU+1EA1U+1EA0U+1EA3U+1EA2U+1EA5U+1EA4U+1EA7U+1EA6U+1EA9U+1EA8U+1EABU+1EAAU+1EADU+1EACU+1EAFU+1EAEU+1EB1U+1EB0U+1EB3U+1EB2U+1EB5U+1EB4U+1EB7U+1EB6U+1EB9U+1EB8U+1EBBU+1EBAU+1EBDU+1EBCU+1EBFU+1EBEU+1EC1U+1EC0U+1EC3U+1EC2U+1EC5U+1EC4U+1EC7U+1EC6U+1EC9U+1EC8U+1ECBU+1ECAU+1ECDU+1ECCU+1ECFU+1ECEU+1ED1U+1ED0U+1ED3U+1ED2U+1ED5U+1ED4U+1ED7U+1ED6U+1ED9U+1ED8U+1EDBU+1EDAU+1EDDU+1EDCU+1EDFU+1EDEU+1EE1U+1EE0U+1EE3U+1EE2U+1EE5U+1EE4U+1EE7U+1EE6U+1EE9U+1EE8U+1EEBU+1EEAU+1EEDU+1EECU+1EEFU+1EEEU+1EF1U+1EF0U+1EF3U+1EF2U+1EF5U+1EF4U+1EF7U+1EF6U+1EF9U+1EF8";
 			assert.strictEqual(utils.encodeUnicodeCodePointNotation(complexUnicode), encoded);
@@ -94,6 +94,20 @@ suite("Dev Toolbox Tests", () => {
 		test("Complex emoji", () => {
 			const encoded = "U+1F3F4U+E0067U+E0062U+E0077U+E006CU+E0073U+E007FU+0020U+1F9D1U+200DU+1F91DU+200DU+1F9D1U+0020U+1F468U+200DU+1F469U+200DU+1F466U+200DU+1F466U+0020U+1F469U+200DU+1F469U+200DU+1F467U+200DU+1F467U+0020U+1F469U+200DU+2764U+FE0FU+200DU+1F48BU+200DU+1F469U+0020U+1F3F4";
 			assert.strictEqual(utils.encodeUnicodeCodePointNotation(complexEmoji), encoded);
+			assert.strictEqual(utils.decodeUnicodeCodePointNotation(encoded), complexEmoji);
+		});
+	});
+
+		suite("Encode/Decode to Unicode Codepoint (separated)", () => {
+		test("Complex unicode characters", () => {
+			const encoded = "U+0110 U+0111 U+0129 U+0128 U+0169 U+0168 U+01A1 U+01A0 U+01B0 U+01AF U+1EA1 U+1EA0 U+1EA3 U+1EA2 U+1EA5 U+1EA4 U+1EA7 U+1EA6 U+1EA9 U+1EA8 U+1EAB U+1EAA U+1EAD U+1EAC U+1EAF U+1EAE U+1EB1 U+1EB0 U+1EB3 U+1EB2 U+1EB5 U+1EB4 U+1EB7 U+1EB6 U+1EB9 U+1EB8 U+1EBB U+1EBA U+1EBD U+1EBC U+1EBF U+1EBE U+1EC1 U+1EC0 U+1EC3 U+1EC2 U+1EC5 U+1EC4 U+1EC7 U+1EC6 U+1EC9 U+1EC8 U+1ECB U+1ECA U+1ECD U+1ECC U+1ECF U+1ECE U+1ED1 U+1ED0 U+1ED3 U+1ED2 U+1ED5 U+1ED4 U+1ED7 U+1ED6 U+1ED9 U+1ED8 U+1EDB U+1EDA U+1EDD U+1EDC U+1EDF U+1EDE U+1EE1 U+1EE0 U+1EE3 U+1EE2 U+1EE5 U+1EE4 U+1EE7 U+1EE6 U+1EE9 U+1EE8 U+1EEB U+1EEA U+1EED U+1EEC U+1EEF U+1EEE U+1EF1 U+1EF0 U+1EF3 U+1EF2 U+1EF5 U+1EF4 U+1EF7 U+1EF6 U+1EF9 U+1EF8";
+			assert.strictEqual(utils.encodeUnicodeCodePointNotation(complexUnicode, false, true), encoded);
+			assert.strictEqual(utils.decodeUnicodeCodePointNotation(encoded), complexUnicode);
+		});
+
+		test("Complex emoji", () => {
+			const encoded = "U+1F3F4 U+E0067 U+E0062 U+E0077 U+E006C U+E0073 U+E007F U+0020 U+1F9D1 U+200D U+1F91D U+200D U+1F9D1 U+0020 U+1F468 U+200D U+1F469 U+200D U+1F466 U+200D U+1F466 U+0020 U+1F469 U+200D U+1F469 U+200D U+1F467 U+200D U+1F467 U+0020 U+1F469 U+200D U+2764 U+FE0F U+200D U+1F48B U+200D U+1F469 U+0020 U+1F3F4";
+			assert.strictEqual(utils.encodeUnicodeCodePointNotation(complexEmoji, false, true), encoded);
 			assert.strictEqual(utils.decodeUnicodeCodePointNotation(encoded), complexEmoji);
 		});
 	});
@@ -126,7 +140,7 @@ suite("Dev Toolbox Tests", () => {
 		});
 	});
 
-	suite("Encode/Decode Hex Code Points", () => {
+	suite("Encode/Decode Hex Code Points (non-separated)", () => {
 		test("Complex unicode characters", () => {
 			const encoded = "0x1100x1110x1290x1280x1690x1680x1A10x1A00x1B00x1AF0x1EA10x1EA00x1EA30x1EA20x1EA50x1EA40x1EA70x1EA60x1EA90x1EA80x1EAB0x1EAA0x1EAD0x1EAC0x1EAF0x1EAE0x1EB10x1EB00x1EB30x1EB20x1EB50x1EB40x1EB70x1EB60x1EB90x1EB80x1EBB0x1EBA0x1EBD0x1EBC0x1EBF0x1EBE0x1EC10x1EC00x1EC30x1EC20x1EC50x1EC40x1EC70x1EC60x1EC90x1EC80x1ECB0x1ECA0x1ECD0x1ECC0x1ECF0x1ECE0x1ED10x1ED00x1ED30x1ED20x1ED50x1ED40x1ED70x1ED60x1ED90x1ED80x1EDB0x1EDA0x1EDD0x1EDC0x1EDF0x1EDE0x1EE10x1EE00x1EE30x1EE20x1EE50x1EE40x1EE70x1EE60x1EE90x1EE80x1EEB0x1EEA0x1EED0x1EEC0x1EEF0x1EEE0x1EF10x1EF00x1EF30x1EF20x1EF50x1EF40x1EF70x1EF60x1EF90x1EF8";
 			assert.strictEqual(utils.encodeHexCodePoints(complexUnicode), encoded, "encode hex code points");
@@ -137,6 +151,21 @@ suite("Dev Toolbox Tests", () => {
 			const encoded = "0x1F3F40xE00670xE00620xE00770xE006C0xE00730xE007F0x200x1F9D10x200D0x1F91D0x200D0x1F9D10x200x1F4680x200D0x1F4690x200D0x1F4660x200D0x1F4660x200x1F4690x200D0x1F4690x200D0x1F4670x200D0x1F4670x200x1F4690x200D0x27640xFE0F0x200D0x1F48B0x200D0x1F4690x200x1F3F4";
 
 			assert.strictEqual(utils.encodeHexCodePoints(complexEmoji), encoded, "encode hex code points");
+			assert.strictEqual(utils.decodeHexCodePoints(encoded), complexEmoji, "decode hex code points");
+		});
+	});
+
+	suite("Encode/Decode Hex Code Points (separated)", () => {
+		test("Complex unicode characters", () => {
+			const encoded = "0x110 0x111 0x129 0x128 0x169 0x168 0x1A1 0x1A0 0x1B0 0x1AF 0x1EA1 0x1EA0 0x1EA3 0x1EA2 0x1EA5 0x1EA4 0x1EA7 0x1EA6 0x1EA9 0x1EA8 0x1EAB 0x1EAA 0x1EAD 0x1EAC 0x1EAF 0x1EAE 0x1EB1 0x1EB0 0x1EB3 0x1EB2 0x1EB5 0x1EB4 0x1EB7 0x1EB6 0x1EB9 0x1EB8 0x1EBB 0x1EBA 0x1EBD 0x1EBC 0x1EBF 0x1EBE 0x1EC1 0x1EC0 0x1EC3 0x1EC2 0x1EC5 0x1EC4 0x1EC7 0x1EC6 0x1EC9 0x1EC8 0x1ECB 0x1ECA 0x1ECD 0x1ECC 0x1ECF 0x1ECE 0x1ED1 0x1ED0 0x1ED3 0x1ED2 0x1ED5 0x1ED4 0x1ED7 0x1ED6 0x1ED9 0x1ED8 0x1EDB 0x1EDA 0x1EDD 0x1EDC 0x1EDF 0x1EDE 0x1EE1 0x1EE0 0x1EE3 0x1EE2 0x1EE5 0x1EE4 0x1EE7 0x1EE6 0x1EE9 0x1EE8 0x1EEB 0x1EEA 0x1EED 0x1EEC 0x1EEF 0x1EEE 0x1EF1 0x1EF0 0x1EF3 0x1EF2 0x1EF5 0x1EF4 0x1EF7 0x1EF6 0x1EF9 0x1EF8";
+			assert.strictEqual(utils.encodeHexCodePoints(complexUnicode, false, true), encoded, "encode hex code points");
+			assert.strictEqual(utils.decodeHexCodePoints(encoded), complexUnicode, "decode hex code points");
+		});
+
+		test("Complex emoji", () => {
+			const encoded = "0x1F3F4 0xE0067 0xE0062 0xE0077 0xE006C 0xE0073 0xE007F 0x20 0x1F9D1 0x200D 0x1F91D 0x200D 0x1F9D1 0x20 0x1F468 0x200D 0x1F469 0x200D 0x1F466 0x200D 0x1F466 0x20 0x1F469 0x200D 0x1F469 0x200D 0x1F467 0x200D 0x1F467 0x20 0x1F469 0x200D 0x2764 0xFE0F 0x200D 0x1F48B 0x200D 0x1F469 0x20 0x1F3F4";
+
+			assert.strictEqual(utils.encodeHexCodePoints(complexEmoji, false, true), encoded, "encode hex code points");
 			assert.strictEqual(utils.decodeHexCodePoints(encoded), complexEmoji, "decode hex code points");
 		});
 	});
@@ -236,26 +265,135 @@ suite("Dev Toolbox Tests", () => {
 	suite("Remove Non-Printable Characters", () => {
 		test("removes non-printable characters", () => {
 			const input = "Hello\u0000 World\u200B!";
-			const expected = "Hello  World !";
-			assert.strictEqual(utils.removeNonPrintableCharacters(input), expected);
+			const expected = "Hello World!";
+			assert.strictEqual(utils.cleanText(input), expected);
 		});
 
 		test("preserves printable characters", () => {
 			const input = "Hello World!";
 			const expected = "Hello World!";
-			assert.strictEqual(utils.removeNonPrintableCharacters(input), expected);
+			assert.strictEqual(utils.cleanText(input), expected);
 		});
 
 		test("preserves whitespace characters", () => {
 			const input = "Hello\tWorld\nNew Line\rCarriage Return";
 			const expected = "Hello\tWorld\nNew Line\rCarriage Return";
-			assert.strictEqual(utils.removeNonPrintableCharacters(input), expected);
+			assert.strictEqual(utils.cleanText(input), expected);
 		});
 
 		test("handles empty input", () => {
 			const input = "";
 			const expected = "";
-			assert.strictEqual(utils.removeNonPrintableCharacters(input), expected);
+			assert.strictEqual(utils.cleanText(input), expected);
+		});
+
+		test("normalizes dash characters to standard hyphen", () => {
+			const input = "Figure‒Dash En–Dash Em—Dash Horizontal―Bar";
+			const expected = "Figure-Dash En-Dash Em-Dash Horizontal-Bar";
+			assert.strictEqual(utils.cleanText(input), expected);
+		});
+
+		test("normalizes space characters to standard space", () => {
+			const input = "No\u00A0Break\u2002En\u2003Space\u2009Thin\u200AHair";
+			const expected = "No Break En Space Thin Hair";
+			assert.strictEqual(utils.cleanText(input), expected);
+		});
+
+		test("preserves complex emojis and surrogate pairs", () => {
+			const input = "😀 🌟 👨‍👩‍👧‍👦 🏳️‍🌈";
+			const expected = "😀 🌟 👨‍👩‍👧‍👦 🏳️‍🌈";
+			assert.strictEqual(utils.cleanText(input), expected);
+		});
+
+		test("removes invisible zero-width characters", () => {
+			const input = "Hello\u200B\u200C\u2060World";
+			const expected = "HelloWorld";
+			assert.strictEqual(utils.cleanText(input), expected);
+		});
+
+		test("preserves RTL/LTR directional formatting", () => {
+			const input = "Hello \u202Bمرحبا\u202C World";
+			const expected = "Hello ‫مرحبا‬ World";
+			assert.strictEqual(utils.cleanText(input), expected);
+		});
+
+		test("handles BOM characters by converting to space", () => {
+			const input = "\uFEFFHello World";
+			const expected = " Hello World";
+			assert.strictEqual(utils.cleanText(input), expected);
+		});
+
+		test("handles mixed content with all scenarios", () => {
+			const input = "Text\u0000With\u2013Dashes\u00A0Spaces\u200BInvisible👨‍👩‍👧‍👦Emoji";
+			const expected = "TextWith-Dashes SpacesInvisible👨‍👩‍👧‍👦Emoji";
+			assert.strictEqual(utils.cleanText(input), expected);
+		});
+
+		test("preserves mathematical and currency symbols", () => {
+			const input = "∑ ∫ € £ ∞";
+			const expected = "∑ ∫ € £ ∞";
+			assert.strictEqual(utils.cleanText(input), expected);
+		});
+
+		test("removes control characters but keeps tabs and line endings", () => {
+			const input = "Line1\u0001\u0002\u0003\nLine2\tTab\u0008Backspace";
+			const expected = "Line1\nLine2\tTabBackspace";
+			assert.strictEqual(utils.cleanText(input), expected);
+		});
+
+		test("handles string with only control characters", () => {
+			const input = "\u0001\u0002\u0003\u0004\u0005";
+			const expected = "";
+			assert.strictEqual(utils.cleanText(input), expected);
+		});
+
+		test("preserves combining characters and variation selectors", () => {
+			const input = "é ☆️ ★️";
+			const expected = "é ☆️ ★️";
+			assert.strictEqual(utils.cleanText(input), expected);
+		});
+
+		test("normalizes multiple different space types consistently", () => {
+			const input = "a\u00A0b\u2002c\u2003d\u2009e";
+			const expected = "a b c d e";
+			assert.strictEqual(utils.cleanText(input), expected);
+		});
+
+		test("normalizes multiple different dash types consistently", () => {
+			const input = "a\u2010b\u2013c\u2014d\u2212e";
+			const expected = "a-b-c-d-e";
+			assert.strictEqual(utils.cleanText(input), expected);
+		});
+
+		test("preserves zero width joiner for complex emojis", () => {
+			const input = "👨‍👩‍👧‍👦";
+			const expected = "👨‍👩‍👧‍👦";
+			assert.strictEqual(utils.cleanText(input), expected);
+		});
+
+		test("preserves box drawing characters", () => {
+			const input = "┌─┐\n│ │\n└─┘";
+			const expected = "┌─┐\n│ │\n└─┘";
+			assert.strictEqual(utils.cleanText(input), expected);
+		});
+
+		test("handles very large input efficiently", () => {
+			const largeInput = "A".repeat(10000) + "\u0000" + "B".repeat(10000);
+			const result = utils.cleanText(largeInput);
+			assert.strictEqual(result.length, 20000);
+			assert.strictEqual(result.includes("\u0000"), false);
+		});
+
+		test("converts BOM to space at any position", () => {
+			const input = "Start\uFEFFMiddle\uFEFFEnd";
+			const expected = "Start Middle End";
+			assert.strictEqual(utils.cleanText(input), expected);
+		});
+
+		test("preserves arrows and other symbols", () => {
+			const input = "→ ← ↑ ↓ ↔";
+			const expected = "→ ← ↑ ↓ ↔";
+			assert.strictEqual(utils.cleanText(input), expected);
 		});
 	});
 

@@ -37,7 +37,7 @@
   "extension.command.generateGuid.title": "生成 UUID/GUID",
   "extension.command.removeEmptyLinesDocument.title": "从文档中移除空行",
   "extension.command.removeEmptyLinesSelection.title": "从所选内容中移除空行",
-  "extension.command.removeNonPrintableChars.title": "移除不可打印字符",
+  "extension.command.cleanText.title": "清理文本（移除不可打印字符并规范化）",
   "extension.command.removeLeadingTrailingWhitespace.title": "移除行首与行尾空白",
   "extension.command.encodeHTMLNamedCharacterEntitys.title": "编码 HTML 命名字符实体 (&aacute;, &#xXXXX;, &#xXXXXX;)",
   "extension.command.decodeHTMLNamedCharacterEntitys.title": "解码 HTML 命名字符实体 (&aacute;, &#xXXXX;, &#xXXXXX;)",

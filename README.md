@@ -4,29 +4,31 @@
 
 # Playful Sparkle: Dev Toolbox
 
-**Playful Sparkle Dev Toolbox** is your all-in-one solution within Visual Studio Code for URL slug generation, Base64/URL encoding/decoding, GUID generation, and removing empty lines, non-printable characters, and whitespace. This extension streamlines common text manipulation tasks directly in your editor, boosting your productivity without the need for external tools.
+**Dev Toolbox** is a Visual Studio Code extension that provides essential text manipulation tools including URL slug generation, Base64/URL encoding/decoding, GUID generation, text case conversion, and advanced text cleaning.
 
-Seamlessly integrate these essential features into your coding environment to simplify text processing and generation. Whether you're optimizing URLs, handling data encoding, generating unique IDs, or cleaning up text, **Playful Sparkle Dev Toolbox** provides efficient and reliable tools at your fingertips.
+Streamline your development workflow with comprehensive text processing tools directly in your editor. From cleaning problematic text to generating identifiers and converting text formats, **Dev Toolbox** handles common development tasks efficiently.
+
+---
+
+## Text Case Conversion
+
+![Converting text between various programming case formats](img/text-case.gif "Example: camelCase, PascalCase, snake_case, kebab-case")
+
+## Slugify Text
+
+![Converting text to URL-safe slugs](img/generate-url-slug.gif "Example: My Document Name → my-document-name")
+
+## GUID Generation
+
+![Generating unique identifiers in various formats](img/guid.gif "Example: raw, registry, and bracket formats")
+
+## Encoding and Conversions
+
+![Encoding and decoding text in various formats](img/encode.gif "Example: Base64, URL, HTML entities, Unicode escapes")
 
 ---
 
 ## Features
-
-### Text case conversion
-
-![Text case conversion](img/text-case.gif "Text case conversion")
-
-### Slugify text (make text URL safe)
-
-![Slugify text (make text URL safe)](img/generate-url-slug.gif "Slugify text (make text URL safe)")
-
-### GUID generation
-
-![GUID generation](img/guid.gif "GUID generation")
-
-### Encoding and conversions
-
-![Encoding and conversions](img/encode.gif "Encoding and conversions")
 
 * **Text formatting**
   * Text case conversion commands. Easily convert selected text into various common programming case formats:
@@ -82,9 +84,11 @@ This extension has no special requirements or dependencies. It works directly wi
 
 ## Known Issues
 
-* **GUID Generation Predictability:**
-    * The `generateGuid` function uses `Math.random()` for GUID generation, which is not cryptographically secure. While suitable for most general-purpose use cases, it should not be used for applications requiring high levels of security or uniqueness.
-    * While the GUID generated is very unlikely to be the same, there is still a very small risk of collision.
+- **GUID Generation Predictability**
+  The GUID generation uses `Math.random()` which is suitable for general purposes but not cryptographically secure. While collision risk is minimal, avoid for security-critical applications.
+
+- **Large File Processing**
+  Text processing operations occur in memory. Very large documents may experience performance impacts. Consider processing selections for optimal performance.
 
 If you encounter any of these or other issues, please report them on the [GitHub Issues page](https://github.com/playfulsparkle/vscode_ps_dev_toolbox/issues) with detailed steps to reproduce the problem.
 
@@ -92,100 +96,90 @@ If you encounter any of these or other issues, please report them on the [GitHub
 
 ## Release Notes
 
+### 0.0.19
+
+- Renamed `Remove Non-printable Characters` to `Clean Text (Remove Non-printable Characters & Normalize)` and enhanced the function to normalize spaces, dashes, and preserve complex Unicode characters.
+
 ### 0.0.18
 
-Added Sort Lines Ascending/Descending which provides advanced, fast, Unicode-aware sorting for entire documents or text selections.
+- Added Sort Lines Ascending/Descending with advanced, fast, Unicode-aware sorting for documents or selections.
 
 ### 0.0.17
 
-Improved decoding across all encoders, added input validation.
+- Improved decoding across all encoders with enhanced input validation.
 
 ### 0.0.16
 
-Translated Command Palette category.
+- Translated Command Palette category for better internationalization.
 
 ### 0.0.15
 
-* Added support for encoding and decoding percent-encoded URI sequences.
+- Added support for encoding and decoding percent-encoded URI sequences.
 
 ### 0.0.14
 
-* Added "Convert to URL Slug" command to Explorer context menu for renaming files and folders to URL-safe format (supports multi-selection)
-* Updated locale handling in text transformation commands
+- Added "Convert to URL Slug" command to Explorer context menu for file and folder renaming
+- Updated locale handling in text transformation commands
 
 ### 0.0.13
 
-* Fixed single block selection for URL slugify
-* Added support for multi-line text selection - each line is now slugified separately
-* Preserved original line ending delimiters (LF, CRLF, or mixed) when processing multi-line selections
+- Fixed single block selection for URL slugify
+- Added multi-line text selection support with original line ending preservation
 
 ### 0.0.12
 
-* URL slugify supports multi-cursor editing.
-* Fixed named HTML entity encoding.
-* Fixed hex numeric entity encoding.
-* Fixed decimal numeric entity encoding.
-* Fixed handling of full Unicode range.
-* Fixed ES6 code point escape encoding.
-* Fixed extended hex escape generation.
-* Fixed CSS escape encode and decode.
-* Fixed JS escape encode and decode.
-* Fixed script-context escape encode and decode.
-* Fixed behavior, then standardized function naming in “encode/decode hex entities.”
-* Test cases updated and expanded.
+- URL slugify supports multi-cursor editing
+- Fixed encoding/decoding across all entity types
+- Improved full Unicode range handling
+- Standardized function naming and expanded test coverage
 
 ### 0.0.11
 
-Introduced a streamlined issue reporting mechanism in alignment with **Microsoft Visual Studio Code** extension development best practices. This enhancement allows users to report bugs, suggest features, and provide feedback more efficiently, improving overall user experience and support responsiveness.
+- Introduced streamlined issue reporting aligned with Microsoft Visual Studio Code extension development best practices.
 
 ### 0.0.10
 
-* Updated the logic for removing non-printable characters. Most control characters and specific invisible whitespace are now replaced with a space. Standard whitespace (tab, line feed, carriage return) is preserved, as are zero-width joiners/non-joiners and variation selectors when they are part of character sequences.
+- Updated non-printable character removal to replace control characters with spaces while preserving standard whitespace and complex character sequences.
 
 ### 0.0.9
 
-* Introduced a suite of commands to easily convert selected text to various common programming case formats like `camelCase` (e.g., `myVariableName`), `PascalCase` (e.g., `MyClassName`), `snake_case` (e.g., `my_variable_name`), `SCREAMING_SNAKE_CASE` (e.g., `MY_CONSTANT_NAME`), `kebab-case` (e.g., `my-variable-name`), `TRAIN-CASE` (e.g., `MY-VARIABLE-NAME`), `flatcase` (e.g., `myvariablename`), `UPPERCASE` (e.g., `MYVARIABLENAME`)
+- Added comprehensive text case conversion suite including camelCase, PascalCase, snake_case, kebab-case, and other common programming formats.
 
 ### 0.0.8
 
-The updated removal of non-printable characters now neutralizes hidden control characters (e.g., `null bytes`, `zero-width spaces`), maintains complex character sequences (`emojis`, `diacritics`, `joined scripts`) while stripping `broken`/`invalid Unicode artifacts`, eliminates potential injection vectors from malformed surrogate pairs and invisible formatting characters, and guarantees output contains only standardized, renderable characters per Unicode 15.0 specifications.
+- Enhanced non-printable character removal to neutralize hidden control characters while maintaining complex Unicode sequences and eliminating malformed surrogate pairs.
 
 ### 0.0.7
 
-* Updated encode/decode named HTML entity, encode/decode HTML hex entity, encode/decode decimal entity, encode/decode JavaScript unicode escape, encode/decode CSS unicode escape, encode/decode code point, encode ES6 unicode code point escape, encode/decode extended hex escape and encode/decode hex code point now work using multi cursor.
-
+- Improved multi-cursor support for all encoding/decoding operations including HTML entities, Unicode escapes, and code point transformations.
 
 ### 0.0.6
 
-* Added support for three new GUID formats.
-* Introduced support for the following character encoding and decoding schemes.
+- Added support for three new GUID formats
+- Introduced comprehensive character encoding and decoding schemes
 
 ### 0.0.5
 
-* The extension's icon color theme has been updated, providing a more polished and consistent look.
-* The extension description has been refined to be more clear, concise, and easier for new users to understand its features and benefits.
+- Updated extension icon theme for polished appearance
+- Refined extension description for clarity and user understanding
 
 ### 0.0.4
 
-* Remove Empty Lines from Document.
-* Remove Empty Lines from Selection.
+- Added Remove Empty Lines from Document and Selection with configurable whitespace handling.
 
 ### 0.0.3
 
-* Re-upload, package was not updated properly.
+- Re-upload to address package update issues.
 
 ### 0.0.2
 
-* Removes empty lines from the selected text.
-* Removes non-printable characters from the selected text.
-* Removes whitespace (spaces, tabs, newlines) from the beginning and end of the selected text.
+- Remove empty lines from selected text
+- Remove non-printable characters from selections
+- Remove leading/trailing whitespace from text
 
 ### 0.0.1
-* Locale-Aware Case Conversion.
-* URL-Friendly Slug Generation.
-* Base64 Encoding/Decoding.
-* URL Encoding/Decoding.
-* GUID Generation.
+
+- Initial release with locale-aware case conversion, URL slug generation, Base64/URL encoding/decoding, and GUID generation.
 
 ---
 
@@ -194,6 +188,7 @@ The updated removal of non-printable characters now neutralizes hidden control c
 For any inquiries, bug reports, or feature requests related to the **Playful Sparkle: Dev Toolbox** extension, please feel free to utilize the following channels:
 
 * **GitHub Issues**: For bug reports, feature suggestions, or technical discussions, please open a new issue on the [GitHub repository](https://github.com/playfulsparkle/vscode_ps_dev_toolbox/issues). This allows for community visibility and tracking of reported issues.
+
 * **Email Support**: For general questions or private inquiries, you can contact the developer directly via email at `support@playfulsparkle.com`. Please allow a reasonable timeframe for a response.
 
 We encourage users to use the GitHub Issues page for bug reports and feature requests as it helps in better organization and tracking of the extension's development.

@@ -2,150 +2,87 @@
 
 All notable changes to the "Playful Sparkle: Dev Toolbox" extension will be documented in this file.
 
+## [0.0.19] - 2025-11-07
+
+- Renamed `Remove Non-printable Characters` to `Clean Text (Remove Non-printable Characters & Normalize)` and enhanced the function to normalize spaces, dashes, and preserve complex Unicode characters.
+
 ## [0.0.18] - 2025-11-03
 
-Added Sort Lines Ascending/Descending which provides advanced, fast, Unicode-aware sorting for entire documents or text selections.
+- Added Sort Lines Ascending/Descending with advanced, fast, Unicode-aware sorting for documents or selections.
 
 ## [0.0.17] - 2025-10-30
 
-Improved decoding across all encoders, added input validation.
+- Improved decoding across all encoders with enhanced input validation.
 
 ## [0.0.16] - 2025-10-29
 
-Translated Command Palette category.
+- Translated Command Palette category for better internationalization.
 
 ## [0.0.15] - 2025-10-28
 
-* Added support for encoding and decoding percent-encoded URI sequences.
+- Added support for encoding and decoding percent-encoded URI sequences.
 
 ## [0.0.14] - 2025-10-27
 
-* Added "Convert to URL Slug" command to Explorer context menu for renaming files and folders to URL-safe format (supports multi-selection)
-* Updated locale handling in text transformation commands
+- Added "Convert to URL Slug" command to Explorer context menu for file and folder renaming
+- Updated locale handling in text transformation commands
 
 ## [0.0.13] - 2025-10-26
 
-* Fixed single block selection for URL slugify
-* Added support for multi-line text selection - each line is now slugified separately
-* Preserved original line ending delimiters (LF, CRLF, or mixed) when processing multi-line selections
+- Fixed single block selection for URL slugify
+- Added multi-line text selection support with original line ending preservation
 
 ## [0.0.12] - 2025-10-26
 
-* URL slugify supports multi-cursor editing.
-* Fixed named HTML entity encoding.
-* Fixed hex numeric entity encoding.
-* Fixed decimal numeric entity encoding.
-* Fixed handling of full Unicode range.
-* Fixed ES6 code point escape encoding.
-* Fixed extended hex escape generation.
-* Fixed CSS escape encode and decode.
-* Fixed JS escape encode and decode.
-* Fixed script-context escape encode and decode.
-* Fixed behavior, then standardized function naming in “encode/decode hex entities.”
-* Test cases updated and expanded.
+- URL slugify supports multi-cursor editing
+- Fixed encoding/decoding across all entity types
+- Improved full Unicode range handling
+- Standardized function naming and expanded test coverage
 
 ## [0.0.11] - 2025-05-02
 
-* **Issue Reporting Support:** Introduced a streamlined issue reporting mechanism in alignment with **Microsoft Visual Studio Code** extension development best practices. This enhancement allows users to report bugs, suggest features, and provide feedback more efficiently, improving overall user experience and support responsiveness.
+- Introduced streamlined issue reporting aligned with Microsoft Visual Studio Code extension development best practices.
 
 ## [0.0.10] - 2025-05-02
 
-* **Code fix:** Updated the logic for removing non-printable characters. Most control characters and specific invisible whitespace are now replaced with a space. Standard whitespace (tab, line feed, carriage return) is preserved, as are zero-width joiners/non-joiners and variation selectors when they are part of character sequences.
+- Updated non-printable character removal to replace control characters with spaces while preserving standard whitespace and complex character sequences.
 
 ## [0.0.9] - 2025-04-26
 
-* **Added:** Introduced a suite of commands to easily convert selected text to various common programming case formats.
-    * Added function to convert to `camelCase` (e.g., `myVariableName`)
-    * Added function to convert to `PascalCase` (e.g., `MyClassName`)
-    * Added function to convert to `snake_case` (e.g., `my_variable_name`)
-    * Added function to convert to `SCREAMING_SNAKE_CASE` (e.g., `MY_CONSTANT_NAME`)
-    * Added function to convert to `kebab-case` (e.g., `my-variable-name`)
-    * Added function to convert to `TRAIN-CASE` (e.g., `MY-VARIABLE-NAME`)
-    * Added function to convert to `flatcase` (e.g., `myvariablename`)
-    * Added function to convert to `UPPERCASE` (e.g., `MYVARIABLENAME`)
+- Added comprehensive text case conversion suite including camelCase, PascalCase, snake_case, kebab-case, and other common programming formats.
 
 ## [0.0.8] - 2025-04-26
 
-* **Update:** For remove non printable characters:
-    * **Sanitized Text Output:** Neutralizes hidden control characters (e.g., `null bytes`, `zero-width spaces`) by converting them to standard spaces, ensuring consistent rendering across all platforms
-    * **Grapheme Integrity:** Maintains complex character sequences (`emojis`, `diacritics`, `joined scripts`) while stripping `broken`/`invalid Unicode artifacts`
-    * **Security Hardening:** Eliminates potential injection vectors from malformed surrogate pairs and invisible formatting characters
-    * **Strict Unicode Compliance:** Guarantees output contains only standardized, renderable characters per Unicode 15.0 specifications
+- Enhanced non-printable character removal to neutralize hidden control characters while maintaining complex Unicode sequences and eliminating malformed surrogate pairs.
 
 ## [0.0.7] - 2025-04-08
 
-* **Update:** encode/decode named HTML entity, encode/decode HTML hex entity, encode/decode decimal entity, encode/decode JavaScript unicode escape, encode/decode CSS unicode escape, encode/decode code point, encode ES6 unicode code point escape, encode/decode extended hex escape and encode/decode hex code point now work using multi cursor.
+- Improved multi-cursor support for all encoding/decoding operations including HTML entities, Unicode escapes, and code point transformations.
 
 ## [0.0.6] - 2025-04-08
 
-* **GUID Generation Enhancements:** Added support for three new GUID formats:
-    * Registry format: `{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}`
-    * Square brackets format: `[Guid("xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx")]`
-    * Less than sign format: `<Guid("xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx")>`
-* **New Encoding/Decoding Features:** Introduced support for the following character encoding and decoding schemes:
-    * Named HTML Entities (e.g., `<>` to `&lt;&gt;`)
-    * HTML Hex Entities (e.g., `!` to `&#x21;`)
-    * HTML Decimal Entities (e.g., `"` to `&#34;`)
-    * JavaScript Unicode Escape Sequences (e.g., `$` to `\u0024`)
-    * CSS Unicode Escape Sequences (e.g., `#` to `\0023`)
-    * Unicode Code Points (e.g., `%` to `U+0025`)
-    * ES6 Unicode Code Point Escape Sequences (e.g., `&` to `\u{26}`)
-    * Extended Hex Escape Sequences (e.g., `'` to `\x{27}`)
-    * Hex Code Points (e.g., `(` to `0x28`)
+- Added support for three new GUID formats
+- Introduced comprehensive character encoding and decoding schemes
 
 ## [0.0.5] - 2025-04-03
 
-* **Enhanced Visuals:** The extension's icon color theme has been updated, providing a more polished and consistent look.
-* **Improved User Understanding:** The extension description has been refined to be more clear, concise, and easier for new users to understand its features and benefits.
+- Updated extension icon theme for polished appearance
+- Refined extension description for clarity and user understanding
 
 ## [0.0.4] - 2025-04-03
 
-* **Added:**
-    * Remove Empty Lines from Document
-    * Remove Empty Lines from Selection
-
-* **Removed:**
-    * Remove all empty lines or only consecutive ones.
+- Added Remove Empty Lines from Document and Selection with configurable whitespace handling.
 
 ## [0.0.3] - 2025-04-02
 
-* Re-upload, package was not updated properly
+- Re-upload to address package update issues.
 
 ## [0.0.2] - 2025-04-02
 
-* **Remove Empty Lines:**
-    * Removes empty lines from the selected text.
-    * Supports options to:
-        * Remove all empty lines or only consecutive ones.
-        * Consider lines with only whitespace as empty.
-        
-* **Remove Non-Printable Characters:**
-    * Removes non-printable characters from the selected text.
-
-* **Remove Leading and Trailing Whitespace:**
-    * Removes whitespace (spaces, tabs, newlines) from the beginning and end of the selected text.
+- Remove empty lines from selected text
+- Remove non-printable characters from selections
+- Remove leading/trailing whitespace from text
 
 ## [0.0.1] - 2025-03-31
 
-* **Locale-Aware Case Conversion:**
-    * Converts selected text to lowercase or uppercase, respecting language-specific rules.
-    * Prompts for a locale to use for conversion, allowing for accurate handling of different languages.
-
-* **URL-Friendly Slug Generation:**
-    * Transforms selected text into a URL-safe slug.
-    * Removes diacritics (accents), special characters, and replaces spaces with hyphens.
-    * Intelligently preserves file extensions when present.
-
-* **Base64 Encoding/Decoding:**
-    * Encodes the selected text into a Base64 string.
-    * Decodes a Base64 string back to its original form.
-
-* **URL Encoding/Decoding:**
-    * Encodes the selected text for use in URLs, escaping special characters.
-    * Decodes URL-encoded text back to its original form.
-    * Ensures compatibility with URL standards.
-
-* **GUID Generation:**
-    * Generates a new Globally Unique Identifier (GUID) in the standard format.
-    * Inserts the generated GUID at the cursor's current position.
-    * Provides a quick way to create unique identifiers within the editor.
+- Initial release with locale-aware case conversion, URL slug generation, Base64/URL encoding/decoding, and GUID generation.

@@ -37,7 +37,7 @@
   "extension.command.generateGuid.title": "Сгенерировать UUID/GUID",
   "extension.command.removeEmptyLinesDocument.title": "Удалить пустые строки из документа",
   "extension.command.removeEmptyLinesSelection.title": "Удалить пустые строки из выделения",
-  "extension.command.removeNonPrintableChars.title": "Удалить непечатаемые символы",
+  "extension.command.cleanText.title": "Очистить текст (удалить непечатаемые символы и нормализовать)",
   "extension.command.removeLeadingTrailingWhitespace.title": "Удалить начальные и конечные пробелы",
   "extension.command.encodeHTMLNamedCharacterEntitys.title": "Кодировать именованные символьные сущности HTML (&aacute;, &#xXXXX;, &#xXXXXX;)",
   "extension.command.decodeHTMLNamedCharacterEntitys.title": "Декодировать именованные символьные сущности HTML (&aacute;, &#xXXXX;, &#xXXXXX;)",

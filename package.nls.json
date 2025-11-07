@@ -37,7 +37,7 @@
   "extension.command.generateGuid.title": "Generate UUID/GUID",
   "extension.command.removeEmptyLinesDocument.title": "Remove Empty Lines from Document",
   "extension.command.removeEmptyLinesSelection.title": "Remove Empty Lines from Selection",
-  "extension.command.removeNonPrintableChars.title": "Remove Non-printable Characters",
+  "extension.command.cleanText.title": "Clean Text (Remove Non-printable Characters & Normalize)",
   "extension.command.removeLeadingTrailingWhitespace.title": "Remove Leading and Trailing Whitespace",
   "extension.command.encodeHTMLNamedCharacterEntitys.title": "Encode HTML Named Character Entities (&aacute;, &#xXXXX;, &#xXXXXX;)",
   "extension.command.decodeHTMLNamedCharacterEntitys.title": "Decode HTML Named Character Entities (&aacute;, &#xXXXX;, &#xXXXXX;)",

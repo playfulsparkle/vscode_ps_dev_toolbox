@@ -37,7 +37,7 @@
   "extension.command.generateGuid.title": "UUID/GUID を生成",
   "extension.command.removeEmptyLinesDocument.title": "ドキュメントから空行を削除",
   "extension.command.removeEmptyLinesSelection.title": "選択範囲から空行を削除",
-  "extension.command.removeNonPrintableChars.title": "非印字文字を削除",
+  "extension.command.cleanText.title": "テキストをクリーンアップ（非印字文字を削除して正規化）",
   "extension.command.removeLeadingTrailingWhitespace.title": "前後の空白を削除",
   "extension.command.encodeHTMLNamedCharacterEntitys.title": "HTML の名前付き文字参照をエンコード (&aacute;, &#xXXXX;, &#xXXXXX;)",
   "extension.command.decodeHTMLNamedCharacterEntitys.title": "HTML の名前付き文字参照をデコード (&aacute;, &#xXXXX;, &#xXXXXX;)",
