@@ -133,6 +133,14 @@ if (!String.prototype.safeToUppercase) {
  * @module TextUtils
  */
 
+export function validateSortLocale(sortLocale: string, defaultLocale: string): string | string[] {
+    try {
+        return filterUserLocaleInput(defaultLocale, sortLocale);
+    } catch (_) {
+        return defaultLocale;
+    }
+}
+
 /**
  * Converts a string to lowercase safely using the specified locale
  * Falls back to `toLowerCase` if `toLocaleLowerCase` fails
@@ -326,14 +334,24 @@ export function removeLeadingTrailingWhitespace(text: string): string {
     if (typeof text !== "string") {
         return text;
     }
-
-    const lines = text.split("\n");
-
-    for (let i = 0; i < lines.length; i++) {
-        lines[i] = lines[i].trim();
+    
+    // Split while capturing line endings
+    const parts = text.split(/(\r?\n)/);
+    
+    let result = "";
+    
+    for (let i = 0; i < parts.length; i++) {
+        const part = parts[i];
+        if (part === "\n" || part === "\r\n" || part === "\r") {
+            // Preserve line endings as-is
+            result += part;
+        } else {
+            // Trim content lines
+            result += part.trim();
+        }
     }
-
-    return lines.join("\n");
+    
+    return result;
 }
 
 /**

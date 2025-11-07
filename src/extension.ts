@@ -122,6 +122,27 @@ export function activate(context: vscode.ExtensionContext) {
 	}
 
 	/**
+	 * Helper function to read configuration settings from VS Code workspace
+	 * @param section - The configuration section (e.g., "ps-dev-toolbox.encoding")
+	 * @param key - The configuration key within the section
+	 * @param defaultValue - Default value if the setting is not found
+	 * @returns The configuration value or default value
+	 */
+	const getConfigValue = <T>(
+		section: string,
+		key: string,
+		defaultValue: T
+	): T => {
+		const config = vscode.workspace.getConfiguration(section);
+
+		return config.get<T>(key, defaultValue);
+	};
+
+	const getDefaultLocale = () => {
+		return vscode.env.language || "en";
+	};
+
+	/**
 	 * Processes text in the active editor with a transformation function
 	 * 
 	 * Handles both text selections and entire document processing with
@@ -183,83 +204,6 @@ export function activate(context: vscode.ExtensionContext) {
 				const processedText = transformFn(selectedText, options);
 
 				editBuilder.replace(rangeToProcess, processedText);
-			}
-		});
-	};
-
-	/**
-	 * Sorts lines in the active editor with specified order
-	 * 
-	 * @param {boolean} descending - Whether to sort in descending order
-	 * @returns {Promise<void>}
-	 */
-	const sortLinesCommand = async (descending: boolean): Promise<void> => {
-		const editor = vscode.window.activeTextEditor;
-
-		if (!editor) {
-			return;
-		}
-
-		const document = editor.document;
-		const selections = editor.selections;
-
-		const defaultLocale = vscode.env.language || "en";
-
-		// Get configuration
-		const config = vscode.workspace.getConfiguration("ps-dev-toolbox.sorting");
-
-		const useNumericSorting = config.get<boolean>("useNumericSorting", true);
-		const sortIgnoreCase = config.get<boolean>("sortIgnoreCase", true);
-		const sortLocale = config.get<string>("sortLocale", defaultLocale);
-
-		// Determine locale(s) to use
-		let locales: string | string[];
-
-		if (sortLocale && sortLocale.trim().length > 0) {
-			try {
-				locales = utils.filterUserLocaleInput(defaultLocale, sortLocale);
-			} catch (error) {
-				locales = defaultLocale;
-			}
-		} else {
-			locales = defaultLocale;
-		}
-
-		const sortOptions = {
-			descending: descending,
-			locales: locales,
-			ignoreCase: sortIgnoreCase,
-			numeric: useNumericSorting
-		};
-
-		// If there are no selections or only empty selections, sort the entire document
-		if (!selections.length || selections.every(s => s.isEmpty)) {
-			const entireDocumentRange = new vscode.Range(0, 0, document.lineCount - 1, document.lineAt(document.lineCount - 1).text.length);
-			const text = document.getText(entireDocumentRange);
-			const sortedText = sortUtils.sortLines(text, sortOptions);
-
-			await editor.edit(editBuilder => {
-				editBuilder.replace(entireDocumentRange, sortedText);
-			});
-			return;
-		}
-
-		// Process each selection
-		await editor.edit(editBuilder => {
-			for (const selection of selections) {
-				if (selection.isEmpty) {
-					continue;
-				}
-
-				// Expand selection to include full lines
-				const startLine = document.lineAt(selection.start.line);
-				const endLine = document.lineAt(selection.end.line);
-				const rangeToProcess = new vscode.Range(startLine.range.start, endLine.range.end);
-
-				const selectedText = document.getText(rangeToProcess);
-				const sortedText = sortUtils.sortLines(selectedText, sortOptions);
-
-				editBuilder.replace(rangeToProcess, sortedText);
 			}
 		});
 	};
@@ -329,8 +273,7 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 
 		// Get configuration from settings
-		const config = vscode.workspace.getConfiguration("ps-dev-toolbox.removeEmptyLines");
-		const considerWhitespaceEmpty = config.get<boolean>("considerWhitespaceEmpty", true);
+		const whiteSpaceEmpty = getConfigValue<boolean>("ps-dev-toolbox.removeEmptyLines", "whiteSpaceEmpty", true);
 
 		const document = editor.document;
 		const selections = editor.selections;
@@ -346,7 +289,7 @@ export function activate(context: vscode.ExtensionContext) {
 				const cursorFirstNonEmptyLine = getCursorFirstNoneEmptyLine(selections[0].start.line, document);
 				const cursorLastNonEmptyLine = getCursorLastNoneEmptyLine(selections[0].start.line, document);
 
-				await removeEmptyLines(editor, document, [[cursorFirstNonEmptyLine, cursorLastNonEmptyLine]], considerWhitespaceEmpty);
+				await removeEmptyLines(editor, document, [[cursorFirstNonEmptyLine, cursorLastNonEmptyLine]], whiteSpaceEmpty);
 			} else { // Multi-cursor selections
 				const rangesToProcess: IRange[] = [];
 
@@ -356,10 +299,10 @@ export function activate(context: vscode.ExtensionContext) {
 					}
 				}
 
-				await removeEmptyLines(editor, document, rangesToProcess, considerWhitespaceEmpty);
+				await removeEmptyLines(editor, document, rangesToProcess, whiteSpaceEmpty);
 			}
 		} else { // Process entire document
-			await removeEmptyLines(editor, document, [[0, document.lineCount - 1]], considerWhitespaceEmpty);
+			await removeEmptyLines(editor, document, [[0, document.lineCount - 1]], whiteSpaceEmpty);
 		}
 	};
 
@@ -369,14 +312,14 @@ export function activate(context: vscode.ExtensionContext) {
 	 * @param {vscode.TextEditor} editor - The active text editor
 	 * @param {vscode.TextDocument} document - The text document
 	 * @param {IRange[]} ranges - Array of line ranges to process
-	 * @param {boolean} considerWhitespaceEmpty - Whether to consider whitespace-only lines as empty
+	 * @param {boolean} whiteSpaceEmpty - Whether to consider whitespace-only lines as empty
 	 * @returns {Promise<void>}
 	 */
 	const removeEmptyLines = async (
 		editor: vscode.TextEditor,
 		document: vscode.TextDocument,
 		ranges: IRange[],
-		considerWhitespaceEmpty: boolean
+		whiteSpaceEmpty: boolean
 	): Promise<void> => {
 		if (ranges.length === 0) {
 			return;
@@ -388,7 +331,7 @@ export function activate(context: vscode.ExtensionContext) {
 			for (let idx = range[0]; idx <= range[1]; idx++) {
 				const line = document.lineAt(idx);
 
-				const isEmpty = considerWhitespaceEmpty
+				const isEmpty = whiteSpaceEmpty
 					? line.isEmptyOrWhitespace
 					: line.text.length === 0;
 
@@ -489,7 +432,7 @@ export function activate(context: vscode.ExtensionContext) {
 	 * @returns {Promise<string[]>} Array of validated locales
 	 */
 	const localesPrompt = async (): Promise<string[]> => {
-		const defaultLocale = vscode.env.language || "en";
+		const defaultLocale = getDefaultLocale();
 
 		const localesInput = await vscode.window.showInputBox({
 			prompt: vscode.l10n.t("Enter the locales to use for the transformation (comma-separated)"),
@@ -650,8 +593,7 @@ export function activate(context: vscode.ExtensionContext) {
 		 * @returns {Promise<void>}
 		 */
 		[CommandId.Slugify]: async (): Promise<void> => {
-			const config = vscode.workspace.getConfiguration("ps-dev-toolbox");
-			const separator = config.get<string>("slugifySeparator", "-");
+			const separator = getConfigValue<string>("ps-dev-toolbox.slugify", "separator", "-");
 
 			return processTextInEditor(text => utils.slugify(text, separator));
 		},
@@ -668,8 +610,7 @@ export function activate(context: vscode.ExtensionContext) {
 				return;
 			}
 
-			const config = vscode.workspace.getConfiguration("ps-dev-toolbox");
-			const separator = config.get<string>("slugifySeparator", "-");
+			const separator = getConfigValue<string>("ps-dev-toolbox.slugify", "separator", "-");
 
 			// Handle multiple selection
 			const urisToRename = selectedUris && selectedUris.length > 0 ? selectedUris : [uri];
@@ -749,19 +690,18 @@ export function activate(context: vscode.ExtensionContext) {
 		 * @returns {Promise<void>}
 		 */
 		[CommandId.GenerateGuid]: createInsertAtCursorCommand((): string => {
-			const config = vscode.workspace.getConfiguration("ps-dev-toolbox");
-			const uuidFormat = config.get<string>("uuidFormat", "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx");
+			const format = getConfigValue<string>("ps-dev-toolbox.uuid", "format", "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx");
 			const generatedUuid = utils.generateGuid();
 
-			switch (uuidFormat) {
-				default:
-					return `${generatedUuid}`;
+			switch (format) {
 				case "{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}":
 					return `{${generatedUuid}}`;
 				case "[Guid(\"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\")]":
 					return `[Guid("${generatedUuid}")]`;
 				case "<Guid(\"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\")>":
 					return `<Guid("${generatedUuid}")>`;
+				default:
+					return `${generatedUuid}`;
 			}
 		}),
 
@@ -799,8 +739,7 @@ export function activate(context: vscode.ExtensionContext) {
 		 * @returns {Promise<void>}
 		 */
 		[CommandId.EncodeHTMLNamedCharacterEntitys]: async (): Promise<void> => {
-			const config = vscode.workspace.getConfiguration("ps-dev-toolbox.encoding");
-			const doubleEncode = config.get<boolean>("doubleEncode", false);
+			const doubleEncode = getConfigValue<boolean>("ps-dev-toolbox.encoding", "doubleEncode", false);
 
 			await processTextInEditor(text => utils.encodeHTMLNamedCharacterEntity(text, doubleEncode));
 		},
@@ -818,8 +757,7 @@ export function activate(context: vscode.ExtensionContext) {
 		 * @returns {Promise<void>}
 		 */
 		[CommandId.EncodeHTMLHexadecimalCharacterReference]: async (): Promise<void> => {
-			const config = vscode.workspace.getConfiguration("ps-dev-toolbox.encoding");
-			const doubleEncode = config.get<boolean>("doubleEncode", false);
+			const doubleEncode = getConfigValue<boolean>("ps-dev-toolbox.encoding", "doubleEncode", false);
 
 			await processTextInEditor(text => utils.encodeHTMLHexadecimalCharacterReference(text, doubleEncode));
 		},
@@ -837,8 +775,7 @@ export function activate(context: vscode.ExtensionContext) {
 		 * @returns {Promise<void>}
 		 */
 		[CommandId.EncodeHtmlDecimalEntities]: async (): Promise<void> => {
-			const config = vscode.workspace.getConfiguration("ps-dev-toolbox.encoding");
-			const doubleEncode = config.get<boolean>("doubleEncode", false);
+			const doubleEncode = getConfigValue<boolean>("ps-dev-toolbox.encoding", "doubleEncode", false);
 
 			await processTextInEditor(text => utils.encodeHtmlDecimalEntities(text, doubleEncode));
 		},
@@ -856,8 +793,7 @@ export function activate(context: vscode.ExtensionContext) {
 		 * @returns {Promise<void>}
 		 */
 		[CommandId.EncodeJavaScriptUTF16EscapeSequences]: async (): Promise<void> => {
-			const config = vscode.workspace.getConfiguration("ps-dev-toolbox.encoding");
-			const doubleEncode = config.get<boolean>("doubleEncode", false);
+			const doubleEncode = getConfigValue<boolean>("ps-dev-toolbox.encoding", "doubleEncode", false);
 
 			await processTextInEditor(text => utils.encodeJavaScriptUTF16EscapeSequence(text, doubleEncode));
 		},
@@ -875,8 +811,7 @@ export function activate(context: vscode.ExtensionContext) {
 		 * @returns {Promise<void>}
 		 */
 		[CommandId.EncodeCssUnicodeEscape]: async (): Promise<void> => {
-			const config = vscode.workspace.getConfiguration("ps-dev-toolbox.encoding");
-			const doubleEncode = config.get<boolean>("doubleEncode", false);
+			const doubleEncode = getConfigValue<boolean>("ps-dev-toolbox.encoding", "doubleEncode", false);
 
 			await processTextInEditor(text => utils.encodeCssUnicodeEscape(text, doubleEncode));
 		},
@@ -894,8 +829,7 @@ export function activate(context: vscode.ExtensionContext) {
 		 * @returns {Promise<void>}
 		 */
 		[CommandId.EncodeUnicodeCodePointNotation]: async (): Promise<void> => {
-			const config = vscode.workspace.getConfiguration("ps-dev-toolbox.encoding");
-			const doubleEncode = config.get<boolean>("doubleEncode", false);
+			const doubleEncode = getConfigValue<boolean>("ps-dev-toolbox.encoding", "doubleEncode", false);
 
 			await processTextInEditor(text => utils.encodeUnicodeCodePointNotation(text, doubleEncode));
 		},
@@ -913,8 +847,7 @@ export function activate(context: vscode.ExtensionContext) {
 		 * @returns {Promise<void>}
 		 */
 		[CommandId.EncodeUnicodeCodePointEscapeSequence]: async (): Promise<void> => {
-			const config = vscode.workspace.getConfiguration("ps-dev-toolbox.encoding");
-			const doubleEncode = config.get<boolean>("doubleEncode", false);
+			const doubleEncode = getConfigValue<boolean>("ps-dev-toolbox.encoding", "doubleEncode", false);
 
 			await processTextInEditor(text => utils.encodeUnicodeCodePointEscapeSequence(text, doubleEncode));
 		},
@@ -932,8 +865,7 @@ export function activate(context: vscode.ExtensionContext) {
 		 * @returns {Promise<void>}
 		 */
 		[CommandId.EncodeExtendedHexEscape]: async (): Promise<void> => {
-			const config = vscode.workspace.getConfiguration("ps-dev-toolbox.encoding");
-			const doubleEncode = config.get<boolean>("doubleEncode", false);
+			const doubleEncode = getConfigValue<boolean>("ps-dev-toolbox.encoding", "doubleEncode", false);
 
 			await processTextInEditor(text => utils.encodePCREUnicodeHexadecimalEcape(text, doubleEncode));
 		},
@@ -951,8 +883,7 @@ export function activate(context: vscode.ExtensionContext) {
 		 * @returns {Promise<void>}
 		 */
 		[CommandId.EncodeHexCodePoints]: async (): Promise<void> => {
-			const config = vscode.workspace.getConfiguration("ps-dev-toolbox.encoding");
-			const doubleEncode = config.get<boolean>("doubleEncode", false);
+			const doubleEncode = getConfigValue<boolean>("ps-dev-toolbox.encoding", "doubleEncode", false);
 
 			await processTextInEditor(text => utils.encodeHexCodePoints(text, doubleEncode));
 		},
@@ -969,14 +900,42 @@ export function activate(context: vscode.ExtensionContext) {
 		 * 
 		 * @returns {Promise<void>}
 		 */
-		[CommandId.SortLinesAscending]: async (): Promise<void> => sortLinesCommand(false),
+		[CommandId.SortLinesAscending]: async (): Promise<void> => {
+			const defaultLocale = getDefaultLocale();
+			const useNumericSorting = getConfigValue<boolean>("ps-dev-toolbox.sorting", "numeric", true);
+			const sortIgnoreCase = getConfigValue<boolean>("ps-dev-toolbox.sorting", "ignoreCase", true);
+			const sortLocale = getConfigValue<string>("ps-dev-toolbox.sorting", "locale", defaultLocale);
+			const locales = utils.validateSortLocale(sortLocale, defaultLocale);
+			const sortOptions = {
+				descending: false,
+				locales: locales,
+				ignoreCase: sortIgnoreCase,
+				numeric: useNumericSorting
+			};
+
+			await processTextInEditor(text => sortUtils.sortLines(text, sortOptions));
+		},
 
 		/**
 		 * Sorts lines in descending order
 		 * 
 		 * @returns {Promise<void>}
 		 */
-		[CommandId.SortLinesDescending]: async (): Promise<void> => sortLinesCommand(true),
+		[CommandId.SortLinesDescending]: async (): Promise<void> => {
+			const defaultLocale = getDefaultLocale();
+			const useNumericSorting = getConfigValue<boolean>("ps-dev-toolbox.sorting", "numeric", true);
+			const sortIgnoreCase = getConfigValue<boolean>("ps-dev-toolbox.sorting", "ignoreCase", true);
+			const sortLocale = getConfigValue<string>("ps-dev-toolbox.sorting", "locale", defaultLocale);
+			const locales = utils.validateSortLocale(sortLocale, defaultLocale);
+			const sortOptions = {
+				descending: true,
+				locales: locales,
+				ignoreCase: sortIgnoreCase,
+				numeric: useNumericSorting
+			};
+
+			await processTextInEditor(text => sortUtils.sortLines(text, sortOptions));
+		},
 	};
 
 	// Register all commands

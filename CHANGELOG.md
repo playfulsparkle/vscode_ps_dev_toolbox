@@ -2,6 +2,11 @@
 
 All notable changes to the "Playful Sparkle: Dev Toolbox" extension will be documented in this file.
 
+## [0.0.20] - 2025-11-07
+
+- Fixed command `removeLeadingTrailingWhitespaceDocument` not found.
+- Optimized, normalized leading and trailing whitespace command.
+
 ## [0.0.19] - 2025-11-07
 
 - Renamed `Remove Non-printable Characters` to `Clean Text (Remove Non-printable Characters & Normalize)` and enhanced the function to normalize spaces, dashes, and preserve complex Unicode characters.

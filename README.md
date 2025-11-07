@@ -96,6 +96,11 @@ If you encounter any of these or other issues, please report them on the [GitHub
 
 ## Release Notes
 
+### 0.0.20
+
+- Fixed command `removeLeadingTrailingWhitespaceDocument` not found.
+- Optimized, normalized leading and trailing whitespace command.
+
 ### 0.0.19
 
 - Renamed `Remove Non-printable Characters` to `Clean Text (Remove Non-printable Characters & Normalize)` and enhanced the function to normalize spaces, dashes, and preserve complex Unicode characters.

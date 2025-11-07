@@ -1,7 +1,7 @@
 {
   "name": "ps-dev-toolbox",
   "displayName": "Dev Toolbox",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "publisher": "playful-sparkle",
   "description": "All-in-one toolset for URL slug generation, Base64/URL encoding/decoding, GUID generation, and removing empty lines, non-printable characters, whitespace and many more.",
   "author": {
@@ -181,7 +181,7 @@
         "category": "%extension.category.utilities.title%"
       },
       {
-        "command": "ps-dev-toolbox.removeLeadingTrailingWhitespaceDocument",
+        "command": "ps-dev-toolbox.removeLeadingTrailingWhitespace",
         "title": "%extension.command.removeLeadingTrailingWhitespace.title%",
         "category": "%extension.category.utilities.title%"
       },
@@ -360,7 +360,7 @@
           "default": false,
           "description": "%extension.config.encoding.doubleEncode.desc%"
         },
-        "ps-dev-toolbox.slugifySeparator": {
+        "ps-dev-toolbox.slugify.separator": {
           "type": "string",
           "default": "-",
           "description": "%extension.config.slugify.desc%",
@@ -373,12 +373,12 @@
             "%extension.config.slugify.underscore.desc%"
           ]
         },
-        "ps-dev-toolbox.removeEmptyLines.considerWhitespaceEmpty": {
+        "ps-dev-toolbox.removeEmptyLines.whiteSpaceEmpty": {
           "type": "boolean",
           "default": true,
-          "description": "%extension.config.removeEmptyLines.considerWhitespaceEmpty.desc%"
+          "description": "%extension.config.removeEmptyLines.whiteSpaceEmpty.desc%"
         },
-        "ps-dev-toolbox.uuidFormat": {
+        "ps-dev-toolbox.uuid.format": {
           "type": "string",
           "default": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
           "description": "%extension.config.uuid.desc%",
@@ -395,20 +395,20 @@
             "%extension.config.uuid.lessThanSignFormat.desc%"
           ]
         },
-        "ps-dev-toolbox.sorting.useNumericSorting": {
+        "ps-dev-toolbox.sorting.numeric": {
           "type": "boolean",
           "default": true,
-          "description": "%extension.config.sorting.useNumericSorting%"
+          "description": "%extension.config.sorting.numeric%"
         },
-        "ps-dev-toolbox.sorting.sortIgnoreCase": {
+        "ps-dev-toolbox.sorting.ignoreCase": {
           "type": "boolean",
           "default": true,
-          "description": "%extension.config.sorting.sortIgnoreCase%"
+          "description": "%extension.config.sorting.ignoreCase%"
         },
-        "ps-dev-toolbox.sorting.sortLocale": {
+        "ps-dev-toolbox.sorting.locale": {
           "type": "string",
           "default": "",
-          "description": "%extension.config.sorting.sortLocale%"
+          "description": "%extension.config.sorting.locale%"
         }
       }
     },
