@@ -100,10 +100,10 @@ const spaceCharacters = new Set([
 // Invisible/zero-width characters to remove (not convert to space)
 const invisibleCharacters = new Set([
     0x200B, // ZERO WIDTH SPACE
-    0x200C, // ZERO WIDTH NON-JOINER
+    0x200C, // ZERO WIDTH NON-JOINER  
     // 0x200D, // ZERO WIDTH JOINER - Preserve zero width joiner
-    0x2060, // WORD JOINER - Remove invisible spaces
-    0xFEFF, // ZERO WIDTH NO-BREAK SPACE (when not at start)
+    0x2060, // WORD JOINER
+    0xFEFF, // ZERO WIDTH NO-BREAK SPACE (BOM)
 ]);
 
 // Add safe string methods to String prototype if they don't exist
@@ -252,75 +252,78 @@ export function cleanText(text: string): string {
         return text;
     }
 
-    let result = "";
+    const len = text.length;
+    if (len === 0) {return text;}
+
+    const result: string[] = [];
     let i = 0;
 
-    while (i < text.length) {
+    while (i < len) {
         const char = text[i];
         const code = text.charCodeAt(i);
 
-        // Check for dash characters to normalize
-        if (dashCharacters.has(code)) {
-            result += "-"; // Normalize to standard hyphen
-            i++;
-            continue;
-        }
-
-        // Check for space characters to normalize
-        if (spaceCharacters.has(code)) {
-            result += " "; // Normalize to standard space
-            i++;
-            continue;
-        }
-
-        // Remove invisible characters
-        if (invisibleCharacters.has(code)) {
-            i++;
-            continue;
-        }
-
-        // Fast path for common printable ASCII
+        // Fast path for common printable ASCII (most common case first)
         if (code >= 0x20 && code <= 0x7E) {
-            result += char;
+            result.push(char);
+            
             i++;
             continue;
         }
 
         // Preserve common whitespace and line endings
         if (code === 0x09 || code === 0x0A || code === 0x0D) { // \t, \n, \r
-            result += char;
+            result.push(char);
+
             i++;
             continue;
         }
 
-        // Handle Unicode characters and surrogate pairs
-        if (code >= 0xA0 && code <= 0xD7FF) {
-            result += char;
+        // Check character types
+        if (dashCharacters.has(code)) {
+            result.push("-");
+
+            i++;
+        } else if (spaceCharacters.has(code)) {
+            result.push(" ");
+
+            i++;
+        } else if (invisibleCharacters.has(code)) {
+            i++; // Remove completely
+        } else if (code === 0x200D) { // Zero Width Joiner - PRESERVE
+            result.push(char);
+
+            i++;
+        } else if (code >= 0xA0 && code <= 0xD7FF) {
+            result.push(char);
+
             i++;
         } else if (code >= 0xE000 && code <= 0xFFFF) {
-            result += char;
+            result.push(char);
+
             i++;
-        } else if (code >= 0xD800 && code <= 0xDBFF && i + 1 < text.length) {
-            // Potential surrogate pair
+        } else if (code >= 0xD800 && code <= 0xDBFF && i + 1 < len) {
+            // Handle surrogate pairs
             const nextCode = text.charCodeAt(i + 1);
+
             if (nextCode >= 0xDC00 && nextCode <= 0xDFFF) {
-                // Valid surrogate pair - preserve emojis and extended chars
-                result += char + text[i + 1];
+                // Preserve valid surrogate pair, emojis and extended chars
+                result.push(char + text[i + 1]);
+
                 i += 2;
             } else {
-                // Isolated high surrogate - remove
+                // Remove invalid high surrogate
                 i++;
             }
         } else if (code >= 0xDC00 && code <= 0xDFFF) {
-            // Isolated low surrogate - remove
+            // Remove invalid low surrogate
             i++;
         } else {
-            // Remove control characters and other non-printables
+            // Remove other control characters
             i++;
         }
     }
 
-    return result;
+    return result.join("");
 }
 
 // Helper function to check if a codepoint is whitespace
