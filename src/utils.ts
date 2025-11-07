@@ -323,35 +323,124 @@ export function cleanText(text: string): string {
     return result;
 }
 
+// Helper function to check if a codepoint is whitespace
+function isWhitespace(code: number): boolean {
+    return code === 0x0020 || // Space
+        code === 0x0009 || // Tab
+        code === 0x000C || // Form feed
+        code === 0x000B || // Vertical tab
+        code === 0x00A0 || // Non-breaking space
+        code === 0x2028 || // Line separator
+        code === 0x2029 || // Paragraph separator
+        code === 0x2002 || // En space
+        code === 0x2003 || // Em space
+        code === 0x2009 || // Thin space
+        code === 0x200A || // Hair space
+        code === 0x202F || // Narrow no-break space
+        code === 0x205F || // Medium mathematical space
+        code === 0x3000;   // Ideographic space
+}
+
 /**
  * Removes leading and trailing whitespace from each line
  * 
  * @param {string} text - The input text to process
+ * @param {boolean} preserveTabs - If true, only removes spaces (but tabs)
  * 
  * @returns {string} The text with leading and trailing whitespace removed from each line
  */
-export function removeLeadingTrailingWhitespace(text: string): string {
+export function removeLeadingTrailingWhitespace(
+    text: string,
+    preserveTabs: boolean = false
+): string {
     if (typeof text !== "string") {
         return text;
     }
-    
-    // Split while capturing line endings
-    const parts = text.split(/(\r?\n)/);
-    
-    let result = "";
-    
-    for (let i = 0; i < parts.length; i++) {
-        const part = parts[i];
-        if (part === "\n" || part === "\r\n" || part === "\r") {
-            // Preserve line endings as-is
-            result += part;
-        } else {
-            // Trim content lines
-            result += part.trim();
+
+    const len = text.length;
+
+    if (len === 0) {
+        return text;
+    }
+
+    const lines: string[] = [];
+
+    let lineStart = 0;
+
+    for (let i = 0; i <= len; i++) {
+        const code = i < len ? text.charCodeAt(i) : -1;
+        const isEOL = code === 0x000A || code === 0x000D || i === len;
+
+        if (isEOL) {
+            // Determine line ending type
+            let eolLength = 0;
+            let eol = "";
+
+            if (i < len) {
+                if (code === 0x000D && i + 1 < len && text.charCodeAt(i + 1) === 0x000A) { // \r\n
+                    eol = "\r\n";
+                    eolLength = 2;
+                } else if (code === 0x000A) { // \n
+                    eol = "\n";
+                    eolLength = 1;
+                } else if (code === 0x000D) { // \r
+                    eol = "\r";
+                    eolLength = 1;
+                }
+            }
+
+            // Find first non-whitespace character from start
+            let start = lineStart;
+
+            while (start < i) {
+                const c = text.charCodeAt(start);
+                const shouldBreak = preserveTabs ?
+                    (c === 0x0009 || !isWhitespace(c)) :
+                    !isWhitespace(c);
+
+                if (shouldBreak) {
+                    break;
+                }
+
+                start++;
+            }
+
+            // Find last non-whitespace character from end
+            let end = i - 1;
+
+            while (end >= start) {
+                const c = text.charCodeAt(end);
+                const shouldBreak = preserveTabs ?
+                    (c === 0x0009 || !isWhitespace(c)) :
+                    !isWhitespace(c);
+
+                if (shouldBreak) {
+                    break;
+                }
+
+                end--;
+            }
+
+            // Extract trimmed line content
+            let lineContent = "";
+
+            if (end >= start) {
+                lineContent = text.substring(start, end + 1);
+            }
+
+            // Store line with original EOL
+            lines.push(lineContent + eol);
+
+            // Advance index if we consumed multiple characters
+            if (eolLength > 0) {
+                i += eolLength - 1; // -1 because loop will increment
+            }
+
+            lineStart = i + 1;
         }
     }
-    
-    return result;
+
+    return lines.join("");
 }
 
 /**

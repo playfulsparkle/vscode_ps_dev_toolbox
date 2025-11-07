@@ -98,7 +98,7 @@ suite("Dev Toolbox Tests", () => {
 		});
 	});
 
-		suite("Encode/Decode to Unicode Codepoint (separated)", () => {
+	suite("Encode/Decode to Unicode Codepoint (separated)", () => {
 		test("Complex unicode characters", () => {
 			const encoded = "U+0110 U+0111 U+0129 U+0128 U+0169 U+0168 U+01A1 U+01A0 U+01B0 U+01AF U+1EA1 U+1EA0 U+1EA3 U+1EA2 U+1EA5 U+1EA4 U+1EA7 U+1EA6 U+1EA9 U+1EA8 U+1EAB U+1EAA U+1EAD U+1EAC U+1EAF U+1EAE U+1EB1 U+1EB0 U+1EB3 U+1EB2 U+1EB5 U+1EB4 U+1EB7 U+1EB6 U+1EB9 U+1EB8 U+1EBB U+1EBA U+1EBD U+1EBC U+1EBF U+1EBE U+1EC1 U+1EC0 U+1EC3 U+1EC2 U+1EC5 U+1EC4 U+1EC7 U+1EC6 U+1EC9 U+1EC8 U+1ECB U+1ECA U+1ECD U+1ECC U+1ECF U+1ECE U+1ED1 U+1ED0 U+1ED3 U+1ED2 U+1ED5 U+1ED4 U+1ED7 U+1ED6 U+1ED9 U+1ED8 U+1EDB U+1EDA U+1EDD U+1EDC U+1EDF U+1EDE U+1EE1 U+1EE0 U+1EE3 U+1EE2 U+1EE5 U+1EE4 U+1EE7 U+1EE6 U+1EE9 U+1EE8 U+1EEB U+1EEA U+1EED U+1EEC U+1EEF U+1EEE U+1EF1 U+1EF0 U+1EF3 U+1EF2 U+1EF5 U+1EF4 U+1EF7 U+1EF6 U+1EF9 U+1EF8";
 			assert.strictEqual(utils.encodeUnicodeCodePointNotation(complexUnicode, false, true), encoded);
@@ -397,28 +397,363 @@ suite("Dev Toolbox Tests", () => {
 		});
 	});
 
-	suite("Remove Leading Trailing Whitespace", () => {
-		test("removes leading and trailing whitespace from each line", () => {
-			const input = "  Line 1  \n\tLine 2\t\n  Line 3  ";
-			const expected = "Line 1\nLine 2\nLine 3";
-			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input), expected);
-		});
-
-		test("preserves lines with no leading or trailing whitespace", () => {
-			const input = "Line 1\nLine 2\nLine 3";
-			const expected = "Line 1\nLine 2\nLine 3";
-			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input), expected);
-		});
-
-		test("handles empty input", () => {
+	suite("Remove Leading/Trailing Whitespace", () => {
+		test("empty string", () => {
 			const input = "";
+			const expected = "";
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input), expected);
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input, true), expected);
+		});
+
+		test("single space", () => {
+			const input = " ";
 			const expected = "";
 			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input), expected);
 		});
 
-		test("handles lines with only whitespace", () => {
-			const input = "  \n\t\n  ";
-			const expected = "\n\n";
+		test("multiple spaces", () => {
+			const input = "   ";
+			const expected = "";
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input), expected);
+		});
+
+		test("spaces with text", () => {
+			const input = "   hello world   ";
+			const expected = "hello world";
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input), expected);
+		});
+
+		test("tabs with text", () => {
+			const input = "\t\thello world\t\t";
+			const expected = "hello world";
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input), expected);
+		});
+
+		test("tabs with text when preserveTabs=true", () => {
+			const input = "\t\thello world\t\t";
+			const expected = "\t\thello world\t\t";
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input, true), expected);
+		});
+
+		test("mixed whitespace with preserveTabs=true", () => {
+			const input = "  \t  hello world  \t  ";
+			const expected = "\t  hello world  \t";
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input, true), expected);
+		});
+
+		test("multiple lines with spaces", () => {
+			const input = "  line1  \n  line2  \n  line3  ";
+			const expected = "line1\nline2\nline3";
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input), expected);
+		});
+
+		test("multiple lines with tabs", () => {
+			const input = "\tline1\t\n\tline2\t\n\tline3\t";
+			const expected = "line1\nline2\nline3";
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input), expected);
+		});
+
+		test("multiple lines with tabs when preserveTabs=true", () => {
+			const input = "\tline1\t\n\tline2\t\n\tline3\t";
+			const expected = "\tline1\t\n\tline2\t\n\tline3\t";
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input, true), expected);
+		});
+
+		test("mixed line endings - LF", () => {
+			const input = "  hello  \n  world  ";
+			const expected = "hello\nworld";
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input), expected);
+		});
+
+		test("mixed line endings - CR", () => {
+			const input = "  hello  \r  world  ";
+			const expected = "hello\rworld";
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input), expected);
+		});
+
+		test("mixed line endings - CRLF", () => {
+			const input = "  hello  \r\n  world  ";
+			const expected = "hello\r\nworld";
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input), expected);
+		});
+
+		test("mixed line endings - all types", () => {
+			const input = "  line1  \n  line2  \r  line3  \r\n  line4  ";
+			const expected = "line1\nline2\rline3\r\nline4";
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input), expected);
+		});
+
+		test("line with only whitespace", () => {
+			const input = "  \nhello\n  \nworld\n  ";
+			const expected = "\nhello\n\nworld\n";
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input), expected);
+		});
+
+		test("line with only whitespace when preserveTabs=true", () => {
+			const input = "  \t  \nhello\n  \t  \nworld\n  \t  ";
+			const expected = "\t\nhello\n\t\nworld\n\t";
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input, true), expected);
+		});
+
+		test("string ends with newline", () => {
+			const input = "  hello world  \n";
+			const expected = "hello world\n";
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input), expected);
+		});
+
+		test("string starts with newline", () => {
+			const input = "\n  hello world  ";
+			const expected = "\nhello world";
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input), expected);
+		});
+
+		test("consecutive empty lines", () => {
+			const input = "  line1  \n\n\n  line2  ";
+			const expected = "line1\n\n\nline2";
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input), expected);
+		});
+
+		test("non-breaking spaces", () => {
+			const input = "\u00A0hello world\u00A0";
+			const expected = "hello world";
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input), expected);
+		});
+
+		test("non-breaking spaces with preserveTabs=true", () => {
+			const input = "\u00A0hello world\u00A0";
+			const expected = "hello world";
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input, true), expected);
+		});
+
+		test("vertical tab and form feed", () => {
+			const input = "\u000Bhello\u000Cworld\u000B";
+			const expected = "hello\u000Cworld";
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input), expected);
+		});
+
+		test("unicode line separators", () => {
+			const input = "\u2028hello world\u2028";
+			const expected = "hello world";
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input), expected);
+		});
+
+		test("mixed whitespace characters", () => {
+			const input = " \t\u00A0\u000Bhello world \t\u00A0\u000B";
+			const expected = "hello world";
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input), expected);
+		});
+
+		test("no whitespace at all", () => {
+			const input = "helloworld";
+			const expected = "helloworld";
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input), expected);
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input, true), expected);
+		});
+
+		test("whitespace only in middle", () => {
+			const input = "hello   world";
+			const expected = "hello   world";
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input), expected);
+		});
+
+		test("CR at end of string", () => {
+			const input = "hello world\r";
+			const expected = "hello world\r";
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input), expected);
+		});
+
+		test("LF at end of string", () => {
+			const input = "hello world\n";
+			const expected = "hello world\n";
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input), expected);
+		});
+
+		test("CRLF at end of string", () => {
+			const input = "hello world\r\n";
+			const expected = "hello world\r\n";
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input), expected);
+		});
+
+		test("single character with whitespace", () => {
+			const input = "  a  ";
+			const expected = "a";
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input), expected);
+		});
+
+		test("whitespace with preserveTabs=false (default)", () => {
+			const input = "  \t  hello  \t  ";
+			const expected = "hello";
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input), expected);
+		});
+
+		test("very long line with whitespace", () => {
+			const longText = "a".repeat(1000);
+			const input = `   ${longText}   `;
+			const expected = longText;
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input), expected);
+		});
+
+		test("many lines with varying whitespace", () => {
+			const input = "  line1  \n\tline2\t\n  \tline3\t  \nline4\n  ";
+			const expected = "line1\nline2\nline3\nline4\n";
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input), expected);
+		});
+
+		test("preserveTabs=true with mixed content", () => {
+			const input = "  \thello  \t  world  \t  ";
+			const expected = "\thello  \t  world  \t";
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input, true), expected);
+		});
+
+		test("non-string input returns as-is", () => {
+			const input = 123 as any;
+			const expected = 123;
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input), expected);
+		});
+
+		test("null input returns as-is", () => {
+			const input = null as any;
+			const expected = null;
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input), expected);
+		});
+
+		test("undefined input returns as-is", () => {
+			const input = undefined as any;
+			const expected = undefined;
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input), expected);
+		});
+
+		// Test each space individually
+		test("regular space (U+0020)", () => {
+			const space = " ";
+			const input = `${space}hello${space}`;
+			const expected = "hello";
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input), expected);
+		});
+
+		test("no-break space (U+00A0)", () => {
+			const space = "\u00A0";
+			const input = `${space}hello${space}`;
+			const expected = "hello";
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input), expected);
+		});
+
+		test("en space (U+2002)", () => {
+			const space = "\u2002";
+			const input = `${space}hello${space}`;
+			const expected = "hello";
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input), expected);
+		});
+
+		test("em space (U+2003)", () => {
+			const space = "\u2003";
+			const input = `${space}hello${space}`;
+			const expected = "hello";
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input), expected);
+		});
+
+		test("thin space (U+2009)", () => {
+			const space = "\u2009";
+			const input = `${space}hello${space}`;
+			const expected = "hello";
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input), expected);
+		});
+
+		test("hair space (U+200A)", () => {
+			const space = "\u200A";
+			const input = `${space}hello${space}`;
+			const expected = "hello";
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input), expected);
+		});
+
+		test("narrow no-break space (U+202F)", () => {
+			const space = "\u202F";
+			const input = `${space}hello${space}`;
+			const expected = "hello";
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input), expected);
+		});
+
+		test("medium mathematical space (U+205F)", () => {
+			const space = "\u205F";
+			const input = `${space}hello${space}`;
+			const expected = "hello";
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input), expected);
+		});
+
+		test("ideographic space (U+3000)", () => {
+			const space = "\u3000";
+			const input = `${space}hello${space}`;
+			const expected = "hello";
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input), expected);
+		});
+
+		// Test combinations of different spaces
+		test("mixed unicode spaces", () => {
+			const spaces = ["\u00A0", "\u2002", "\u2003", "\u2009", "\u200A", "\u202F", "\u205F", "\u3000"];
+			const leadingSpaces = spaces.join("");
+			const trailingSpaces = spaces.reverse().join("");
+			const input = `${leadingSpaces}hello${trailingSpaces}`;
+			const expected = "hello";
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input), expected);
+		});
+
+		test("mixed unicode spaces with tabs", () => {
+			const input = "\u2002\t\u2003hello\t\u2009\u200A";
+			const expected = "\t\u2003hello\t";
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input, true), expected);
+		});
+
+		// Test with line breaks
+		test("unicode spaces with line breaks", () => {
+			const input = "\u2002\u2003line1\u2009\u200A\n\u202F\u205Fline2\u3000";
+			const expected = "line1\nline2";
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input), expected);
+		});
+
+		test("unicode spaces with line breaks and preserveTabs=true", () => {
+			const input = "\u2002\t\u2003line1\u2009\t\u200A\n\u202F\t\u205Fline2\t\u3000";
+			const expected = "\t\u2003line1\u2009\t\n\t\u205Fline2\t";
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input, true), expected);
+		});
+
+		// Test that these spaces are NOT removed when in the middle
+		test("unicode spaces in middle of text are preserved", () => {
+			const input = "hello\u2002world\u2003foo\u2009bar";
+			const expected = "hello\u2002world\u2003foo\u2009bar";
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input), expected);
+		});
+
+		// Test with only unicode spaces
+		test("string with only unicode spaces", () => {
+			const input = "\u2002\u2003\u2009\u200A\u202F\u205F\u3000";
+			const expected = "";
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input), expected);
+		});
+
+		test("string with only unicode spaces and preserveTabs=true", () => {
+			const input = "\u2002\u2003\u2009\u200A\u202F\u205F\u3000";
+			const expected = "";
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input, true), expected);
+		});
+
+		// Test mixed with regular spaces
+		test("mixed regular and unicode spaces", () => {
+			const input = " \u2002 \u2003 hello \u2009 \u200A ";
+			const expected = "hello";
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input), expected);
+		});
+
+		// Test in multi-line context
+		test("multi-line with unicode spaces", () => {
+			const input = "\u2002\u2003line1\u2009\u200A\n\u202F\u205Fline2\u3000\n\u2002line3\u2003";
+			const expected = "line1\nline2\nline3";
+			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input), expected);
+		});
+
+		// Edge case: single character surrounded by unicode spaces
+		test("single character with unicode spaces", () => {
+			const input = "\u2002\u2003a\u2009\u200A";
+			const expected = "a";
 			assert.strictEqual(utils.removeLeadingTrailingWhitespace(input), expected);
 		});
 	});
