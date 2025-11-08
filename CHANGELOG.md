@@ -2,6 +2,10 @@
 
 All notable changes to the "Playful Sparkle: Dev Toolbox" extension will be documented in this file.
 
+## [0.0.21] - 2025-11-08
+
+- Refactored clean text, the text is now processed by character‑by‑character loop: first normalises malformed Unicode sequences, then uses lookup sets to strip hidden control characters, preserve valid surrogate pairs, and clean up exotic spaces and dashes.
+
 ## [0.0.20] - 2025-11-07
 
 - Fixed command `removeLeadingTrailingWhitespaceDocument` not found.

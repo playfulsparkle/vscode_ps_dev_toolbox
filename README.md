@@ -96,6 +96,10 @@ If you encounter any of these or other issues, please report them on the [GitHub
 
 ## Release Notes
 
+### 0.0.21
+
+- Refactored clean text, the text is now processed by character‑by‑character loop: first normalises malformed Unicode sequences, then uses lookup sets to strip hidden control characters, preserve valid surrogate pairs, and clean up exotic spaces and dashes.
+
 ### 0.0.20
 
 - Fixed command `removeLeadingTrailingWhitespaceDocument` not found.

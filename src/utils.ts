@@ -1,4 +1,10 @@
 import { uniqueEntityNames, codePointToEntityName, entityNameToCodePoint } from "./namedentities";
+import {
+    CONTROL_CHARACTERS, DASH_CHARACTERS, SPACE_CHARACTERS, INVISIBLE_CHARACTERS, SPECIAL_REMOVE_CHARACTERS, SOFT_HYPHEN_MARKS,
+    REGEX_FILE_EXTENSION, REGEX_BASE64, REGEX_LOCALE, REGEX_HEX_NUMERIC_ENTITY, REGEX_NAMED_ENTITY, REGEX_DECIMAL_ENTITY,
+    REGEX_UNICODE4_HEX_DIGIT, REGEX_UNICODE8_HEX_DIGIT, REGEX_BACKSLASH6_HEX_DIGIT, REGEX_U_PLUS_CODE_POINT,
+    REGEX_UNICODE_BRACED_CODE_POINT, REGEX_UNICODE_BRACED_HEXADECIMAL, REGEX_HEX_CODE_POINT
+} from "./constants";
 
 /**
  * Global type extensions for String prototype
@@ -22,89 +28,6 @@ declare global {
         safeToUppercase(locale?: string | string[]): string;
     }
 }
-
-/**
- * Regular expression patterns for various text processing operations
- * 
- * @namespace
- * @property {RegExp} fileExtension - Matches file extensions (2-11 characters after dot)
- * @property {RegExp} base64 - Validates Base64 encoded strings
- * @property {RegExp} locale - Validates locale strings (e.g., 'en-US', 'hu')
- * @property {RegExp} hexNumericEntity - Matches HTML hexadecimal numeric entities (&#xHHHH;)
- * @property {RegExp} namedEntity - Matches HTML named entities (&name;)
- * @property {RegExp} decimalEntity - Matches HTML decimal entities (&#DDDD;)
- * @property {RegExp} unicode4HexDigit - Matches 4-digit Unicode escape sequences (\uXXXX)
- * @property {RegExp} unicode8HexDigit - Matches 8-digit Unicode escape sequences (\UXXXXXXXX)
- * @property {RegExp} backslash6HexDigit - Matches 6-digit hexadecimal escape sequences (\XXXXXX)
- * @property {RegExp} uPlusCodePoint - Matches Unicode code point notation (U+XXXX)
- * @property {RegExp} unicodeBracedCodePoint - Matches ES6 Unicode code point escapes (\u{XXX})
- * @property {RegExp} unicodeBracedHexadecimal - Matches extended hexadecimal escapes (\x{XXX})
- * @property {RegExp} hexCodePoint - Matches hexadecimal code point notation (0xXXX)
- */
-const re = {
-    fileExtension: /(\.[a-zA-Z0-9]{2,11})$/,
-    base64: /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/,
-    locale: /^[a-zA-Z]{2,3}(-[a-zA-Z0-9]+)*$/,
-    hexNumericEntity: /^&#x[0-9A-F]{4,};/,            // &#xHHHH;
-    namedEntity: /^&([A-Za-z][A-Za-z0-9]{1,31});/,    // &name;
-    decimalEntity: /^&#[0-9]+;/,                      // &#DDDD;
-    unicode4HexDigit: /^\\u[0-9A-Fa-f]{4}/,           // \uXXXX
-    unicode8HexDigit: /^\\U[0-9A-Fa-f]{8}/,           // \UXXXXXXXX
-    backslash6HexDigit: /^\\[0-9A-Fa-f]{6}\s?/,       // \XXXXXX
-    uPlusCodePoint: /^U\+[0-9A-Fa-f]{4,6}/,           // U+XXXX, U+XXXXX or U+XXXXXX
-    unicodeBracedCodePoint: /^\\u\{[0-9A-Fa-f]+\}/,   // \u{XXX}
-    unicodeBracedHexadecimal: /^\\x\{[0-9A-Fa-f]+\}/, // \x{XXX}
-    hexCodePoint: /^0x[0-9A-Fa-f]+/,                  // 0xXXX
-};
-
-// Common dash characters to normalize to standard hyphen (U+002D)
-const dashCharacters = new Set([
-    0x2010, // ‐ HYPHEN
-    0x2011, // ‑ NON-BREAKING HYPHEN
-    0x2012, // ‒ FIGURE DASH
-    0x2013, // – EN DASH
-    0x2014, // — EM DASH
-    0x2015, // ― HORIZONTAL BAR
-    0x2053, // ⁓ SWUNG DASH
-    0x207B, // ⁻ SUPERSCRIPT MINUS
-    0x208B, // ₋ SUBSCRIPT MINUS
-    0x2212, // − MINUS SIGN
-    0x2E3A, // ⸺ TWO-EM DASH
-    0x2E3B, // ⸻ THREE-EM DASH
-    0xFE58, // ﹘ SMALL EM DASH
-    0xFE63, // ﹣ SMALL HYPHEN-MINUS
-    0xFF0D, // － FULLWIDTH HYPHEN-MINUS
-]);
-
-// Space characters to normalize to standard space (U+0020)
-const spaceCharacters = new Set([
-    0x00A0, //   NO-BREAK SPACE
-    0x1680, //   OGHAM SPACE MARK
-    0x2000, //   EN QUAD
-    0x2001, //   EM QUAD
-    0x2002, //   EN SPACE
-    0x2003, //   EM SPACE
-    0x2004, //   THREE-PER-EM SPACE
-    0x2005, //   FOUR-PER-EM SPACE
-    0x2006, //   SIX-PER-EM SPACE
-    0x2007, //   FIGURE SPACE
-    0x2008, //   PUNCTUATION SPACE
-    0x2009, //   THIN SPACE
-    0x200A, //   HAIR SPACE
-    0x202F, //   NARROW NO-BREAK SPACE
-    0x205F, //   MEDIUM MATHEMATICAL SPACE
-    0x3000, // 　 IDEOGRAPHIC SPACE
-    0xFEFF, // ﻿ ZERO WIDTH NO-BREAK SPACE (BOM)
-]);
-
-// Invisible/zero-width characters to remove (not convert to space)
-const invisibleCharacters = new Set([
-    0x200B, // ZERO WIDTH SPACE
-    0x200C, // ZERO WIDTH NON-JOINER  
-    // 0x200D, // ZERO WIDTH JOINER - Preserve zero width joiner
-    0x2060, // WORD JOINER
-    0xFEFF, // ZERO WIDTH NO-BREAK SPACE (BOM)
-]);
 
 // Add safe string methods to String prototype if they don't exist
 if (!String.prototype.safeToLowerCase) {
@@ -226,7 +149,7 @@ export function filterUserLocaleInput(defaultLocale: string, userLocaleInput: st
                 return intlLocale.language.length >= 2;
             } catch {
                 // If Intl.Locale fails, fall back to basic pattern check
-                return re.locale.test(locale);
+                return REGEX_LOCALE.test(locale);
             }
         });
 
@@ -238,124 +161,140 @@ export function filterUserLocaleInput(defaultLocale: string, userLocaleInput: st
 }
 
 /**
- * Removes non-printable characters from text
- * 
- * Handles control characters, invisible whitespace, invalid surrogates, and special Unicode characters
- * while preserving valid surrogate pairs and variation selectors in appropriate contexts
- * 
- * @param {string} text - The input text to clean
- * 
- * @returns {string} The text with non-printable characters removed or replaced with spaces
+ * Removes non-printable characters from text while preserving
+ * visible characters needed for proper rendering in various
+ * languages.  Direction marks and joining characters are kept,
+ * bidirectional override characters are stripped, and valid
+ * surrogate pairs are preserved.
+ *
+ * @param text The input text to clean.
+ * @returns The text with non-printable characters removed or
+ *          replaced with spaces.
  */
 export function cleanText(text: string): string {
+    // Type guard
     if (typeof text !== "string") {
         return text;
     }
 
-    const len = text.length;
-    if (len === 0) {return text;}
+    // Normalise invalid surrogate pairs to well-formed sequences.  If
+    // this changes the string length, we recompute the length below.
+    if (typeof (text as any).toWellFormed === "function") {
+        text = (text as any).toWellFormed();
+    }
 
-    const result: string[] = [];
+    // Compute length after any normalisation.
+    let len = text.length;
+
+    if (len === 0) {
+        return text;
+    }
+
+    let result = "";
     let i = 0;
-
     while (i < len) {
-        const char = text[i];
         const code = text.charCodeAt(i);
 
-        // Fast path for common printable ASCII (most common case first)
+        // Fast path for common printable ASCII (U+0020..U+007E)
         if (code >= 0x20 && code <= 0x7E) {
-            result.push(char);
-            
+            result += text[i];
             i++;
             continue;
         }
 
-        // Preserve common whitespace and line endings
-        if (code === 0x09 || code === 0x0A || code === 0x0D) { // \t, \n, \r
-            result.push(char);
-
+        // Preserve essential whitespace (tab, newline, carriage return)
+        if (code === 0x09 || code === 0x0A || code === 0x0D) {
+            result += text[i];
             i++;
             continue;
         }
 
-        // Check character types
-        if (dashCharacters.has(code)) {
-            result.push("-");
+        // Remove unsafe bidi override characters
+        // if (BIDI_OVERRIDE_CHARACTERS.has(code)) {
+        //     i++;
+        //     continue;
+        // }
 
+        // Remove C0/C1 control characters
+        if (CONTROL_CHARACTERS.has(code)) {
             i++;
-        } else if (spaceCharacters.has(code)) {
-            result.push(" ");
-
+        } else if (DASH_CHARACTERS.has(code)) {
+            // Normalise dashes to ASCII hyphen
+            result += "-";
             i++;
-        } else if (invisibleCharacters.has(code)) {
-            i++; // Remove completely
-        } else if (code === 0x200D) { // Zero Width Joiner - PRESERVE
-            result.push(char);
-
+        } else if (SPACE_CHARACTERS.has(code)) {
+            // Normalise unusual spaces to standard space
+            result += " ";
             i++;
-        } else if (code >= 0xA0 && code <= 0xD7FF) {
-            result.push(char);
-
+        } else if (INVISIBLE_CHARACTERS.has(code)) {
+            // Remove invisible characters
             i++;
-        } else if (code >= 0xE000 && code <= 0xFFFF) {
-            result.push(char);
-
+        } else if (SPECIAL_REMOVE_CHARACTERS.has(code)) {
+            // Remove problematic specials
             i++;
-        } else if (code >= 0xD800 && code <= 0xDBFF && i + 1 < len) {
-            // Handle surrogate pairs
-            const nextCode = text.charCodeAt(i + 1);
-
-            if (nextCode >= 0xDC00 && nextCode <= 0xDFFF) {
-                // Preserve valid surrogate pair, emojis and extended chars
-                result.push(char + text[i + 1]);
-
-                i += 2;
+        } else if (SOFT_HYPHEN_MARKS.has(code)) {
+            // Remove discretionary hyphen
+            i++;
+        } else if (code === 0x200D) {
+            // Preserve Zero Width Joiner for emoji and scripts
+            result += text[i];
+            i++;
+        } else if (code >= 0xD800 && code <= 0xDBFF) {
+            // High surrogate; ensure it is paired with a low surrogate
+            if (i + 1 < len) {
+                const nextCode = text.charCodeAt(i + 1);
+                if (nextCode >= 0xDC00 && nextCode <= 0xDFFF) {
+                    // Preserve valid surrogate pair
+                    result += text[i] + text[i + 1];
+                    i += 2;
+                } else {
+                    // Skip unmatched high surrogate
+                    i++;
+                }
             } else {
-                // Remove invalid high surrogate
+                // Skip high surrogate at end of string
                 i++;
             }
         } else if (code >= 0xDC00 && code <= 0xDFFF) {
-            // Remove invalid low surrogate
+            // Skip unpaired low surrogate
+            i++;
+        } else if (code >= 0xA0 && code <= 0xD7FF) {
+            // Preserve BMP characters (Latin-1 Supplement through Hangul)
+            result += text[i];
+            i++;
+        } else if (code >= 0xE000 && code <= 0xF8FF) {
+            // Preserve Private Use Area
+            result += text[i];
+            i++;
+        } else if (code >= 0xF900 && code <= 0xFFFD) {
+            // Preserve CJK Compatibility and Specials (includes VS1–VS16)
+            result += text[i];
+            i++;
+        } else if (code === 0xFFFE || code === 0xFFFF) {
+            // Skip non-characters
             i++;
         } else {
-            // Remove other control characters
+            // Default: preserve other characters
+            result += text[i];
             i++;
         }
     }
-
-    return result.join("");
-}
-
-// Helper function to check if a codepoint is whitespace
-function isWhitespace(code: number): boolean {
-    return code === 0x0020 || // Space
-        code === 0x0009 || // Tab
-        code === 0x000C || // Form feed
-        code === 0x000B || // Vertical tab
-        code === 0x00A0 || // Non-breaking space
-        code === 0x2028 || // Line separator
-        code === 0x2029 || // Paragraph separator
-        code === 0x2002 || // En space
-        code === 0x2003 || // Em space
-        code === 0x2009 || // Thin space
-        code === 0x200A || // Hair space
-        code === 0x202F || // Narrow no-break space
-        code === 0x205F || // Medium mathematical space
-        code === 0x3000;   // Ideographic space
+    return result;
 }
 
 /**
  * Removes leading and trailing whitespace from each line
  * 
  * @param {string} text - The input text to process
- * @param {boolean} preserveTabs - If true, only removes spaces (but tabs)
+ * @param {boolean} preserveTabs - If true, only removes spaces (not tabs)
  * 
  * @returns {string} The text with leading and trailing whitespace removed from each line
  */
-export function removeLeadingTrailingWhitespace(
+export function trimLineWhitespace(
     text: string,
     preserveTabs: boolean = false
 ): string {
+    // Early validation
     if (typeof text !== "string") {
         return text;
     }
@@ -366,8 +305,38 @@ export function removeLeadingTrailingWhitespace(
         return text;
     }
 
-    const lines: string[] = [];
+    /**
+     * Helper function to check if a codepoint is whitespace
+     * Includes all Unicode whitespace characters that should be trimmed
+     */
+    const isWhitespace = (code: number): boolean => {
+        return code === 0x0020 || // Space
+            code === 0x0009 || // Tab
+            code === 0x000C || // Form feed
+            code === 0x000B || // Vertical tab
+            code === 0x00A0 || // Non-breaking space
+            code === 0x1680 || // Ogham space mark
+            code === 0x2000 || // En quad
+            code === 0x2001 || // Em quad
+            code === 0x2002 || // En space
+            code === 0x2003 || // Em space
+            code === 0x2004 || // Three-per-em space
+            code === 0x2005 || // Four-per-em space
+            code === 0x2006 || // Six-per-em space
+            code === 0x2007 || // Figure space
+            code === 0x2008 || // Punctuation space
+            code === 0x2009 || // Thin space
+            code === 0x200A || // Hair space
+            code === 0x2028 || // Line separator
+            code === 0x2029 || // Paragraph separator
+            code === 0x202F || // Narrow no-break space
+            code === 0x205F || // Medium mathematical space
+            code === 0x3000 || // Ideographic space
+            code === 0xFEFF;   // Zero-width no-break space (BOM)
+    };
 
+    // Use a single string builder approach for better performance
+    let result = "";
     let lineStart = 0;
 
     for (let i = 0; i <= len; i++) {
@@ -376,19 +345,18 @@ export function removeLeadingTrailingWhitespace(
 
         if (isEOL) {
             // Determine line ending type
-            let eolLength = 0;
             let eol = "";
+            let skipNext = false;
 
             if (i < len) {
-                if (code === 0x000D && i + 1 < len && text.charCodeAt(i + 1) === 0x000A) { // \r\n
+                if (code === 0x000D && i + 1 < len && text.charCodeAt(i + 1) === 0x000A) {
                     eol = "\r\n";
-                    eolLength = 2;
-                } else if (code === 0x000A) { // \n
+
+                    skipNext = true; // Skip the \n in next iteration
+                } else if (code === 0x000A) {
                     eol = "\n";
-                    eolLength = 1;
-                } else if (code === 0x000D) { // \r
+                } else if (code === 0x000D) {
                     eol = "\r";
-                    eolLength = 1;
                 }
             }
 
@@ -424,26 +392,23 @@ export function removeLeadingTrailingWhitespace(
                 end--;
             }
 
-            // Extract trimmed line content
-            let lineContent = "";
-
+            // Build result string directly
             if (end >= start) {
-                lineContent = text.substring(start, end + 1);
+                result += text.substring(start, end + 1);
             }
 
-            // Store line with original EOL
-            lines.push(lineContent + eol);
+            result += eol;
 
-            // Advance index if we consumed multiple characters
-            if (eolLength > 0) {
-                i += eolLength - 1; // -1 because loop will increment
+            // Update lineStart for next iteration
+            if (skipNext) {
+                i++; // Skip the \n in \r\n
             }
 
             lineStart = i + 1;
         }
     }
 
-    return lines.join("");
+    return result;
 }
 
 /**
@@ -513,7 +478,7 @@ function slugifySingleLine(text: string, separator: string): string {
 
     // Check if what follows the dot looks like a valid file extension
     const possibleExt = text.substring(lastDotIndex);
-    if (!possibleExt.match(re.fileExtension)) {
+    if (!possibleExt.match(REGEX_FILE_EXTENSION)) {
         return slugifyHelper(text, separator);
     }
 
@@ -754,7 +719,7 @@ export function base64Decode(text: string): string {
  * @returns {boolean} True if the string is valid Base64
  */
 export function isValidBase64(text: string): boolean {
-    return re.base64.test(text);
+    return REGEX_BASE64.test(text);
 }
 
 /**
@@ -818,13 +783,13 @@ function isHTMLNamedCharacterEntity(str: string, idx: number): number {
     const s = str.slice(idx);
 
     // Hex numeric form: &#xHHHH;
-    let m = re.hexNumericEntity.exec(s);
+    let m = REGEX_HEX_NUMERIC_ENTITY.exec(s);
     if (m) {
         return m[0].length;
     }
 
     // Named form: &name;
-    m = re.namedEntity.exec(s);
+    m = REGEX_NAMED_ENTITY.exec(s);
     if (m && uniqueEntityNames.has(m[1])) {
         return m[0].length;
     }
@@ -994,7 +959,7 @@ function isHTMLHexadecimalCharacterReference(str: string, idx: number): number {
     const s = str.slice(idx);
 
     // Hex numeric form: &#xHHHH;
-    let m = re.hexNumericEntity.exec(s);
+    let m = REGEX_HEX_NUMERIC_ENTITY.exec(s);
     if (m) {
         return m[0].length;
     }
@@ -1143,7 +1108,7 @@ function isHtmlDecimalEntity(str: string, idx: number): number {
     const s = str.slice(idx);
 
     // Decimal numeric form: &#1234;
-    let m = re.decimalEntity.exec(s);
+    let m = REGEX_DECIMAL_ENTITY.exec(s);
     if (m) {
         return m[0].length;
     }
@@ -1291,13 +1256,13 @@ function isJavaScriptUTF16EscapeSequence(str: string, idx: number): number {
     const s = str.slice(idx);
 
     // \uXXXX (4 hex digits)
-    let m = re.unicode4HexDigit.exec(s);
+    let m = REGEX_UNICODE4_HEX_DIGIT.exec(s);
     if (m) {
         return m[0].length;
     }
 
     // \UXXXXXXXX (8 hex digits)
-    m = re.unicode8HexDigit.exec(s);
+    m = REGEX_UNICODE8_HEX_DIGIT.exec(s);
     if (m) {
         return m[0].length;
     }
@@ -1427,7 +1392,7 @@ function isCssUnicodeEscape(str: string, idx: number): number {
     const s = str.slice(idx);
 
     // \XXXXXX (backslash + 6 hex digits)
-    let m = re.backslash6HexDigit.exec(s);
+    let m = REGEX_BACKSLASH6_HEX_DIGIT.exec(s);
     if (m) {
         return m[0].length;
     }
@@ -1564,7 +1529,7 @@ function isUnicodeCodePointNotation(str: string, idx: number): number {
     const s = str.slice(idx);
 
     // U+XXXX, U+XXXXX or U+XXXXXX
-    let m = re.uPlusCodePoint.exec(s);
+    let m = REGEX_U_PLUS_CODE_POINT.exec(s);
     if (m) {
         return m[0].length;
     }
@@ -1693,7 +1658,7 @@ function isUnicodeCodePointEscapeSequence(str: string, idx: number): number {
     const s = str.slice(idx);
 
     // \u{XXX} (braced, variable length)
-    let m = re.unicodeBracedCodePoint.exec(s);
+    let m = REGEX_UNICODE_BRACED_CODE_POINT.exec(s);
     if (m) {
         return m[0].length;
     }
@@ -1818,7 +1783,7 @@ function isPCREUnicodeHexadecimalEcape(str: string, idx: number): number {
     const s = str.slice(idx);
 
     // \x{XXX} (braced, variable length)
-    let m = re.unicodeBracedHexadecimal.exec(s);
+    let m = REGEX_UNICODE_BRACED_HEXADECIMAL.exec(s);
     if (m) {
         return m[0].length;
     }
@@ -1943,7 +1908,7 @@ function isHexCodePoint(str: string, idx: number): number {
     const s = str.slice(idx);
 
     // 0xXXX (hex literal)
-    let m = re.hexCodePoint.exec(s);
+    let m = REGEX_HEX_CODE_POINT.exec(s);
     if (m) {
         return m[0].length;
     }

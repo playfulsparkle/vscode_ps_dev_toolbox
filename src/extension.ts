@@ -78,7 +78,7 @@ export function activate(context: vscode.ExtensionContext) {
 		/** Removes non-printable characters from text */
 		CleanText = "ps-dev-toolbox.cleanText",
 		/** Removes leading and trailing whitespace */
-		RemoveLeadingTrailingWhitespace = "ps-dev-toolbox.removeLeadingTrailingWhitespace",
+		TrimLineWhitespace = "ps-dev-toolbox.trimLineWhitespace",
 		/** Encodes text to HTML named character entities */
 		EncodeHTMLNamedCharacterEntitys = "ps-dev-toolbox.encodeHTMLNamedCharacterEntitys",
 		/** Decodes text from HTML named character entities */
@@ -403,30 +403,6 @@ export function activate(context: vscode.ExtensionContext) {
 	};
 
 	/**
-	 * Removes leading and trailing whitespace from text
-	 * 
-	 * @returns {Promise<void>}
-	 */
-	const removeLeadingTrailingWhitespaceCommand = async (): Promise<void> => {
-		await processTextInEditor(
-			utils.removeLeadingTrailingWhitespace,
-			true // Expand to full lines
-		);
-	};
-
-	/**
-	 * Removes non-printable characters from text
-	 * 
-	 * @returns {Promise<void>}
-	 */
-	const cleanTextCommand = async (): Promise<void> => {
-		await processTextInEditor(
-			utils.cleanText,
-			false // Don't expand to full lines (process exact selection)
-		);
-	};
-
-	/**
 	 * Prompts user for locale input and validates it
 	 * 
 	 * @returns {Promise<string[]>} Array of validated locales
@@ -724,14 +700,26 @@ export function activate(context: vscode.ExtensionContext) {
 		 * 
 		 * @returns {Promise<void>}
 		 */
-		[CommandId.CleanText]: cleanTextCommand,
+		[CommandId.CleanText]: async (): Promise<void> => {
+			await processTextInEditor(
+				utils.cleanText,
+				false // Don't expand to full lines (process exact selection)
+			);
+		},
 
 		/**
 		 * Removes leading and trailing whitespace
 		 * 
 		 * @returns {Promise<void>}
 		 */
-		[CommandId.RemoveLeadingTrailingWhitespace]: removeLeadingTrailingWhitespaceCommand,
+		[CommandId.TrimLineWhitespace]: async (): Promise<void> => {
+			const preserveTabs = getConfigValue<boolean>("ps-dev-toolbox.trimLineWhitespace", "preserveTabs", true);
+
+			await processTextInEditor(
+				text => utils.trimLineWhitespace(text, preserveTabs),
+				true // Expand to full lines
+			);
+		},
 
 		/**
 		 * Encodes text to HTML named character entities
