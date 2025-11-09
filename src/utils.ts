@@ -1,9 +1,10 @@
+import * as path from "path";
 import { uniqueEntityNames, codePointToEntityName, entityNameToCodePoint } from "./namedentities";
 import {
     CONTROL_CHARACTERS, DASH_CHARACTERS, SPACE_CHARACTERS, INVISIBLE_CHARACTERS, SPECIAL_REMOVE_CHARACTERS, SOFT_HYPHEN_MARKS,
     REGEX_FILE_EXTENSION, REGEX_BASE64, REGEX_LOCALE, REGEX_HEX_NUMERIC_ENTITY, REGEX_NAMED_ENTITY, REGEX_DECIMAL_ENTITY,
     REGEX_UNICODE4_HEX_DIGIT, REGEX_UNICODE8_HEX_DIGIT, REGEX_BACKSLASH6_HEX_DIGIT, REGEX_U_PLUS_CODE_POINT,
-    REGEX_UNICODE_BRACED_CODE_POINT, REGEX_UNICODE_BRACED_HEXADECIMAL, REGEX_HEX_CODE_POINT
+    REGEX_UNICODE_BRACED_CODE_POINT, REGEX_UNICODE_BRACED_HEXADECIMAL, REGEX_HEX_CODE_POINT, REGEX_EOL_SPLIT
 } from "./constants";
 
 /**
@@ -424,8 +425,9 @@ export function trimLineWhitespace(
  * @returns {string} The slugified version of the string
  */
 export function slugify(text: string, separator: string = "-"): string {
+    // Type guard - return as-is for non-strings (matches test expectations)
     if (typeof text !== "string") {
-        return "";
+        return text as any;
     }
 
     if (text.length === 0) {
@@ -434,20 +436,19 @@ export function slugify(text: string, separator: string = "-"): string {
 
     // Check if text contains line breaks - if so, process each line separately
     if (text.includes("\n") || text.includes("\r")) {
-        // Split while capturing the delimiters
-        const parts = text.split(/(\r?\n)/);
-
+        const parts = text.split(REGEX_EOL_SPLIT);
         let result = "";
 
         for (let i = 0; i < parts.length; i++) {
             const part = parts[i];
 
-            if (part === "\n" || part === "\r\n" || part === "\r") { // If it's a line break delimiter, preserve it as-is
+            // If it's a line break delimiter, preserve it as-is
+            if (part === "\n" || part === "\r\n" || part === "\r") {
                 result += part;
-            } else if (part.length > 0) { // If it's actual content, slugify it
+            } else if (part.length > 0) {
+                // If it's actual content, slugify it
                 result += slugifySingleLine(part, separator);
             }
-
             // Empty strings (from consecutive line breaks) are skipped
         }
 
@@ -456,6 +457,33 @@ export function slugify(text: string, separator: string = "-"): string {
 
     // Single line processing
     return slugifySingleLine(text, separator);
+}
+
+function extractFileNameExt(str: string): string[] {
+    const doubleExts = [
+        ".tar.gz", ".tar.br", ".tar.bz2", ".tar.xz", ".tar.zst",
+        ".tar.lz", ".tar.lzma", ".tar.lzo", ".tar.z", ".svg.gz",
+    ];
+
+    const lower = str.toLowerCase();
+
+    for (const ext of doubleExts) {
+        if (lower.endsWith(ext)) {
+            return [str.slice(0, -ext.length), str.slice(str.length - ext.length)];
+        }
+    }
+
+    if (str.startsWith("..")) {
+        return [str.replace(/\.+/g, "."), ""];
+    }
+
+    if (str.startsWith(".")) {
+        return ["", str];
+    }
+
+    const ext = path.extname(str);
+
+    return [path.basename(str, ext), ext];
 }
 
 /**
@@ -468,25 +496,22 @@ export function slugify(text: string, separator: string = "-"): string {
  * @returns {string} The slugified text
  */
 function slugifySingleLine(text: string, separator: string): string {
-    // Find the last dot position
-    const lastDotIndex = text.lastIndexOf(".");
+    const dotPrefix = text.startsWith(".") ? "." : "";
 
-    // Quick check if there might be a file extension (contains a dot)
-    if (lastDotIndex === -1 || lastDotIndex === text.length - 1) {
-        return slugifyHelper(text, separator);
+    // Use path.extname to detect file extensions
+    const [baseName, ext] = extractFileNameExt(text);
+
+    if (!baseName && ext) {
+        return ext;
     }
 
-    // Check if what follows the dot looks like a valid file extension
-    const possibleExt = text.substring(lastDotIndex);
-    if (!possibleExt.match(REGEX_FILE_EXTENSION)) {
-        return slugifyHelper(text, separator);
+    // Normal case: has both base name and extension
+    if (baseName && ext) {
+        return dotPrefix + slugifyHelper(baseName, separator) + ext.toLowerCase();
     }
 
-    // Process only the base name (everything except the extension)
-    const baseName = text.substring(0, lastDotIndex);
-
-    // Apply slugify to base name and reattach extension
-    return slugifyHelper(baseName, separator) + possibleExt;
+    // No extension found
+    return dotPrefix + slugifyHelper(text, separator);
 }
 
 /**
@@ -499,21 +524,38 @@ function slugifySingleLine(text: string, separator: string): string {
  * @returns {string} The processed text
  */
 function slugifyHelper(text: string, separator: string): string {
-    // Remove diacritics (accent marks) and convert to lowercase in one step
+    // Handle string.toWellFormed() if available (ES2024)
+    if (typeof (text as any).toWellFormed === "function") {
+        text = (text as any).toWellFormed();
+    }
+
+    // Escape separator for regex use
+    const escapedSeparator = separator.replace(/[-.*+?^${}()|[\]\\]/g, "\\$&");
+
+    // Remove diacritics (accent marks) by normalizing to NFD
     let normalized = text.normalize("NFD");
 
-    // Remove combining marks and special characters in one regex operation
-    normalized = normalized.replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    // Remove combining marks (the separated accent characters)
+    normalized = normalized.replace(/[\u0300-\u036f]/g, "");
 
-    // Remove non-alphanumeric characters (except spaces)
-    normalized = normalized.replace(new RegExp(`[^a-z0-9\s${separator}]`, "g"), " ");
+    // Convert to lowercase
+    normalized = normalized.toLowerCase();
+
+    // Keep alphanumeric, Unicode letters (CJK, Arabic, etc.), spaces, and the separator
+    // This preserves non-Latin characters while removing most special characters
+    normalized = normalized.replace(new RegExp(`[^a-z0-9\\s${escapedSeparator}\\p{L}]`, "gu"), " ");
+
+    // Trim leading/trailing whitespace
     normalized = normalized.trim();
 
-    // Replace spaces with hyphens
+    // Replace one or more spaces with single separator
     normalized = normalized.replace(/\s+/g, separator);
 
-    // Replace multiple hyphens with a single hyphen
-    normalized = normalized.replace(new RegExp(`${separator}+`, "g"), separator);
+    // Replace multiple consecutive separators with a single separator
+    normalized = normalized.replace(new RegExp(`${escapedSeparator}{2,}`, "g"), separator);
+
+    // Remove leading/trailing separators
+    normalized = normalized.replace(new RegExp(`^${escapedSeparator}+|${escapedSeparator}+$`, "g"), "");
 
     return normalized;
 }

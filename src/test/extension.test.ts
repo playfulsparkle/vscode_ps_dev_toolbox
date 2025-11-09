@@ -170,10 +170,6 @@ suite("Dev Toolbox Tests", () => {
 		});
 	});
 
-	// suite("String Utilities", () => {
-
-	// });
-
 	suite("Encoding Utilities", () => {
 		test("base64Encode/base64Decode roundtrip", () => {
 			const original = "Playful Sparkle 🎉";
@@ -217,48 +213,314 @@ suite("Dev Toolbox Tests", () => {
 	});
 
 	suite("Slugify", () => {
-		test("slugify preserves file extensions", () => {
-			assert.strictEqual(
-				utils.slugify("Document Version 2.0.pdf"),
-				"document-version-2-0.pdf"
-			);
-			assert.strictEqual(
-				utils.slugify("Image with spaces.jpeg"),
-				"image-with-spaces.jpeg"
-			);
+		suite("Basic Functionality", () => {
+			test("preserves file extensions", () => {
+				assert.strictEqual(
+					utils.slugify("Document Version 2.0.pdf"),
+					"document-version-2-0.pdf"
+				);
+				assert.strictEqual(
+					utils.slugify("Image with spaces.jpeg"),
+					"image-with-spaces.jpeg"
+				);
+			});
+
+			test("handles special characters", () => {
+				assert.strictEqual(
+					utils.slugify("Modülär Ärchïtecture~!@#$%^&*().txt"),
+					"modular-architecture.txt"
+				);
+				assert.strictEqual(
+					utils.slugify("Hello   World--__--Test"),
+					"hello-world-test"
+				);
+			});
+
+			test("removes diacritics", () => {
+				assert.strictEqual(
+					utils.slugify("Àççèñtéd Chäràctêrs"),
+					"accented-characters"
+				);
+				assert.strictEqual(
+					utils.slugify("Ñörmälîzätïon"),
+					"normalization"
+				);
+			});
 		});
 
-		test("slugify single large 'selection'", () => {
-			assert.strictEqual(
-				utils.slugify("Document Version 1.0.pdf\r\nDocument Version 2.0.pdf"),
-				"document-version-1-0.pdf\r\ndocument-version-2-0.pdf"
-			);
-			assert.strictEqual(
-				utils.slugify("Image with spaces 1.jpeg\r\nImage with spaces 2.jpeg"),
-				"image-with-spaces-1.jpeg\r\nimage-with-spaces-2.jpeg"
-			);
+		suite("File Extensions", () => {
+			test("handles file with extension", () => {
+				assert.strictEqual(utils.slugify("my-file.txt", "-"), "my-file.txt");
+			});
+
+			test("handles hidden file without extension", () => {
+				assert.strictEqual(utils.slugify(".gitignore", "-"), ".gitignore");
+			});
+
+			test("handles multiple dots in filename", () => {
+				assert.strictEqual(utils.slugify("my.project.file.txt", "-"), "my-project-file.txt");
+			});
+
+			test("handles file without extension", () => {
+				assert.strictEqual(utils.slugify("README", "-"), "readme");
+			});
+
+			test("handles file ending with dot", () => {
+				assert.strictEqual(utils.slugify("file.", "-"), "file.");
+			});
+
+			test("handles empty string", () => {
+				assert.strictEqual(utils.slugify("", "-"), "");
+			});
 		});
 
-		test("slugify handles special characters", () => {
-			assert.strictEqual(
-				utils.slugify("Modülär Ärchïtecture~!@#$%^&*().txt"),
-				"modular-architecture.txt"
-			);
-			assert.strictEqual(
-				utils.slugify("Hello   World--__--Test"),
-				"hello-world-test"
-			);
+		suite("Multi-line Content", () => {
+			test("slugify single large 'selection' with CRLF", () => {
+				assert.strictEqual(
+					utils.slugify("Document Version 1.0.pdf\r\nDocument Version 2.0.pdf"),
+					"document-version-1-0.pdf\r\ndocument-version-2-0.pdf"
+				);
+			});
+
+			test("slugify single large 'selection' with LF", () => {
+				assert.strictEqual(
+					utils.slugify("Image with spaces 1.jpeg\nImage with spaces 2.jpeg"),
+					"image-with-spaces-1.jpeg\nimage-with-spaces-2.jpeg"
+				);
+			});
 		});
 
-		test("slugify removes diacritics", () => {
-			assert.strictEqual(
-				utils.slugify("Àççèñtéd Chäràctêrs"),
-				"accented-characters"
-			);
-			assert.strictEqual(
-				utils.slugify("Ñörmälîzätïon"),
-				"normalization"
-			);
+		suite("Edge Cases - Empty/Whitespace", () => {
+			test("handles only whitespace", () => {
+				assert.strictEqual(utils.slugify("   ", "-"), "");
+			});
+
+			test("handles only special characters", () => {
+				assert.strictEqual(utils.slugify("@#$%^&*()", "-"), "");
+			});
+
+			test("handles only special characters with extension", () => {
+				assert.strictEqual(utils.slugify("@#$%^&*().txt", "-"), ".txt");
+			});
+
+			test("handles leading and trailing whitespace", () => {
+				assert.strictEqual(
+					utils.slugify("  file name  .txt", "-"),
+					"file-name.txt"
+				);
+			});
+		});
+
+		suite("Edge Cases - Separators", () => {
+			test("handles multiple consecutive spaces", () => {
+				assert.strictEqual(
+					utils.slugify("hello     world.txt", "-"),
+					"hello-world.txt"
+				);
+			});
+
+			test("handles multiple consecutive dashes", () => {
+				assert.strictEqual(
+					utils.slugify("hello-----world.txt", "-"),
+					"hello-world.txt"
+				);
+			});
+
+			test("handles leading separators", () => {
+				assert.strictEqual(
+					utils.slugify("---hello.txt", "-"),
+					"hello.txt"
+				);
+			});
+
+			test("handles trailing separators", () => {
+				assert.strictEqual(
+					utils.slugify("hello---.txt", "-"),
+					"hello.txt"
+				);
+			});
+
+			test("uses underscore separator", () => {
+				assert.strictEqual(
+					utils.slugify("Hello World.txt", "_"),
+					"hello_world.txt"
+				);
+			});
+
+			test("handles mixed separators with underscore", () => {
+				assert.strictEqual(
+					utils.slugify("Hello---World___Test.txt", "_"),
+					"hello_world_test.txt"
+				);
+			});
+		});
+
+		suite("Extensions - Complex Cases", () => {
+			test("handles double extension (.tar.gz)", () => {
+				assert.strictEqual(
+					utils.slugify("Archive File.tar.gz", "-"),
+					"archive-file.tar.gz"
+				);
+			});
+
+			test("handles multiple dots in basename and extension", () => {
+				assert.strictEqual(
+					utils.slugify("My.File.2023.backup.txt", "-"),
+					"my-file-2023-backup.txt"
+				);
+			});
+
+			test("handles no extension with dots in name", () => {
+				assert.strictEqual(
+					utils.slugify("Version.2.0.Final", "-"),
+					"version-2-0.final"
+				);
+			});
+
+			test("handles single character extension", () => {
+				assert.strictEqual(
+					utils.slugify("file.c", "-"),
+					"file.c"
+				);
+			});
+
+			test("handles long extension", () => {
+				assert.strictEqual(
+					utils.slugify("file.extension", "-"),
+					"file.extension"
+				);
+			});
+
+			test("handles ALL CAPS extension", () => {
+				assert.strictEqual(
+					utils.slugify("FILE.TXT", "-"),
+					"file.txt"
+				);
+			});
+		});
+
+		suite("Unicode - Advanced", () => {
+			test("handles CJK characters", () => {
+				assert.strictEqual(
+					utils.slugify("文档.txt", "-"),
+					"文档.txt"
+				);
+			});
+
+			test("handles Arabic/RTL text", () => {
+				const result = utils.slugify("مستند.txt", "-");
+				assert.ok(result.length > 0, "Should not be empty");
+			});
+
+			test("handles mixed scripts", () => {
+				assert.strictEqual(
+					utils.slugify("Hello 世界 مرحبا.txt", "-"),
+					"hello-世界-مرحبا.txt"
+				);
+			});
+
+			test("handles Unicode normalization (NFD vs NFC)", () => {
+				// é can be represented as single char (NFC) or e + combining accent (NFD)
+				const nfc = "café.txt";
+				const nfd = "café.txt";
+				const result1 = utils.slugify(nfc, "-");
+				const result2 = utils.slugify(nfd, "-");
+				assert.strictEqual(result1, result2, "Should normalize Unicode");
+			});
+		});
+
+		suite("Multi-line - Advanced", () => {
+			test("handles mixed line endings", () => {
+				const input = "file1.txt\nfile2.txt\r\nfile3.txt\rfile4.txt";
+				const result = utils.slugify(input);
+				// Should preserve all line endings exactly
+				assert.strictEqual(result, input);
+			});
+
+			test("handles empty lines", () => {
+				assert.strictEqual(
+					utils.slugify("file1.txt\n\n\nfile2.txt"),
+					"file1.txt\n\n\nfile2.txt"
+				);
+			});
+
+			test("handles lines with only whitespace", () => {
+				assert.strictEqual(
+					utils.slugify("file1.txt\n   \nfile2.txt"),
+					"file1.txt\n\nfile2.txt"
+				);
+			});
+
+			test("handles very long multi-line content", () => {
+				const lines = Array(1000).fill("File Name.txt").join("\n");
+				const result = utils.slugify(lines, "-");
+				const resultLines = result.split("\n");
+				assert.strictEqual(resultLines.length, 1000, "Should preserve line count");
+				assert.ok(resultLines.every(line => line === "file-name.txt"), "All lines slugified");
+			});
+		});
+
+		suite("Special Cases", () => {
+			test("handles filename with only extension", () => {
+				assert.strictEqual(
+					utils.slugify(".txt", "-"),
+					".txt"
+				);
+			});
+
+			test("handles multiple dots at start", () => {
+				assert.strictEqual(
+					utils.slugify("..gitignore", "-"),
+					".gitignore"
+				);
+			});
+
+			test("handles Windows reserved names", () => {
+				assert.strictEqual(
+					utils.slugify("CON.txt", "-"),
+					"con.txt"
+				);
+			});
+
+			test("handles case preservation in extension", () => {
+				assert.strictEqual(
+					utils.slugify("File.TxT", "-"),
+					"file.txt"
+				);
+			});
+
+			test("handles numbers only", () => {
+				assert.strictEqual(
+					utils.slugify("123456.txt", "-"),
+					"123456.txt"
+				);
+			});
+
+			test("handles single character", () => {
+				assert.strictEqual(
+					utils.slugify("a", "-"),
+					"a"
+				);
+			});
+		});
+
+		suite("Type Safety", () => {
+			test("handles non-string input gracefully", () => {
+				assert.strictEqual(utils.slugify(null as any), null);
+				assert.strictEqual(utils.slugify(undefined as any), undefined);
+				assert.strictEqual(utils.slugify(123 as any), 123);
+			});
+		});
+
+		suite("Performance", () => {
+			test("handles large file in reasonable time", function () {
+				this.timeout(1000);
+				const largeName = "a".repeat(100000);
+				const start = Date.now();
+				utils.slugify(largeName, "-");
+				const duration = Date.now() - start;
+				assert.ok(duration < 1000, `Should complete quickly (took ${duration}ms)`);
+			});
 		});
 	});
 

@@ -25,6 +25,8 @@ export const REGEX_UNICODE_BRACED_HEXADECIMAL = /^\\x\{[0-9A-Fa-f]+\}/; // \x{XX
 
 export const REGEX_HEX_CODE_POINT = /^0x[0-9A-Fa-f]+/;                  // 0xXXX
 
+export const REGEX_EOL_SPLIT = /(\r?\n|\r)/;
+
 /*
  * Common dash characters to normalise to standard hyphen (U+002D).
  * U+2212 (MINUS SIGN) has been removed because it is semantically

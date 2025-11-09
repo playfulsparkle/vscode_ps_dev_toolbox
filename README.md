@@ -96,6 +96,12 @@ If you encounter any of these or other issues, please report them on the [GitHub
 
 ## Release Notes
 
+### 0.0.22
+
+- Fixed bug parsing multi-line slug processing.
+- Fixed bug escaping slug separator.
+- Refactored slug generator, betted handling of double extension like `.tar.gz`, support for unicode, LTR/RTL, emoji characters.
+
 ### 0.0.21
 
 - Refactored clean text, the text is now processed by character‑by‑character loop: first normalises malformed Unicode sequences, then uses lookup sets to strip hidden control characters, preserve valid surrogate pairs, and clean up exotic spaces and dashes.
