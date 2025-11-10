@@ -40,7 +40,7 @@ export function activate(context: vscode.ExtensionContext) {
 		/** Converts text to slug format with configurable separator */
 		Slugify = "ps-dev-toolbox.slugify",
 		/** Converts file or folder names to slug format */
-		SlugifyFilename = "ps-dev-toolbox.slugifyFileOrFolder",
+		SlugifyFilenameOrFolder = "ps-dev-toolbox.slugifyFilenameOrFolder",
 		/** Converts text to camelCase format */
 		ToCamelCase = "ps-dev-toolbox.toCamelCase",
 		/** Converts text to PascalCase format */
@@ -438,7 +438,7 @@ export function activate(context: vscode.ExtensionContext) {
 	 * @param {string} separator - Separator to use for slugification
 	 * @returns {Promise<void>}
 	 */
-	const renameToSlug = async (uri: vscode.Uri, separator: string): Promise<void> => {
+	const slugifyFilenameOrFolder = async (uri: vscode.Uri, separator: string): Promise<void> => {
 		const oldPath = uri.fsPath;
 
 		const itemName = path.basename(oldPath);
@@ -460,11 +460,7 @@ export function activate(context: vscode.ExtensionContext) {
 		const newUri = vscode.Uri.file(newPath);
 		let shouldOverwrite = false;
 
-		// Check existence using VS Code API (avoids race condition)
-		try {
-			await vscode.workspace.fs.stat(newUri);
-
-			// File exists - prompt user
+		if (await isFileExists(newUri)) {
 			const overwritePrompt = await vscode.window.showWarningMessage(
 				vscode.l10n.t("'{0}' already exists. Do you want to overwrite it?", slugifiedName),
 				{ modal: true },
@@ -474,15 +470,13 @@ export function activate(context: vscode.ExtensionContext) {
 
 			if (overwritePrompt === vscode.l10n.t("Yes")) {
 				shouldOverwrite = true;
-			} else if (overwritePrompt === vscode.l10n.t("No")) {
-				return; // User chose not to overwrite
+			} else {
+				return;
 			}
-		} catch (_) {
-			// File doesn't exist - this is fine, continue
 		}
 
 		try {
-			await vscode.workspace.fs.rename(uri, vscode.Uri.file(newPath), { overwrite: shouldOverwrite });
+			await vscode.workspace.fs.rename(uri, newUri, { overwrite: shouldOverwrite });
 
 			vscode.window.showInformationMessage(
 				vscode.l10n.t("Renamed: {0} to {1}", itemName, slugifiedName)
@@ -491,6 +485,15 @@ export function activate(context: vscode.ExtensionContext) {
 			vscode.window.showErrorMessage(
 				vscode.l10n.t("Failed to rename '{0}': {1}", itemName, (error as Error).message)
 			);
+		}
+	};
+
+	const isFileExists = async (uri: vscode.Uri): Promise<boolean> => {
+		try {
+			await vscode.workspace.fs.stat(uri);
+			return true;  // File exists - stat succeeded
+		} catch (error) {
+			return false; // File doesn't exist - stat threw an error
 		}
 	};
 
@@ -581,7 +584,7 @@ export function activate(context: vscode.ExtensionContext) {
 		 * @param {vscode.Uri[]} [selectedUris] - Array of all selected URIs for multi-select
 		 * @returns {Promise<void>}
 		 */
-		[CommandId.SlugifyFilename]: async (uri: vscode.Uri, selectedUris?: vscode.Uri[]): Promise<void> => {
+		[CommandId.SlugifyFilenameOrFolder]: async (uri: vscode.Uri, selectedUris?: vscode.Uri[]): Promise<void> => {
 			if (!uri) {
 				return;
 			}
@@ -592,7 +595,7 @@ export function activate(context: vscode.ExtensionContext) {
 			const urisToRename = selectedUris && selectedUris.length > 0 ? selectedUris : [uri];
 
 			for (const currentUri of urisToRename) {
-				await renameToSlug(currentUri, separator);
+				await slugifyFilenameOrFolder(currentUri, separator);
 			}
 
 			if (urisToRename.length > 1) {

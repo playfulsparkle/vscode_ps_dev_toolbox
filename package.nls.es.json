@@ -20,7 +20,7 @@
   "extension.category.help.title": "Ayuda",
   "extension.command.reportIssue.title": "Informar de un problema",
   "extension.command.slugify.title": "Generar slug de URL",
-  "extension.command.slugifyFileOrFolder.title": "Convertir a slug de URL",
+  "extension.command.slugifyFilenameOrFolder.title": "Convertir a slug de URL",
   "extension.command.toCamelCase.title": "Convertir a camelCase (myVariableName)",
   "extension.command.toPascalCase.title": "Convertir a PascalCase (MyClassName)",
   "extension.command.toSnakeCase.title": "Convertir a snake_case (my_variable_name)",

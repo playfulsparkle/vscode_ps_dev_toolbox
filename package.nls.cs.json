@@ -20,7 +20,7 @@
   "extension.category.help.title": "Nápověda",
   "extension.command.reportIssue.title": "Nahlásit problém",
   "extension.command.slugify.title": "Vygenerovat URL slug",
-  "extension.command.slugifyFileOrFolder.title": "Převést na URL slug",
+  "extension.command.slugifyFilenameOrFolder.title": "Převést na URL slug",
   "extension.command.toCamelCase.title": "Převést na camelCase (myVariableName)",
   "extension.command.toPascalCase.title": "Převést na PascalCase (MyClassName)",
   "extension.command.toSnakeCase.title": "Převést na snake_case (my_variable_name)",

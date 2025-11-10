@@ -20,7 +20,7 @@
   "extension.category.help.title": "帮助",
   "extension.command.reportIssue.title": "报告问题",
   "extension.command.slugify.title": "生成 URL Slug",
-  "extension.command.slugifyFileOrFolder.title": "转换为 URL Slug",
+  "extension.command.slugifyFilenameOrFolder.title": "转换为 URL Slug",
   "extension.command.toCamelCase.title": "转换为 camelCase (myVariableName)",
   "extension.command.toPascalCase.title": "转换为 PascalCase (MyClassName)",
   "extension.command.toSnakeCase.title": "转换为 snake_case (my_variable_name)",

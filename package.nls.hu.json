@@ -20,7 +20,7 @@
   "extension.category.help.title": "Súgó",
   "extension.command.reportIssue.title": "Probléma jelentése",
   "extension.command.slugify.title": "URL slug előállítása",
-  "extension.command.slugifyFileOrFolder.title": "Átalakítás URL sluggá",
+  "extension.command.slugifyFilenameOrFolder.title": "Átalakítás URL sluggá",
   "extension.command.toCamelCase.title": "Átalakítás camelCase formára (myVariableName)",
   "extension.command.toPascalCase.title": "Átalakítás PascalCase formára (MyClassName)",
   "extension.command.toSnakeCase.title": "Átalakítás snake_case formára (my_variable_name)",

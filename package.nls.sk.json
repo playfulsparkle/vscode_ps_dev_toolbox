@@ -20,7 +20,7 @@
   "extension.category.help.title": "Nápoveda",
   "extension.command.reportIssue.title": "Nahlásiť problém",
   "extension.command.slugify.title": "Vygenerovať URL slug",
-  "extension.command.slugifyFileOrFolder.title": "Konvertovať na URL slug",
+  "extension.command.slugifyFilenameOrFolder.title": "Konvertovať na URL slug",
   "extension.command.toCamelCase.title": "Konvertovať na camelCase (myVariableName)",
   "extension.command.toPascalCase.title": "Konvertovať na PascalCase (MyClassName)",
   "extension.command.toSnakeCase.title": "Konvertovať na snake_case (my_variable_name)",

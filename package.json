@@ -90,8 +90,8 @@
   "contributes": {
     "commands": [
       {
-        "command": "ps-dev-toolbox.slugifyFileOrFolder",
-        "title": "%extension.command.slugifyFileOrFolder.title%"
+        "command": "ps-dev-toolbox.slugifyFilenameOrFolder",
+        "title": "%extension.command.slugifyFilenameOrFolder.title%"
       },
       {
         "command": "ps-dev-toolbox.toCamelCase",
@@ -336,12 +336,12 @@
     "menus": {
       "explorer/context": [
         {
-          "command": "ps-dev-toolbox.slugifyFileOrFolder",
+          "command": "ps-dev-toolbox.slugifyFilenameOrFolder",
           "group": "7_modification",
           "when": "explorerResourceIsFolder == false"
         },
         {
-          "command": "ps-dev-toolbox.slugifyFileOrFolder",
+          "command": "ps-dev-toolbox.slugifyFilenameOrFolder",
           "group": "7_modification",
           "when": "explorerResourceIsFolder == true"
         }

@@ -20,7 +20,7 @@
   "extension.category.help.title": "도움말",
   "extension.command.reportIssue.title": "문제 보고",
   "extension.command.slugify.title": "URL 슬러그 생성",
-  "extension.command.slugifyFileOrFolder.title": "URL 슬러그로 변환",
+  "extension.command.slugifyFilenameOrFolder.title": "URL 슬러그로 변환",
   "extension.command.toCamelCase.title": "camelCase로 변환 (myVariableName)",
   "extension.command.toPascalCase.title": "PascalCase로 변환 (MyClassName)",
   "extension.command.toSnakeCase.title": "snake_case로 변환 (my_variable_name)",
