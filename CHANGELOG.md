@@ -2,6 +2,10 @@
 
 All notable changes to the "Playful Sparkle: Dev Toolbox" extension will be documented in this file.
 
+## [0.0.23] - 2025-11-11
+
+- Fixed bug checking file exists for renaming file/folder.
+
 ## [0.0.22] - 2025-11-09
 
 - Fixed bug parsing multi-line slug processing.

@@ -96,6 +96,10 @@ If you encounter any of these or other issues, please report them on the [GitHub
 
 ## Release Notes
 
+### 0.0.23
+
+- Fixed bug checking file exists for renaming file/folder.
+
 ### 0.0.22
 
 - Fixed bug parsing multi-line slug processing.
