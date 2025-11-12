@@ -96,6 +96,10 @@ If you encounter any of these or other issues, please report them on the [GitHub
 
 ## Release Notes
 
+### 0.0.24
+
+- Fix bug file existence check now verifies exact case on case-insensitive file systems (Windows, macOS)
+
 ### 0.0.23
 
 - Fixed bug checking file exists for renaming file/folder.

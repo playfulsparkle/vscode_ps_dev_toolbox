@@ -2,6 +2,10 @@
 
 All notable changes to the "Playful Sparkle: Dev Toolbox" extension will be documented in this file.
 
+## [0.0.24] - 2025-11-12
+
+- Fix bug file existence check now verifies exact case on case-insensitive file systems (Windows, macOS)
+
 ## [0.0.23] - 2025-11-11
 
 - Fixed bug checking file exists for renaming file/folder.
