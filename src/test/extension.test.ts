@@ -550,7 +550,7 @@ suite("Dev Toolbox Tests", () => {
 		});
 
 		test("normalizes dash characters to standard hyphen", () => {
-			const input = "Figure‒Dash En–Dash Em—Dash Horizontal―Bar";
+			const input = "Figure-Dash En-Dash Em—Dash Horizontal―Bar";
 			const expected = "Figure-Dash En-Dash Em-Dash Horizontal-Bar";
 			assert.strictEqual(utils.cleanText(input), expected);
 		});

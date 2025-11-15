@@ -268,7 +268,7 @@ export function cleanText(text: string): string {
             result += text[i];
             i++;
         } else if (code >= 0xF900 && code <= 0xFFFD) {
-            // Preserve CJK Compatibility and Specials (includes VS1–VS16)
+            // Preserve CJK Compatibility and Specials (includes VS1-VS16)
             result += text[i];
             i++;
         } else if (code === 0xFFFE || code === 0xFFFF) {

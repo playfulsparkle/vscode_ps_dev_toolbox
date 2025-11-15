@@ -1,7 +1,7 @@
 {
   "name": "ps-dev-toolbox",
   "displayName": "Dev Toolbox",
-  "version": "0.0.24",
+  "version": "0.0.25",
   "publisher": "playful-sparkle",
   "description": "All-in-one toolset for URL slug generation, Base64/URL encoding/decoding, GUID generation, and removing empty lines, non-printable characters, whitespace and many more.",
   "author": {
@@ -186,13 +186,23 @@
         "category": "%extension.category.utilities.title%"
       },
       {
-        "command": "ps-dev-toolbox.sortLinesAscending",
-        "title": "%extension.command.sortLinesAscending.title%",
+        "command": "ps-dev-toolbox.sortLinesByTextAscending",
+        "title": "%extension.command.sortLinesByTextAscending.title%",
         "category": "%extension.category.utilities.title%"
       },
       {
-        "command": "ps-dev-toolbox.sortLinesDescending",
-        "title": "%extension.command.sortLinesDescending.title%",
+        "command": "ps-dev-toolbox.sortLinesByTextDescending",
+        "title": "%extension.command.sortLinesByTextDescending.title%",
+        "category": "%extension.category.utilities.title%"
+      },
+      {
+        "command": "ps-dev-toolbox.sortLinesByLengthAscending",
+        "title": "%extension.command.sortLinesByLengthAscending.title%",
+        "category": "%extension.category.utilities.title%"
+      },
+      {
+        "command": "ps-dev-toolbox.sortLinesByLengthDescending",
+        "title": "%extension.command.sortLinesByLengthDescending.title%",
         "category": "%extension.category.utilities.title%"
       },
       {

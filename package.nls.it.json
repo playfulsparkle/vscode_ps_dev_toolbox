@@ -58,6 +58,8 @@
   "extension.command.decodePCREUnicodeHexadecimalEcape.title": "Decodificare le sequenze di escape esadecimali Unicode in PCRE (\\x{XX}, \\x{XXXXX})",
   "extension.command.encodeHexCodePoints.title": "Codifica punti di codice esadecimali (0xXX, 0xXXXXX)",
   "extension.command.decodeHexCodePoints.title": "Decodifica punti di codice esadecimali (0xXX, 0xXXXXX)",
-  "extension.command.sortLinesAscending.title": "Ordina righe in ordine crescente",
-  "extension.command.sortLinesDescending.title": "Ordina righe in ordine decrescente"
+  "extension.command.sortLinesByTextAscending.title": "Ordina righe per testo (da A a Z)",
+  "extension.command.sortLinesByTextDescending.title": "Ordina righe per testo (da Z a A)",
+  "extension.command.sortLinesByLengthAscending.title": "Ordina righe per lunghezza (più brevi prima)",
+  "extension.command.sortLinesByLengthDescending.title": "Ordina righe per lunghezza (più lunghe prima)"
 }

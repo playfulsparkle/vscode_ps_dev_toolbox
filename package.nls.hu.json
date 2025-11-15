@@ -58,6 +58,8 @@
   "extension.command.decodePCREUnicodeHexadecimalEcape.title": "PCRE Unicode hexadecimális escape szekvenciák dekódolása (\\x{XX}, \\x{XXXXX})",
   "extension.command.encodeHexCodePoints.title": "Hex kódpontok kódolása (0xXX, 0xXXXXX)",
   "extension.command.decodeHexCodePoints.title": "Hex kódpontok dekódolása (0xXX, 0xXXXXX)",
-  "extension.command.sortLinesAscending.title": "Sorok rendezése növekvő sorrendben",
-  "extension.command.sortLinesDescending.title": "Sorok rendezése csökkenő sorrendben"
+  "extension.command.sortLinesByTextAscending.title": "Sorok rendezése szöveg szerint (A-Z)",
+  "extension.command.sortLinesByTextDescending.title": "Sorok rendezése szöveg szerint (Z-A)",
+  "extension.command.sortLinesByLengthAscending.title": "Sorok rendezése hossz szerint (legrövidebb elöl)",
+  "extension.command.sortLinesByLengthDescending.title": "Sorok rendezése hossz szerint (leghosszabb elöl)"
 }

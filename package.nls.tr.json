@@ -58,6 +58,8 @@
   "extension.command.decodePCREUnicodeHexadecimalEcape.title": "PCRE'de Unicode onaltılık kaçış dizilerinin kodunu çöz (\\x{XX}, \\x{XXXXX})",
   "extension.command.encodeHexCodePoints.title": "Onaltılık kod noktalarını kodла (0xXX, 0xXXXXX)",
   "extension.command.decodeHexCodePoints.title": "Onaltılık kod noktalarının kodunu çöz (0xXX, 0xXXXXX)",
-  "extension.command.sortLinesAscending.title": "Satırları artan sırada sırala",
-  "extension.command.sortLinesDescending.title": "Satırları azalan sırada sırala"
+  "extension.command.sortLinesByTextAscending.title": "Satırları metne göre sırala (A’dan Z’ye)",
+  "extension.command.sortLinesByTextDescending.title": "Satırları metne göre sırala (Z’den A’ya)",
+  "extension.command.sortLinesByLengthAscending.title": "Satırları uzunluğa göre sırala (önce en kısalar)",
+  "extension.command.sortLinesByLengthDescending.title": "Satırları uzunluğa göre sırala (önce en uzunlar)"
 }

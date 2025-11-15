@@ -1,7 +1,8 @@
 import * as vscode from "vscode";
 import * as path from "path";
 import * as utils from "./utils";
-import * as sortUtils from "./sortUtils";
+import * as textSortUtils from "./textSortUtils";
+import * as lineSortUtils from "./lineSortUtils";
 
 /**
  * VS Code Extension: Playful Sparkle Developer Toolbox
@@ -116,9 +117,13 @@ export function activate(context: vscode.ExtensionContext) {
 		/** Decodes text from hexadecimal code points */
 		DecodeHexCodePoints = "ps-dev-toolbox.decodeHexCodePoints",
 		/** Sorts lines in ascending order */
-		SortLinesAscending = "ps-dev-toolbox.sortLinesAscending",
+		SortLinesByTextAscending = "ps-dev-toolbox.sortLinesByTextAscending",
 		/** Sorts lines in descending order */
-		SortLinesDescending = "ps-dev-toolbox.sortLinesDescending"
+		SortLinesByTextDescending = "ps-dev-toolbox.sortLinesByTextDescending",
+		/** Sorts lines by length in ascending order (shortest first) */
+		SortLinesByLengthAscending = "ps-dev-toolbox.sortLinesByLengthAscending",
+		/** Sorts lines by length in descending order (longest first) */
+		SortLinesByLengthDescending = "ps-dev-toolbox.sortLinesByLengthDescending"
 	}
 
 	/**
@@ -611,13 +616,25 @@ export function activate(context: vscode.ExtensionContext) {
 			// Handle multiple selection
 			const urisToRename = selectedUris && selectedUris.length > 0 ? selectedUris : [uri];
 
-			for (const currentUri of urisToRename) {
-				await slugifyFilenameOrFolder(currentUri, separator);
-			}
+			let successCount = 0;
 
-			if (urisToRename.length > 1) {
+			const results = await Promise.allSettled(
+				urisToRename.map(currentUri =>
+					slugifyFilenameOrFolder(currentUri, separator)
+				)
+			);
+
+			results.forEach((result, index) => {
+				if (result.status === "rejected") {
+					console.error(`Failed to process ${urisToRename[index].fsPath}:`, result.reason);
+				} else {
+					successCount++;
+				}
+			});
+
+			if (successCount > 0) {
 				vscode.window.showInformationMessage(
-					vscode.l10n.t("{0} items slugified successfully.", urisToRename.length)
+					vscode.l10n.t("{0} items slugified successfully.", successCount)
 				);
 			}
 		},
@@ -904,11 +921,11 @@ export function activate(context: vscode.ExtensionContext) {
 		[CommandId.DecodeHexCodePoints]: async (): Promise<void> => processTextInEditor(utils.decodeHexCodePoints),
 
 		/**
-		 * Sorts lines in ascending order
+		 * Sorts lines by text in ascending order (A to Z)
 		 * 
 		 * @returns {Promise<void>}
 		 */
-		[CommandId.SortLinesAscending]: async (): Promise<void> => {
+		[CommandId.SortLinesByTextAscending]: async (): Promise<void> => {
 			const defaultLocale = getDefaultLocale();
 			const useNumericSorting = getConfigValue<boolean>("ps-dev-toolbox.sorting", "numeric", true);
 			const sortIgnoreCase = getConfigValue<boolean>("ps-dev-toolbox.sorting", "ignoreCase", true);
@@ -921,15 +938,15 @@ export function activate(context: vscode.ExtensionContext) {
 				numeric: useNumericSorting
 			};
 
-			await processTextInEditor(text => sortUtils.sortLines(text, sortOptions));
+			await processTextInEditor(text => textSortUtils.sortLinesByText(text, sortOptions));
 		},
 
 		/**
-		 * Sorts lines in descending order
+		 * Sorts lines by text in descending order (Z to A)
 		 * 
 		 * @returns {Promise<void>}
 		 */
-		[CommandId.SortLinesDescending]: async (): Promise<void> => {
+		[CommandId.SortLinesByTextDescending]: async (): Promise<void> => {
 			const defaultLocale = getDefaultLocale();
 			const useNumericSorting = getConfigValue<boolean>("ps-dev-toolbox.sorting", "numeric", true);
 			const sortIgnoreCase = getConfigValue<boolean>("ps-dev-toolbox.sorting", "ignoreCase", true);
@@ -942,7 +959,35 @@ export function activate(context: vscode.ExtensionContext) {
 				numeric: useNumericSorting
 			};
 
-			await processTextInEditor(text => sortUtils.sortLines(text, sortOptions));
+			await processTextInEditor(text => textSortUtils.sortLinesByText(text, sortOptions));
+		},
+
+		/**
+		 * Sorts lines by length in ascending order (shortest first)
+		 * 
+		 * @returns {Promise<void>}
+		 */
+		[CommandId.SortLinesByLengthAscending]: async (): Promise<void> => {
+			const sortOptions = {
+				descending: false,
+				preserveEqualOrder: true
+			};
+
+			await processTextInEditor(text => lineSortUtils.sortLinesByLength(text, sortOptions));
+		},
+
+		/**
+		 * Sorts lines by length in descending order (longest first)
+		 * 
+		 * @returns {Promise<void>}
+		 */
+		[CommandId.SortLinesByLengthDescending]: async (): Promise<void> => {
+			const sortOptions = {
+				descending: true,
+				preserveEqualOrder: true
+			};
+
+			await processTextInEditor(text => lineSortUtils.sortLinesByLength(text, sortOptions));
 		},
 	};
 

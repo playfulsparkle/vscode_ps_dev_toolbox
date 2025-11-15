@@ -58,6 +58,8 @@
   "extension.command.decodePCREUnicodeHexadecimalEcape.title": "PCRE における Unicode 16進エスケープシーケンスをデコード (\\x{XX}, \\x{XXXXX})",
   "extension.command.encodeHexCodePoints.title": "16 進の符号位置をエンコード (0xXX, 0xXXXXX)",
   "extension.command.decodeHexCodePoints.title": "16 進の符号位置をデコード (0xXX, 0xXXXXX)",
-  "extension.command.sortLinesAscending.title": "行を昇順で並べ替え",
-  "extension.command.sortLinesDescending.title": "行を降順で並べ替え"
+  "extension.command.sortLinesByTextAscending.title": "テキスト順で行を並べ替え（A から Z）",
+  "extension.command.sortLinesByTextDescending.title": "テキスト順で行を並べ替え（Z から A）",
+  "extension.command.sortLinesByLengthAscending.title": "長さで行を並べ替え（短いものが先）",
+  "extension.command.sortLinesByLengthDescending.title": "長さで行を並べ替え（長いものが先）"
 }

@@ -58,6 +58,8 @@
   "extension.command.decodePCREUnicodeHexadecimalEcape.title": "PCRE의 Unicode 16진수 이스케이프 시퀀스 디코딩 (\\x{XX}, \\x{XXXXX})",
   "extension.command.encodeHexCodePoints.title": "16진 코드 포인트 인코딩 (0xXX, 0xXXXXX)",
   "extension.command.decodeHexCodePoints.title": "16진 코드 포인트 디코딩 (0xXX, 0xXXXXX)",
-  "extension.command.sortLinesAscending.title": "줄을 오름차순으로 정렬",
-  "extension.command.sortLinesDescending.title": "줄을 내림차순으로 정렬"
+  "extension.command.sortLinesByTextAscending.title": "텍스트 기준으로 줄 정렬(A에서 Z)",
+  "extension.command.sortLinesByTextDescending.title": "텍스트 기준으로 줄 정렬(Z에서 A)",
+  "extension.command.sortLinesByLengthAscending.title": "길이 기준으로 줄 정렬(짧은 순)",
+  "extension.command.sortLinesByLengthDescending.title": "길이 기준으로 줄 정렬(긴 순)"
 }

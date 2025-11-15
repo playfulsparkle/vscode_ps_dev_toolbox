@@ -2,6 +2,12 @@
 
 All notable changes to the "Playful Sparkle: Dev Toolbox" extension will be documented in this file.
 
+## [0.0.25] - 2025-11-15
+
+- Refactored sort line to sort line by text (A-Z/Z-A).
+- Add sort line by line length (shortests first/longest first).
+- Optimized async call to slugify filename or folder.
+
 ## [0.0.24] - 2025-11-12
 
 - Fix bug file existence check now verifies exact case on case-insensitive file systems (Windows, macOS)

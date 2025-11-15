@@ -58,6 +58,8 @@
   "extension.command.decodePCREUnicodeHexadecimalEcape.title": "PCRE-Unicode-Hexadezimal-Escape-Sequenzen dekodieren (\\x{XX}, \\x{XXXXX})",
   "extension.command.encodeHexCodePoints.title": "Hex-Codepoints kodieren (0xXX, 0xXXXXX)",
   "extension.command.decodeHexCodePoints.title": "Hex-Codepoints dekodieren (0xXX, 0xXXXXX)",
-  "extension.command.sortLinesAscending.title": "Zeilen aufsteigend sortieren",
-  "extension.command.sortLinesDescending.title": "Zeilen absteigend sortieren"
+  "extension.command.sortLinesByTextAscending.title": "Zeilen nach Text sortieren (A bis Z)",
+  "extension.command.sortLinesByTextDescending.title": "Zeilen nach Text sortieren (Z bis A)",
+  "extension.command.sortLinesByLengthAscending.title": "Zeilen nach Länge sortieren (kürzeste zuerst)",
+  "extension.command.sortLinesByLengthDescending.title": "Zeilen nach Länge sortieren (längste zuerst)"
 }

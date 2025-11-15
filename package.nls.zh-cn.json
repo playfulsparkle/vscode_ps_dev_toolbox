@@ -58,6 +58,8 @@
   "extension.command.decodePCREUnicodeHexadecimalEcape.title": "在 PCRE 中解码 Unicode 十六进制转义序列 (\\x{XX}, \\x{XXXXX})",
   "extension.command.encodeHexCodePoints.title": "编码十六进制码位 (0xXX, 0xXXXXX)",
   "extension.command.decodeHexCodePoints.title": "解码十六进制码位 (0xXX, 0xXXXXX)",
-  "extension.command.sortLinesAscending.title": "将行按升序排序",
-  "extension.command.sortLinesDescending.title": "将行按降序排序"
+  "extension.command.sortLinesByTextAscending.title": "按文本对行排序（A 到 Z）",
+  "extension.command.sortLinesByTextDescending.title": "按文本对行排序（Z 到 A）",
+  "extension.command.sortLinesByLengthAscending.title": "按长度对行排序（从短到长）",
+  "extension.command.sortLinesByLengthDescending.title": "按长度对行排序（从长到短）"
 }

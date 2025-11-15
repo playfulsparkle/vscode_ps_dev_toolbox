@@ -27,6 +27,18 @@ export const REGEX_HEX_CODE_POINT = /^0x[0-9A-Fa-f]+/;                  // 0xXXX
 
 export const REGEX_EOL_SPLIT = /(\r?\n|\r)/;
 
+/**
+ * Comprehensive regex pattern for detecting diacritic characters using Unicode properties
+ * 
+ * This pattern uses Unicode property escapes to match:
+ * - \p{Mn}: Non-spacing marks (combining diacritics like accents, umlauts, tildes)
+ * - \p{Mc}: Spacing combining marks (used in some Indic scripts)
+ * - \p{Me}: Enclosing marks (circle, square, diamond around characters)
+ * 
+ * Covers diacritics across all scripts including Latin, Greek, Cyrillic, Arabic, Devanagari, etc.
+ */
+export const DIACRITIC_PATTERN = /[\p{Mn}\p{Mc}\p{Me}]/u;
+
 /*
  * Common dash characters to normalise to standard hyphen (U+002D).
  * U+2212 (MINUS SIGN) has been removed because it is semantically

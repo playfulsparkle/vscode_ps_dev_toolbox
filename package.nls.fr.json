@@ -58,6 +58,8 @@
   "extension.command.decodePCREUnicodeHexadecimalEcape.title": "Décoder les séquences d’échappement hexadécimales Unicode dans PCRE (\\x{XX}, \\x{XXXXX})",
   "extension.command.encodeHexCodePoints.title": "Encoder les points de code hexadécimaux (0xXX, 0xXXXXX)",
   "extension.command.decodeHexCodePoints.title": "Décoder les points de code hexadécimaux (0xXX, 0xXXXXX)",
-  "extension.command.sortLinesAscending.title": "Trier les lignes par ordre croissant",
-  "extension.command.sortLinesDescending.title": "Trier les lignes par ordre décroissant"
+  "extension.command.sortLinesByTextAscending.title": "Trier les lignes par texte (A à Z)",
+  "extension.command.sortLinesByTextDescending.title": "Trier les lignes par texte (Z à A)",
+  "extension.command.sortLinesByLengthAscending.title": "Trier les lignes par longueur (les plus courtes d’abord)",
+  "extension.command.sortLinesByLengthDescending.title": "Trier les lignes par longueur (les plus longues d’abord)"
 }

@@ -58,6 +58,8 @@
   "extension.command.decodePCREUnicodeHexadecimalEcape.title": "Декодировать шестнадцатеричные экранирующие последовательности Unicode в PCRE (\\x{XX}, \\x{XXXXX})",
   "extension.command.encodeHexCodePoints.title": "Кодировать шестнадцатеричные кодовые точки (0xXX, 0xXXXXX)",
   "extension.command.decodeHexCodePoints.title": "Декодировать шестнадцатеричные кодовые точки (0xXX, 0xXXXXX)",
-  "extension.command.sortLinesAscending.title": "Сортировать строки по возрастанию",
-  "extension.command.sortLinesDescending.title": "Сортировать строки по убыванию"
+  "extension.command.sortLinesByTextAscending.title": "Сортировать строки по тексту (A-Z)",
+  "extension.command.sortLinesByTextDescending.title": "Сортировать строки по тексту (Z-A)",
+  "extension.command.sortLinesByLengthAscending.title": "Сортировать строки по длине (сначала кратчайшие)",
+  "extension.command.sortLinesByLengthDescending.title": "Сортировать строки по длине (сначала самые длинные)"
 }

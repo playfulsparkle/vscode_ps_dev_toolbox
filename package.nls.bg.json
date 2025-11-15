@@ -58,6 +58,8 @@
   "extension.command.decodePCREUnicodeHexadecimalEcape.title": "Декодиране на шестнадесетични escape последователности Unicode в PCRE (\\x{XX}, \\x{XXXXX})",
   "extension.command.encodeHexCodePoints.title": "Кодиране на шестнадесетични кодови точки (0xXX, 0xXXXXX)",
   "extension.command.decodeHexCodePoints.title": "Декодиране на шестнадесетични кодови точки (0xXX, 0xXXXXX)",
-  "extension.command.sortLinesAscending.title": "Сортиране на редовете във възходящ ред",
-  "extension.command.sortLinesDescending.title": "Сортиране на редовете в низходящ ред"
+  "extension.command.sortLinesByTextAscending.title": "Сортиране на редовете по текст (A до Z)",
+  "extension.command.sortLinesByTextDescending.title": "Сортиране на редовете по текст (Z до A)",
+  "extension.command.sortLinesByLengthAscending.title": "Сортиране на редовете по дължина (най-къси първо)",
+  "extension.command.sortLinesByLengthDescending.title": "Сортиране на редовете по дължина (най-дълги първо)"
 }

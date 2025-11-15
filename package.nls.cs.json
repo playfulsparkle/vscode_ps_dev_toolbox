@@ -58,6 +58,8 @@
   "extension.command.decodePCREUnicodeHexadecimalEcape.title": "Dekódovat hexadecimální escape sekvence Unicode v PCRE (\\x{XX}, \\x{XXXXX})",
   "extension.command.encodeHexCodePoints.title": "Kódovat hexadecimální kódové body (0xXX, 0xXXXXX)",
   "extension.command.decodeHexCodePoints.title": "Dekódovat hexadecimální kódové body (0xXX, 0xXXXXX)",
-  "extension.command.sortLinesAscending.title": "Seřadit řádky vzestupně",
-  "extension.command.sortLinesDescending.title": "Seřadit řádky sestupně"
+  "extension.command.sortLinesByTextAscending.title": "Seřadit řádky podle textu (A až Z)",
+  "extension.command.sortLinesByTextDescending.title": "Seřadit řádky podle textu (Z až A)",
+  "extension.command.sortLinesByLengthAscending.title": "Seřadit řádky podle délky (nejkratší nejdříve)",
+  "extension.command.sortLinesByLengthDescending.title": "Seřadit řádky podle délky (nejdelší nejdříve)"
 }
