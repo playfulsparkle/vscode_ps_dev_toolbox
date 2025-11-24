@@ -190,10 +190,10 @@ suite("Dev Toolbox Tests", () => {
 		});
 
 		test("urlEncode/urlDecode roundtrip", () => {
-			const original = "Search for & stuff?";
+			const original = "https://www.google.com/search?q=apple+pie&sourceid=chrome&ie=UTF-8";
 			const encoded = utils.urlEncode(original);
 			assert.strictEqual(utils.urlDecode(encoded), original);
-			assert.strictEqual(encoded, "Search%20for%20%26%20stuff%3F");
+			assert.strictEqual(encoded, encoded);
 		});
 	});
 

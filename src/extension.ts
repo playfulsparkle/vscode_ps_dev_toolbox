@@ -450,7 +450,7 @@ export function activate(context: vscode.ExtensionContext) {
 		const parentPath = path.dirname(oldPath);
 		const slugifiedName = utils.slugify(itemName, separator);
 
-		if (slugifiedName.trim().length === 0) {
+		if (slugifiedName.length === 0) {
 			return;
 		}
 

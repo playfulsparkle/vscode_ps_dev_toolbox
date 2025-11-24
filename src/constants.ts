@@ -1,4 +1,6 @@
 
+export const BASE_64_MAX_LENGTH = 10000;
+
 export const REGEX_FILE_EXTENSION = /(\.[a-zA-Z0-9]{2,11})$/;
 
 export const REGEX_BASE64 = /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/;

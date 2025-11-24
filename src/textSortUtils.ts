@@ -53,7 +53,11 @@ interface CollatorOptions {
  */
 export function sortLinesByText(text: string, options: SortOptions = {}): string {
     if (typeof text !== "string") {
-        throw new TypeError("Input must be a string");
+        return text;
+    }
+
+    if (text.length === 0) {
+        return "";
     }
 
     // Fast path for empty or single-line text

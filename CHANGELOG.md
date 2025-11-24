@@ -2,6 +2,10 @@
 
 All notable changes to the "Playful Sparkle: Dev Toolbox" extension will be documented in this file.
 
+## [0.0.26] - 2025-11-24
+
+- Added function normlaization.
+
 ## [0.0.25] - 2025-11-15
 
 - Refactored sort line to sort line by text (A-Z/Z-A).

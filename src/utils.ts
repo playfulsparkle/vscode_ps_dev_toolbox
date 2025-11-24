@@ -2,7 +2,7 @@ import * as path from "path";
 import { uniqueEntityNames, codePointToEntityName, entityNameToCodePoint } from "./namedentities";
 import {
     CONTROL_CHARACTERS, DASH_CHARACTERS, SPACE_CHARACTERS, INVISIBLE_CHARACTERS, SPECIAL_REMOVE_CHARACTERS, SOFT_HYPHEN_MARKS,
-    REGEX_FILE_EXTENSION, REGEX_BASE64, REGEX_LOCALE, REGEX_HEX_NUMERIC_ENTITY, REGEX_NAMED_ENTITY, REGEX_DECIMAL_ENTITY,
+    BASE_64_MAX_LENGTH, REGEX_BASE64, REGEX_LOCALE, REGEX_HEX_NUMERIC_ENTITY, REGEX_NAMED_ENTITY, REGEX_DECIMAL_ENTITY,
     REGEX_UNICODE4_HEX_DIGIT, REGEX_UNICODE8_HEX_DIGIT, REGEX_BACKSLASH6_HEX_DIGIT, REGEX_U_PLUS_CODE_POINT,
     REGEX_UNICODE_BRACED_CODE_POINT, REGEX_UNICODE_BRACED_HEXADECIMAL, REGEX_HEX_CODE_POINT, REGEX_EOL_SPLIT
 } from "./constants";
@@ -79,6 +79,10 @@ export function safeToLowerCase(text: string, locale: string[]): string {
         return text;
     }
 
+    if (text.length === 0) {
+        return "";
+    }
+
     if (locale.length > 0) {
         try {
             return text.toLocaleLowerCase(locale);
@@ -102,6 +106,10 @@ export function safeToLowerCase(text: string, locale: string[]): string {
 export function safeToUppercase(text: string, locale: string[]): string {
     if (typeof text !== "string") {
         return text;
+    }
+
+    if (text.length === 0) {
+        return "";
     }
 
     if (locale.length > 0) {
@@ -161,6 +169,16 @@ export function filterUserLocaleInput(defaultLocale: string, userLocaleInput: st
     throw new Error(`No valid locales found in input: "${userLocaleInput}".`);
 }
 
+// Normalise invalid surrogate pairs to well-formed sequences.  If
+// this changes the string length, we recompute the length below.
+function normalizeText(text: string): string {
+    if (typeof (text as any).toWellFormed === "function") {
+        return (text as any).toWellFormed();
+    }
+
+    return text;
+}
+
 /**
  * Removes non-printable characters from text while preserving
  * visible characters needed for proper rendering in various
@@ -173,26 +191,21 @@ export function filterUserLocaleInput(defaultLocale: string, userLocaleInput: st
  *          replaced with spaces.
  */
 export function cleanText(text: string): string {
-    // Type guard
     if (typeof text !== "string") {
         return text;
     }
 
-    // Normalise invalid surrogate pairs to well-formed sequences.  If
-    // this changes the string length, we recompute the length below.
-    if (typeof (text as any).toWellFormed === "function") {
-        text = (text as any).toWellFormed();
-    }
+    text = normalizeText(text);
 
-    // Compute length after any normalisation.
-    let len = text.length;
+    const len = text.length;
 
     if (len === 0) {
-        return text;
+        return "";
     }
 
     let result = "";
     let i = 0;
+
     while (i < len) {
         const code = text.charCodeAt(i);
 
@@ -295,15 +308,16 @@ export function trimLineWhitespace(
     text: string,
     preserveTabs: boolean = false
 ): string {
-    // Early validation
     if (typeof text !== "string") {
         return text;
     }
 
+    text = normalizeText(text);
+
     const len = text.length;
 
     if (len === 0) {
-        return text;
+        return "";
     }
 
     /**
@@ -425,10 +439,11 @@ export function trimLineWhitespace(
  * @returns {string} The slugified version of the string
  */
 export function slugify(text: string, separator: string = "-"): string {
-    // Type guard - return as-is for non-strings (matches test expectations)
     if (typeof text !== "string") {
-        return text as any;
+        return text;
     }
+
+    text = normalizeText(text);
 
     if (text.length === 0) {
         return "";
@@ -524,11 +539,6 @@ function slugifySingleLine(text: string, separator: string): string {
  * @returns {string} The processed text
  */
 function slugifyHelper(text: string, separator: string): string {
-    // Handle string.toWellFormed() if available (ES2024)
-    if (typeof (text as any).toWellFormed === "function") {
-        text = (text as any).toWellFormed();
-    }
-
     // Escape separator for regex use
     const escapedSeparator = separator.replace(/[-.*+?^${}()|[\]\\]/g, "\\$&");
 
@@ -610,9 +620,20 @@ function capitalize(word: string): string {
  * @returns {string} The string in camelCase
  */
 export function toCamelCase(text: string): string {
+    if (typeof text !== "string") {
+        return text;
+    }
+
+    if (text.length === 0) {
+        return "";
+    }
+
     const words = normalizeToWords(text);
+
     if (words.length === 0) { return ""; }
+
     const [first, ...rest] = words;
+
     return first + rest.map(capitalize).join("");
 }
 
@@ -626,6 +647,14 @@ export function toCamelCase(text: string): string {
  * @returns {string} The string in PascalCase
  */
 export function toPascalCase(text: string): string {
+    if (typeof text !== "string") {
+        return text;
+    }
+
+    if (text.length === 0) {
+        return "";
+    }
+
     return normalizeToWords(text)
         .map(capitalize)
         .join("");
@@ -641,6 +670,14 @@ export function toPascalCase(text: string): string {
  * @returns {string} The string in snake_case
  */
 export function toSnakeCase(text: string): string {
+    if (typeof text !== "string") {
+        return text;
+    }
+
+    if (text.length === 0) {
+        return "";
+    }
+
     return normalizeToWords(text).join("_");
 }
 
@@ -654,6 +691,14 @@ export function toSnakeCase(text: string): string {
  * @returns {string} The string in SCREAMING_SNAKE_CASE
  */
 export function toScreamingSnakeCase(text: string): string {
+    if (typeof text !== "string") {
+        return text;
+    }
+
+    if (text.length === 0) {
+        return "";
+    }
+
     return normalizeToWords(text)
         .map(word => word.toUpperCase())
         .join("_");
@@ -669,6 +714,14 @@ export function toScreamingSnakeCase(text: string): string {
  * @returns {string} The string in kebab-case
  */
 export function toKebabCase(text: string): string {
+    if (typeof text !== "string") {
+        return text;
+    }
+
+    if (text.length === 0) {
+        return "";
+    }
+
     return normalizeToWords(text).join("-");
 }
 
@@ -682,6 +735,14 @@ export function toKebabCase(text: string): string {
  * @returns {string} The string in TRAIN-CASE
  */
 export function toTrainCase(text: string): string {
+    if (typeof text !== "string") {
+        return text;
+    }
+
+    if (text.length === 0) {
+        return "";
+    }
+
     return normalizeToWords(text)
         .map(word => word.toUpperCase())
         .join("-");
@@ -697,6 +758,14 @@ export function toTrainCase(text: string): string {
  * @returns {string} The string in flatcase
  */
 export function toFlatCase(text: string): string {
+    if (typeof text !== "string") {
+        return text;
+    }
+
+    if (text.length === 0) {
+        return "";
+    }
+
     return normalizeToWords(text).join("");
 }
 
@@ -710,6 +779,14 @@ export function toFlatCase(text: string): string {
  * @returns {string} The string in UPPERCASE format
  */
 export function toUpperCase(text: string): string {
+    if (typeof text !== "string") {
+        return text;
+    }
+
+    if (text.length === 0) {
+        return "";
+    }
+
     return normalizeToWords(text)
         .map(word => word.toUpperCase())
         .join("");
@@ -725,6 +802,10 @@ export function toUpperCase(text: string): string {
 export function base64Encode(text: string): string {
     if (typeof text !== "string") {
         return text;
+    }
+
+    if (text.length === 0) {
+        return "";
     }
 
     return Buffer.from(text).toString("base64");
@@ -761,6 +842,14 @@ export function base64Decode(text: string): string {
  * @returns {boolean} True if the string is valid Base64
  */
 export function isValidBase64(text: string): boolean {
+    if (typeof text !== "string") {
+        return false;
+    }
+
+    if (text.length > BASE_64_MAX_LENGTH) {
+        return false;
+    }
+
     return REGEX_BASE64.test(text);
 }
 
@@ -776,7 +865,13 @@ export function urlEncode(text: string): string {
         return text;
     }
 
-    return encodeURIComponent(text);
+    text = normalizeText(text);
+
+    if (text.length === 0) {
+        return "";
+    }
+
+    return encodeURI(text);
 }
 
 /**
@@ -788,10 +883,16 @@ export function urlEncode(text: string): string {
  */
 export function urlDecode(text: string): string {
     if (typeof text !== "string") {
+        return text;
+    }
+
+    text = normalizeText(text);
+
+    if (text.length === 0) {
         return "";
     }
 
-    return decodeURIComponent(text);
+    return decodeURI(text);
 }
 
 /**
@@ -826,12 +927,14 @@ function isHTMLNamedCharacterEntity(str: string, idx: number): number {
 
     // Hex numeric form: &#xHHHH;
     let m = REGEX_HEX_NUMERIC_ENTITY.exec(s);
+
     if (m) {
         return m[0].length;
     }
 
     // Named form: &name;
     m = REGEX_NAMED_ENTITY.exec(s);
+
     if (m && uniqueEntityNames.has(m[1])) {
         return m[0].length;
     }
@@ -853,6 +956,10 @@ function isHTMLNamedCharacterEntity(str: string, idx: number): number {
 export function encodeHTMLNamedCharacterEntity(text: string, doubleEncode: boolean = false): string {
     if (typeof text !== "string") {
         return text;
+    }
+
+    if (text.length === 0) {
+        return "";
     }
 
     let result = "";
@@ -945,7 +1052,7 @@ export function encodeHTMLNamedCharacterEntity(text: string, doubleEncode: boole
  */
 export function decodeHTMLNamedCharacterEntity(text: string): string {
     if (typeof text !== "string") {
-        return "";
+        return text;
     }
 
     if (text.length === 0) {
@@ -1002,6 +1109,7 @@ function isHTMLHexadecimalCharacterReference(str: string, idx: number): number {
 
     // Hex numeric form: &#xHHHH;
     let m = REGEX_HEX_NUMERIC_ENTITY.exec(s);
+
     if (m) {
         return m[0].length;
     }
@@ -1024,6 +1132,10 @@ function isHTMLHexadecimalCharacterReference(str: string, idx: number): number {
 export function encodeHTMLHexadecimalCharacterReference(text: string, doubleEncode: boolean = false): string {
     if (typeof text !== "string") {
         return text;
+    }
+
+    if (text.length === 0) {
+        return "";
     }
 
     let result = "";
@@ -1106,7 +1218,7 @@ export function encodeHTMLHexadecimalCharacterReference(text: string, doubleEnco
  */
 export function decodeHTMLHexadecimalCharacterReference(text: string): string {
     if (typeof text !== "string") {
-        return "";
+        return text;
     }
 
     if (text.length === 0) {
@@ -1151,6 +1263,7 @@ function isHtmlDecimalEntity(str: string, idx: number): number {
 
     // Decimal numeric form: &#1234;
     let m = REGEX_DECIMAL_ENTITY.exec(s);
+
     if (m) {
         return m[0].length;
     }
@@ -1173,6 +1286,10 @@ function isHtmlDecimalEntity(str: string, idx: number): number {
 export function encodeHtmlDecimalEntities(text: string, doubleEncode: boolean = false): string {
     if (typeof text !== "string") {
         return text;
+    }
+
+    if (text.length === 0) {
+        return "";
     }
 
     let result = "";
@@ -1252,7 +1369,7 @@ export function encodeHtmlDecimalEntities(text: string, doubleEncode: boolean = 
  */
 export function decodeHtmlDecimalEntities(text: string): string {
     if (typeof text !== "string") {
-        return "";
+        return text;
     }
 
     if (text.length === 0) {
@@ -1299,12 +1416,14 @@ function isJavaScriptUTF16EscapeSequence(str: string, idx: number): number {
 
     // \uXXXX (4 hex digits)
     let m = REGEX_UNICODE4_HEX_DIGIT.exec(s);
+
     if (m) {
         return m[0].length;
     }
 
     // \UXXXXXXXX (8 hex digits)
     m = REGEX_UNICODE8_HEX_DIGIT.exec(s);
+
     if (m) {
         return m[0].length;
     }
@@ -1331,6 +1450,10 @@ function isJavaScriptUTF16EscapeSequence(str: string, idx: number): number {
 export function encodeJavaScriptUTF16EscapeSequence(text: string, doubleEncode: boolean = false): string {
     if (typeof text !== "string") {
         return text;
+    }
+
+    if (text.length === 0) {
+        return "";
     }
 
     let result = "";
@@ -1397,6 +1520,10 @@ export function encodeJavaScriptUTF16EscapeSequence(text: string, doubleEncode: 
  */
 export function decodeJavaScriptUTF16EscapeSequence(text: string): string {
     if (typeof text !== "string") {
+        return text;
+    }
+
+    if (text.length === 0) {
         return "";
     }
 
@@ -1435,6 +1562,7 @@ function isCssUnicodeEscape(str: string, idx: number): number {
 
     // \XXXXXX (backslash + 6 hex digits)
     let m = REGEX_BACKSLASH6_HEX_DIGIT.exec(s);
+
     if (m) {
         return m[0].length;
     }
@@ -1461,6 +1589,10 @@ function isCssUnicodeEscape(str: string, idx: number): number {
 export function encodeCssUnicodeEscape(text: string, doubleEncode: boolean = false): string {
     if (typeof text !== "string") {
         return text;
+    }
+
+    if (text.length === 0) {
+        return "";
     }
 
     let result = "";
@@ -1526,7 +1658,7 @@ export function encodeCssUnicodeEscape(text: string, doubleEncode: boolean = fal
  */
 export function decodeCssUnicodeEscape(text: string): string {
     if (typeof text !== "string") {
-        return "";
+        return text;
     }
 
     if (text.length === 0) {
@@ -1572,6 +1704,7 @@ function isUnicodeCodePointNotation(str: string, idx: number): number {
 
     // U+XXXX, U+XXXXX or U+XXXXXX
     let m = REGEX_U_PLUS_CODE_POINT.exec(s);
+
     if (m) {
         return m[0].length;
     }
@@ -1597,6 +1730,10 @@ function isUnicodeCodePointNotation(str: string, idx: number): number {
 export function encodeUnicodeCodePointNotation(text: string, doubleEncode: boolean = false, separate: boolean = false): string {
     if (typeof text !== "string") {
         return text;
+    }
+
+    if (text.length === 0) {
+        return "";
     }
 
     let result = "";
@@ -1658,7 +1795,7 @@ export function encodeUnicodeCodePointNotation(text: string, doubleEncode: boole
  */
 export function decodeUnicodeCodePointNotation(text: string): string {
     if (typeof text !== "string") {
-        return "";
+        return text;
     }
 
     if (text.length === 0) {
@@ -1701,6 +1838,7 @@ function isUnicodeCodePointEscapeSequence(str: string, idx: number): number {
 
     // \u{XXX} (braced, variable length)
     let m = REGEX_UNICODE_BRACED_CODE_POINT.exec(s);
+
     if (m) {
         return m[0].length;
     }
@@ -1726,6 +1864,10 @@ function isUnicodeCodePointEscapeSequence(str: string, idx: number): number {
 export function encodeUnicodeCodePointEscapeSequence(text: string, doubleEncode: boolean = false): string {
     if (typeof text !== "string") {
         return text;
+    }
+
+    if (text.length === 0) {
+        return "";
     }
 
     let result = "";
@@ -1784,7 +1926,7 @@ export function encodeUnicodeCodePointEscapeSequence(text: string, doubleEncode:
  */
 export function decodeUnicodeCodePointEscapeSequence(text: string): string {
     if (typeof text !== "string") {
-        return "";
+        return text;
     }
 
     if (text.length === 0) {
@@ -1826,6 +1968,7 @@ function isPCREUnicodeHexadecimalEcape(str: string, idx: number): number {
 
     // \x{XXX} (braced, variable length)
     let m = REGEX_UNICODE_BRACED_HEXADECIMAL.exec(s);
+
     if (m) {
         return m[0].length;
     }
@@ -1851,6 +1994,10 @@ function isPCREUnicodeHexadecimalEcape(str: string, idx: number): number {
 export function encodePCREUnicodeHexadecimalEcape(text: string, doubleEncode: boolean = false): string {
     if (typeof text !== "string") {
         return text;
+    }
+
+    if (text.length === 0) {
+        return "";
     }
 
     let result = "";
@@ -1909,7 +2056,7 @@ export function encodePCREUnicodeHexadecimalEcape(text: string, doubleEncode: bo
  */
 export function decodePCREUnicodeHexadecimalEcape(text: string): string {
     if (typeof text !== "string") {
-        return "";
+        return text;
     }
 
     if (text.length === 0) {
@@ -1951,6 +2098,7 @@ function isHexCodePoint(str: string, idx: number): number {
 
     // 0xXXX (hex literal)
     let m = REGEX_HEX_CODE_POINT.exec(s);
+    
     if (m) {
         return m[0].length;
     }
@@ -1975,6 +2123,10 @@ function isHexCodePoint(str: string, idx: number): number {
 export function encodeHexCodePoints(text: string, doubleEncode: boolean = false, separate: boolean = false): string {
     if (typeof text !== "string") {
         return text;
+    }
+
+    if (text.length === 0) {
+        return "";
     }
 
     let result = "";
@@ -2034,7 +2186,7 @@ export function encodeHexCodePoints(text: string, doubleEncode: boolean = false,
  */
 export function decodeHexCodePoints(text: string): string {
     if (typeof text !== "string") {
-        return "";
+        return text;
     }
 
     if (text.length === 0) {

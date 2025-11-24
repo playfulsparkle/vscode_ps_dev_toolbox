@@ -100,6 +100,10 @@ If you encounter any of these or other issues, please report them on the [GitHub
 
 ## Release Notes
 
+### 0.0.26
+
+- Added function normlaization.
+
 ### 0.0.25
 
 - Refactored sort line to sort line by text (A-Z/Z-A).
