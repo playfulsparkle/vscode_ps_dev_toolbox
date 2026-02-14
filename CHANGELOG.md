@@ -2,6 +2,10 @@
 
 All notable changes to the "Playful Sparkle: Dev Toolbox" extension will be documented in this file.
 
+## [0.0.27] - 2026-02-06
+
+- Fixed bug handling perdiods during conversion string to URL slug.
+
 ## [0.0.26] - 2025-11-24
 
 - Added function normlaization.

@@ -100,6 +100,10 @@ If you encounter any of these or other issues, please report them on the [GitHub
 
 ## Release Notes
 
+### 0.0.27
+
+- Fixed bug handling perdiods during conversion string to URL slug.
+
 ### 0.0.26
 
 - Added function normlaization.

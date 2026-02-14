@@ -479,26 +479,26 @@ function extractFileNameExt(str: string): string[] {
         ".tar.gz", ".tar.br", ".tar.bz2", ".tar.xz", ".tar.zst",
         ".tar.lz", ".tar.lzma", ".tar.lzo", ".tar.z", ".svg.gz",
     ];
-
     const lower = str.toLowerCase();
 
+    // Check for double extensions
     for (const ext of doubleExts) {
         if (lower.endsWith(ext)) {
             return [str.slice(0, -ext.length), str.slice(str.length - ext.length)];
         }
     }
 
-    if (str.startsWith("..")) {
-        return [str.replace(/\.+/g, "."), ""];
-    }
-
-    if (str.startsWith(".")) {
-        return ["", str];
-    }
-
     const ext = path.extname(str);
 
-    return [path.basename(str, ext), ext];
+    // Validate that the extension looks like a real file extension:
+    // - Should be 2-5 characters long (after the dot)
+    // - Should only contain alphanumeric characters
+    if (ext && /^\.[a-zA-Z0-9]{2,5}$/.test(ext)) {
+        return [path.basename(str, ext), ext];
+    }
+
+    // No valid extension found
+    return [str, ""];
 }
 
 /**
@@ -516,17 +516,8 @@ function slugifySingleLine(text: string, separator: string): string {
     // Use path.extname to detect file extensions
     const [baseName, ext] = extractFileNameExt(text);
 
-    if (!baseName && ext) {
-        return ext;
-    }
-
-    // Normal case: has both base name and extension
-    if (baseName && ext) {
-        return dotPrefix + slugifyHelper(baseName, separator) + ext.toLowerCase();
-    }
-
     // No extension found
-    return dotPrefix + slugifyHelper(text, separator);
+    return dotPrefix + slugifyHelper(baseName, separator) + ext.toLowerCase();
 }
 
 /**
@@ -2098,7 +2089,7 @@ function isHexCodePoint(str: string, idx: number): number {
 
     // 0xXXX (hex literal)
     let m = REGEX_HEX_CODE_POINT.exec(s);
-    
+
     if (m) {
         return m[0].length;
     }

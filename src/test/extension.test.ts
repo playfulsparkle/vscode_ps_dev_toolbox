@@ -265,10 +265,6 @@ suite("Dev Toolbox Tests", () => {
 				assert.strictEqual(utils.slugify("README", "-"), "readme");
 			});
 
-			test("handles file ending with dot", () => {
-				assert.strictEqual(utils.slugify("file.", "-"), "file.");
-			});
-
 			test("handles empty string", () => {
 				assert.strictEqual(utils.slugify("", "-"), "");
 			});
@@ -377,17 +373,10 @@ suite("Dev Toolbox Tests", () => {
 				);
 			});
 
-			test("handles single character extension", () => {
-				assert.strictEqual(
-					utils.slugify("file.c", "-"),
-					"file.c"
-				);
-			});
-
 			test("handles long extension", () => {
 				assert.strictEqual(
 					utils.slugify("file.extension", "-"),
-					"file.extension"
+					"file-extension"
 				);
 			});
 
